@@ -45,7 +45,7 @@
     <string name="preferences_german_dont">Do not translate to German</string>
  	<string name="preferences_update_dictionary">Update dictionary</string>
  	<string name="preferences_dictionary_info">No dictionary found</string>
- 	<string name="line">line</string>
+ 	<string name="preferences">Preferences</string>
  	
    <!-- Tabs -->
    <string name="search_exact">Exact</string>

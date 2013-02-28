@@ -975,7 +975,7 @@ containing a value of this type.
         public static final int homeAsUp=0x7f050006;
         public static final int listMode=0x7f050002;
         public static final int main_fragment=0x7f050035;
-        public static final int menu_search=0x7f050047;
+        public static final int menu_search=0x7f05003f;
         public static final int normal=0x7f050001;
         public static final int notification_image=0x7f050037;
         public static final int notification_text=0x7f050039;
@@ -983,14 +983,6 @@ containing a value of this type.
         public static final int ntification_progressBar=0x7f05003a;
         public static final int results_fragment_container=0x7f05003b;
         public static final int search=0x7f05003c;
-        public static final int setting_language_dutch_check=0x7f050043;
-        public static final int setting_language_dutch_title=0x7f050044;
-        public static final int setting_language_english_check=0x7f05003f;
-        public static final int setting_language_english_title=0x7f050040;
-        public static final int setting_language_french_check=0x7f050041;
-        public static final int setting_language_french_title=0x7f050042;
-        public static final int setting_language_german_check=0x7f050045;
-        public static final int setting_language_german_title=0x7f050046;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
@@ -1033,10 +1025,9 @@ containing a value of this type.
         public static final int notification=0x7f03001b;
         public static final int results_fragment=0x7f03001c;
         public static final int search_actionbar=0x7f03001d;
-        public static final int settings=0x7f03001e;
-        public static final int settings_action_provider=0x7f03001f;
-        public static final int sherlock_spinner_dropdown_item=0x7f030020;
-        public static final int sherlock_spinner_item=0x7f030021;
+        public static final int settings_action_provider=0x7f03001e;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001f;
+        public static final int sherlock_spinner_item=0x7f030020;
     }
     public static final class menu {
         public static final int menu=0x7f0c0000;
@@ -1111,13 +1102,13 @@ containing a value of this type.
         public static final int language_french=0x7f0a0026;
         public static final int language_german=0x7f0a0028;
         public static final int last_update=0x7f0a0024;
-        public static final int line=0x7f0a0034;
         public static final int menu_setting=0x7f0a0021;
         public static final int no_dictionary_found=0x7f0a0017;
         /**  MainActivity 
  MainActivity 
          */
         public static final int parsing_downloaded_dictionary=0x7f0a0016;
+        public static final int preferences=0x7f0a0034;
         public static final int preferences_dictionary_info=0x7f0a0033;
         public static final int preferences_dutch_do=0x7f0a002e;
         public static final int preferences_dutch_dont=0x7f0a002f;
@@ -1150,6 +1141,8 @@ containing a value of this type.
         public static final int AppTheme=0x7f0b0059;
         public static final int DialogWindowTitle_Sherlock=0x7f0b0036;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0b0037;
+        public static final int LightTabWidget=0x7f0b005d;
+        public static final int MyTheme=0x7f0b005c;
         public static final int NotificationText=0x7f0b005a;
         public static final int NotificationTitle=0x7f0b005b;
         public static final int Sherlock___TextAppearance_Small=0x7f0b004a;

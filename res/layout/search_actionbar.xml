@@ -11,7 +11,8 @@
 	<RelativeLayout
 	 android:layout_width="match_parent"
      android:layout_height="match_parent"
-     android:layout_marginLeft="32dp"   
+     android:layout_marginLeft="32dp" 
+     android:layout_marginTop="4dp"  
 	     >
     <EditText
         android:id="@+id/search"
@@ -41,7 +42,7 @@
         android:layout_marginRight="32dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true" 
-        android:contentDescription="Preferences"
+        android:contentDescription="@string/preferences"
         android:onClick="showPreferences"/>
    
 </LinearLayout>
