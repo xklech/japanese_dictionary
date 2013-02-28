@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_notification"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center" >
+
+    <ImageView
+        android:id="@+id/notification_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher"
+    />
+
+    <TextView
+        android:id="@+id/notification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/notification_image"
+        android:layout_alignTop="@+id/notification_image"
+        style="@style/NotificationTitle"
+    />
+
+    <TextView
+        android:id="@+id/notification_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/notification_image"
+        android:layout_below="@+id/notification_title"
+        style="@style/NotificationText"
+    />
+    <ProgressBar  
+            style="?android:attr/progressBarStyleHorizontal" 
+            android:layout_height="wrap_content" 
+            android:layout_width="fill_parent"
+            android:max="0" 
+            android:progress="0"   
+            android:layout_toRightOf="@+id/notification_image"
+            android:layout_below="@+id/notification_text"
+            android:id="@+id/ntification_progressBar" 
+            />
+</RelativeLayout>

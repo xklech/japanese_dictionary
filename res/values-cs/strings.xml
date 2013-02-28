@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Japonský slovník</string>
+    <string name="title_activity_main">Japonský slovník</string>
+    
+    <!-- ParserService -->
+    <string name="dictionary_download_title">Stahuji slovník</string>
+    <string name="dictionary_download_in_progress">Probíhá stahování slovníku</string>
+    <string name="dictionary_download_complete">Stahování kompletní</string>
+    <string name="dictionary_parsing_in_progress">Probíhá zpracování slovníku.</string>
+    <string name="dictionary_download_interrupted">Stahování přerušeno</string>
+    
+    <!-- MainActivity -->
+    <string name="parsing_downloaded_dictionary">Zpracování staženého slovníku</string>
+    <string name="no_dictionary_found">Slovník nenalezen</string>
+    <string name="download_dictionary_question">Chcete nyní stáhnout slovník? Vyžadováno připojení k internetu.</string>
+    <string name="download">Stáhnout</string>
+    <string name="storno">Zrušit</string>
+    <string name="currently_downloading_dictionary">Stahujislovník, prosím vyčkejte</string>
+    <string name="internet_connection_failed_title">Připojení k internetu selhalo</string>
+    <string name="internet_connection_failed_message">Připojení k internetu není k dispozici</string>
+    <string name="external_storrage_failed_title">Nedostupné externí uložiště </string>
+    <string name="external_storrage_failed_message">Externí uložiště je nedostupné.</string>   
+    <string name="search_translation">Vyhledat překlad</string> 
+    <string name="menu_setting">Nastavení</string> 
+    <string name="updating_in_progress">Probíhá aktualizace slovníku, prosím čekejte.</string>
+    <string name="unknown_last_update">Poslední aktualizace neznámá</string>
+    <string name="last_update">Poslední aktualizace:</string>
+    <!-- Languages -->
+    <string name="language_english">Anglciky</string>
+    <string name="language_french">Francouzsky</string>
+    <string name="language_dutch">Holandsky</string>
+    <string name="language_german">Německy</string>  
+    
+    <!--  Preferences -->
+    <string name="preferences_english_do">Překládat do angličtiny</string>
+    <string name="preferences_english_dont">Nepřekládat do angličtiny</string>
+    <string name="preferences_french_do">Překládat do francouzštiny</string>
+    <string name="preferences_french_dont">Nepřekládat do francouzštiny</string>
+    <string name="preferences_dutch_do">Nepřekládat do holandštiny</string>
+    <string name="preferences_dutch_dont">Nepřekládat do holandštiny</string>
+    <string name="preferences_german_do">Nepřekládat do němčiny</string>
+    <string name="preferences_german_dont">Nepřekládat do němčiny</string>
+ 	<string name="preferences_update_dictionary">Aktualizovat slovník</string>
+ 	<string name="preferences_dictionary_info">Slovník nenalezen</string>
+ 	<string name="line">line</string>
+ 	
+   <!-- Tabs -->
+   <string name="search_exact">Přesně</string>
+   <string name="search_begining">Začátek</string>
+   <string name="search_middle">Střed</string>
+   <string name="search_end">Konec</string>
+ 	
+</resources>
