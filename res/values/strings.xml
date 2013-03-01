@@ -54,4 +54,10 @@
    <string name="search_middle">Contains</string>
    <string name="search_end">Ends</string>
    
+   
+   <!-- Display Translation -->
+   <string name="tramslation_unknown_translation">Unknown translation</string>
+   <string name="tramslation_title">Entry detail</string>
+   
+   
 </resources>

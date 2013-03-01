@@ -52,4 +52,9 @@
    <string name="search_middle">Střed</string>
    <string name="search_end">Konec</string>
  	
+   
+   <!-- Display Translation -->
+   <string name="tramslation_unknown_translation">Neznámý překlad</string>
+   <string name="tramslation_title">Detail záznamu</string>
+   
 </resources>

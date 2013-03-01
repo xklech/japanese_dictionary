@@ -1,5 +1,6 @@
 package cz.muni.fi.japanesedictionary.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -68,7 +69,11 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         }else{
         	write.setVisibility(View.GONE);
         }
-        if(german){
+        if(english){
+            if(item.getEnglishSense() != null){
+            	translate.setText(item.getEnglishSense().get(0).get(0));
+            } 
+        }else if(german){
             if(item.getGermanSense() != null){
             	translate.setText(item.getGermanSense().get(0).get(0));
             }       	
@@ -86,7 +91,9 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
             }        	
         }
 
+        
+        
         return view;
-    } 
+    }  
     
 }

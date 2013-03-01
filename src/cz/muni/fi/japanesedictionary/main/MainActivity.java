@@ -138,8 +138,8 @@ public class MainActivity extends SherlockFragmentActivity
 			// two frames layout
 			Log.i("MainActivity","Setting info fragment");
 			DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
-			fragment.updateTranslation(getTranslationCallBack(index));
-
+			fragment.setTranslation(getTranslationCallBack(index));
+			fragment.updateTranslation();
 			return;
 		}
 		DisplayTranslation displayFragment = new DisplayTranslation();
