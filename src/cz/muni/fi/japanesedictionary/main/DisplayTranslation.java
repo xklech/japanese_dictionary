@@ -159,7 +159,7 @@ public class DisplayTranslation extends SherlockFragment {
     	if(inflater != null){
     		LinearLayout translations_container = (LinearLayout)getView().findViewById(R.id.translation_translation_container);
         	translations_container.removeAllViews();
-    		if(english && translation.getEnglishSense().size() > 0){
+    		if(english && translation.getEnglishSense()!= null && translation.getEnglishSense().size() > 0){
 		        	View translation_language = inflater.inflate(R.layout.translation_language, null);
 	    			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
 	    			textView.setText(getString(R.string.language_english));
@@ -184,7 +184,7 @@ public class DisplayTranslation extends SherlockFragment {
 		        		
 		        	}
 	        }
-	        if(french && translation.getFrenchSense().size() > 0){
+	        if(french && translation.getFrenchSense()!= null && translation.getFrenchSense().size() > 0){
 	        	View translation_language = inflater.inflate(R.layout.translation_language, null);
     			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
     			textView.setText(getString(R.string.language_french));
@@ -208,7 +208,7 @@ public class DisplayTranslation extends SherlockFragment {
 		        		}
 		        	}
 	        }
-	        if(dutch && translation.getDutchSense().size() > 0){
+	        if(dutch && translation.getDutchSense()!= null && translation.getDutchSense().size() > 0){
 	        	View translation_language = inflater.inflate(R.layout.translation_language, null);
     			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
     			textView.setText(getString(R.string.language_dutch));
@@ -232,7 +232,7 @@ public class DisplayTranslation extends SherlockFragment {
 		        		}
 		        	}
 	        }
-	        if(german && translation.getGermanSense().size() > 0){
+	        if(german && translation.getGermanSense() != null && translation.getGermanSense().size() > 0){
 	        	View translation_language = inflater.inflate(R.layout.translation_language, null);
     			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
     			textView.setText(getString(R.string.language_german));

@@ -185,9 +185,8 @@ public class MainFragment extends SherlockFragment implements
 							: View.GONE);
 
 					if (mSearchFragment != null) {
+						mSearchInput = s.toString();
 						mSearchFragment.changeSearched(s.toString());
-						System.out.println("registruju change");
-
 					}
 				}
 			});
