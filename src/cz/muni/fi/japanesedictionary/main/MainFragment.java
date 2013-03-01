@@ -1,14 +1,10 @@
 package cz.muni.fi.japanesedictionary.main;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,12 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -42,10 +36,6 @@ public class MainFragment extends SherlockFragment implements
 	private MenuItem mSearchItem = null;
 	private EditText mSearch = null;
 	private Button mDelete = null;
-
-	private ResultLoader resultLoader = null;
-
-	
 	
 	
 	@Override
@@ -63,6 +53,7 @@ public class MainFragment extends SherlockFragment implements
 
 	}
 
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -86,7 +77,12 @@ public class MainFragment extends SherlockFragment implements
 		mTabHost.addTab(mTabHost.newTabSpec("end").setIndicator(getText(R.string.search_end))
 				.setContent(new TabFactory(getActivity())));
 		mTabHost.setOnTabChangedListener(this);
-		mLastTabId = "exact";
+		if(mLastTabId == null || mLastTabId.length()==0){
+			mLastTabId = "exact";
+		}else{
+			mTabHost.setCurrentTabByTag(mLastTabId);
+		}
+		
 
 		if (savedInstanceState != null) {
 			Log.i("MainFragment", "Setting current tab: "+savedInstanceState.getString(MainActivity.PART_OF_TEXT));
@@ -95,6 +91,8 @@ public class MainFragment extends SherlockFragment implements
 			mLastTabId = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
 			mSearchInput = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
 			mSearchFragment = (ResultFragmentList) getActivity().getSupportFragmentManager().findFragmentByTag("result_fragment");
+		}else{
+			Log.e("MainFragment","serach: "+mSearchInput + " part: "+mLastTabId);
 		}
 		SharedPreferences settings = getActivity().getSharedPreferences(
 				ParserService.DICTIONARY_PREFERENCES, 0);
@@ -122,12 +120,17 @@ public class MainFragment extends SherlockFragment implements
 			bundleFragment.putString(MainActivity.PART_OF_TEXT,
 					mLastTabId);
 			mSearchFragment.setArguments(bundleFragment);
-			FragmentTransaction ft = getActivity().getSupportFragmentManager()
+			FragmentTransaction ft = getChildFragmentManager()
 					.beginTransaction();
 			ft.add(android.R.id.tabcontent, mSearchFragment,"result_fragment");
 			ft.commit();
 		}else{
-			Log.i("MainFragment","Loading old fragment");
+			if(mSearchInput == null){
+				Log.i("MainFragment","loading resultLoader");
+				mSearchInput = mSearchFragment.getSearched();
+			}	
+			Log.i("MainFragment","Loading old fragment input: " + mSearchInput);
+			
 		}
 
 		
@@ -154,7 +157,6 @@ public class MainFragment extends SherlockFragment implements
 					R.id.delete);
 			mDelete.setVisibility(mSearch.getText().length() > 0 ? View.VISIBLE
 					: View.GONE);
-			if(mDelete == null)System.out.println("nulllll");
 			mDelete.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -183,21 +185,8 @@ public class MainFragment extends SherlockFragment implements
 							: View.GONE);
 
 					if (mSearchFragment != null) {
-						if (resultLoader == null) {
-							Loader<List<Translation>> loader = mSearchFragment
-									.getLoaderManager().getLoader(0);
-							resultLoader = (ResultLoader) loader;
-							if (resultLoader == null) {
-								return;
-							}
-						}
-						Message msg = new Message();
-						Bundle bundle = new Bundle();
-						bundle.putString(
-								MainActivity.HANDLER_BUNDLE_TRANSLATION,
-								s.toString());
-						msg.setData(bundle);
-						resultLoader.getHandler().sendMessage(msg);
+						mSearchFragment.changeSearched(s.toString());
+						System.out.println("registruju change");
 
 					}
 				}
@@ -225,14 +214,16 @@ public class MainFragment extends SherlockFragment implements
 		}
 
 		@Override
-		public View createTabContent(String tag) {
-			Log.i("TabFactory", tag);
-			
+		public View createTabContent(String tag) {			
 			View v = new View(mContext);
 			v.setMinimumWidth(0);
 			v.setMinimumHeight(0);
 			return v;
 		}
+	}
+	
+	public ResultFragmentList getResultFragmentList(){
+		return mSearchFragment;
 	}
 
 }

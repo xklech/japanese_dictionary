@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="AppTheme" parent="android:Theme.Light" />
     <style name="NotificationText">
       <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
@@ -16,4 +16,10 @@
     <style name="LightTabWidget" parent="@android:style/Widget.TabWidget">
         <item name="android:textSize">14sp</item>
     </style>
+    
+    <style name="ListItemWrite">
+      <item name="android:textColor">?android:attr/textColorHighlight</item>
+      <item name="android:textStyle">bold</item>
+    </style>
+    
 </resources>

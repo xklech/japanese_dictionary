@@ -13,6 +13,7 @@
     <!-- MainActivity -->
     <string name="parsing_downloaded_dictionary">Parsing downloaded dictionary</string>
     <string name="no_dictionary_found">No dictionary found</string>
+    <string name="nothing_found">Nothing found</string>
     <string name="download_dictionary_question">Do you want to download dictionary? \nInternet connection required.\nSize: 11 MB</string>
     <string name="download">Download</string>
     <string name="storno">Storno</string>
@@ -49,8 +50,8 @@
  	
    <!-- Tabs -->
    <string name="search_exact">Exact</string>
-   <string name="search_begining">Begin</string>
-   <string name="search_middle">Middloe</string>
-   <string name="search_end">End</string>
+   <string name="search_begining">Begins</string>
+   <string name="search_middle">Contains</string>
+   <string name="search_end">Ends</string>
    
 </resources>

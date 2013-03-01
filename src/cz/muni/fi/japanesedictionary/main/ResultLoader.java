@@ -60,6 +60,10 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	public Handler getHandler(){
 		return handler;
 	}
+	
+	public String getExpression(){
+		return expression;
+	}
 
 	@Override
 	public List<Translation> loadInBackground() {

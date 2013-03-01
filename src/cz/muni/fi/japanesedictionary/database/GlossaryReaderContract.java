@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import cz.muni.fi.japanesedictionary.main.Translation;
 
 public class GlossaryReaderContract extends SQLiteOpenHelper {
 	
@@ -88,11 +89,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	    cursor.moveToFirst();
 	 
 	    Translation translation = new Translation();
-    	translation.setJapanese(cursor.getString(0));
-    	translation.setDutch(cursor.getString(1));
-    	translation.setEnglish(cursor.getString(2));
-    	translation.setFrench(cursor.getString(3));
-    	translation.setGerman(cursor.getString(4));
+
     	cursor.close();
 	    // return translation
 	    return translation;

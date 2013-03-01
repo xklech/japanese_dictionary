@@ -54,6 +54,8 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 						
 						Intent intent = new Intent(getApplicationContext(), ParserService.class);
 						startService(intent);
+						Toast.makeText(getApplicationContext(), R.string.updating_in_progress, Toast.LENGTH_SHORT).show();
+
 					}
 					return false;
 				}

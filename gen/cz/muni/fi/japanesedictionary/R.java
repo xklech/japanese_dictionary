@@ -966,28 +966,32 @@ containing a value of this type.
         public static final int abs__title=0x7f05001b;
         public static final int abs__titleDivider=0x7f05001c;
         public static final int abs__up=0x7f05000b;
-        public static final int button=0x7f05003e;
-        public static final int custom_notification=0x7f050036;
-        public static final int delete=0x7f05003d;
+        public static final int button=0x7f050042;
+        public static final int custom_notification=0x7f05003a;
+        public static final int delete=0x7f050041;
+        public static final int detail_fragment=0x7f050039;
         public static final int disableHome=0x7f050009;
         public static final int edit_query=0x7f050027;
         public static final int fragment_container=0x7f050034;
         public static final int homeAsUp=0x7f050006;
+        public static final int jap_read=0x7f050036;
+        public static final int jap_write=0x7f050035;
         public static final int listMode=0x7f050002;
-        public static final int main_fragment=0x7f050035;
-        public static final int menu_search=0x7f05003f;
+        public static final int main_fragment=0x7f050038;
+        public static final int menu_search=0x7f050043;
         public static final int normal=0x7f050001;
-        public static final int notification_image=0x7f050037;
-        public static final int notification_text=0x7f050039;
-        public static final int notification_title=0x7f050038;
-        public static final int ntification_progressBar=0x7f05003a;
-        public static final int results_fragment_container=0x7f05003b;
-        public static final int search=0x7f05003c;
+        public static final int notification_image=0x7f05003b;
+        public static final int notification_text=0x7f05003d;
+        public static final int notification_title=0x7f05003c;
+        public static final int ntification_progressBar=0x7f05003e;
+        public static final int results_fragment_container=0x7f05003f;
+        public static final int search=0x7f050040;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
         public static final int tabMode=0x7f050003;
         public static final int text=0x7f050033;
+        public static final int translation=0x7f050037;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;
     }
@@ -1019,15 +1023,17 @@ containing a value of this type.
         public static final int abs__search_view=0x7f030015;
         public static final int abs__simple_dropdown_hint=0x7f030016;
         public static final int article_view=0x7f030017;
-        public static final int fragment_container=0x7f030018;
-        public static final int main_activity=0x7f030019;
-        public static final int main_fragment=0x7f03001a;
-        public static final int notification=0x7f03001b;
-        public static final int results_fragment=0x7f03001c;
-        public static final int search_actionbar=0x7f03001d;
-        public static final int settings_action_provider=0x7f03001e;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001f;
-        public static final int sherlock_spinner_item=0x7f030020;
+        public static final int display_translation=0x7f030018;
+        public static final int fragment_container=0x7f030019;
+        public static final int list_item=0x7f03001a;
+        public static final int main_activity=0x7f03001b;
+        public static final int main_fragment=0x7f03001c;
+        public static final int notification=0x7f03001d;
+        public static final int results_fragment=0x7f03001e;
+        public static final int search_actionbar=0x7f03001f;
+        public static final int settings_action_provider=0x7f030020;
+        public static final int sherlock_spinner_dropdown_item=0x7f030021;
+        public static final int sherlock_spinner_item=0x7f030022;
     }
     public static final class menu {
         public static final int menu=0x7f0c0000;
@@ -1079,7 +1085,7 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0009;
         public static final int app_name=0x7f0a000f;
-        public static final int currently_downloading_dictionary=0x7f0a001b;
+        public static final int currently_downloading_dictionary=0x7f0a001c;
         public static final int dictionary_download_complete=0x7f0a0013;
         public static final int dictionary_download_in_progress=0x7f0a0012;
         public static final int dictionary_download_interrupted=0x7f0a0015;
@@ -1088,60 +1094,62 @@ containing a value of this type.
          */
         public static final int dictionary_download_title=0x7f0a0011;
         public static final int dictionary_parsing_in_progress=0x7f0a0014;
-        public static final int download=0x7f0a0019;
-        public static final int download_dictionary_question=0x7f0a0018;
-        public static final int external_storrage_failed_message=0x7f0a001f;
-        public static final int external_storrage_failed_title=0x7f0a001e;
-        public static final int internet_connection_failed_message=0x7f0a001d;
-        public static final int internet_connection_failed_title=0x7f0a001c;
-        public static final int language_dutch=0x7f0a0027;
+        public static final int download=0x7f0a001a;
+        public static final int download_dictionary_question=0x7f0a0019;
+        public static final int external_storrage_failed_message=0x7f0a0020;
+        public static final int external_storrage_failed_title=0x7f0a001f;
+        public static final int internet_connection_failed_message=0x7f0a001e;
+        public static final int internet_connection_failed_title=0x7f0a001d;
+        public static final int language_dutch=0x7f0a0028;
         /**  Languages 
  Languages 
          */
-        public static final int language_english=0x7f0a0025;
-        public static final int language_french=0x7f0a0026;
-        public static final int language_german=0x7f0a0028;
-        public static final int last_update=0x7f0a0024;
-        public static final int menu_setting=0x7f0a0021;
+        public static final int language_english=0x7f0a0026;
+        public static final int language_french=0x7f0a0027;
+        public static final int language_german=0x7f0a0029;
+        public static final int last_update=0x7f0a0025;
+        public static final int menu_setting=0x7f0a0022;
         public static final int no_dictionary_found=0x7f0a0017;
+        public static final int nothing_found=0x7f0a0018;
         /**  MainActivity 
  MainActivity 
          */
         public static final int parsing_downloaded_dictionary=0x7f0a0016;
-        public static final int preferences=0x7f0a0034;
-        public static final int preferences_dictionary_info=0x7f0a0033;
-        public static final int preferences_dutch_do=0x7f0a002e;
-        public static final int preferences_dutch_dont=0x7f0a002f;
+        public static final int preferences=0x7f0a0035;
+        public static final int preferences_dictionary_info=0x7f0a0034;
+        public static final int preferences_dutch_do=0x7f0a002f;
+        public static final int preferences_dutch_dont=0x7f0a0030;
         /**   Preferences 
          */
-        public static final int preferences_english_do=0x7f0a002a;
-        public static final int preferences_english_dont=0x7f0a002b;
-        public static final int preferences_french_do=0x7f0a002c;
-        public static final int preferences_french_dont=0x7f0a002d;
-        public static final int preferences_german_do=0x7f0a0030;
-        public static final int preferences_german_dont=0x7f0a0031;
+        public static final int preferences_english_do=0x7f0a002b;
+        public static final int preferences_english_dont=0x7f0a002c;
+        public static final int preferences_french_do=0x7f0a002d;
+        public static final int preferences_french_dont=0x7f0a002e;
+        public static final int preferences_german_do=0x7f0a0031;
+        public static final int preferences_german_dont=0x7f0a0032;
         /**   Preferences 
          */
-        public static final int preferences_language_setting=0x7f0a0029;
-        public static final int preferences_update_dictionary=0x7f0a0032;
-        public static final int search_begining=0x7f0a0036;
-        public static final int search_end=0x7f0a0038;
+        public static final int preferences_language_setting=0x7f0a002a;
+        public static final int preferences_update_dictionary=0x7f0a0033;
+        public static final int search_begining=0x7f0a0037;
+        public static final int search_end=0x7f0a0039;
         /**  Tabs 
  Tabs 
          */
-        public static final int search_exact=0x7f0a0035;
-        public static final int search_middle=0x7f0a0037;
-        public static final int search_translation=0x7f0a0020;
-        public static final int storno=0x7f0a001a;
+        public static final int search_exact=0x7f0a0036;
+        public static final int search_middle=0x7f0a0038;
+        public static final int search_translation=0x7f0a0021;
+        public static final int storno=0x7f0a001b;
         public static final int title_activity_main=0x7f0a0010;
-        public static final int unknown_last_update=0x7f0a0023;
-        public static final int updating_in_progress=0x7f0a0022;
+        public static final int unknown_last_update=0x7f0a0024;
+        public static final int updating_in_progress=0x7f0a0023;
     }
     public static final class style {
         public static final int AppTheme=0x7f0b0059;
         public static final int DialogWindowTitle_Sherlock=0x7f0b0036;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0b0037;
         public static final int LightTabWidget=0x7f0b005d;
+        public static final int ListItemWrite=0x7f0b005e;
         public static final int MyTheme=0x7f0b005c;
         public static final int NotificationText=0x7f0b005a;
         public static final int NotificationTitle=0x7f0b005b;

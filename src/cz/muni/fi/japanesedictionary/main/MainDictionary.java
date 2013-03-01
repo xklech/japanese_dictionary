@@ -63,7 +63,7 @@ public class MainDictionary extends FragmentActivity implements DictionaryLangua
 		    	    Document d = searcher.doc(docId);
 		    	    System.out.println((i + 1) + ". " + d.get("english"));
 		    	}
-		    	
+		    	searcher.close();
 		    	
 	    	}catch(Exception ex){
 	    		System.out.println("vyjimka hledani: " + ex.toString());

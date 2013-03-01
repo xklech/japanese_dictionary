@@ -30,6 +30,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -71,6 +72,7 @@ public class ParserService extends IntentService{
 		mBuilder.setSmallIcon(R.drawable.ic_launcher);
 
 		Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+		resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent resultPendingIntent =
 				PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		mBuilder.setContentIntent(resultPendingIntent);
@@ -210,6 +212,10 @@ public class ParserService extends IntentService{
         	downloadedFile.delete();
         	Log.i("ParserService", "Parsing dictionary - downloaded file deleted");
         	mNotificationView.setTextViewText(R.id.notification_text, getString(R.string.dictionary_download_complete));
+        	mNotificationView.setProgressBar(R.id.ntification_progressBar, 0, 0, false);
+        	mNotification.contentView=mNotificationView;
+        	
+        	
         	mNotification.contentView = mNotificationView;
      
     		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -245,9 +251,20 @@ public class ParserService extends IntentService{
         Date date = new Date();
         editor.putLong("dictionaryLastUpdate",date.getTime());
         editor.commit();
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean english = sharedPrefs.getBoolean("language_english", false);
+        boolean french = sharedPrefs.getBoolean("language_french", false);        
+        boolean dutch = sharedPrefs.getBoolean("language_dutch", false);
+        boolean german = sharedPrefs.getBoolean("language_german", false);
+        if(!english && !french && !dutch && !german){
+        	Log.i("ParserService","Setting english as only translation language");
+            SharedPreferences.Editor editor_lang = sharedPrefs.edit();
+            editor_lang.putBoolean("language_english", true);
+            editor_lang.commit();
+        }
+        
         Log.i("ParserService", "Parsing dictionary - preferences saved");
-        Intent intent = new Intent("serviceDone");
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent("downloadingDictinaryServiceDone");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);	
 	}
 	

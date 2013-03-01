@@ -11,6 +11,13 @@ public class Translation {
 	private List<List<String>> dutch;
 	private List<List<String>> german;
 	
+	@Override
+	public String toString() {
+		return "Translation [jap_keb=" + jap_keb + ", jap_reb=" + jap_reb
+				+ ", english=" + english + ", french=" + french + ", dutch="
+				+ dutch + ", german=" + german + "]";
+	}
+
 	public Translation(){
 		jap_keb = new ArrayList<String>();
 		jap_reb = new ArrayList<String>();

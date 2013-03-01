@@ -13,6 +13,7 @@
     <!-- MainActivity -->
     <string name="parsing_downloaded_dictionary">Zpracování staženého slovníku</string>
     <string name="no_dictionary_found">Slovník nenalezen</string>
+    <string name="nothing_found">Výraz nenalezen</string>
     <string name="download_dictionary_question">Chcete nyní stáhnout slovník? Vyžadováno připojení k internetu.</string>
     <string name="download">Stáhnout</string>
     <string name="storno">Zrušit</string>

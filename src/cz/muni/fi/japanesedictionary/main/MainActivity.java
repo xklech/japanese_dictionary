@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainActivity extends SherlockFragmentActivity
+	implements ResultFragmentList.OnTranslationSelectedListener,
+				DisplayTranslation.OnCreateTranslationListener{
 
 	public static final String DICTIONARY_PATH = "http://index.aerolines.cz/JMdict.gz";
 	public static final String PARSER_SERVICE = "cz.muni.fi.japanesedictionary.parser.ParserService";
@@ -30,11 +33,15 @@ public class MainActivity extends SherlockFragmentActivity {
 	public static final String HANDLER_BUNDLE_TAB = "cz.muni.fi.japanesedictionary.handler_bundle_tab";
 	public static final String FRAGMENT_CREATE_TRANSLATION = "cz.muni.fi.japanesedictionary.fragment_create_translation";
 	public static final String FRAGMENT_CREATE_PART = "cz.muni.fi.japanesedictionary.fragment_create_part";
-
 	
-
-
-
+	
+	private MainFragment mainFragment;
+	private TranslationsAdapter mAdapter = null;
+	
+	
+	public void setAdapter(TranslationsAdapter _adapter){
+		mAdapter = _adapter;
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +52,18 @@ public class MainActivity extends SherlockFragmentActivity {
 			return ;
 		}
 		Log.i("MainActivity","Setting layout");
-		
-		MainFragment fragment = new MainFragment();
+		mainFragment = new MainFragment();
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		Log.i("MainActivity","Setting fragment");
-		ft.add(R.id.main_fragment, fragment);
-		ft.commit();
+		Log.i("MainActivity","Setting main fragment");
+		ft.add(R.id.main_fragment, mainFragment,"mainFragment");
+		if(findViewById(R.id.detail_fragment) != null){
+			// two frames layout
+			Log.i("MainActivity","Setting info fragment");
+			DisplayTranslation displayTranslation = new DisplayTranslation();
+			ft.add(R.id.detail_fragment, displayTranslation,"displayFragment");
+		}
 
+		ft.commit();
 	}
 
 
@@ -113,6 +125,42 @@ public class MainActivity extends SherlockFragmentActivity {
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 	}
+
+
+
+	@Override
+	public void onTranslationSelected(int index) {
+		// TODO Auto-generated method stub
+		Log.i("MainActivity","Item clicked: ");
+		
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		if(findViewById(R.id.detail_fragment) != null){
+			// two frames layout
+			Log.i("MainActivity","Setting info fragment");
+			DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
+			fragment.updateTranslation(getTranslationCallBack(index));
+
+			return;
+		}
+		DisplayTranslation displayFragment = new DisplayTranslation();
+		Bundle bundle = new Bundle();
+		bundle.putInt("TranslationId", index);
+		displayFragment.setArguments(bundle);
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.replace(R.id.main_fragment, displayFragment);
+		ft.addToBackStack(null);
+		ft.commit();
+		
+	}
+	
+	public Translation getTranslationCallBack(int index){
+		if(mAdapter != null){
+			return mAdapter.getItem(index);
+		}
+		return null;
+
+	}
+	
 
 	/*
 	 * private DownloadProgressDialog dialog = null;
