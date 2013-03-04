@@ -17,13 +17,13 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-import org.json.JSONArray;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
@@ -71,7 +71,11 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         SharedPreferences settings = context.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
         boolean validDictionary = settings.getBoolean("hasValidDictionary", false);
         String pathToDictionary = settings.getString("pathToDictionary", null);
-        
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean englishBool = sharedPrefs.getBoolean("language_english", false);
+        boolean frenchBool = sharedPrefs.getBoolean("language_french", false);        
+        boolean dutchBool = sharedPrefs.getBoolean("language_dutch", false);
+        boolean germanBool = sharedPrefs.getBoolean("language_german", false);
         List<Translation> translations = new ArrayList<Translation>();
         
         if(!validDictionary){
@@ -132,115 +136,49 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	    	    //Log.e("df", d.toString());
 	    	    String japanese_keb = d.get("japanese_keb");
 	    	    if(japanese_keb != null && japanese_keb.length()!=0 ){
-	    	    	JSONArray japan_keb= new JSONArray(japanese_keb);
-	    	    	if(japan_keb != null){
-		    	    	for( int j = 0; j< japan_keb.length(); j++){
-	    	    			String keb = japan_keb.getString(j);
-	    	    			translation.addJapKeb(keb);
-	    	    			
-		    	    	}
-	    	    	}
+	    	    	translation.parseJapaneseKeb(japanese_keb);
 	    	    }
 	    	    
 	    	    String japanese_reb = d.get("japanese_reb");
 	    	    if(japanese_reb != null && japanese_reb.length()!=0 ){
-	    	    	JSONArray japan_reb= new JSONArray(japanese_reb);
-	    	    	if(japan_reb != null){
-		    	    	for( int j = 0; j< japan_reb.length(); j++){
-	    	    			String reb = japan_reb.getString(j);
-	    	    			translation.addJapReb(reb);
-	    	    			//Log.e("ResultLoader", reb);
-		    	    	}
-	    	    	}
+	    	    	translation.parseJapaneseReb(japanese_reb);
 	    	    }
 	    	    
 	    	    String english = d.get("english");
 	    	    if(english != null && english.length()!=0 ){
-	    	    	JSONArray eng= new JSONArray(english);
-	    	    	if(eng != null){
-		    	    	for( int j = 0; j< eng.length(); j++){
-	    	    			if(!eng.isNull(j)){
-	    	    				List<String> sense = new ArrayList<String>();
-	    	    				JSONArray senses = eng.getJSONArray(j);
-	    	    				if(senses != null){
-		    	    				for(int k = 0; k < senses.length();k++  ){
-		    	    					String english_sense = senses.getString(k);
-		    	    					sense.add(english_sense);
-		    	    				}
-		    	    				translation.addEnglishSense(sense);
-	    	    				}
-	    	    			}
-		    	    	}
-	    	    	}
+	    	    	translation.parseEnglish(english);
 	    	    }
 	    	    
 	    	    String french = d.get("french");
 	    	    if(french != null && french.length()!=0 ){
-	    	    	JSONArray fr= new JSONArray(french);
-	    	    	if(fr != null){
-		    	    	for( int j = 0; j< fr.length(); j++){
-	    	    			if(!fr.isNull(j)){
-	    	    				List<String> sense = new ArrayList<String>();
-	    	    				JSONArray senses = fr.getJSONArray(j);
-	    	    				if(senses != null){
-		    	    				for(int k = 0; k < senses.length();k++  ){
-		    	    					String french_sense = senses.getString(k);
-		    	    					sense.add(french_sense);
-		    	    				}
-		    	    				translation.addFrenchSense(sense);
-	    	    				}
-	    	    			}
-		    	    	}
-	    	    	}
+	    	    	translation.parseFrench(french);
 	    	    }
 	    	    
 	    	    String dutch = d.get("dutch");
 	    	    if(dutch != null && dutch.length()!=0 ){
-	    	    	JSONArray dut= new JSONArray(dutch);
-	    	    	if(dut != null){
-		    	    	for( int j = 0; j< dut.length(); j++){
-	    	    			if(!dut.isNull(j)){
-	    	    				List<String> sense = new ArrayList<String>();
-	    	    				JSONArray senses = dut.getJSONArray(j);
-	    	    				if(senses != null){
-		    	    				for(int k = 0; k < senses.length();k++  ){
-		    	    					String dutch_sense = senses.getString(k);
-		    	    					sense.add(dutch_sense);
-		    	    				}
-		    	    				translation.addDutchSense(sense);
-	    	    				}
-	    	    			}
-		    	    	}
-	    	    	}
+	    	    	translation.parseDutch(dutch);
 	    	    } 	    	    
 	    	    
 	    	    String german = d.get("german");
 	    	    if(german != null && german.length()!=0 ){
-	    	    	JSONArray ger= new JSONArray(german);
-	    	    	if(ger != null){
-		    	    	for( int j = 0; j< ger.length(); j++){
-	    	    			if(!ger.isNull(j)){
-	    	    				List<String> sense = new ArrayList<String>();
-	    	    				JSONArray senses = ger.getJSONArray(j);
-	    	    				if(senses != null){
-		    	    				for(int k = 0; k < senses.length();k++  ){
-		    	    					String german_sense = senses.getString(k);
-		    	    					sense.add(german_sense);
-		    	    				}
-		    	    				translation.addGermanSense(sense);
-	    	    				}
-	    	    			}
-		    	    	}
-	    	    	}
+	    	    	translation.parseGerman(german);
 	    	    }
 	    	    
-	    	    translations.add(translation);
-
+	    	    if(
+	    	    	(englishBool && translation.getEnglishSense()!= null) || 
+	    	    	(dutchBool && translation.getDutchSense()!= null) || 
+	    	    	(germanBool && translation.getGermanSense()!= null) || 	
+	    	    	(frenchBool && translation.getFrenchSense()!= null) ||
+	    	    	(!englishBool && !dutchBool && !germanBool && !frenchBool && translation.getEnglishSense()!= null)
+	    	    ){
+	    	    	translations.add(translation);
+	    	    }
 	    	}
 	    	
     	}catch(Exception ex){
-    		System.out.println("vyjimka hledani: " + ex.toString());
+    		Log.e("ResultLoader","vyjimka hledani: " + ex.toString());
     	}
+
 		return translations.isEmpty()?null:translations;
 	}
 	

@@ -18,6 +18,7 @@ import android.view.View;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import cz.muni.fi.japanesedictionary.R;
+import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
 public class MainActivity extends SherlockFragmentActivity
@@ -37,7 +38,7 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	private MainFragment mainFragment;
 	private TranslationsAdapter mAdapter = null;
-	
+	private GlossaryReaderContract database = null;
 	
 	public void setAdapter(TranslationsAdapter _adapter){
 		mAdapter = _adapter;
@@ -48,6 +49,7 @@ public class MainActivity extends SherlockFragmentActivity
 		super.onCreate(savedInstanceState);
 		Log.i("MainActivity","Checking saved instance");
 		setContentView(R.layout.main_activity);
+		database = new GlossaryReaderContract(getApplicationContext());
 		if(savedInstanceState != null){
 			return ;
 		}
@@ -159,6 +161,10 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 		return null;
 
+	}
+	
+	public GlossaryReaderContract getDatabse(){
+		return database;
 	}
 	
 

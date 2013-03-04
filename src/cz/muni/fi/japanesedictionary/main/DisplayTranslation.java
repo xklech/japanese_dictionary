@@ -28,6 +28,8 @@ public class DisplayTranslation extends SherlockFragment {
 	OnCreateTranslationListener mCallbackTranslation;
 	Translation translation = null;
     LayoutInflater inflater = null;
+    DBAsyncTask saveTranslation = null;
+    
 	public interface OnCreateTranslationListener{
 		public Translation getTranslationCallBack(int index);
 	}
@@ -112,20 +114,12 @@ public class DisplayTranslation extends SherlockFragment {
 		TextView alternative = (TextView)getView().findViewById(R.id.translation_alternative);
         if(translation.getJapaneseReb() != null){
         	read.setText(translation.getJapaneseReb().get(0));
-        	/*int size_reb = translation.getJapaneseReb().size();
-        	if(size_reb > 1){
-        		StringBuilder strBuilder = new StringBuilder();
-        		for(int i = 1;i < size_reb;i++){
-        			strBuilder.append(translation.getJapaneseReb().get(i));
-        			if(i+1 < size_reb){
-        				strBuilder.append(", ");
-        			}
-        		}
-            	alternative.setText(strBuilder);
-               	((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.VISIBLE);
-        	}else{
-        		((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.GONE);
-        	}*/
+        	if(saveTranslation == null){
+        		saveTranslation = new DBAsyncTask(((MainActivity)getActivity()).getDatabse());
+        	}
+        	if(saveTranslation != null){
+        		saveTranslation.doInBackground(translation);
+        	}
         }
         if(translation.getJapaneseKeb() != null){
         	int size_keb = translation.getJapaneseKeb().size();
@@ -159,7 +153,7 @@ public class DisplayTranslation extends SherlockFragment {
     	if(inflater != null){
     		LinearLayout translations_container = (LinearLayout)getView().findViewById(R.id.translation_translation_container);
         	translations_container.removeAllViews();
-    		if(english && translation.getEnglishSense()!= null && translation.getEnglishSense().size() > 0){
+    		if((english || (!english && !french && !dutch && ! german)) && translation.getEnglishSense()!= null && translation.getEnglishSense().size() > 0){
 		        	View translation_language = inflater.inflate(R.layout.translation_language, null);
 	    			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
 	    			textView.setText(getString(R.string.language_english));

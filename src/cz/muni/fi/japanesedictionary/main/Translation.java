@@ -3,6 +3,11 @@ package cz.muni.fi.japanesedictionary.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import android.util.Log;
+
 public class Translation {
 	private List<String> jap_keb;
 	private List<String> jap_reb;
@@ -28,23 +33,41 @@ public class Translation {
 	}
 	
 	public void addJapKeb(String keb){
+		if(keb == null || keb.length() < 1){
+			return ;
+		}
 		jap_keb.add(keb);
 	}
 	
 	public void addJapReb(String reb){
+		if(reb == null || reb.length() < 1){
+			return ;
+		}
 		jap_reb.add(reb);
 	}
 	
 	public void addEnglishSense(List<String> sense){
+		if(sense == null || sense.size() < 1){
+			return ;
+		}
 		english.add(sense);
 	}
 	public void addFrenchSense(List<String> sense){
+		if(sense == null || sense.size() < 1){
+			return ;
+		}
 		french.add(sense);
 	}
 	public void addDutchSense(List<String> sense){
+		if(sense == null || sense.size() < 1){
+			return ;
+		}
 		dutch.add(sense);
 	}
 	public void addGermanSense(List<String> sense){
+		if(sense == null || sense.size() < 1){
+			return ;
+		}
 		german.add(sense);
 	}
 	
@@ -72,18 +95,155 @@ public class Translation {
 		return german.isEmpty()?null:german;
 	}
 	
-	public String getEnglishFirstSense(){
-		if(english.isEmpty()){
-			return null;
-		}
-		List<String> sense= english.get(0);
-		String ret="";
-		for(String trans: sense){
-			if(ret.length()>0){
-				ret.concat(", ");
-			}
-			ret.concat(trans);
-		}
-		return ret;
+	public void parseJapaneseKeb(String json_string){
+    	if(json_string != null){
+    		List<String> japKeb = null;
+        	JSONArray language_senses;
+    		try {
+    			language_senses = new JSONArray(json_string);
+    		} catch (JSONException e) {
+    			Log.w("Translation","getting parseJapaneseKeb()  initial expression failed: "+ e.toString());
+    			return ;
+    		}
+    		japKeb = this.parseOneSense(language_senses);
+	    	for(String str: japKeb){
+	    		this.addJapKeb(str);
+	    	}
+    	}
 	}
+	
+	public void parseJapaneseReb(String json_string){
+    	if(json_string != null){
+    		List<String> japReb = null;
+        	JSONArray language_senses;
+    		try {
+    			language_senses = new JSONArray(json_string);
+    		} catch (JSONException e) {
+    			Log.w("Translation","getting parseJapaneseReb()  initial expression failed: "+ e.toString());
+    			return ;
+    		}
+    		japReb = this.parseOneSense(language_senses);
+	    	for(String str: japReb){
+	    		this.addJapReb(str);
+	    	}
+    	}
+	}	
+	
+	private List<String> parseOneSense(JSONArray sense){
+		if(sense != null){
+			List<String> sense_translation = new ArrayList<String>();
+			for(int k = 0; k < sense.length();k++  ){
+				String english_sense = null;
+				try {
+					english_sense = sense.getString(k);
+					sense_translation.add(english_sense);
+				} catch (JSONException e) {
+					Log.w("Translation","getting parseOneSense() expression failed: "+ e.toString());
+					e.printStackTrace();
+				}
+			}
+			return sense_translation;
+		}
+		return null;
+	}
+	
+	public void parseEnglish(String json_string){
+    	if(json_string == null){
+    		return ;
+    	}
+    	JSONArray language_senses;
+		try {
+			language_senses = new JSONArray(json_string);
+		} catch (JSONException e) {
+			Log.w("Translation","getting parseEnglish()  initial expression failed: "+ e.toString());
+			return ;
+		}
+	
+    	for( int j = 0; j< language_senses.length(); j++){
+			if(!language_senses.isNull(j)){
+				List<String> sense;
+				try {
+					sense = parseOneSense(language_senses.getJSONArray(j));
+					this.addEnglishSense(sense);
+				} catch (JSONException e) {
+					Log.w("Translation","getting parseEnglish() expression failed: "+ e.toString());
+				}
+			}
+    	}
+	}
+	
+	public void parseDutch(String json_string){
+    	if(json_string == null){
+    		return ;
+    	}
+    	JSONArray language_senses;
+		try {
+			language_senses = new JSONArray(json_string);
+		} catch (JSONException e) {
+			Log.w("Translation","getting parseDutch()  initial expression failed: "+ e.toString());
+			return ;
+		}
+	
+    	for( int j = 0; j< language_senses.length(); j++){
+			if(!language_senses.isNull(j)){
+				List<String> sense;
+				try {
+					sense = parseOneSense(language_senses.getJSONArray(j));
+					this.addDutchSense(sense);
+				} catch (JSONException e) {
+					Log.w("Translation","getting parseDutch() expression failed: "+ e.toString());
+				}
+			}
+    	}
+	}	
+	
+	public void parseFrench(String json_string){
+    	if(json_string == null){
+    		return ;
+    	}
+    	JSONArray language_senses;
+		try {
+			language_senses = new JSONArray(json_string);
+		} catch (JSONException e) {
+			Log.w("Translation","getting parseFrench()  initial expression failed: "+ e.toString());
+			return ;
+		}
+	
+    	for( int j = 0; j< language_senses.length(); j++){
+			if(!language_senses.isNull(j)){
+				List<String> sense;
+				try {
+					sense = parseOneSense(language_senses.getJSONArray(j));
+					this.addFrenchSense(sense);
+				} catch (JSONException e) {
+					Log.w("Translation","getting parseFrench() expression failed: "+ e.toString());
+				}
+			}
+    	}
+	}	
+		
+	public void parseGerman(String json_string){
+    	if(json_string == null){
+    		return ;
+    	}
+    	JSONArray language_senses;
+		try {
+			language_senses = new JSONArray(json_string);
+		} catch (JSONException e) {
+			Log.w("Translation","getting parseGerman()  initial expression failed: "+ e.toString());
+			return ;
+		}
+	
+    	for( int j = 0; j< language_senses.length(); j++){
+			if(!language_senses.isNull(j)){
+				List<String> sense;
+				try {
+					sense = parseOneSense(language_senses.getJSONArray(j));
+					this.addGermanSense(sense);
+				} catch (JSONException e) {
+					Log.w("Translation","getting parseGerman() expression failed: "+ e.toString());
+				}
+			}
+    	}
+	}		
 }
