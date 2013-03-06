@@ -58,6 +58,7 @@
    <!-- Display Translation -->
    <string name="tramslation_unknown_translation">Unknown translation</string>
    <string name="tramslation_title">Entry detail</string>
-   
-   
+   <string name="tramslation_romaji">Romaji</string>  
+   <string name="tramslation_alternative">Alternative</string> 
+   <string name="tramslation_translation">Translation</string> 
 </resources>

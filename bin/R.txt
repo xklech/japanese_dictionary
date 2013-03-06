@@ -421,7 +421,10 @@ int string search_middle 0x7f0a0038
 int string search_translation 0x7f0a0021
 int string storno 0x7f0a001b
 int string title_activity_main 0x7f0a0010
+int string tramslation_alternative 0x7f0a003d
+int string tramslation_romaji 0x7f0a003c
 int string tramslation_title 0x7f0a003b
+int string tramslation_translation 0x7f0a003e
 int string tramslation_unknown_translation 0x7f0a003a
 int string unknown_last_update 0x7f0a0024
 int string updating_in_progress 0x7f0a0023

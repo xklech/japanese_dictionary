@@ -22,6 +22,7 @@
 	        android:textAppearance="?android:attr/textAppearanceSmall"
 	        android:textColor="@android:color/secondary_text_dark"
 	        android:layout_marginLeft="50dp"
+	        android:textIsSelectable="true"
 	        />
    	</LinearLayout>
 </LinearLayout>

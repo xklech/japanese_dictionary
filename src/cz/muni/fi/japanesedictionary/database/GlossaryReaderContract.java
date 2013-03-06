@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -83,16 +82,21 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 			values.put(GlossaryEntry.COLUMN_NAME_JAPANESE_REB, (new JSONArray(translation.getJapaneseReb())).toString());
 		}
 		if(translation.getDutchSense() != null && translation.getDutchSense().size() > 0){	
-			values.put(GlossaryEntry.COLUMN_NAME_DUTCH,(new JSONArray(translation.getDutchSense())).toString());
+			JSONArray sense = convertToJSON(translation.getDutchSense());
+			values.put(GlossaryEntry.COLUMN_NAME_DUTCH,sense.toString());
 		}
+		
 		if(translation.getEnglishSense() != null && translation.getEnglishSense().size() > 0){	
-			values.put(GlossaryEntry.COLUMN_NAME_ENGLISH, (new JSONArray(translation.getEnglishSense())).toString());
+			JSONArray sense = convertToJSON(translation.getEnglishSense());
+			values.put(GlossaryEntry.COLUMN_NAME_ENGLISH, sense.toString());
 		}
 		if(translation.getFrenchSense() != null && translation.getFrenchSense().size() > 0){	
-			values.put(GlossaryEntry.COLUMN_NAME_FRENCH, (new JSONArray(translation.getFrenchSense())).toString());
+			JSONArray sense = convertToJSON(translation.getFrenchSense());
+			values.put(GlossaryEntry.COLUMN_NAME_FRENCH, sense.toString());
 		}
 		if(translation.getGermanSense() != null && translation.getGermanSense().size() > 0){
-			values.put(GlossaryEntry.COLUMN_NAME_GERMAN, (new JSONArray(translation.getGermanSense())).toString());
+			JSONArray sense = convertToJSON(translation.getGermanSense());
+			values.put(GlossaryEntry.COLUMN_NAME_GERMAN, sense.toString());
 		}
 		Log.i("GlossaryReaderContract","Save translation values: "+values.toString());
 		long returnedId = db.insert(GlossaryEntry.TABLE_NAME,null, values);
@@ -125,7 +129,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	            null, 	//selection args
 	            null, 	//group
 	            null, 	//having
-	            "id DESC", 	//order by - ordered by id descendant
+	            "_id DESC", 	//order by - ordered by id descendant
 	            "10");	//limit - 10 last records 
 	    if (cursor == null){
 	    	return null;
@@ -139,7 +143,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	    	String japaneseKeb = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntry.COLUMN_NAME_JAPANESE_KEB));
 	    	String japaneseReb = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntry.COLUMN_NAME_JAPANESE_REB));
 	    	String english = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntry.COLUMN_NAME_ENGLISH));
-	    	String french = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntry.COLUMN_NAME_ENGLISH));
+	    	String french = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntry.COLUMN_NAME_FRENCH));
 	    	String dutch = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntry.COLUMN_NAME_DUTCH));
 	    	String german = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntry.COLUMN_NAME_GERMAN));   
 	    	
@@ -155,6 +159,23 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 
     	cursor.close();
 	    return (translationsReturn == null || translationsReturn.size()<1)? null : translationsReturn;
+	}
+	
+	/**
+	 * Taks list of senses and convert it to ona JSONArray
+	 * 
+	 * @param senses - List of senses
+	 * @return coverted JSONArray
+	 */
+	
+	private JSONArray convertToJSON(List<List<String>> senses){
+		JSONArray senseJSON = new JSONArray();
+		for(List<String> oneSense : senses){
+			JSONArray innerJSON = new JSONArray(oneSense);
+			senseJSON.put(innerJSON);
+		}
+		return senseJSON;
+		
 	}
 
 	

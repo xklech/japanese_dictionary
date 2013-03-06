@@ -1152,7 +1152,10 @@ containing a value of this type.
         public static final int search_translation=0x7f0a0021;
         public static final int storno=0x7f0a001b;
         public static final int title_activity_main=0x7f0a0010;
+        public static final int tramslation_alternative=0x7f0a003d;
+        public static final int tramslation_romaji=0x7f0a003c;
         public static final int tramslation_title=0x7f0a003b;
+        public static final int tramslation_translation=0x7f0a003e;
         /**  Display Translation 
  Display Translation 
          */

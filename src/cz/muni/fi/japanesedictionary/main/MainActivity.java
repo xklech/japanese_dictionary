@@ -68,7 +68,11 @@ public class MainActivity extends SherlockFragmentActivity
 		ft.commit();
 	}
 
-
+	@Override
+	protected void onDestroy() {
+		database.close();
+		super.onDestroy();
+	}
 
 	public static boolean canWriteExternalStorage() {
 		return Environment.getExternalStorageState().equals(

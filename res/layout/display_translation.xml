@@ -22,6 +22,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/secondary_text_dark"
         android:layout_marginLeft="20dp"
+        android:textIsSelectable="true"
         />
     
     <TextView 
@@ -31,6 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/primary_text_dark"
         android:layout_marginLeft="20dp"
+        android:textIsSelectable="true"
         />
 	</LinearLayout>
 		<View
@@ -48,7 +50,7 @@
 	        android:gravity="right"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
 	        android:textColor="@android:color/secondary_text_dark"
-	        android:text="Romaji"
+	        android:text="@string/tramslation_romaji"
 	        android:layout_gravity="right"
 	        android:layout_marginLeft="50dp" />
 	    <TextView 
@@ -57,7 +59,8 @@
 	        android:id="@+id/translation_romaji"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
 	        android:textColor="@android:color/primary_text_dark"
-	        android:text="Romaji Text"
+	        android:text="@string/tramslation_romaji"
+	        android:textIsSelectable="true"
 	        android:layout_marginLeft="10dp"
 	        />
    	</LinearLayout>
@@ -77,7 +80,7 @@
 	        android:gravity="right"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
 	        android:textColor="@android:color/secondary_text_dark"
-	        android:text="Alternative"
+	        android:text="@string/tramslation_alternative"
 	        android:layout_marginLeft="50dp"
 	        />
 	    <TextView 
@@ -86,8 +89,8 @@
 	        android:id="@+id/translation_alternative"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
 	        android:textColor="@android:color/primary_text_dark"
-	        android:text="alternative, alternative 2"
 	        android:layout_marginLeft="10dp"
+	        android:textIsSelectable="true"
 	        />
    	</LinearLayout>
 		<View
@@ -105,7 +108,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/primary_text_dark"
-        android:text="Translation"
+        android:text="@string/tramslation_translation"
         android:layout_marginLeft="20dp"
         />
 	</LinearLayout>

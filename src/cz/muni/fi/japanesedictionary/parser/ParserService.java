@@ -212,10 +212,7 @@ public class ParserService extends IntentService{
         	downloadedFile.delete();
         	Log.i("ParserService", "Parsing dictionary - downloaded file deleted");
         	mNotificationView.setTextViewText(R.id.notification_text, getString(R.string.dictionary_download_complete));
-        	mNotificationView.setProgressBar(R.id.ntification_progressBar, 0, 0, false);
-        	mNotification.contentView=mNotificationView;
-        	
-        	
+        	mNotificationView.setProgressBar(R.id.ntification_progressBar, 0, 0, true);       	
         	mNotification.contentView = mNotificationView;
      
     		Intent intent = new Intent(getApplicationContext(), MainActivity.class);

@@ -26,11 +26,12 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
+import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
 public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	private Context context;
-	private String expression;
+	private String expression = null;
 	private String part;
 	private IndexSearcher searcher;
 
@@ -38,7 +39,6 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	
 	public ResultLoader(Context cont,String expr,String _part) {
 		super(cont);
-		expression = expr;
 		context = cont;
 		part = _part;
 		Log.e("ResultLoader", "part constructor: "+part);
@@ -91,12 +91,20 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         	Log.e("ResultLoader", "Cant read dictionary directory");
         	return null;
         }
-        if(expression == null || expression.length() == 0){
+        if(expression == null){
+        	//spusteni bez vyhledani
+        	Log.i("ResultLoader","First run - last 10 translations: "+expression);
+        	GlossaryReaderContract database = new GlossaryReaderContract(context);
+        	translations = database.getLastTenTranslations();
+        	database.close();
+        	return translations;
+
+
+        }
+        if(expression.length() < 1){
         	Log.i("ResultLoader", "No expression to translate");
         	return null;
         }
-        Log.e("fragment", "maam");
-        
         
 		
     	Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
