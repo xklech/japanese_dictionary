@@ -27,6 +27,7 @@
     <string name="updating_in_progress">Probíhá aktualizace slovníku, prosím čekejte.</string>
     <string name="unknown_last_update">Poslední aktualizace neznámá</string>
     <string name="last_update">Poslední aktualizace:</string>
+    <string name="actionbar_search">Hledat</string>
     <!-- Languages -->
     <string name="language_english">Anglciky</string>
     <string name="language_french">Francouzsky</string>

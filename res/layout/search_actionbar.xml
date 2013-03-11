@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:focusable="true"
-    android:orientation="horizontal"
- 
-    android:background="?attr/actionBarItemBackground"
-    style="?attr/actionButtonStyle" >
-	<RelativeLayout
+<RelativeLayout
+	 xmlns:android="http://schemas.android.com/apk/res/android"
+	 android:focusable="true"
 	 android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:layout_marginLeft="32dp" 
-     android:layout_marginTop="4dp"  
-	     >
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:layout_marginLeft="32dp" 
+    android:layout_marginTop="4dp" 
+    android:background="?attr/actionBarItemBackground"
+    style="?attr/actionButtonStyle" 
+     >
     <EditText
         android:id="@+id/search"
         android:layout_width="match_parent"
@@ -33,16 +29,5 @@
         android:layout_alignRight="@id/search"
         android:layout_marginRight="12dp"
         android:background="@drawable/delete" />
-    </RelativeLayout>
+ </RelativeLayout>
     
-    <ImageButton android:id="@+id/button"
-        android:background="@drawable/ic_launcher_settings"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginRight="32dp"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true" 
-        android:contentDescription="@string/preferences"
-        android:onClick="showPreferences"/>
-   
-</LinearLayout>

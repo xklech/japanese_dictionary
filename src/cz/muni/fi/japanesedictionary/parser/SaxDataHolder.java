@@ -21,7 +21,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import cz.muni.fi.japanesedictionary.R;
@@ -29,40 +33,49 @@ import cz.muni.fi.japanesedictionary.R;
 
 public class SaxDataHolder extends DefaultHandler{
 	
-	NotificationManager mNotifyManager = null;
-	Notification mNotification = null;
-	RemoteViews mNotificationView = null;
+	private NotificationManager mNotifyManager = null;
+	private Notification mNotification = null;
+	private RemoteViews mNotificationView = null;
 	
-	IndexWriter w;
-	Document doc;
-	boolean japanese_keb;
-	boolean japanese_reb;
-	boolean english;
-	boolean french;
-	boolean dutch;
-	boolean german;
-	long startTime;
+	private BroadcastReceiver mReceiverDone= new BroadcastReceiver() {
+		  @Override public void onReceive(Context context, Intent intent) { 
+			  //		  intent can contain anydata 
+			  canceled = true;
+		  } };
 	
-	JSONArray japanese_rebJSON;
-	JSONArray japanese_kebJSON;
+	private boolean canceled = false;
+		  
+	private IndexWriter w;
+	private Document doc;
+	private boolean japanese_keb;
+	private boolean japanese_reb;
+	private boolean english;
+	private boolean french;
+	private boolean dutch;
+	private boolean german;
+	private long startTime;
 	
-	JSONArray englishJSON;
-	JSONArray englishJSONSense;
+	private JSONArray japanese_rebJSON;
+	private JSONArray japanese_kebJSON;
 	
-	JSONArray frenchJSON;
-	JSONArray frenchJSONSense;	
+	private JSONArray englishJSON;
+	private JSONArray englishJSONSense;
 	
-	JSONArray dutchJSON;
-	JSONArray dutchJSONSense;	
+	private JSONArray frenchJSON;
+	private JSONArray frenchJSONSense;	
 	
-	JSONArray germanJSON;
-	JSONArray germanJSONSense;
+	private JSONArray dutchJSON;
+	private JSONArray dutchJSONSense;	
+	
+	private JSONArray germanJSON;
+	private JSONArray germanJSONSense;
 	
 	
-	Context context;
-	int i = 0;
-	int perc = 0;
-	int percSave = 0;
+	
+	private Context context;
+	private int i = 0;
+	private int perc = 0;
+	private int percSave = 0;
 	public static final int ENTRIES = 170000;
 	public SaxDataHolder(File file,Context appContext,NotificationManager nM,
 			Notification notif,RemoteViews rV) throws IOException,SAXException{
@@ -87,39 +100,43 @@ public class SaxDataHolder extends DefaultHandler{
 	}
 	
 	
+	
 	public void startElement(String uri, String localName,String qName, 
             Attributes attributes) throws SAXException {		
-			if("entry".equals(qName)){
-				//System.out.println("Entry "+ (++i));
-				doc = new Document();
-				englishJSONSense = new JSONArray();
-				frenchJSONSense = new JSONArray();
-				dutchJSONSense = new JSONArray();
-				germanJSONSense = new JSONArray();
-				japanese_rebJSON = new JSONArray();
-				japanese_kebJSON = new JSONArray();
-			}else if("reb".equals(qName)){
-				japanese_reb = true;
-			}else if("keb".equals(qName)){
-				japanese_keb = true;
-			}else if("sense".equals(qName)){
-				
-				englishJSON = new JSONArray();
-				frenchJSON = new JSONArray();
-				dutchJSON = new JSONArray();
-				germanJSON = new JSONArray();
-			}else if("gloss".equals(qName)){
-				if("eng".equals(attributes.getValue("xml:lang"))){
-					//english
-					english = true;
-				}else if("fre".equals(attributes.getValue("xml:lang"))){
-					french = true;
-				}else if("dut".equals(attributes.getValue("xml:lang"))){
-					dutch = true;
-				}else if("ger".equals(attributes.getValue("xml:lang"))){
-					german = true;
-				}
+		if(canceled){
+			throw new SAXException("SAX terminated due to ParserService end.");
+		}
+		if("entry".equals(qName)){
+			//System.out.println("Entry "+ (++i));
+			doc = new Document();
+			englishJSONSense = new JSONArray();
+			frenchJSONSense = new JSONArray();
+			dutchJSONSense = new JSONArray();
+			germanJSONSense = new JSONArray();
+			japanese_rebJSON = new JSONArray();
+			japanese_kebJSON = new JSONArray();
+		}else if("reb".equals(qName)){
+			japanese_reb = true;
+		}else if("keb".equals(qName)){
+			japanese_keb = true;
+		}else if("sense".equals(qName)){
+			
+			englishJSON = new JSONArray();
+			frenchJSON = new JSONArray();
+			dutchJSON = new JSONArray();
+			germanJSON = new JSONArray();
+		}else if("gloss".equals(qName)){
+			if("eng".equals(attributes.getValue("xml:lang"))){
+				//english
+				english = true;
+			}else if("fre".equals(attributes.getValue("xml:lang"))){
+				french = true;
+			}else if("dut".equals(attributes.getValue("xml:lang"))){
+				dutch = true;
+			}else if("ger".equals(attributes.getValue("xml:lang"))){
+				german = true;
 			}
+		}
 			
     }
 	
@@ -128,13 +145,13 @@ public class SaxDataHolder extends DefaultHandler{
 			doc.add(new Field("japanese","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
 			//System.out.println(new String(ch,start,length));
 			if(japanese_keb){
-				japanese_kebJSON.put(new String(ch,start,length));				
+				japanese_kebJSON.put(new String(ch,start,length));	
+				japanese_keb = false;
 			}
 			if(japanese_reb){
-				japanese_rebJSON.put(new String(ch,start,length));				
+				japanese_rebJSON.put(new String(ch,start,length));		
+				japanese_reb = false;
 			}
-			japanese_keb = false;
-			japanese_reb = false;
 		}else if(english){
 			englishJSON.put(new String(ch,start,length));
 			//doc.add(new Field("english",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
@@ -236,10 +253,14 @@ public class SaxDataHolder extends DefaultHandler{
 	
 	public void startDocument(){
 		Log.i("SaxDataHolder", "Start of document");
+		LocalBroadcastManager.getInstance(context).registerReceiver(
+				mReceiverDone, new IntentFilter("serviceCanceled"));
 	}
 	
 	public void endDocument(){ 
 		Log.i("SaxDataHolder", "End of document");
+		LocalBroadcastManager.getInstance(context).unregisterReceiver(
+				mReceiverDone);
 			try {
 				w.close();
 			} catch (IOException e) {

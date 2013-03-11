@@ -4,7 +4,13 @@
         android:id="@+id/menu_search"
         android:actionLayout="@layout/search_actionbar"
         android:showAsAction="always"
-        android:title="Search"/>
-
+        android:title="@string/actionbar_search"
+        />
+	<item 
+	    android:title="@string/menu_setting"
+	    android:showAsAction="ifRoom"
+	    android:id="@+id/settings"
+	    android:icon="@android:drawable/ic_menu_preferences"
+	    />
 
 </menu>

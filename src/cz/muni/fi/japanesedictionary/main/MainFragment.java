@@ -1,6 +1,7 @@
 package cz.muni.fi.japanesedictionary.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -193,6 +194,20 @@ public class MainFragment extends SherlockFragment implements
 		
 		super.onCreateOptionsMenu(menu, inflater);
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.settings){
+			Log.i("MainActivity", "Lauching preference Activity");
+			Intent intent = new Intent(getActivity().getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		}
+		
+		return super.onOptionsItemSelected(item);
+	}
+	
 
 	@Override
 	public void onTabChanged(String tabId) {

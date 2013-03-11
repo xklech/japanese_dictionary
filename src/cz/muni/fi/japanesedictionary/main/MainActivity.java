@@ -24,8 +24,7 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
 public class MainActivity extends SherlockFragmentActivity
 	implements ResultFragmentList.OnTranslationSelectedListener,
 				DisplayTranslation.OnCreateTranslationListener{
-
-	public static final String DICTIONARY_PATH = "http://index.aerolines.cz/JMdict.gz";
+	
 	public static final String PARSER_SERVICE = "cz.muni.fi.japanesedictionary.parser.ParserService";
 	public static final String SEARCH_PREFERENCES = "cz.muni.fi.japanesedictionary.main.search_preferences";
 	public static final String SEARCH_TEXT = "cz.muni.fi.japanesedictionary.edit_text_searched";

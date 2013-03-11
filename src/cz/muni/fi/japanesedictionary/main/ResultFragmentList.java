@@ -92,15 +92,8 @@ public class ResultFragmentList extends SherlockListFragment implements
 			}
 		}
 
-		// We have a menu item to show in action bar.
-		// setHasOptionsMenu(true);
-
 		// Start out with a progress indicator.
 		setListShown(false);
-
-		// Give some text to display if there is no data. In a real
-		// application this would come from a resource.
-
 		SharedPreferences settings = getActivity().getSharedPreferences(
 				ParserService.DICTIONARY_PREFERENCES, 0);
 		boolean validDictionary = settings.getBoolean("hasValidDictionary",

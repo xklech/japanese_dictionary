@@ -4,14 +4,15 @@
     <string name="title_activity_main">Japanese dictionary</string>
     
     <!-- ParserService -->
-    <string name="dictionary_download_title">Downloading dictionary</string>
+    <string name="dictionary_download_title">Downloading japanese dictionary</string>
     <string name="dictionary_download_in_progress">Download in progress</string>
+    <string name="dictionary_kanji_download_title">Downloading kanji dictionary</string>
     <string name="dictionary_download_complete">Download complete</string>
     <string name="dictionary_parsing_in_progress">Parsing file in progress.</string>
     <string name="dictionary_download_interrupted">Downloading interrupted</string>
     
     <!-- MainActivity -->
-    <string name="parsing_downloaded_dictionary">Parsing downloaded dictionary</string>
+    <string name="parsing_downloaded_dictionary">Parsing downloaded dictionaries</string>
     <string name="no_dictionary_found">No dictionary found</string>
     <string name="nothing_found">Nothing found</string>
     <string name="download_dictionary_question">Do you want to download dictionary? \nInternet connection required.\nSize: 11 MB</string>
@@ -27,6 +28,7 @@
     <string name="updating_in_progress">Updating dictionary in progress, please wait</string>
     <string name="unknown_last_update">Last update unknown</string>
     <string name="last_update">Last update: </string>
+    <string name="actionbar_search">Search</string>
     
     <!-- Languages -->
     <string name="language_english">English</string>
