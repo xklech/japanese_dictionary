@@ -23,6 +23,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.japanesedictionary.entity.Translation;
 
 public class ResultFragmentList extends SherlockListFragment implements
 		LoaderManager.LoaderCallbacks<List<Translation>> {

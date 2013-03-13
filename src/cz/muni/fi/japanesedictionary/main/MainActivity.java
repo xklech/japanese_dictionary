@@ -20,6 +20,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.japanesedictionary.entity.Translation;
 
 public class MainActivity extends SherlockFragmentActivity
 	implements ResultFragmentList.OnTranslationSelectedListener,

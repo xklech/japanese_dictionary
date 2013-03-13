@@ -63,4 +63,5 @@
    <string name="tramslation_romaji">Romaji</string>  
    <string name="tramslation_alternative">Alternative</string> 
    <string name="tramslation_translation">Translation</string> 
+   <string name="tramslation_kanji">Kanji</string> 
 </resources>

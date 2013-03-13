@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import cz.muni.fi.japanesedictionary.R;
+import cz.muni.japanesedictionary.entity.Translation;
 
 public class TranslationsAdapter extends ArrayAdapter<Translation>{
     

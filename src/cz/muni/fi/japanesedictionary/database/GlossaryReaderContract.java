@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
-import cz.muni.fi.japanesedictionary.main.Translation;
+import cz.muni.japanesedictionary.entity.Translation;
 
 public class GlossaryReaderContract extends SQLiteOpenHelper {
 	

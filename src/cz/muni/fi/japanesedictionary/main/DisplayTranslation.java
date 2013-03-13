@@ -1,6 +1,7 @@
 package cz.muni.fi.japanesedictionary.main;
 
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,14 +23,17 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
+import cz.muni.fi.japanesedictionary.database.DBAsyncTask;
+import cz.muni.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.japanesedictionary.entity.Translation;
 
 public class DisplayTranslation extends SherlockFragment {
 	
 	OnCreateTranslationListener mCallbackTranslation;
 	Translation translation = null;
+	Map<String, JapaneseCharacter> characters = null;
     LayoutInflater inflater = null;
-    DBAsyncTask saveTranslation = null;
-    
+    Map<String,List<JapaneseCharacter>> mapOfJapaneseCharacters;			
 	public interface OnCreateTranslationListener{
 		public Translation getTranslationCallBack(int index);
 	}
@@ -101,6 +105,7 @@ public class DisplayTranslation extends SherlockFragment {
 	    }
 	}
 	
+	
 	public void updateTranslation(){
 		Log.w("DisplayTranslation","translation: "+translation);
 		
@@ -114,11 +119,9 @@ public class DisplayTranslation extends SherlockFragment {
 		TextView alternative = (TextView)getView().findViewById(R.id.translation_alternative);
         if(translation.getJapaneseReb() != null){
         	read.setText(translation.getJapaneseReb().get(0));
-        	if(saveTranslation == null){
-        		saveTranslation = new DBAsyncTask(((MainActivity)getActivity()).getDatabse());
-        	}
+        	DBAsyncTask saveTranslation   = new DBAsyncTask(((MainActivity)getActivity()).getDatabse());
         	if(saveTranslation != null){
-        		saveTranslation.doInBackground(translation);
+        		saveTranslation.execute(translation);
         	}
         }
         if(translation.getJapaneseKeb() != null){
@@ -137,9 +140,10 @@ public class DisplayTranslation extends SherlockFragment {
         		((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.GONE);
         	}
         }
-        
-        if(translation.getJapaneseKeb() != null){
-        	write.setText(translation.getJapaneseKeb().get(0));
+        String writeCharacters = null;
+        if(translation.getJapaneseKeb() != null && translation.getJapaneseKeb().size() > 0){
+        	writeCharacters = translation.getJapaneseKeb().get(0);
+        	write.setText(writeCharacters);
         	write.setVisibility(View.VISIBLE);
         }else{
         	write.setVisibility(View.GONE);
@@ -250,9 +254,51 @@ public class DisplayTranslation extends SherlockFragment {
 		        		}
 		        	}
 	        }
+	        
+	        if(writeCharacters != null){
+	        	// write single characters
+	        	if(writeCharacters.length() > 0){
+	        		CharacterLoader charLoader  = new CharacterLoader(getActivity().getApplicationContext(),this);
+	        		charLoader.execute(writeCharacters);
+	        	}
+	        }
+	        
+	        
     	}else{
     		Log.e("DisplayTranslation", "inflater null");
     	}        
 	}
 	
+	public void displayCharacters(){
+		System.out.println("displaying characters: " + characters);
+	}
+	
+	
+	public void setMapOfJapaneseCharacters(Map<String,List<JapaneseCharacter>> _mapOfJapaneseCharacters){
+		mapOfJapaneseCharacters = _mapOfJapaneseCharacters;
+	}
+	
+    /*public static class DisplayTranslationHandler extends Handler {
+        private final WeakReference<DisplayTranslation> mDisplayTranslation; 
+
+        DisplayTranslationHandler(DisplayTranslation displayTranslation) {
+        	mDisplayTranslation = new WeakReference<DisplayTranslation>(displayTranslation);
+        }
+        @Override
+        public void handleMessage(Message msg)
+        {d
+        	DisplayTranslation displayTranslationFragment = mDisplayTranslation.get();
+             if (displayTranslationFragment != null) { 
+            	 displayTranslationFragment.displayCharacters();
+             }
+        }
+    }*/
+
+	public void setCharacters(Map<String, JapaneseCharacter> characters) {
+		this.characters = characters;
+	}
+	
+    
+    
+    
 }

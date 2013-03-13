@@ -28,6 +28,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.japanesedictionary.entity.Translation;
 
 public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	private Context context;

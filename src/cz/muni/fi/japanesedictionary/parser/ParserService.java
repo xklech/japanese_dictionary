@@ -346,9 +346,13 @@ public class ParserService extends IntentService{
             complete = true;
             
             if(renameFolder){
+            	Log.i("ParserService", "Parsing dictionary - rename folders");
             	File directory = new File(indexFile);
             	deleteDirectory(directory);
-            	file.renameTo(directory);
+            	if(file.renameTo(directory)){
+            		Log.i("ParserService", "Parsing dictionary - folder renamed");
+            		file = directory;
+            	}
             }
             
     		return file.getAbsolutePath();
@@ -424,9 +428,14 @@ public class ParserService extends IntentService{
             complete = true;
             
             if(renameFolder){
+            	Log.i("ParserService", "Parsing KanjiDict - rename folders");
             	File directory = new File(indexFile);
             	deleteDirectory(directory);
-            	file.renameTo(directory);
+            	if(file.renameTo(directory)){
+            		Log.i("ParserService", "Parsing KanjiDict - folder renamed");
+            		file = directory;
+            	}
+            	
             }
             
     		return file.getAbsolutePath();
@@ -448,6 +457,8 @@ public class ParserService extends IntentService{
         SharedPreferences settings = getSharedPreferences(DICTIONARY_PREFERENCES, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("hasValidDictionary", true);
+		Log.i("ParserService", "Dictionary path: "+dictionaryPath);
+		Log.i("ParserService", "KanjiDict path: "+kanjiDictPath);
         editor.putString("pathToDictionary", dictionaryPath);     
         editor.putBoolean("hasValidKanjiDictionary", true);
         editor.putString("pathToKanjiDictionary", kanjiDictPath);  

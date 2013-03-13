@@ -78,7 +78,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	private JSONObject valueDicRef;
 	private String dicRefKey;
 	private JSONArray valueRmGroupJaOn;
-	private JSONArray valueRMGroupJaKun;
+	private JSONArray valueRmGroupJaKun;
 	private JSONArray valueMeaningEnglish;
 	private JSONArray valueMeaningFrench;
 	/*
@@ -93,7 +93,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			Notification notif,RemoteViews rV) throws IOException,SAXException{
         
 		if(file == null){
-			Log.e("SaxDataHolder", "SaxDataHolder - dictionary directory is null");
+			Log.e("SaxDataHolderKanjiDict", "SaxDataHolderKanjiDict - dictionary directory is null");
 			throw new IllegalArgumentException("SaxParser: dictiona< ry directory is null");
 		}
 		context = appContext;
@@ -107,7 +107,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 		mNotifyManager = nM;
 		mNotification = notif;
 		mNotificationView = rV;
-		Log.i("SaxDataHolder", "SaxDataHolderKanjiDict created");
+		Log.i("SaxDataHolderKanjiDict", "SaxDataHolderKanjiDict created");
 	}
 	
 	
@@ -129,7 +129,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			doc = new Document();
 			valueDicRef = new JSONObject();
 			valueRmGroupJaOn = new JSONArray();
-			valueRMGroupJaKun = new JSONArray();
+			valueRmGroupJaKun = new JSONArray();
 			valueMeaningEnglish = new JSONArray();
 			valueMeaningFrench = new JSONArray();
 			/*
@@ -159,7 +159,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 				rmGroupJaKun = true;
 			}
 		}else if("meaning".equals(qName)){
-			if("en".equals(attributes.getValue("m_lang"))){
+			if(attributes.getValue("m_lang") == null){
 				//english
 				meaningEnglish = true;
 			}else if("fr".equals(attributes.getValue("m_lang"))){
@@ -180,7 +180,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
 		if(literal){
-			doc.add(new Field("literal","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.YES, Index.ANALYZED));
+			doc.add(new Field("literal",new String(ch,start,length),Field.Store.YES, Index.ANALYZED));
 			literal = false;
 		}else if(radicalClassic){
 				String value = tryParseNumber(new String(ch,start,length));
@@ -217,7 +217,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			valueRmGroupJaOn.put(new String(ch,start,length));
 			rmGroupJaOn = false;
 		}else if(rmGroupJaKun){
-			valueRMGroupJaKun.put(new String(ch,start,length));
+			valueRmGroupJaKun.put(new String(ch,start,length));
 			rmGroupJaKun = false;
 		}else if(nanori){
 			valueNanori.put(new String(ch,start,length));
@@ -249,8 +249,8 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			if(valueRmGroupJaOn.length() > 0){
 				doc.add(new Field("rmGroupJaOn",valueRmGroupJaOn.toString(),Field.Store.YES,Index.NO));
 			}
-			if(valueRMGroupJaKun.length() > 0){
-				doc.add(new Field("rmGroupJaKun",valueRMGroupJaKun.toString(),Field.Store.YES,Index.NO));
+			if(valueRmGroupJaKun.length() > 0){
+				doc.add(new Field("rmGroupJaKun",valueRmGroupJaKun.toString(),Field.Store.YES,Index.NO));
 			}
 			if(valueMeaningEnglish.length() > 0){
 				doc.add(new Field("meaningEnglish",valueMeaningEnglish.toString(),Field.Store.YES,Index.NO));
@@ -270,8 +270,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			if(valueNanori.length() > 0){
 				doc.add(new Field("nanori",valueNanori.toString(),Field.Store.YES,Index.NO));
 			}
-			
-			System.out.println(doc);
+
 			try {
 				i++;
 				//System.out.println(i);
@@ -282,7 +281,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
                 if(perc < persPub){
                 	if(percSave + 4 < persPub){
                 		w.commit();
-                		Log.i("SaxDataHolder", "SaxDataHolder progress saved - " + persPub + " %");
+                		Log.i("SaxDataHolderKanjiDict", "SaxDataHolder progress saved - " + persPub + " %");
                 		percSave = persPub;
                 	}
                 	
