@@ -287,6 +287,7 @@ int id edit_query 0x7f040027
 int id homeAsUp 0x7f040006
 int id listMode 0x7f040002
 int id normal 0x7f040001
+int id results_fragment_container 0x7f040033
 int id showCustom 0x7f040008
 int id showHome 0x7f040005
 int id showTitle 0x7f040007
@@ -317,8 +318,9 @@ int layout abs__screen_simple_overlay_action_mode 0x7f030013
 int layout abs__search_dropdown_item_icons_2line 0x7f030014
 int layout abs__search_view 0x7f030015
 int layout abs__simple_dropdown_hint 0x7f030016
-int layout sherlock_spinner_dropdown_item 0x7f030017
-int layout sherlock_spinner_item 0x7f030018
+int layout results_fragment 0x7f030017
+int layout sherlock_spinner_dropdown_item 0x7f030018
+int layout sherlock_spinner_item 0x7f030019
 int string abs__action_bar_home_description 0x7f090000
 int string abs__action_bar_up_description 0x7f090001
 int string abs__action_menu_overflow_description 0x7f090002

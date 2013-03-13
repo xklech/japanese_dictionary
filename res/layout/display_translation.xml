@@ -59,7 +59,6 @@
 	        android:id="@+id/translation_romaji"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
 	        android:textColor="@android:color/primary_text_dark"
-	        android:text="@string/tramslation_romaji"
 	        android:textIsSelectable="true"
 	        android:layout_marginLeft="10dp"
 	        />
@@ -123,26 +122,33 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="1dp"
 		    android:background="@android:color/darker_gray"/>
-	<LinearLayout 
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="#303030"
-	    >
-    <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/primary_text_dark"
-        android:text="@string/tramslation_kanji"
-        android:layout_marginLeft="20dp"
-        />
-	</LinearLayout>
+   	<LinearLayout 
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content"
+   	    android:id="@+id/translation_kanji_container"
+   	    android:orientation="vertical"
+   	    >
 		<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:id="@+id/translation_kanji_container"
-	    >
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#303030"
+		    >
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textColor="@android:color/primary_text_dark"
+	        android:text="@string/tramslation_kanji"
+	        android:layout_marginLeft="20dp"
+	        />
+		</LinearLayout>
+			<LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:id="@+id/translation_kanji_meanings_container"
+		    >
+	   	</LinearLayout>
    	</LinearLayout>
 </LinearLayout>
 </ScrollView>

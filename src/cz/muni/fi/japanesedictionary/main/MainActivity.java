@@ -20,6 +20,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.japanesedictionary.entity.Translation;
 
 public class MainActivity extends SherlockFragmentActivity
@@ -136,7 +137,6 @@ public class MainActivity extends SherlockFragmentActivity
 
 	@Override
 	public void onTranslationSelected(int index) {
-		// TODO Auto-generated method stub
 		Log.i("MainActivity","Item clicked: ");
 		
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -153,10 +153,17 @@ public class MainActivity extends SherlockFragmentActivity
 		bundle.putInt("TranslationId", index);
 		displayFragment.setArguments(bundle);
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.replace(R.id.main_fragment, displayFragment);
+		ft.replace(R.id.main_fragment, displayFragment,"displayFragment");
 		ft.addToBackStack(null);
 		ft.commit();
 		
+	}
+	
+	public void displayKanjiInfo(String japCharacter){
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
+		JapaneseCharacter japaneseCharacter = fragment.getJapaneseCharacterFromMap(japCharacter);
+		System.out.println(japaneseCharacter);
 	}
 	
 	public Translation getTranslationCallBack(int index){

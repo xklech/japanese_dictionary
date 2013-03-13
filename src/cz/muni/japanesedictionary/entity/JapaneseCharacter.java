@@ -146,35 +146,35 @@ public class JapaneseCharacter {
 	}
 
 	public Map<String, String> getDicRef() {
-		return dicRef;
+		return dicRef.size() < 1? null : dicRef;
 	}
 
 	public List<String> getRmGroupJaOn() {
-		return rmGroupJaOn;
+		return rmGroupJaOn.size() < 1? null : rmGroupJaOn;
 	}
 
 	public List<String> getRmGroupJaKun() {
-		return rmGroupJaKun;
+		return rmGroupJaKun.size() < 1? null : rmGroupJaKun;
 	}
 
 	public List<String> getMeaningEnglish() {
-		return meaningEnglish;
+		return meaningEnglish.size() < 1? null : meaningEnglish;
 	}
 
 	public List<String> getMeaningFrench() {
-		return meaningFrench;
+		return  meaningEnglish.size() < 1? null : meaningFrench;
 	}
 
 	public List<String> getMeaningDutch() {
-		return meaningDutch;
+		return meaningDutch.size() < 1? null : meaningDutch;
 	}
 
 	public List<String> getMeaningGerman() {
-		return meaningGerman;
+		return meaningGerman.size() < 1? null : meaningGerman;
 	}
 
 	public List<String> getNanori() {
-		return nanori;
+		return nanori.size() < 1? null : nanori;
 	}
 
 	public void parseDicRef(String jsonString){

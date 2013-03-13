@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.DBAsyncTask;
+import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 import cz.muni.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.japanesedictionary.entity.Translation;
 
@@ -33,7 +35,15 @@ public class DisplayTranslation extends SherlockFragment {
 	Translation translation = null;
 	Map<String, JapaneseCharacter> characters = null;
     LayoutInflater inflater = null;
-    Map<String,List<JapaneseCharacter>> mapOfJapaneseCharacters;			
+    Map<String,List<JapaneseCharacter>> mapOfJapaneseCharacters;	
+    
+    private boolean english;
+    private boolean french;        
+    private boolean dutch;
+    private boolean german;
+    
+    
+    
 	public interface OnCreateTranslationListener{
 		public Translation getTranslationCallBack(int index);
 	}
@@ -113,16 +123,26 @@ public class DisplayTranslation extends SherlockFragment {
 			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
 			return;
 		}
+		this.updateLanguages();
 		
 		TextView read = (TextView)getView().findViewById(R.id.translation_read);
 		TextView write = (TextView)getView().findViewById(R.id.translation_write);
+		
+		
+		
+		
 		TextView alternative = (TextView)getView().findViewById(R.id.translation_alternative);
         if(translation.getJapaneseReb() != null){
-        	read.setText(translation.getJapaneseReb().get(0));
+        	String reading = translation.getJapaneseReb().get(0);
+        	read.setText(reading);
         	DBAsyncTask saveTranslation   = new DBAsyncTask(((MainActivity)getActivity()).getDatabse());
         	if(saveTranslation != null){
         		saveTranslation.execute(translation);
         	}
+        	TextView romaji = (TextView)getView().findViewById(R.id.translation_romaji);
+        	romaji.setText(RomanizationEnum.Hepburn.toRomaji(reading));
+
+        	
         }
         if(translation.getJapaneseKeb() != null){
         	int size_keb = translation.getJapaneseKeb().size();
@@ -149,11 +169,7 @@ public class DisplayTranslation extends SherlockFragment {
         	write.setVisibility(View.GONE);
         }
         
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean english = sharedPrefs.getBoolean("language_english", false);
-        boolean french = sharedPrefs.getBoolean("language_french", false);        
-        boolean dutch = sharedPrefs.getBoolean("language_dutch", false);
-        boolean german = sharedPrefs.getBoolean("language_german", false);
+
     	if(inflater != null){
     		LinearLayout translations_container = (LinearLayout)getView().findViewById(R.id.translation_translation_container);
         	translations_container.removeAllViews();
@@ -254,7 +270,8 @@ public class DisplayTranslation extends SherlockFragment {
 		        		}
 		        	}
 	        }
-	        
+	        ((LinearLayout)getView().findViewById(R.id.translation_kanji_container)).setVisibility(View.GONE);
+	        characters = null;
 	        if(writeCharacters != null){
 	        	// write single characters
 	        	if(writeCharacters.length() > 0){
@@ -270,7 +287,96 @@ public class DisplayTranslation extends SherlockFragment {
 	}
 	
 	public void displayCharacters(){
-		System.out.println("displaying characters: " + characters);
+		if(characters == null || characters.size() < 1){
+			return ;
+		}
+        ((LinearLayout)getView().findViewById(R.id.translation_kanji_container)).setVisibility(View.VISIBLE);
+        String writeCharacters = translation.getJapaneseKeb().get(0);
+        LinearLayout container = (LinearLayout)getView().findViewById(R.id.translation_kanji_meanings_container);
+        for(int i =0; i < writeCharacters.length(); i++){
+        	String character = String.valueOf(writeCharacters.charAt(i));
+        	JapaneseCharacter japCharacter = characters.get(character);
+        	if(japCharacter != null){
+	        	View translationKanji = inflater.inflate(R.layout.kanji_line, null);
+	        	TextView kanjiView = (TextView) translationKanji.findViewById(R.id.translation_kanji);
+	        	kanjiView.setText(character);
+	        	TextView meaningView = (TextView) translationKanji.findViewById(R.id.translation_kanji_meaning);
+	        	if(english && japCharacter.getMeaningEnglish() != null){
+	        		int meaningSize = japCharacter.getMeaningEnglish().size();
+	        		if(meaningSize > 0){
+		        		int j =0;
+	        			StringBuilder strBuilder = new StringBuilder();
+	        			for(String str:japCharacter.getMeaningEnglish()){
+	        				strBuilder.append(str);
+	        				j++;
+	        				if(j < meaningSize){
+	        					strBuilder.append(", ");
+	        				}
+	        			}
+	        			meaningView.setText(strBuilder);
+	        			
+	        		}
+	        	}else if(french && japCharacter.getMeaningFrench() != null){
+	        		int meaningSize = japCharacter.getMeaningFrench().size();
+	        		if(meaningSize > 0){
+		        		int j =0;
+	        			StringBuilder strBuilder = new StringBuilder();
+	        			for(String str:japCharacter.getMeaningFrench()){
+	        				strBuilder.append(str);
+	        				j++;
+	        				if(j < meaningSize){
+	        					strBuilder.append(", ");
+	        				}
+	        			}
+	        			meaningView.setText(strBuilder);
+	        		}
+	        	}else if(french && japCharacter.getMeaningDutch() != null){
+	        		int meaningSize = japCharacter.getMeaningDutch().size();
+	        		if(meaningSize > 0){
+		        		int j =0;
+	        			StringBuilder strBuilder = new StringBuilder();
+	        			for(String str:japCharacter.getMeaningDutch()){
+	        				strBuilder.append(str);
+	        				j++;
+	        				if(j < meaningSize){
+	        					strBuilder.append(", ");
+	        				}
+	        			}
+	        			meaningView.setText(strBuilder);
+	        		}
+	        	}else if(german && japCharacter.getMeaningGerman() != null){
+	        		int meaningSize = japCharacter.getMeaningGerman().size();
+	        		if(meaningSize > 0){
+		        		int j =0;
+	        			StringBuilder strBuilder = new StringBuilder();
+	        			for(String str:japCharacter.getMeaningGerman()){
+	        				strBuilder.append(str);
+	        				j++;
+	        				if(j < meaningSize){
+	        					strBuilder.append(", ");
+	        				}
+	        			}
+	        			meaningView.setText(strBuilder);
+	        		}
+	        	}else{
+	        		meaningView.setText(getString(R.string.tramslation_kanji_no_meaning));
+	        	}
+	        	
+	        	translationKanji.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						TextView textView = (TextView) v.findViewById(R.id.translation_kanji);
+						((MainActivity)getActivity()).displayKanjiInfo(String.valueOf(textView.getText()));
+					}
+				});
+	        	
+	        	
+	        	container.addView(translationKanji);
+        	}
+        }
+        
+		
+		
 	}
 	
 	
@@ -298,7 +404,17 @@ public class DisplayTranslation extends SherlockFragment {
 		this.characters = characters;
 	}
 	
-    
+	public JapaneseCharacter getJapaneseCharacterFromMap(String key){
+		return characters.get(key);
+	}
+	
+    private void updateLanguages(){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        english = sharedPrefs.getBoolean("language_english", false);
+        french = sharedPrefs.getBoolean("language_french", false);        
+        dutch = sharedPrefs.getBoolean("language_dutch", false);
+        german = sharedPrefs.getBoolean("language_german", false);
+    }
     
     
 }
