@@ -31,11 +31,11 @@ import cz.muni.japanesedictionary.entity.Translation;
 
 public class DisplayTranslation extends SherlockFragment {
 	
-	OnCreateTranslationListener mCallbackTranslation;
-	Translation translation = null;
-	Map<String, JapaneseCharacter> characters = null;
-    LayoutInflater inflater = null;
-    Map<String,List<JapaneseCharacter>> mapOfJapaneseCharacters;	
+	private OnCreateTranslationListener mCallbackTranslation;
+	private Translation translation = null;
+	private Map<String, JapaneseCharacter> characters = null;
+	private LayoutInflater inflater = null;
+	
     
     private boolean english;
     private boolean french;        
@@ -45,7 +45,10 @@ public class DisplayTranslation extends SherlockFragment {
     
     
 	public interface OnCreateTranslationListener{
+		
 		public Translation getTranslationCallBack(int index);
+		
+		public void showKanjiDetail(JapaneseCharacter character);
 	}
 	
     @Override
@@ -70,6 +73,7 @@ public class DisplayTranslation extends SherlockFragment {
 		if(savedInstanceState != null){
 			return;
 		}
+		
 		Bundle bundle = getArguments();
 		if(bundle != null){
 			int index = bundle.getInt("TranslationId");
@@ -77,25 +81,28 @@ public class DisplayTranslation extends SherlockFragment {
 		}
 		setHasOptionsMenu(true);
         inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
+        
 		super.onCreate(savedInstanceState);
 	}
 	
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		updateTranslation();
-		
-		super.onViewCreated(view, savedInstanceState);
-	}
 	
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu_details, menu);
 		getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(true);
 		getSherlockActivity().getSupportActionBar().setDisplayShowTitleEnabled(true);
-		getSherlockActivity().getSupportActionBar().setTitle(getString(R.string.tramslation_title));
+		getSherlockActivity().getSupportActionBar().setTitle(getString(R.string.tramslation_title));		
 		super.onCreateOptionsMenu(menu, inflater);
 	}
+	
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+        updateTranslation();
+		super.onViewCreated(view, savedInstanceState);
+	}
+	
 	public void setTranslation(Translation tran){
 		this.translation = tran;
 	}
@@ -110,6 +117,12 @@ public class DisplayTranslation extends SherlockFragment {
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(intent);
 	            return true;
+	        case R.id.settings:
+    			Log.i("MainActivity", "Lauching preference Activity");
+    			Intent intentSetting = new Intent(getActivity().getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+    			intentSetting.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    			startActivity(intentSetting);
+    			return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -362,11 +375,12 @@ public class DisplayTranslation extends SherlockFragment {
 	        		meaningView.setText(getString(R.string.tramslation_kanji_no_meaning));
 	        	}
 	        	
-	        	translationKanji.setOnClickListener(new OnClickListener() {
+	        	translationKanji.findViewById(R.id.kanji_line_id).setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						TextView textView = (TextView) v.findViewById(R.id.translation_kanji);
-						((MainActivity)getActivity()).displayKanjiInfo(String.valueOf(textView.getText()));
+						System.out.println("clicked");
+						mCallbackTranslation.showKanjiDetail(characters.get(textView.getText()));
 					}
 				});
 	        	
@@ -380,9 +394,7 @@ public class DisplayTranslation extends SherlockFragment {
 	}
 	
 	
-	public void setMapOfJapaneseCharacters(Map<String,List<JapaneseCharacter>> _mapOfJapaneseCharacters){
-		mapOfJapaneseCharacters = _mapOfJapaneseCharacters;
-	}
+
 	
     /*public static class DisplayTranslationHandler extends Handler {
         private final WeakReference<DisplayTranslation> mDisplayTranslation; 
@@ -403,11 +415,7 @@ public class DisplayTranslation extends SherlockFragment {
 	public void setCharacters(Map<String, JapaneseCharacter> characters) {
 		this.characters = characters;
 	}
-	
-	public JapaneseCharacter getJapaneseCharacterFromMap(String key){
-		return characters.get(key);
-	}
-	
+		
     private void updateLanguages(){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         english = sharedPrefs.getBoolean("language_english", false);

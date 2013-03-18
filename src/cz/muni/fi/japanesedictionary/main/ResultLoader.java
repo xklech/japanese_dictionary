@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
@@ -28,6 +29,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 import cz.muni.japanesedictionary.entity.Translation;
 
 public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
@@ -114,6 +116,13 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
     		query.setPhraseSlop(0);
     		String search;
     		Log.e("ResultLoader", "part search: "+part);
+    		
+    		if(Pattern.matches("\\w*", expression)){
+    			//only romaji
+    			
+    			Log.i("ResultLoader","Only letters :"+ RomanizationEnum.Hepburn.toHiragana(expression));
+    			expression = RomanizationEnum.Hepburn.toHiragana(expression);
+    		}
     		if("end".equals(part)){
     			Log.i("ResultLoader","end");
     			search = "\""+expression + " lucenematch\"";
@@ -127,7 +136,7 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
     			Log.i("ResultLoader","exactly same");
     			search = "\"lucenematch "+expression + " lucenematch\"";
     		}
-    		Log.i("ResultLoader", "Searching for: "+search);
+    		Log.i("ResultLoader"," Searching for: "+search);
     		Query q = query.parse(search); 
 	    	 if( searcher == null){
 	 	    	Directory dir = FSDirectory.open(file);

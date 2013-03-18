@@ -9,6 +9,7 @@
     <string name="dictionary_kanji_download_title">Downloading kanji dictionary</string>
     <string name="dictionary_download_complete">Download complete</string>
     <string name="dictionary_parsing_in_progress">Parsing file in progress.</string>
+    <string name="dictionary_parsing_in_progress_time_left">Parsing file in progress. Time left: t_l min.</string>
     <string name="dictionary_download_interrupted">Downloading interrupted</string>
     
     <!-- MainActivity -->
@@ -65,4 +66,11 @@
    <string name="tramslation_translation">Translation</string> 
    <string name="tramslation_kanji">Kanji</string> 
    <string name="tramslation_kanji_no_meaning">No known meaning in selected language</string> 
+   
+   
+   <!-- Display character info -->
+   <string name="character_unknown_translation">Unknown character</string>
+   <string name="character_title">Character detail</string>
+
+   
 </resources>

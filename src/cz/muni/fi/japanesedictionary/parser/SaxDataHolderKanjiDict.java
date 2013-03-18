@@ -48,6 +48,8 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	private Document doc;
 	private long startTime;
 	
+	String[] notificationTimeLeft;
+	
 	private Context context;
 	private int i = 0;
 	private int perc = 0;
@@ -104,6 +106,10 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 		
 		startTime = System.currentTimeMillis();
 		
+		notificationTimeLeft = context.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
+		if(notificationTimeLeft.length != 2 ){
+			mNotificationView.setTextViewText(R.id.notification_text, context.getString(R.string.dictionary_parsing_in_progress_time_left));
+		}
 		mNotifyManager = nM;
 		mNotification = notif;
 		mNotificationView = rV;
@@ -291,7 +297,10 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
                 	duration = duration * (100-persPub);
                 	
                 	mNotificationView.setProgressBar(R.id.ntification_progressBar, 100, persPub, false);
-                	mNotificationView.setTextViewText(R.id.notification_text, context.getString(R.string.dictionary_parsing_in_progress) + " Time left: "+Math.round(duration/60000)+" min.");
+                	if(notificationTimeLeft.length ==2){
+                		int timeLeft = Math.round(duration/60000);
+                		mNotificationView.setTextViewText(R.id.notification_text, notificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + notificationTimeLeft[1] );
+                	}
                 	mNotification.contentView = mNotificationView;
 	                mNotifyManager.notify(0, mNotification);
                 	

@@ -25,7 +25,8 @@ import cz.muni.japanesedictionary.entity.Translation;
 
 public class MainActivity extends SherlockFragmentActivity
 	implements ResultFragmentList.OnTranslationSelectedListener,
-				DisplayTranslation.OnCreateTranslationListener{
+				DisplayTranslation.OnCreateTranslationListener,
+				DisplayCharacterInfo.OnLoadGetCharacterListener{
 	
 	public static final String PARSER_SERVICE = "cz.muni.fi.japanesedictionary.parser.ParserService";
 	public static final String SEARCH_PREFERENCES = "cz.muni.fi.japanesedictionary.main.search_preferences";
@@ -40,7 +41,7 @@ public class MainActivity extends SherlockFragmentActivity
 	private MainFragment mainFragment;
 	private TranslationsAdapter mAdapter = null;
 	private GlossaryReaderContract database = null;
-	
+	private JapaneseCharacter japaneseCharacter;
 	public void setAdapter(TranslationsAdapter _adapter){
 		mAdapter = _adapter;
 	}
@@ -152,116 +153,52 @@ public class MainActivity extends SherlockFragmentActivity
 		Bundle bundle = new Bundle();
 		bundle.putInt("TranslationId", index);
 		displayFragment.setArguments(bundle);
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		FragmentTransaction ft = fragmentManager.beginTransaction();
 		ft.replace(R.id.main_fragment, displayFragment,"displayFragment");
 		ft.addToBackStack(null);
 		ft.commit();
 		
 	}
 	
-	public void displayKanjiInfo(String japCharacter){
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
-		JapaneseCharacter japaneseCharacter = fragment.getJapaneseCharacterFromMap(japCharacter);
-		System.out.println(japaneseCharacter);
-	}
-	
+	@Override
 	public Translation getTranslationCallBack(int index){
 		if(mAdapter != null){
 			return mAdapter.getItem(index);
 		}
 		return null;
-
 	}
 	
 	public GlossaryReaderContract getDatabse(){
 		return database;
 	}
-	
 
-	/*
-	 * private DownloadProgressDialog dialog = null;
-	 * 
-	 * private BroadcastReceiver mReceiverDone= new BroadcastReceiver() {
-	 * 
-	 * @Override public void onReceive(Context context, Intent intent) { //
-	 * intent can contain anydata MainActivity.this.startMainApplication();
-	 * 
-	 * } };
-	 * 
-	 * private BroadcastReceiver mReceiverProgress= new BroadcastReceiver() {
-	 * 
-	 * @Override public void onReceive(Context context, Intent intent) { //
-	 * intent can contain anydata
-	 * 
-	 * boolean parsing = intent.getBooleanExtra("parsing", false); if(dialog !=
-	 * null){ if(parsing){ dialog.setProgress(0);
-	 * dialog.setMessage(getString(R.string.dictionary_parsing_in_progress) +
-	 * " Time left: ? min.");
-	 * //dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); return; } int
-	 * current = intent.getIntExtra("current", 0); int left =
-	 * intent.getIntExtra("left",-1); dialog.setProgress(current); if(left !=
-	 * -1){ dialog.setMessage(getString(R.string.dictionary_parsing_in_progress)
-	 * + " Time left: "+left+" min."); } }
-	 * 
-	 * } };
-	 * 
-	 * 
-	 * 
-	 * private class DownloadProgressDialog extends ProgressDialog {
-	 * 
-	 * public DownloadProgressDialog(Context context) { super(context); }
-	 * 
-	 * @Override public void onBackPressed() { super.onBackPressed();
-	 * MainActivity.this.finish(); } }
-	 * 
-	 * @Override public void onCreate(Bundle b){ super.onCreate(b);
-	 * setContentView(R.layout.splash_layout);
-	 * 
-	 * }
-	 * 
-	 * @Override public void onStart(){ super.onStart(); SharedPreferences
-	 * settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
-	 * boolean finished = settings.getBoolean("hasValidDictionary", false);
-	 * if(!finished){ if(!isMyServiceRunning()){ AlertDialog
-	 * alertDialogDictionary = new
-	 * AlertDialog.Builder(MainActivity.this).create();
-	 * alertDialogDictionary.setTitle(getString(R.string.no_dictionary_found));
-	 * alertDialogDictionary
-	 * .setMessage(getString(R.string.download_dictionary_question));
-	 * alertDialogDictionary.setButton( DialogInterface.BUTTON_POSITIVE,
-	 * getString(R.string.download), new DialogInterface.OnClickListener() {
-	 * public void onClick(DialogInterface dialog, int which) {
-	 * dialog.dismiss(); MainActivity.this.downloadDictionary(); } });
-	 * alertDialogDictionary.setButton( DialogInterface.BUTTON_NEGATIVE,
-	 * getString(R.string.storno), new DialogInterface.OnClickListener() {
-	 * public void onClick(DialogInterface dialog, int which) {
-	 * MainActivity.this.finish(); } });
-	 * alertDialogDictionary.setOnCancelListener(new OnCancelListener() {
-	 * 
-	 * @Override public void onCancel(DialogInterface dialog) {
-	 * MainActivity.this.finish(); } });
-	 * 
-	 * alertDialogDictionary.setCanceledOnTouchOutside(false);
-	 * alertDialogDictionary.show(); } }else{ startMainApplication(); } }
-	 * 
-	 * 
-	 * 
-	 * 
-	 * @Override public void onResume(){ super.onResume();
-	 * LocalBroadcastManager.
-	 * getInstance(this).registerReceiver(mReceiverDone,new
-	 * IntentFilter("serviceDone"));
-	 * LocalBroadcastManager.getInstance(this).registerReceiver
-	 * (mReceiverProgress,new IntentFilter("serviceProgress")); }
-	 * 
-	 * @Override public void onPause(){ super.onPause();
-	 * LocalBroadcastManager.getInstance
-	 * (this).unregisterReceiver(mReceiverDone);
-	 * LocalBroadcastManager.getInstance
-	 * (this).unregisterReceiver(mReceiverProgress); }
-	 * 
-	 * 
-	 */
+	@Override
+	public void showKanjiDetail(JapaneseCharacter character) {
+		// TODO Auto-generated method stub
+		japaneseCharacter  = character;
+		System.out.println(japaneseCharacter);
+		
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		if(findViewById(R.id.detail_fragment) != null){
+			// two frames layout
+			Log.i("MainActivity","Setting info fragment");
+			DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
+			
+			return;
+		}
+		
+		DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.replace(R.id.main_fragment, displayCharacter,"displayCharacter");
+		fragmentTransaction.addToBackStack(null);
+		fragmentTransaction.commit();
+	}
+
+	@Override
+	public JapaneseCharacter getJapaneseCharacter() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 }

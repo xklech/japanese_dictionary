@@ -8,6 +8,7 @@
     <string name="dictionary_download_in_progress">Probíhá stahování slovníku</string>
     <string name="dictionary_download_complete">Stahování kompletní</string>
     <string name="dictionary_parsing_in_progress">Probíhá zpracování slovníku.</string>
+    <string name="dictionary_parsing_in_progress_time_left">Probíhá zpracování slovníku. Zbývá: t_l min.</string>
     <string name="dictionary_download_interrupted">Stahování přerušeno</string>
     
     <!-- MainActivity -->
@@ -57,5 +58,15 @@
    <!-- Display Translation -->
    <string name="tramslation_unknown_translation">Neznámý překlad</string>
    <string name="tramslation_title">Detail záznamu</string>
+   <string name="tramslation_romaji">Romaji</string>  
+   <string name="tramslation_alternative">Alternativy</string> 
+   <string name="tramslation_translation">Překlad</string> 
+   <string name="tramslation_kanji">Kanji</string> 
+   <string name="tramslation_kanji_no_meaning">Žádné známe významy ve zvoleném jazyce</string> 
+   
+   <!-- Display character info -->
+   <string name="character_unknown_translation">Neznámý znak</string>
+   <string name="character_title">Detail znaku</string>
+
    
 </resources>

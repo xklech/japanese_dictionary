@@ -25,7 +25,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
-import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 
 public class MainFragment extends SherlockFragment implements
 		TabHost.OnTabChangeListener {
@@ -163,7 +162,7 @@ public class MainFragment extends SherlockFragment implements
 				@Override
 				public void onClick(View view) {
 					if (mSearch != null) {
-						mSearch.setText("");
+						mSearch.setText(null);
 					}
 				}
 			});
@@ -187,14 +186,7 @@ public class MainFragment extends SherlockFragment implements
 							: View.GONE);
 
 					if (mSearchFragment != null) {
-						mSearchInput = s.toString();
-						
-						String ret = RomanizationEnum.Hepburn.toHiragana(s.toString());
-						System.out.println(ret);
-						s.clearSpans();
-						s.clear();
-						s.insert(0, ret);
-						
+						mSearchInput = s.toString();						
 						mSearchFragment.changeSearched(s.toString());
 					}
 				}
