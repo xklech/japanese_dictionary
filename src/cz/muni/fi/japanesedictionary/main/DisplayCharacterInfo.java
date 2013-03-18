@@ -16,7 +16,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.japanesedictionary.entity.JapaneseCharacter;
-import cz.muni.japanesedictionary.entity.Translation;
 
 public class DisplayCharacterInfo extends SherlockFragment{
 	
@@ -90,9 +89,8 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
-	    
 	}
-
+	   
 	
 	
 }
