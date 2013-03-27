@@ -36,8 +36,10 @@ public class DisplayTranslation extends SherlockFragment {
 	private Map<String, JapaneseCharacter> characters = null;
 	private LayoutInflater inflater = null;
 	
-    
-    private boolean english;
+	private boolean translationChanged = false;
+
+
+	private boolean english;
     private boolean french;        
     private boolean dutch;
     private boolean german;
@@ -67,10 +69,20 @@ public class DisplayTranslation extends SherlockFragment {
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.display_translation, null);
 	}
-		
+
+	@Override
+	public void onStart() {
+		if(updateLanguages() || translationChanged){
+			updateTranslation();
+			Log.i("DisplayTranslation","update translation");
+		}
+		super.onStart();
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		if(savedInstanceState != null){
+			Log.i("DisplayTranslation","saved state");			
 			return;
 		}
 		
@@ -78,6 +90,8 @@ public class DisplayTranslation extends SherlockFragment {
 		if(bundle != null){
 			int index = bundle.getInt("TranslationId");
 			translation =  mCallbackTranslation.getTranslationCallBack(index);
+		}else{
+			translation = null;
 		}
 		setHasOptionsMenu(true);
         inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -105,6 +119,7 @@ public class DisplayTranslation extends SherlockFragment {
 	
 	public void setTranslation(Translation tran){
 		this.translation = tran;
+		this.translationChanged = true;
 	}
 	
 	
@@ -128,15 +143,18 @@ public class DisplayTranslation extends SherlockFragment {
 	    }
 	}
 	
-	
+    
+    public void setTranslationChanged(boolean translationChanged) {
+		this.translationChanged = translationChanged;
+	}
+    
 	public void updateTranslation(){
 		Log.w("DisplayTranslation","translation: "+translation);
-		
+		translationChanged = false;
 		if(translation == null){
 			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
 			return;
 		}
-		this.updateLanguages();
 		
 		TextView read = (TextView)getView().findViewById(R.id.translation_read);
 		TextView write = (TextView)getView().findViewById(R.id.translation_write);
@@ -306,6 +324,7 @@ public class DisplayTranslation extends SherlockFragment {
         ((LinearLayout)getView().findViewById(R.id.translation_kanji_container)).setVisibility(View.VISIBLE);
         String writeCharacters = translation.getJapaneseKeb().get(0);
         LinearLayout container = (LinearLayout)getView().findViewById(R.id.translation_kanji_meanings_container);
+        container.removeAllViews();
         for(int i =0; i < writeCharacters.length(); i++){
         	String character = String.valueOf(writeCharacters.charAt(i));
         	JapaneseCharacter japCharacter = characters.get(character);
@@ -416,12 +435,30 @@ public class DisplayTranslation extends SherlockFragment {
 		this.characters = characters;
 	}
 		
-    private void updateLanguages(){
+    private boolean updateLanguages(){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        english = sharedPrefs.getBoolean("language_english", false);
-        french = sharedPrefs.getBoolean("language_french", false);        
-        dutch = sharedPrefs.getBoolean("language_dutch", false);
-        german = sharedPrefs.getBoolean("language_german", false);
+        boolean changed = false;
+        boolean englTemp = sharedPrefs.getBoolean("language_english", false);
+        if(englTemp != english){
+        	english = englTemp;
+        	changed = true;
+        }
+        boolean frenchTemp = sharedPrefs.getBoolean("language_french", false);  
+        if(frenchTemp != french){
+        	french = frenchTemp;
+        	changed = true;
+        }
+        boolean dutchTemp = sharedPrefs.getBoolean("language_dutch", false);  
+        if(dutchTemp != dutch){
+        	dutch = dutchTemp;
+        	changed = true;
+        }
+        boolean germanTemp = sharedPrefs.getBoolean("language_german", false);  
+        if(germanTemp != german){
+        	german = germanTemp;
+        	changed = true;
+        }
+        return changed;
     }
     
     

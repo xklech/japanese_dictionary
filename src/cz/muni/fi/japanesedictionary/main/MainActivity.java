@@ -42,6 +42,9 @@ public class MainActivity extends SherlockFragmentActivity
 	private TranslationsAdapter mAdapter = null;
 	private GlossaryReaderContract database = null;
 	private JapaneseCharacter japaneseCharacter;
+	
+	
+	
 	public void setAdapter(TranslationsAdapter _adapter){
 		mAdapter = _adapter;
 	}
@@ -145,8 +148,23 @@ public class MainActivity extends SherlockFragmentActivity
 			// two frames layout
 			Log.i("MainActivity","Setting info fragment");
 			DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
-			fragment.setTranslation(getTranslationCallBack(index));
-			fragment.updateTranslation();
+			if(fragment == null ){
+				DisplayTranslation displayFragment = new DisplayTranslation();
+				Bundle bundle = new Bundle();
+				bundle.putInt("TranslationId", index);
+				displayFragment.setArguments(bundle);
+				FragmentTransaction ft = fragmentManager.beginTransaction();
+				ft.replace(R.id.main_fragment, displayFragment,"displayFragment");
+				ft.commit();
+			}else if(fragment.isDetached()){
+				fragment.setTranslation(getTranslationCallBack(index));
+				FragmentTransaction ft = fragmentManager.beginTransaction();
+				ft.replace(R.id.main_fragment, fragment,"displayFragment");
+				ft.commit();
+			}else{
+				fragment.setTranslation(getTranslationCallBack(index));
+				fragment.updateTranslation();
+			}
 			return;
 		}
 		DisplayTranslation displayFragment = new DisplayTranslation();
@@ -182,8 +200,16 @@ public class MainActivity extends SherlockFragmentActivity
 		if(findViewById(R.id.detail_fragment) != null){
 			// two frames layout
 			Log.i("MainActivity","Setting info fragment");
-			DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
-			
+			DisplayCharacterInfo fragment = (DisplayCharacterInfo)fragmentManager.findFragmentByTag("displayCharacter");
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			if(fragment!= null && fragment.isDetached()){
+				fragmentTransaction.replace(R.id.detail_fragment, fragment,"displayCharacter");
+			}else{
+				DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
+				fragmentTransaction.replace(R.id.detail_fragment, displayCharacter,"displayCharacter");
+			}
+			fragmentTransaction.addToBackStack(null);
+			fragmentTransaction.commit();
 			return;
 		}
 		
