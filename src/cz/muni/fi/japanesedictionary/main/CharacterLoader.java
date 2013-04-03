@@ -135,6 +135,11 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	    	    	}
 	    	    }
 	    	    
+	    	    String skip = d.get("queryCodeSkip");
+	    	    if(skip != null && skip.length() > 0 ){
+	    	    	japanCharacter.setSkip(skip);
+	    	    }
+	    	    
 	    	    String dicRef = d.get("dicRef");
 	    	    if(dicRef != null && dicRef.length() > 0 ){
 	    	    	japanCharacter.parseDicRef(dicRef);
@@ -174,11 +179,9 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	    	    if(nanori != null && nanori.length() > 0 ){
 	    	    	japanCharacter.parseNanori(nanori);
 	    	    }
-	    	    if(japanCharacter.getLiteral() != null && japanCharacter.getLiteral().length() > 0)
-	    	    	
-	    	    	
-	    	    result.put(japanCharacter.getLiteral(), japanCharacter);
-	    	    
+	    	    if(japanCharacter.getLiteral() != null && japanCharacter.getLiteral().length() > 0){
+	    	    	result.put(japanCharacter.getLiteral(), japanCharacter);
+	    	    }
 	    	}
 	    	return result.size() > 0 ? result : null;
 	    	

@@ -56,6 +56,7 @@ public class MainActivity extends SherlockFragmentActivity
 		setContentView(R.layout.main_activity);
 		database = new GlossaryReaderContract(getApplicationContext());
 		if(savedInstanceState != null){
+			mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag("mainFragment");
 			return ;
 		}
 		Log.i("MainActivity","Setting layout");
@@ -69,7 +70,6 @@ public class MainActivity extends SherlockFragmentActivity
 			DisplayTranslation displayTranslation = new DisplayTranslation();
 			ft.add(R.id.detail_fragment, displayTranslation,"displayFragment");
 		}
-
 		ft.commit();
 	}
 
@@ -183,6 +183,7 @@ public class MainActivity extends SherlockFragmentActivity
 		if(mAdapter != null){
 			return mAdapter.getItem(index);
 		}
+		System.out.println("adapter is null");
 		return null;
 	}
 	
@@ -194,7 +195,7 @@ public class MainActivity extends SherlockFragmentActivity
 	public void showKanjiDetail(JapaneseCharacter character) {
 		// TODO Auto-generated method stub
 		japaneseCharacter  = character;
-		System.out.println(japaneseCharacter);
+		System.out.println("character: "+character);
 		
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		if(findViewById(R.id.detail_fragment) != null){
@@ -222,8 +223,7 @@ public class MainActivity extends SherlockFragmentActivity
 
 	@Override
 	public JapaneseCharacter getJapaneseCharacter() {
-		// TODO Auto-generated method stub
-		return null;
+		return japaneseCharacter;
 	}
 	
 

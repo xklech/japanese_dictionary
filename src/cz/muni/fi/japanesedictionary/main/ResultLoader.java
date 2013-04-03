@@ -38,12 +38,18 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	private String part;
 	private IndexSearcher searcher;
 
+	private String lastSearched = null;
+	private String lastPart = null;
+	
+	private List<Translation> lastTranslations = null;
+	
 	private Handler handler = new ResultLoaderHandler(this);
 	
 	public ResultLoader(Context cont,String expr,String _part) {
 		super(cont);
 		context = cont;
 		part = _part;
+		expression = expr;
 		Log.e("ResultLoader", "part constructor: "+part);
 		
 	}
@@ -98,7 +104,7 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         	//spusteni bez vyhledani
         	Log.i("ResultLoader","First run - last 10 translations: "+expression);
         	GlossaryReaderContract database = new GlossaryReaderContract(context);
-        	translations = database.getLastTenTranslations();
+        	translations = database.getLastTranslations(10);
         	database.close();
         	return translations;
 
@@ -109,6 +115,11 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         	return null;
         }
         
+        if((lastSearched != null && lastSearched.equals(expression)) && (lastPart != null && lastPart.equals(part))){
+        	Log.i("ResultLoader","Search and part are the same, return old translation list");
+        	return lastTranslations;
+        }
+        
 		
     	Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
     	try{
@@ -116,6 +127,8 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
     		query.setPhraseSlop(0);
     		String search;
     		Log.e("ResultLoader", "part search: "+part);
+
+    		
     		
     		if(Pattern.matches("\\w*", expression)){
     			//only romaji
@@ -197,6 +210,10 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
     		Log.e("ResultLoader","vyjimka hledani: " + ex.toString());
     	}
 
+		lastPart = part;
+		lastSearched = expression;
+		lastTranslations = translations.isEmpty()?null:translations;
+    	
 		return translations.isEmpty()?null:translations;
 	}
 	

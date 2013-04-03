@@ -59,7 +59,8 @@ public class ResultFragmentList extends SherlockListFragment implements
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-    	l.requestFocus();
+    	//l.requestFocus();
+    	System.out.println("jeduuu");
     	mCallbackTranslation.onTranslationSelected(position);
     }
     
@@ -80,18 +81,6 @@ public class ResultFragmentList extends SherlockListFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if (savedInstanceState != null) {
-			searched = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
-			part = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
-			Log.e("ResultFragmentList", "part: "+part);
-		} else {
-			Bundle bundle = getArguments();
-			if (bundle != null) {
-				Log.e("ResultFragmentList", "Bundle: "+bundle);
-				searched = bundle.getString(MainActivity.SEARCH_TEXT);
-				part = bundle.getString(MainActivity.PART_OF_TEXT);
-			}
-		}
 
 		// Start out with a progress indicator.
 		setListShown(false);
@@ -109,13 +98,11 @@ public class ResultFragmentList extends SherlockListFragment implements
 		((MainActivity)getActivity()).setAdapter(mAdapter);
 		setListAdapter(mAdapter);
 
-		getLoaderManager().initLoader(0, null, this);
-		
-		getListView().setOnScrollListener(new OnScrollListener() {
+		/*getListView().setOnScrollListener(new OnScrollListener() {
 			
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				view.requestFocus();
+				//view.requestFocus();
 			}
 
 			@Override
@@ -125,12 +112,18 @@ public class ResultFragmentList extends SherlockListFragment implements
 				
 			}
 		
-		});
+		});*/
 
 	}
 
 	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+	}
+	
+	@Override
 	public Loader<List<Translation>> onCreateLoader(int arg0, Bundle arg1) {
+		System.out.println("Loader created searched: "+searched +" part: "+part);
 		return new ResultLoader(getActivity(), searched, part);
 	}
 
@@ -159,7 +152,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	@Override
 	public void onLoadFinished(Loader<List<Translation>> loader,
 			List<Translation> data) {
-
+		System.out.println("Loader finished");
 		// Set the new data in the adapter.
 		mAdapter.setData(data);
 
@@ -194,5 +187,10 @@ public class ResultFragmentList extends SherlockListFragment implements
 	public String getSearched(){
 		return searched;
 	}
+	
+	public TranslationsAdapter getAdapter(){
+		return mAdapter;
+	}
+	
 
 }

@@ -71,6 +71,10 @@
    <!-- Display character info -->
    <string name="character_unknown_translation">Unknown character</string>
    <string name="character_title">Character detail</string>
-
-   
+   <string name="kanjidict_radical_text">Radical</string>
+   <string name="kanjidict_grade_text">Grade</string>   
+   <string name="kanjidict_stroke_count_text">Stroke count</string>   
+   <string name="kanjidict_dictionaries">Dictionary references</string>  
+   <string name="kanjidict_skip_text">SKIP</string>  
+   <string name="kanjidict_nanori_text">Nanori</string>  
 </resources>

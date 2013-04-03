@@ -18,6 +18,7 @@ public class JapaneseCharacter {
 	private int radicalClassic;
 	private int grade;
 	private int strokeCount;
+	private String skip;
 	private Map<String, String> dicRef;
 	private List<String> rmGroupJaOn;
 	private List<String> rmGroupJaKun;
@@ -72,7 +73,11 @@ public class JapaneseCharacter {
 	public void setStrokeCount(int value){
 		this.strokeCount = value;
 	}
-	
+
+	public void setSkip(String skip) {
+		this.skip = skip;
+	}
+
 	public void addDicRef(String key,String value){
 		if(key == null || key.length() < 1 || value == null || value.length() < 1){
 			return ;
@@ -145,6 +150,10 @@ public class JapaneseCharacter {
 		return strokeCount;
 	}
 
+	public String getSkip() {
+		return skip;
+	}
+	
 	public Map<String, String> getDicRef() {
 		return dicRef.size() < 1? null : dicRef;
 	}
@@ -205,7 +214,7 @@ public class JapaneseCharacter {
 			}
 			if(dicRefTemp != null && dicRefTemp.size() > 0 ){
 				for(String key : dicRefTemp.keySet()){
-					this.dicRef.put(key, dicRefTemp.get(key));
+					addDicRef(key, dicRefTemp.get(key));
 				}
 			}
 		}

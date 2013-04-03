@@ -2,13 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:clickable="false"
+    android:focusable="false"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" 
         android:gravity="left"
+        android:clickable="false"
+        android:focusable="false"
         >
 
         <TextView
@@ -18,6 +23,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/primary_text_dark"
             android:textIsSelectable="true" 
+            android:clickable="false"
+            android:focusable="false"
             android:layout_marginLeft="10dp"
             />
 
@@ -27,7 +34,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/secondary_text_dark"
-            android:textIsSelectable="true" 
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:clickable="false" 
             android:layout_marginLeft="10dp"
             />
     </LinearLayout>
@@ -39,6 +48,8 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="true" 
         android:layout_marginLeft="10dp"
+        android:focusable="false"
+        android:clickable="false" 
         />
 
 </LinearLayout>

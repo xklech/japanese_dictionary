@@ -58,6 +58,12 @@ public class MainFragment extends SherlockFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		if(container != null){
+			Log.e("mainfragment","container neni null");
+		}else{
+			Log.e("mainfragment","container je null");
+		}
+		
 		container = new LinearLayout(getActivity().getApplicationContext());
 		return inflater.inflate(R.layout.main_fragment, container);
 	}
@@ -91,7 +97,7 @@ public class MainFragment extends SherlockFragment implements
 			
 			mLastTabId = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
 			mSearchInput = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
-			mSearchFragment = (ResultFragmentList) getActivity().getSupportFragmentManager().findFragmentByTag("result_fragment");
+			mSearchFragment = (ResultFragmentList) getChildFragmentManager().findFragmentByTag("result_fragment");
 		}else{
 			Log.e("MainFragment","serach: "+mSearchInput + " part: "+mLastTabId);
 		}
@@ -135,7 +141,7 @@ public class MainFragment extends SherlockFragment implements
 		}
 
 		
-		view.requestFocus();
+		//view.requestFocus();
 		setHasOptionsMenu(true);
 		super.onViewCreated(view, savedInstanceState);
 	}
@@ -237,6 +243,10 @@ public class MainFragment extends SherlockFragment implements
 	}
 	
 	public ResultFragmentList getResultFragmentList(){
+		if(mSearchFragment == null){
+			return (ResultFragmentList) getChildFragmentManager().findFragmentByTag("result_fragment");
+		}
+		
 		return mSearchFragment;
 	}
 

@@ -73,8 +73,8 @@ public class DisplayTranslation extends SherlockFragment {
 	@Override
 	public void onStart() {
 		if(updateLanguages() || translationChanged){
-			updateTranslation();
-			Log.i("DisplayTranslation","update translation");
+			//updateTranslation();
+
 		}
 		super.onStart();
 	}
@@ -82,21 +82,13 @@ public class DisplayTranslation extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		if(savedInstanceState != null){
-			Log.i("DisplayTranslation","saved state");			
-			return;
+			Log.i("DisplayTranslation","saved state");	
 		}
-		
-		Bundle bundle = getArguments();
-		if(bundle != null){
-			int index = bundle.getInt("TranslationId");
-			translation =  mCallbackTranslation.getTranslationCallBack(index);
-		}else{
-			translation = null;
-		}
+
 		setHasOptionsMenu(true);
         inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 	}
 	
 	
@@ -113,7 +105,19 @@ public class DisplayTranslation extends SherlockFragment {
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-        updateTranslation();
+		if(savedInstanceState != null){
+			Log.w("DisplayTranslation","rotace");
+			super.onViewCreated(view, savedInstanceState);
+			return;
+		}
+		Bundle bundle = getArguments();
+		if(bundle != null){
+			int index = bundle.getInt("TranslationId");
+			translation =  mCallbackTranslation.getTranslationCallBack(index);
+		}else{
+			translation = null;
+		}
+		updateTranslation();
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
@@ -149,7 +153,7 @@ public class DisplayTranslation extends SherlockFragment {
 	}
     
 	public void updateTranslation(){
-		Log.w("DisplayTranslation","translation: "+translation);
+		Log.i("DisplayTranslation","update translation");
 		translationChanged = false;
 		if(translation == null){
 			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
@@ -321,7 +325,11 @@ public class DisplayTranslation extends SherlockFragment {
 		if(characters == null || characters.size() < 1){
 			return ;
 		}
-        ((LinearLayout)getView().findViewById(R.id.translation_kanji_container)).setVisibility(View.VISIBLE);
+        LinearLayout outerContainer = ((LinearLayout)getView().findViewById(R.id.translation_kanji_container));
+        if(outerContainer == null){
+        	return ;
+        }
+        outerContainer.setVisibility(View.VISIBLE);
         String writeCharacters = translation.getJapaneseKeb().get(0);
         LinearLayout container = (LinearLayout)getView().findViewById(R.id.translation_kanji_meanings_container);
         container.removeAllViews();
@@ -398,8 +406,9 @@ public class DisplayTranslation extends SherlockFragment {
 					@Override
 					public void onClick(View v) {
 						TextView textView = (TextView) v.findViewById(R.id.translation_kanji);
-						System.out.println("clicked");
-						mCallbackTranslation.showKanjiDetail(characters.get(textView.getText()));
+						System.out.println("clicked: "+characters);
+						System.out.println("clicked: "+textView.getText());
+						mCallbackTranslation.showKanjiDetail(characters.get(textView.getText().toString()));
 					}
 				});
 	        	

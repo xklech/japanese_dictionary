@@ -107,7 +107,10 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	}
 	
 	//select translation
-	public List<Translation> getLastTenTranslations(){
+	public List<Translation> getLastTranslations(int count){
+		if(count < 1){
+			return null;
+		}
 		List<Translation> translationsReturn = new ArrayList<Translation>();
 		
 	    SQLiteDatabase db = this.getReadableDatabase();
@@ -130,7 +133,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	            null, 	//group
 	            null, 	//having
 	            "_id DESC", 	//order by - ordered by id descendant
-	            "10");	//limit - 10 last records 
+	            String.valueOf(count));	//limit - 10 last records 
 	    if (cursor == null){
 	    	return null;
 	    }
