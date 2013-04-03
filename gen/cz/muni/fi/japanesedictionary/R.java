@@ -995,7 +995,6 @@ containing a value of this type.
         public static final int kanjidict_stroke_count_container=0x7f05003a;
         public static final int listMode=0x7f050002;
         public static final int main_fragment=0x7f050051;
-        public static final int menu_search=0x7f05005d;
         public static final int normal=0x7f050001;
         public static final int notification_image=0x7f050054;
         public static final int notification_text=0x7f050056;
@@ -1003,7 +1002,7 @@ containing a value of this type.
         public static final int ntification_progressBar=0x7f050057;
         public static final int results_fragment_container=0x7f050058;
         public static final int search=0x7f050059;
-        public static final int settings=0x7f05005e;
+        public static final int settings=0x7f05005d;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;

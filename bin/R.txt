@@ -318,7 +318,6 @@ int id kanjidict_stroke_count 0x7f05003b
 int id kanjidict_stroke_count_container 0x7f05003a
 int id listMode 0x7f050002
 int id main_fragment 0x7f050051
-int id menu_search 0x7f05005d
 int id normal 0x7f050001
 int id notification_image 0x7f050054
 int id notification_text 0x7f050056
@@ -326,7 +325,7 @@ int id notification_title 0x7f050055
 int id ntification_progressBar 0x7f050057
 int id results_fragment_container 0x7f050058
 int id search 0x7f050059
-int id settings 0x7f05005e
+int id settings 0x7f05005d
 int id showCustom 0x7f050008
 int id showHome 0x7f050005
 int id showTitle 0x7f050007

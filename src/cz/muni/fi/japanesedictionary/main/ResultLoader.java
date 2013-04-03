@@ -100,12 +100,19 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         	Log.e("ResultLoader", "Cant read dictionary directory");
         	return null;
         }
+        
+        if((expression == null && lastSearched == null && lastTranslations != null) || ((lastSearched != null && lastSearched.equals(expression)) && (lastPart != null && lastPart.equals(part)))){
+        	Log.i("ResultLoader","Search and part are the same, return old translation list");
+        	return lastTranslations;
+        }
+        
         if(expression == null){
         	//spusteni bez vyhledani
         	Log.i("ResultLoader","First run - last 10 translations: "+expression);
         	GlossaryReaderContract database = new GlossaryReaderContract(context);
         	translations = database.getLastTranslations(10);
         	database.close();
+        	lastTranslations = translations;
         	return translations;
 
 
@@ -115,10 +122,7 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         	return null;
         }
         
-        if((lastSearched != null && lastSearched.equals(expression)) && (lastPart != null && lastPart.equals(part))){
-        	Log.i("ResultLoader","Search and part are the same, return old translation list");
-        	return lastTranslations;
-        }
+
         
 		
     	Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
@@ -163,6 +167,7 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	    	for(int i=0;i<hits.length;++i) {
 	    	    int docId = hits[i].doc;
 	    	    Document d = searcher.doc(docId);
+	    	    
 	    	    Translation translation = new Translation();
 	    	    //Log.e("df", d.toString());
 	    	    String japanese_keb = d.get("japanese_keb");

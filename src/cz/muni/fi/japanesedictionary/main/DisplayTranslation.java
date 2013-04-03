@@ -322,7 +322,7 @@ public class DisplayTranslation extends SherlockFragment {
 	}
 	
 	public void displayCharacters(){
-		if(characters == null || characters.size() < 1){
+		if(characters == null || characters.size() < 1 || getView() == null){
 			return ;
 		}
         LinearLayout outerContainer = ((LinearLayout)getView().findViewById(R.id.translation_kanji_container));
