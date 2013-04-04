@@ -291,6 +291,7 @@ int id abs__textButton 0x7f050013
 int id abs__title 0x7f05001b
 int id abs__titleDivider 0x7f05001c
 int id abs__up 0x7f05000b
+int id action_search 0x7f05005d
 int id custom_notification 0x7f050053
 int id delete 0x7f05005a
 int id detail_fragment 0x7f050052
@@ -325,7 +326,7 @@ int id notification_title 0x7f050055
 int id ntification_progressBar 0x7f050057
 int id results_fragment_container 0x7f050058
 int id search 0x7f050059
-int id settings 0x7f05005d
+int id settings 0x7f05005e
 int id showCustom 0x7f050008
 int id showHome 0x7f050005
 int id showTitle 0x7f050007

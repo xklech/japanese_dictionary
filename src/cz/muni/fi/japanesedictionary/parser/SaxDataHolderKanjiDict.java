@@ -96,7 +96,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
         
 		if(file == null){
 			Log.e("SaxDataHolderKanjiDict", "SaxDataHolderKanjiDict - dictionary directory is null");
-			throw new IllegalArgumentException("SaxParser: dictiona< ry directory is null");
+			throw new IllegalArgumentException("SaxParser: dictionary directory is null");
 		}
 		context = appContext;
 		Directory dir = FSDirectory.open(file);

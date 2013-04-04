@@ -5,7 +5,6 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,15 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.DBAsyncTask;
+import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
-import cz.muni.japanesedictionary.entity.JapaneseCharacter;
-import cz.muni.japanesedictionary.entity.Translation;
 
 public class DisplayTranslation extends SherlockFragment {
 	
@@ -73,8 +69,7 @@ public class DisplayTranslation extends SherlockFragment {
 	@Override
 	public void onStart() {
 		if(updateLanguages() || translationChanged){
-			//updateTranslation();
-
+			updateTranslation();
 		}
 		super.onStart();
 	}
@@ -82,7 +77,8 @@ public class DisplayTranslation extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		if(savedInstanceState != null){
-			Log.i("DisplayTranslation","saved state");	
+			translation = Translation.newInstanceFromBundle(savedInstanceState);
+			Log.i("DisplayTranslation","saved state: "+savedInstanceState);	
 		}
 
 		setHasOptionsMenu(true);
@@ -92,30 +88,29 @@ public class DisplayTranslation extends SherlockFragment {
 	}
 	
 	
-	
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.menu_details, menu);
-		getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(true);
-		getSherlockActivity().getSupportActionBar().setDisplayShowTitleEnabled(true);
-		getSherlockActivity().getSupportActionBar().setTitle(getString(R.string.tramslation_title));		
-		super.onCreateOptionsMenu(menu, inflater);
-	}
+	public void onSaveInstanceState(Bundle outState) {
+		
+		if(translation!= null){
+			outState = translation.createBundleFromTranslation(outState);
+		}
+		Log.i("DisplayTranslation","Save instance "+outState);
+		super.onSaveInstanceState(outState);
+	}	
 	
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		if(savedInstanceState != null){
-			Log.w("DisplayTranslation","rotace");
-			super.onViewCreated(view, savedInstanceState);
-			return;
-		}
-		Bundle bundle = getArguments();
-		if(bundle != null){
-			int index = bundle.getInt("TranslationId");
-			translation =  mCallbackTranslation.getTranslationCallBack(index);
+			Log.w("DisplayTranslation","rotace"+savedInstanceState);
 		}else{
-			translation = null;
+			Bundle bundle = getArguments();
+			if(bundle != null){
+				int index = bundle.getInt("TranslationId");
+				translation =  mCallbackTranslation.getTranslationCallBack(index);
+			}else{
+				translation = null;
+			}
 		}
 		updateTranslation();
 		super.onViewCreated(view, savedInstanceState);
@@ -127,31 +122,6 @@ public class DisplayTranslation extends SherlockFragment {
 	}
 	
 	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case android.R.id.home:
-	            // app icon in action bar clicked; go home
-	            Intent intent = new Intent(getActivity(), MainActivity.class);
-	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	            startActivity(intent);
-	            return true;
-	        case R.id.settings:
-    			Log.i("MainActivity", "Lauching preference Activity");
-    			Intent intentSetting = new Intent(getActivity().getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
-    			intentSetting.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    			startActivity(intentSetting);
-    			return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
-	}
-	
-    
-    public void setTranslationChanged(boolean translationChanged) {
-		this.translationChanged = translationChanged;
-	}
-    
 	public void updateTranslation(){
 		Log.i("DisplayTranslation","update translation");
 		translationChanged = false;

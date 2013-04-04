@@ -23,8 +23,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
-import cz.muni.japanesedictionary.entity.JapaneseCharacter;
 
 public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCharacter>>{
 

@@ -20,6 +20,7 @@
         android:layout_toRightOf="@id/notification_image"
         android:layout_alignTop="@+id/notification_image"
         style="@style/NotificationTitle"
+        android:maxLines="1"
     />
 
     <TextView

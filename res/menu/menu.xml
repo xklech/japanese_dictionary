@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/actionbar_search"
+    	android:icon="@android:drawable/ic_menu_search"
+    	android:showAsAction="always"
+    	android:actionViewClass="com.actionbarsherlock.widget.SearchView"
+    	/>
 	<item 
 	    android:title="@string/menu_setting"
-	    android:showAsAction="ifRoom"
+	    android:showAsAction="never"
 	    android:id="@+id/settings"
 	    android:icon="@android:drawable/ic_menu_preferences"
 	    />

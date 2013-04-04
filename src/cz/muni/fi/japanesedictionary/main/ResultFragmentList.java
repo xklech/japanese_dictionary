@@ -9,31 +9,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Message;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TabHost;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.widget.SearchView;
-import com.actionbarsherlock.widget.SearchView.OnCloseListener;
-import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
 import cz.muni.fi.japanesedictionary.R;
+import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
-import cz.muni.japanesedictionary.entity.Translation;
 
 public class ResultFragmentList extends SherlockListFragment implements
 		LoaderManager.LoaderCallbacks<List<Translation>> {
@@ -117,9 +105,17 @@ public class ResultFragmentList extends SherlockListFragment implements
 				false);
 		if (!validDictionary) {
 			setEmptyText(getString(R.string.no_dictionary_found));
+			if(!MainActivity.isMyServiceRunning(getActivity().getApplicationContext())){
+				DialogFragment newFragment = MyFragmentAlertDialog.newInstance(
+				R.string.no_dictionary_found,
+				R.string.download_dictionary_question, false);
+				newFragment.show(getActivity().getSupportFragmentManager(),
+				"dialog");	
+			}
 		} else {
 			setEmptyText(getString(R.string.nothing_found));
 		}
+		
 		
 		mAdapter = new TranslationsAdapter(getActivity());
 		((MainActivity)getActivity()).setAdapter(mAdapter);
@@ -133,14 +129,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 			mLastSearched = bundle.getString(MainActivity.SEARCH_TEXT);
 			mLastTab = bundle.getString(MainActivity.PART_OF_TEXT);
 		}
-		
-		
-		if(savedInstanceState != null){
-			getLoaderManager().restartLoader(0, null, this);
-		}else{
-			getLoaderManager().initLoader(0, null, this);
-		}
-		
+				
 		/*getListView().setOnScrollListener(new OnScrollListener() {
 			
 			@Override
@@ -159,30 +148,22 @@ public class ResultFragmentList extends SherlockListFragment implements
 
 	}
 
-	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-
-		
-		
+		if(savedInstanceState != null){
+			getLoaderManager().restartLoader(0, null, this);
+		}else{
+			getLoaderManager().initLoader(0, null, this);
+		}
 		super.onViewCreated(view, savedInstanceState);
 	}
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-	
 	
 	@Override
 	public Loader<List<Translation>> onCreateLoader(int arg0, Bundle arg1) {
 		return new ResultLoader(getActivity(), mLastSearched, mLastTab);
 	}
 
-	
-	
+
 
 	@Override
 	public void onLoadFinished(Loader<List<Translation>> loader,

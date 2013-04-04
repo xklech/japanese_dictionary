@@ -5,8 +5,9 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
-import cz.muni.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.Translation;
 
 public class DisplayCharacterInfo extends SherlockFragment{
 	
@@ -28,7 +27,10 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	private OnLoadGetCharacterListener mCallbackCharacter;
 	private LayoutInflater inflater;
 
-	
+	private boolean english;
+    private boolean french;        
+    private boolean dutch;
+    private boolean german;
 	
 	
 	public interface OnLoadGetCharacterListener{
@@ -39,7 +41,10 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		outState.putBoolean("saved", true);
+		if(japaneseCharacter != null){
+			outState = japaneseCharacter.createBundleFromJapaneseCharacter(outState);
+			Log.i("DisplayCharacterInfo","saving state: "+outState);
+		}
 		super.onSaveInstanceState(outState);
 	}
 	
@@ -65,20 +70,15 @@ public class DisplayCharacterInfo extends SherlockFragment{
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {		
-		japaneseCharacter =  mCallbackCharacter.getJapaneseCharacter();
 		setHasOptionsMenu(true);
         inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		if(savedInstanceState != null){
+			japaneseCharacter = JapaneseCharacter.newInstanceFromBundle(savedInstanceState);
+			Log.i("DisplayTranslation","saved state: "+savedInstanceState);	
+		}
 		super.onCreate(savedInstanceState);
 	}
 	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.menu_details, menu);
-		getSherlockActivity().getSupportActionBar().setHomeButtonEnabled(true);
-		getSherlockActivity().getSupportActionBar().setDisplayShowTitleEnabled(true);
-		getSherlockActivity().getSupportActionBar().setTitle(getString(R.string.character_title));
-		super.onCreateOptionsMenu(menu, inflater);
-	}
 	
 	
 	@Override
@@ -86,38 +86,23 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		if(savedInstanceState == null){
 			if(japaneseCharacter != null){
 				Log.i("DisplayCharacterInfo","Update fragment view");
-				updateCharacter();
 			}else{
-				Log.i("DisplayCharacterInfo","Nothing to display");
-				//TODO
+				Log.i("DisplayCharacterInfo","Construct from bundle");
+				japaneseCharacter =  mCallbackCharacter.getJapaneseCharacter();
 				
 			}
 		}
+		updateCharacter();
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
-	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case android.R.id.home:
-	            // app icon in action bar clicked; go home
-	            Intent intent = new Intent(getActivity(), MainActivity.class);
-	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	            startActivity(intent);
-	            return true;
-	        case R.id.settings:
-    			Log.i("MainActivity", "Lauching preference Activity");
-    			Intent intentSetting = new Intent(getActivity().getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
-    			intentSetting.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    			startActivity(intentSetting);
-    			return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+	public void onStart() {
+		if(updateLanguages()){
+			updateCharacter();
+		}
+		super.onStart();
 	}
-	   
-	
 	
 	private void updateCharacter(){
 		Log.i("DisplayCharacterInfo","Setting literal");
@@ -204,7 +189,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	}
 	
 	
-	private Map<String, String> getDictionaryCodes(){
+	public static final Map<String, String> getDictionaryCodes(){
 		Map<String, String> dictionaryCodes = new HashMap<String,String>();
 		dictionaryCodes.put("nelson_c", "Modern Reader's Japanese-English Character Dictionary");
 		dictionaryCodes.put("nelson_n", "The New Nelson Japanese-English Character Dictionary");
@@ -229,5 +214,33 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		
 		return dictionaryCodes;
 	}
+	
+	
+    private boolean updateLanguages(){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean changed = false;
+        boolean englTemp = sharedPrefs.getBoolean("language_english", false);
+        if(englTemp != english){
+        	english = englTemp;
+        	changed = true;
+        }
+        boolean frenchTemp = sharedPrefs.getBoolean("language_french", false);  
+        if(frenchTemp != french){
+        	french = frenchTemp;
+        	changed = true;
+        }
+        boolean dutchTemp = sharedPrefs.getBoolean("language_dutch", false);  
+        if(dutchTemp != dutch){
+        	dutch = dutchTemp;
+        	changed = true;
+        }
+        boolean germanTemp = sharedPrefs.getBoolean("language_german", false);  
+        if(germanTemp != german){
+        	german = germanTemp;
+        	changed = true;
+        }
+        return changed;
+    }
+	
 	
 }

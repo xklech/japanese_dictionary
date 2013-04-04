@@ -3,8 +3,6 @@ package cz.muni.fi.japanesedictionary.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
-import cz.muni.japanesedictionary.entity.Translation;
+import cz.muni.fi.japanesedictionary.entity.Translation;
 
 public class GlossaryReaderContract extends SQLiteOpenHelper {
 	
@@ -73,31 +71,8 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	// add translation
 	public void saveTranslation(Translation translation){
 		SQLiteDatabase db = this.getWritableDatabase();	
-		
-		ContentValues values = new ContentValues();
-		if(translation.getJapaneseKeb() != null && translation.getJapaneseKeb().size() > 0){
-			values.put(GlossaryEntry.COLUMN_NAME_JAPANESE_KEB, (new JSONArray(translation.getJapaneseKeb())).toString());
-		}
-		if(translation.getJapaneseReb() != null && translation.getJapaneseReb().size() > 0){
-			values.put(GlossaryEntry.COLUMN_NAME_JAPANESE_REB, (new JSONArray(translation.getJapaneseReb())).toString());
-		}
-		if(translation.getDutchSense() != null && translation.getDutchSense().size() > 0){	
-			JSONArray sense = convertToJSON(translation.getDutchSense());
-			values.put(GlossaryEntry.COLUMN_NAME_DUTCH,sense.toString());
-		}
-		
-		if(translation.getEnglishSense() != null && translation.getEnglishSense().size() > 0){	
-			JSONArray sense = convertToJSON(translation.getEnglishSense());
-			values.put(GlossaryEntry.COLUMN_NAME_ENGLISH, sense.toString());
-		}
-		if(translation.getFrenchSense() != null && translation.getFrenchSense().size() > 0){	
-			JSONArray sense = convertToJSON(translation.getFrenchSense());
-			values.put(GlossaryEntry.COLUMN_NAME_FRENCH, sense.toString());
-		}
-		if(translation.getGermanSense() != null && translation.getGermanSense().size() > 0){
-			JSONArray sense = convertToJSON(translation.getGermanSense());
-			values.put(GlossaryEntry.COLUMN_NAME_GERMAN, sense.toString());
-		}
+		ContentValues values = translation.createContentValuesFromTranslation();
+
 		Log.i("GlossaryReaderContract","Save translation values: "+values.toString());
 		long returnedId = db.insert(GlossaryEntry.TABLE_NAME,null, values);
 		if(returnedId == -1){
@@ -164,22 +139,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	    return (translationsReturn == null || translationsReturn.size()<1)? null : translationsReturn;
 	}
 	
-	/**
-	 * Taks list of senses and convert it to ona JSONArray
-	 * 
-	 * @param senses - List of senses
-	 * @return coverted JSONArray
-	 */
-	
-	private JSONArray convertToJSON(List<List<String>> senses){
-		JSONArray senseJSON = new JSONArray();
-		for(List<String> oneSense : senses){
-			JSONArray innerJSON = new JSONArray(oneSense);
-			senseJSON.put(innerJSON);
-		}
-		return senseJSON;
-		
-	}
+
 
 	
 }

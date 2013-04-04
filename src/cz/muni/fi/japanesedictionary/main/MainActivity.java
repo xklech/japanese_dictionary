@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import android.widget.TabHost;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnCloseListener;
@@ -27,9 +27,9 @@ import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
+import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
-import cz.muni.japanesedictionary.entity.JapaneseCharacter;
-import cz.muni.japanesedictionary.entity.Translation;
 
 public class MainActivity extends SherlockFragmentActivity
 	implements ResultFragmentList.OnTranslationSelectedListener,
@@ -55,7 +55,6 @@ public class MainActivity extends SherlockFragmentActivity
 	private JapaneseCharacter japaneseCharacter;
 	
 	private ResultFragmentList fragmentList = null;
-	private DisplayTranslation displayTranslation = null;
 	
 	private SearchView mSearchView;
 	
@@ -112,6 +111,7 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		Log.i("MainActivity","Setting layout");
 		fragmentList = new ResultFragmentList();
+		fragmentList.setRetainInstance(true);
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		Log.i("MainActivity","Setting main fragment");
 		ft.add(android.R.id.tabcontent, fragmentList,"resultFragmentList");
@@ -120,6 +120,7 @@ public class MainActivity extends SherlockFragmentActivity
 			Log.i("MainActivity","Setting info fragment");
 			DisplayTranslation displayTranslation = new DisplayTranslation();
 			ft.add(R.id.detail_fragment, displayTranslation,"displayFragment");
+			ft.addToBackStack("mainFragment");
 		}
 		ft.commit();
 	}
@@ -128,23 +129,19 @@ public class MainActivity extends SherlockFragmentActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.i("MainFragment", "Inflating menu");
-		//inflater.inflate(R.menu.menu, menu);
-		
-		Log.i("MainFragment", "Setting menu ");
 
+	    MenuInflater inflater = getSupportMenuInflater();
+	    inflater.inflate(R.menu.menu, menu);
+		Log.i("MainFragment", "Setting menu ");
+		getSupportActionBar().setHomeButtonEnabled(true);
 		
         // Place an action bar item for searching.
-        MenuItem item = menu.add("Search");
-        item.setIcon(android.R.drawable.ic_menu_search);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        mSearchView = new MySearchView(this);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) searchItem.getActionView();
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnCloseListener(this);
         mSearchView.setIconifiedByDefault(false);
-        Log.e("ResultFragmentList","restore searched field: "+mCurFilter);
-        mSearchView.setQuery(mCurFilter, false);
-        item.setActionView(mSearchView);
-
+        
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -176,11 +173,29 @@ public class MainActivity extends SherlockFragmentActivity
         return true;
 
 	}
-
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	            // app icon in action bar clicked; go home
+	            Intent intent = new Intent(this, MainActivity.class);
+	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	            startActivity(intent);
+	            return true;
+	        case R.id.settings:
+    			Log.i("MainActivity", "Lauching preference Activity");
+    			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+    			startActivity(intentSetting);
+    			return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 
 	@Override
 	public boolean onQueryTextSubmit(String query) {
-		// nothing
+		mSearchView.clearFocus();
 		return true;
 	}
 
@@ -199,10 +214,12 @@ public class MainActivity extends SherlockFragmentActivity
 		//fragmentList = getSupportFragmentManager().findFragmentByTag("")
         mCurFilter = newText;
         if(!fragmentList.isVisible()){
+        	getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        	//fragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
+        	fragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
         	ft.replace(android.R.id.tabcontent, fragmentList, "resultFragmentList");
-        	Log.i("MainActivity","text changed - isnt visible");	        	
+        	Log.i("MainActivity","text changed - isnt visible");	
+
         	ft.commit();
         }else{
         	Log.i("MainActivity","text changed is vidible");
@@ -222,17 +239,20 @@ public class MainActivity extends SherlockFragmentActivity
 
 		if(tabId != mLastTabId){
 			mLastTabId = tabId;
-			//fragmentList = getSupportFragmentManager().findFragmentByTag("")
 	        if(!fragmentList.isVisible()){
+	        	//clear backstack
+	        	getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 	        	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-	        	//fragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
+	        	fragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
 	        	ft.replace(android.R.id.tabcontent, fragmentList, "resultFragmentList");
-	        	Log.i("MainActivity","tab changed - isnt visible");	        	
+	        	Log.i("MainActivity","tab changed - isnt visible");	       
+	        	
 	        	ft.commit();
 	        }else{
 	        	Log.i("MainActivity","tab changed is vidible");
+	        	fragmentList.search(mCurFilter, mLastTabId);
 	        }
-	        fragmentList.search(mCurFilter, mLastTabId);
+	        
 		}
 
 	}
@@ -285,6 +305,7 @@ public class MainActivity extends SherlockFragmentActivity
 			newFragment.show(getSupportFragmentManager(), "dialog");
 		} else if (!isMyServiceRunning(getApplicationContext())) {
 			Intent intent = new Intent(this, ParserService.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			startService(intent);
 		}
 	}
@@ -341,10 +362,14 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	@Override
 	public Translation getTranslationCallBack(int index){
-		if(mAdapter != null){
-			return mAdapter.getItem(index);
+		if(mAdapter == null && fragmentList != null){
+			mAdapter = fragmentList.getAdapter();
 		}
-		System.out.println("adapter is null");
+		if(mAdapter != null){
+			if(mAdapter.getCount() > index){
+				return mAdapter.getItem(index);
+			}
+		}
 		return null;
 	}
 	
@@ -354,7 +379,6 @@ public class MainActivity extends SherlockFragmentActivity
 
 	@Override
 	public void showKanjiDetail(JapaneseCharacter character) {
-		// TODO Auto-generated method stub
 		japaneseCharacter  = character;
 		System.out.println("character: "+character);
 		
@@ -376,6 +400,7 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 		
 		DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
+		displayCharacter.setRetainInstance(true);
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(android.R.id.tabcontent, displayCharacter,"displayCharacter");
 		fragmentTransaction.addToBackStack(null);
@@ -387,19 +412,6 @@ public class MainActivity extends SherlockFragmentActivity
 		return japaneseCharacter;
 	}
 	
-    public static class MySearchView extends SearchView {
-        public MySearchView(Context context) {
-            super(context);
-        }
-
-        // The normal SearchView doesn't clear its search text when
-        // collapsed, so we will do this for it.
-        @Override
-        public void onActionViewCollapsed() {
-            //setQuery("", false);
-            super.onActionViewCollapsed();
-        }
-    }
     
 
 	static class TabFactory implements TabHost.TabContentFactory {

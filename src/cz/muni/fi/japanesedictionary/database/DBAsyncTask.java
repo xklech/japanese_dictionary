@@ -1,6 +1,6 @@
 package cz.muni.fi.japanesedictionary.database;
 
-import cz.muni.japanesedictionary.entity.Translation;
+import cz.muni.fi.japanesedictionary.entity.Translation;
 import android.os.AsyncTask;
 
 

@@ -968,6 +968,7 @@ containing a value of this type.
         public static final int abs__title=0x7f05001b;
         public static final int abs__titleDivider=0x7f05001c;
         public static final int abs__up=0x7f05000b;
+        public static final int action_search=0x7f05005d;
         public static final int custom_notification=0x7f050053;
         public static final int delete=0x7f05005a;
         public static final int detail_fragment=0x7f050052;
@@ -1002,7 +1003,7 @@ containing a value of this type.
         public static final int ntification_progressBar=0x7f050057;
         public static final int results_fragment_container=0x7f050058;
         public static final int search=0x7f050059;
-        public static final int settings=0x7f05005d;
+        public static final int settings=0x7f05005e;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
