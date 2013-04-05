@@ -19,7 +19,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
-import cz.muni.fi.japanesedictionary.entity.Translation;
 
 public class DisplayCharacterInfo extends SherlockFragment{
 	
