@@ -78,4 +78,6 @@
    <string name="kanjidict_skip_text">SKIP</string>  
    <string name="kanjidict_nanori_text">Nanori</string>  
    <string name="kanjidict_meanings">Meanings</string>  
+   <string name="kanjidict_onyomi_text">Onyomi</string>  
+   <string name="kanjidict_kunyomi_text">Kunyomi</string>  
 </resources>

@@ -145,9 +145,10 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}else{
 			getView().findViewById(R.id.kanjidict_skip_container).setVisibility(View.GONE);
 		}
+	
 		
 		if(japaneseCharacter.getNanori() != null && japaneseCharacter.getNanori().size() > 0){
-			Log.i("DisplayCharacterInfo","Setting nanori: " + japaneseCharacter.getSkip());
+			Log.i("DisplayCharacterInfo","Setting nanori: " + japaneseCharacter.getNanori());
 			int count = japaneseCharacter.getNanori().size();
 			int i =1;
 			StringBuilder strBuilder = new StringBuilder();
@@ -163,7 +164,42 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}else{
 			getView().findViewById(R.id.kanjidict_nanori_container).setVisibility(View.GONE);
 		}
+
+		if(japaneseCharacter.getRmGroupJaKun() != null && japaneseCharacter.getRmGroupJaKun().size() > 0){
+			Log.i("DisplayCharacterInfo","Setting kunyomi: " + japaneseCharacter.getRmGroupJaKun());
+			int count = japaneseCharacter.getRmGroupJaKun().size();
+			int i =1;
+			StringBuilder strBuilder = new StringBuilder();
+			for(String kunyomi:japaneseCharacter.getRmGroupJaKun()){
+				strBuilder.append(kunyomi);
+				if(i < count){
+					strBuilder.append(", ");
+				}
+				i++;
+			}
+			TextView kunyomi = (TextView)getView().findViewById(R.id.kanjidict_kunyomi);
+			kunyomi.setText(strBuilder);
+		}else{
+			getView().findViewById(R.id.kanjidict_kunyomi_container).setVisibility(View.GONE);
+		}
 		
+		if(japaneseCharacter.getRmGroupJaOn() != null && japaneseCharacter.getRmGroupJaOn().size() > 0){
+			Log.i("DisplayCharacterInfo","Setting onnyomi: " + japaneseCharacter.getRmGroupJaOn());
+			int count = japaneseCharacter.getRmGroupJaOn().size();
+			int i =1;
+			StringBuilder strBuilder = new StringBuilder();
+			for(String onyomi:japaneseCharacter.getRmGroupJaOn()){
+				strBuilder.append(onyomi);
+				if(i < count){
+					strBuilder.append(", ");
+				}
+				i++;
+			}
+			TextView onyomi = (TextView)getView().findViewById(R.id.kanjidict_onyomi);
+			onyomi.setText(strBuilder);
+		}else{
+			getView().findViewById(R.id.kanjidict_onyomi_container).setVisibility(View.GONE);
+		}
 		
 		boolean hasMeaning = false; 	
 		LinearLayout container = (LinearLayout) getView().findViewById(R.id.kanjidict_meanings_lines_container);

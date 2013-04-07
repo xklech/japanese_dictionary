@@ -32,7 +32,6 @@ public class DisplayTranslation extends SherlockFragment {
 	private Map<String, JapaneseCharacter> characters = null;
 	private LayoutInflater inflater = null;
 	
-	private boolean translationChanged = false;
 
 
 	private boolean english;
@@ -71,13 +70,6 @@ public class DisplayTranslation extends SherlockFragment {
 			updateTranslation();
 		super.onStart();
 	}
-	
-	
-	@Override
-	public void onStop() {
-		translationChanged = true;
-		super.onStop();
-	};
 	
 	
 	@Override
@@ -124,13 +116,11 @@ public class DisplayTranslation extends SherlockFragment {
 	
 	public void setTranslation(Translation tran){
 		this.translation = tran;
-		this.translationChanged = true;
 	}
 	
 	
 	public void updateTranslation(){
 		Log.i("DisplayTranslation","update translation");
-		translationChanged = false;
 		if(translation == null){
 			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
 			return;

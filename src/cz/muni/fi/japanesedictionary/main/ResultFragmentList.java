@@ -92,11 +92,8 @@ public class ResultFragmentList extends SherlockListFragment implements
     }
     
 
-
-
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
 		setListShown(false);
 		
 		SharedPreferences settings = getActivity().getSharedPreferences(
@@ -129,27 +126,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 			mLastSearched = bundle.getString(MainActivity.SEARCH_TEXT);
 			mLastTab = bundle.getString(MainActivity.PART_OF_TEXT);
 		}
-				
-		/*getListView().setOnScrollListener(new OnScrollListener() {
-			
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				//view.requestFocus();
-			}
-
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-				// TODO Auto-generated method stub
-				
-			}
 		
-		});*/
-
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
 		if(savedInstanceState != null){
 			getLoaderManager().restartLoader(0, null, this);
 		}else{

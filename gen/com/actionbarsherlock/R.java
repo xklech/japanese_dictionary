@@ -28,7 +28,7 @@ public final class R {
 		public static final int abs__list_item = 0x7f050019;
 		public static final int abs__progress_horizontal = 0x7f05000f;
 		public static final int showHome = 0x7f050005;
-		public static final int results_fragment_container = 0x7f05005c;
+		public static final int results_fragment_container = 0x7f050060;
 		public static final int abs__home = 0x7f05000a;
 		public static final int abs__search_src_text = 0x7f05002e;
 		public static final int abs__search_mag_icon = 0x7f05002c;

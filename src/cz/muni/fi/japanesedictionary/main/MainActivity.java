@@ -141,7 +141,7 @@ public class MainActivity extends SherlockFragmentActivity
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnCloseListener(this);
         mSearchView.setIconifiedByDefault(false);
-        
+        mSearchView.setQuery(mCurFilter, true);
 		return super.onCreateOptionsMenu(menu);
 	}
 

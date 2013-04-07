@@ -216,6 +216,82 @@
 			        />
 		   	</LinearLayout>
 	</LinearLayout>	
+
+	<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:visibility="visible"
+		android:id="@+id/kanjidict_onyomi_container"
+	    >
+			<View
+			    android:layout_width="fill_parent"
+			    android:layout_height="1dp"
+			    android:background="@android:color/darker_gray"/>
+			<LinearLayout 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+				android:orientation="horizontal"
+			    >
+		
+			   	<TextView 
+			        android:layout_width="100dp"
+			        android:layout_height="wrap_content"
+			        android:gravity="right"
+			        android:textAppearance="?android:attr/textAppearanceSmall"
+			        android:textColor="@android:color/secondary_text_dark"
+			        android:text="@string/kanjidict_onyomi_text"
+			        android:layout_gravity="right"
+			        android:layout_marginLeft="20dp" />
+			    <TextView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:id="@+id/kanjidict_onyomi"
+			        android:textAppearance="?android:attr/textAppearanceSmall"
+			        android:textColor="@android:color/primary_text_dark"
+			        android:textIsSelectable="true"
+			        android:layout_marginLeft="10dp"
+			        />
+		   	</LinearLayout>
+	</LinearLayout>	
+
+	<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:visibility="visible"
+		android:id="@+id/kanjidict_kunyomi_container"
+	    >
+			<View
+			    android:layout_width="fill_parent"
+			    android:layout_height="1dp"
+			    android:background="@android:color/darker_gray"/>
+			<LinearLayout 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+				android:orientation="horizontal"
+			    >
+		
+			   	<TextView 
+			        android:layout_width="100dp"
+			        android:layout_height="wrap_content"
+			        android:gravity="right"
+			        android:textAppearance="?android:attr/textAppearanceSmall"
+			        android:textColor="@android:color/secondary_text_dark"
+			        android:text="@string/kanjidict_kunyomi_text"
+			        android:layout_gravity="right"
+			        android:layout_marginLeft="20dp" />
+			    <TextView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:id="@+id/kanjidict_kunyomi"
+			        android:textAppearance="?android:attr/textAppearanceSmall"
+			        android:textColor="@android:color/primary_text_dark"
+			        android:textIsSelectable="true"
+			        android:layout_marginLeft="10dp"
+			        />
+		   	</LinearLayout>
+	</LinearLayout>
 	
    	<LinearLayout 
    	    android:layout_width="match_parent"
