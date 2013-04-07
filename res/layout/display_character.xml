@@ -217,6 +217,39 @@
 		   	</LinearLayout>
 	</LinearLayout>	
 	
+   	<LinearLayout 
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content"
+   	    android:id="@+id/kanjidict_meanings_container"
+   	    android:orientation="vertical"
+   	    >
+		<View
+		    android:layout_width="fill_parent"
+		    android:layout_height="1dp"
+		    android:background="@android:color/darker_gray"/>
+		<LinearLayout 
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#303030"
+		    >
+		    <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@android:color/primary_text_dark"
+		        android:text="@string/kanjidict_meanings"
+		        android:layout_marginLeft="20dp"
+		        />
+	    </LinearLayout>
+		<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:id="@+id/kanjidict_meanings_lines_container"
+	    >
+   		</LinearLayout>
+   	</LinearLayout>
+   	
 	<LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -68,11 +68,17 @@ public class DisplayTranslation extends SherlockFragment {
 
 	@Override
 	public void onStart() {
-		if(updateLanguages() || translationChanged){
 			updateTranslation();
-		}
 		super.onStart();
 	}
+	
+	
+	@Override
+	public void onStop() {
+		translationChanged = true;
+		super.onStop();
+	};
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -129,6 +135,8 @@ public class DisplayTranslation extends SherlockFragment {
 			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
 			return;
 		}
+		
+		updateLanguages();
 		
 		TextView read = (TextView)getView().findViewById(R.id.translation_read);
 		TextView write = (TextView)getView().findViewById(R.id.translation_write);

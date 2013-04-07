@@ -153,7 +153,7 @@ public class ParserService extends IntentService{
 	                output.write(data, 0, count);
 	                if(fileLength != -1){
 		                int persPub = Math.round((((float)total/fileLength)*100)) ;
-		                if(perc < persPub){
+		                if(perc+4 < persPub){
 		                	mNotificationView.setProgressBar(R.id.ntification_progressBar, 100, persPub, false);
 		                	mNotificationView.setTextViewText(R.id.notification_text, getString(R.string.dictionary_download_in_progress) + " "+ persPub +" %");
 		                	mNotification.contentView=mNotificationView;
@@ -231,7 +231,7 @@ public class ParserService extends IntentService{
 			                if(fileLength != -1){
 				                int persPub = Math.round((((float)total/fileLength)*100));
 				                //System.out.println("pers: "+persPub);
-				                if(perc < persPub){
+				                if(perc+4 < persPub){
 				                	mNotificationView.setProgressBar(R.id.ntification_progressBar, 100, persPub, false);
 				                	mNotificationView.setTextViewText(R.id.notification_text, getString(R.string.dictionary_download_in_progress) + " "+ persPub +" %");
 				                	mNotification.contentView=mNotificationView;

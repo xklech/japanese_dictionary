@@ -223,8 +223,9 @@ public class MainActivity extends SherlockFragmentActivity
         	ft.commit();
         }else{
         	Log.i("MainActivity","text changed is vidible");
+        	fragmentList.search(mCurFilter, mLastTabId);
         }
-        fragmentList.search(mCurFilter, mLastTabId);
+        
         
         return true;
 
@@ -400,7 +401,6 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 		
 		DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
-		displayCharacter.setRetainInstance(true);
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(android.R.id.tabcontent, displayCharacter,"displayCharacter");
 		fragmentTransaction.addToBackStack(null);

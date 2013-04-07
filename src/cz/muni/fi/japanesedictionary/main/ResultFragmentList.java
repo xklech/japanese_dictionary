@@ -87,7 +87,7 @@ public class ResultFragmentList extends SherlockListFragment implements
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
     	//l.requestFocus();
-    	System.out.println("jeduuu");
+
     	mCallbackTranslation.onTranslationSelected(position);
     }
     

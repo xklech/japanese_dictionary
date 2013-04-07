@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -73,15 +74,16 @@ public class DisplayCharacterInfo extends SherlockFragment{
         inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if(savedInstanceState != null){
 			japaneseCharacter = JapaneseCharacter.newInstanceFromBundle(savedInstanceState);
-			Log.i("DisplayTranslation","saved state: "+savedInstanceState);	
+			Log.i("DisplayCharacterInfo","saved state: "+savedInstanceState);	
 		}
 		super.onCreate(savedInstanceState);
 	}
 	
-	
+
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		if(savedInstanceState == null){
 			if(japaneseCharacter != null){
 				Log.i("DisplayCharacterInfo","Update fragment view");
@@ -91,8 +93,8 @@ public class DisplayCharacterInfo extends SherlockFragment{
 				
 			}
 		}
-		updateCharacter();
-		super.onViewCreated(view, savedInstanceState);
+
+		
 	}
 	
 	@Override
@@ -105,6 +107,10 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	
 	private void updateCharacter(){
 		Log.i("DisplayCharacterInfo","Setting literal");
+		if(japaneseCharacter == null){
+			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
+			return;
+		}
 		TextView literal = (TextView)getView().findViewById(R.id.kanjidict_literal);
 		literal.setText(japaneseCharacter.getLiteral());
 		
@@ -148,7 +154,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 			for(String nanori:japaneseCharacter.getNanori()){
 				strBuilder.append(nanori);
 				if(i < count){
-					strBuilder.append(',');
+					strBuilder.append(", ");
 				}
 				i++;
 			}
@@ -158,22 +164,113 @@ public class DisplayCharacterInfo extends SherlockFragment{
 			getView().findViewById(R.id.kanjidict_nanori_container).setVisibility(View.GONE);
 		}
 		
+		
+		boolean hasMeaning = false; 	
+		LinearLayout container = (LinearLayout) getView().findViewById(R.id.kanjidict_meanings_lines_container);
+		container.removeAllViews();
+		if(english && japaneseCharacter.getMeaningEnglish() != null && japaneseCharacter.getMeaningEnglish().size() > 0){
+			Log.i("DisplayCharacter","Setting english meaning");
+			hasMeaning = true;
+			View languageView = inflater.inflate(R.layout.kanji_meaning, null);
+			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+			language.setText(R.string.language_english);
+			int i =1;
+			int count = japaneseCharacter.getMeaningEnglish().size();
+			StringBuilder strBuilder = new StringBuilder();
+			for(String meaning : japaneseCharacter.getMeaningEnglish()){
+				strBuilder.append(meaning);
+				if(i < count){
+					strBuilder.append(", ");
+				}
+				i++;
+			}
+			TextView meaningTextView = (TextView)languageView.findViewById(R.id.kanjidict_translation);
+			meaningTextView.setText(strBuilder);
+			Log.i("DisplayCharacter","Setting english meaning: "+strBuilder);
+			container.addView(languageView);
+		}
+		
+		if(french && japaneseCharacter.getMeaningFrench() != null && japaneseCharacter.getMeaningFrench().size() > 0){
+			Log.i("DisplayCharacter","Setting french meaning");
+			hasMeaning = true;
+			View languageView = inflater.inflate(R.layout.kanji_meaning, null);
+			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+			language.setText(R.string.language_french);
+			int i =1;
+			int count = japaneseCharacter.getMeaningFrench().size();
+			StringBuilder strBuilder = new StringBuilder();
+			for(String meaning : japaneseCharacter.getMeaningFrench()){
+				strBuilder.append(meaning);
+				if(i < count){
+					strBuilder.append(", ");
+				}
+				i++;
+			}
+			TextView meaningTextView = (TextView)languageView.findViewById(R.id.kanjidict_translation);
+			meaningTextView.setText(strBuilder);
+			container.addView(languageView);
+		}
+
+		if(dutch && japaneseCharacter.getMeaningDutch() != null && japaneseCharacter.getMeaningDutch().size() > 0){
+			Log.i("DisplayCharacter","Setting dutch meaning");
+			hasMeaning = true;
+			View languageView = inflater.inflate(R.layout.kanji_meaning, null);
+			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+			language.setText(R.string.language_dutch);
+			int i =1;
+			int count = japaneseCharacter.getMeaningDutch().size();
+			StringBuilder strBuilder = new StringBuilder();
+			for(String meaning : japaneseCharacter.getMeaningDutch()){
+				strBuilder.append(meaning);
+				if(i < count){
+					strBuilder.append(", ");
+				}
+				i++;
+			}
+			TextView meaningTextView = (TextView)languageView.findViewById(R.id.kanjidict_translation);
+			meaningTextView.setText(strBuilder);
+			container.addView(languageView);
+		}
+
+		if(german && japaneseCharacter.getMeaningGerman() != null && japaneseCharacter.getMeaningGerman().size() > 0){
+			Log.i("DisplayCharacter","Setting german meaning");
+			hasMeaning = true;
+			View languageView = inflater.inflate(R.layout.kanji_meaning, null);
+			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+			language.setText(R.string.language_german);
+			int i =1;
+			int count = japaneseCharacter.getMeaningGerman().size();
+			StringBuilder strBuilder = new StringBuilder();
+			for(String meaning : japaneseCharacter.getMeaningGerman()){
+				strBuilder.append(meaning);
+				if(i < count){
+					strBuilder.append(", ");
+				}
+				i++;
+			}
+			TextView meaningTextView = (TextView)languageView.findViewById(R.id.kanjidict_translation);
+			meaningTextView.setText(strBuilder);
+			container.addView(languageView);
+		}
+		
+		if(!hasMeaning){
+			Log.i("DisplayCharacter","Doesn't have meanings");
+			getView().findViewById(R.id.kanjidict_meanings_container).setVisibility(View.GONE);
+		}
+
+		
 		if(japaneseCharacter.getDicRef() != null && japaneseCharacter.getDicRef().size() > 0){
 			Log.i("DisplayCharacterInfo","Setting dictionary references");
 			Map<String, String> dictionaries = getDictionaryCodes();
 			LinearLayout dictionariesContainer = (LinearLayout) getView().findViewById(R.id.kanjidict_dictionaries_records);
-			int i =0;
 			for(String key:japaneseCharacter.getDicRef().keySet()){
-				i++;
 				View dictionaryLine = inflater.inflate(R.layout.dictionary_line, null);
 				String dictName = dictionaries.get(key);
 				if(dictName != null && dictName.length() > 0){
 					TextView dictNameView = (TextView)dictionaryLine.findViewById(R.id.kanjidict_dictionary_dict);
 					dictNameView.setText(dictName);
-					dictNameView.setId(i);
 					TextView dictNumber = (TextView)dictionaryLine.findViewById(R.id.kanjidict_dictionary_number);
 					dictNumber.setText(japaneseCharacter.getDicRef().get(key));
-					dictNumber.setId(i*100);
 					
 					dictionariesContainer.addView(dictionaryLine);
 				}

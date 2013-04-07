@@ -77,4 +77,5 @@
    <string name="kanjidict_dictionaries">Dictionary references</string>  
    <string name="kanjidict_skip_text">SKIP</string>  
    <string name="kanjidict_nanori_text">Nanori</string>  
+   <string name="kanjidict_meanings">Meanings</string>  
 </resources>
