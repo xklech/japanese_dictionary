@@ -15,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -67,7 +66,7 @@ public class DisplayTranslation extends SherlockFragment {
 
 	@Override
 	public void onStart() {
-			updateTranslation();
+		updateTranslation();
 		super.onStart();
 	}
 	
@@ -99,6 +98,7 @@ public class DisplayTranslation extends SherlockFragment {
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		
 		if(savedInstanceState != null){
 			Log.w("DisplayTranslation","rotace"+savedInstanceState);
 		}else{
@@ -106,11 +106,9 @@ public class DisplayTranslation extends SherlockFragment {
 			if(bundle != null){
 				int index = bundle.getInt("TranslationId");
 				translation =  mCallbackTranslation.getTranslationCallBack(index);
-			}else{
-				translation = null;
 			}
 		}
-		updateTranslation();
+		
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
@@ -121,10 +119,17 @@ public class DisplayTranslation extends SherlockFragment {
 	
 	public void updateTranslation(){
 		Log.i("DisplayTranslation","update translation");
+		
+		LinearLayout layoutSelect = (LinearLayout) getView().findViewById(R.id.translation_select);
+		LinearLayout layoutTranslation = (LinearLayout) getView().findViewById(R.id.translation_container);
 		if(translation == null){
-			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
+			layoutSelect.setVisibility(View.VISIBLE);
+			layoutTranslation.setVisibility(View.GONE);
 			return;
 		}
+		layoutSelect.setVisibility(View.GONE);
+		layoutTranslation.setVisibility(View.VISIBLE);
+		
 		
 		updateLanguages();
 		
@@ -390,24 +395,6 @@ public class DisplayTranslation extends SherlockFragment {
 	}
 	
 	
-
-	
-    /*public static class DisplayTranslationHandler extends Handler {
-        private final WeakReference<DisplayTranslation> mDisplayTranslation; 
-
-        DisplayTranslationHandler(DisplayTranslation displayTranslation) {
-        	mDisplayTranslation = new WeakReference<DisplayTranslation>(displayTranslation);
-        }
-        @Override
-        public void handleMessage(Message msg)
-        {d
-        	DisplayTranslation displayTranslationFragment = mDisplayTranslation.get();
-             if (displayTranslationFragment != null) { 
-            	 displayTranslationFragment.displayCharacters();
-             }
-        }
-    }*/
-
 	public void setCharacters(Map<String, JapaneseCharacter> characters) {
 		this.characters = characters;
 	}

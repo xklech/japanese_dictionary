@@ -1,5 +1,6 @@
 package cz.muni.fi.japanesedictionary.main;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import android.app.Activity;
@@ -9,6 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -29,6 +32,26 @@ public class ResultFragmentList extends SherlockListFragment implements
 	
 	private String mLastSearched;
 	private String mLastTab;
+	private boolean dualPane = false;
+	private IncomingHandler handler;
+	
+	static class IncomingHandler extends Handler {
+	    private final WeakReference<MainActivity> mActivity; 
+
+	    IncomingHandler(MainActivity activity) {
+	    	mActivity = new WeakReference<MainActivity>(activity);
+	    }
+	    @Override
+	    public void handleMessage(Message msg)
+	    {
+	    	
+	    	MainActivity activity = mActivity.get();
+	         if (activity != null) {
+	        	 Log.e("ResultFragmentList","received message");
+	        	 activity.onTranslationSelected(0);
+	         }else Log.e("ResultFragmentList","received message - null");
+	    }
+	}
 	
     public static ResultFragmentList newInstance(String search,String tab) {
     	ResultFragmentList f = new ResultFragmentList();
@@ -60,10 +83,11 @@ public class ResultFragmentList extends SherlockListFragment implements
 	public void onSaveInstanceState(Bundle outState) {
 		Log.i("ResultFragmentList", "Saving instance");
 
-		if (mLastSearched != null && mLastSearched.length() > 0) {
+		if (mLastSearched != null) {
 			Log.i("ResultFragmentList", "Instance saved");
 			outState.putString(MainActivity.SEARCH_TEXT, mLastSearched);
 		}
+		outState.putBoolean(MainActivity.DUAL_PANE, dualPane);
 		outState.putString(MainActivity.PART_OF_TEXT, mLastTab);
 		Log.i("ResultFragmentList", "saving fragmen: " + mLastTab);
 		super.onSaveInstanceState(outState);
@@ -87,7 +111,6 @@ public class ResultFragmentList extends SherlockListFragment implements
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
     	//l.requestFocus();
-
     	mCallbackTranslation.onTranslationSelected(position);
     }
     
@@ -95,7 +118,11 @@ public class ResultFragmentList extends SherlockListFragment implements
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		setListShown(false);
-		
+		if(getActivity().findViewById(R.id.detail_fragment) != null){
+			//dualPane
+			dualPane = true;
+			handler =  new IncomingHandler((MainActivity)getActivity());
+		}
 		SharedPreferences settings = getActivity().getSharedPreferences(
 				ParserService.DICTIONARY_PREFERENCES, 0);
 		boolean validDictionary = settings.getBoolean("hasValidDictionary",
@@ -121,11 +148,13 @@ public class ResultFragmentList extends SherlockListFragment implements
 		if(savedInstanceState != null){
 			mLastSearched = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
 			mLastTab = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
+			dualPane = savedInstanceState.getBoolean(MainActivity.DUAL_PANE, false);
 		}else if (bundle != null) {
 			Log.e("ResultFragmentList", "Bundle: "+bundle);
 			mLastSearched = bundle.getString(MainActivity.SEARCH_TEXT);
 			mLastTab = bundle.getString(MainActivity.PART_OF_TEXT);
 		}
+		
 		
 		if(savedInstanceState != null){
 			getLoaderManager().restartLoader(0, null, this);
@@ -154,6 +183,10 @@ public class ResultFragmentList extends SherlockListFragment implements
 			setListShown(true);
 		} else {
 			setListShownNoAnimation(true);
+		}
+		if(dualPane && data!= null && data.size() > 0){
+			Log.e("ResultFragmentList","dual pane, display last");
+			handler.sendEmptyMessage(0);
 		}
 
 	}

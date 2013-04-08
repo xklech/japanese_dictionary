@@ -22,8 +22,9 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     boolean german;
     LayoutInflater inflater;
     
+    
     public TranslationsAdapter(Context cont) {
-        super(cont, android.R.layout.simple_list_item_2);
+        super(cont, R.layout.list_item);
         context = cont;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         english = sharedPrefs.getBoolean("language_english", false);
@@ -33,6 +34,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    
     public void setData(List<Translation> data) {
         clear();
         if (data != null) {
@@ -43,10 +45,12 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     }
     
     
+    
     /**
      * Populate new items in the list.
      */
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
+    @Override 
+    public View getView(int position, View convertView, ViewGroup parent) {
         View view;
         TextView write;
         TextView read;

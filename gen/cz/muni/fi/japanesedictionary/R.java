@@ -924,7 +924,7 @@ containing a value of this type.
         public static final int ic_action_search=0x7f020073;
         public static final int ic_launcher=0x7f020074;
         public static final int ic_launcher_settings=0x7f020075;
-        public static final int info_background=0x7f020076;
+        public static final int list_item_selector=0x7f020076;
         public static final int view_click=0x7f020077;
     }
     public static final class id {
@@ -968,17 +968,17 @@ containing a value of this type.
         public static final int abs__title=0x7f05001b;
         public static final int abs__titleDivider=0x7f05001c;
         public static final int abs__up=0x7f05000b;
-        public static final int action_search=0x7f050065;
-        public static final int custom_notification=0x7f05005b;
-        public static final int delete=0x7f050062;
-        public static final int detail_fragment=0x7f05005a;
+        public static final int action_search=0x7f050066;
+        public static final int custom_notification=0x7f05005c;
+        public static final int delete=0x7f050063;
+        public static final int detail_fragment=0x7f05005b;
         public static final int disableHome=0x7f050009;
         public static final int edit_query=0x7f050027;
-        public static final int fragment_container=0x7f050050;
+        public static final int fragment_container=0x7f050052;
         public static final int homeAsUp=0x7f050006;
-        public static final int jap_read=0x7f050057;
-        public static final int jap_write=0x7f050056;
-        public static final int kanji_line_id=0x7f050051;
+        public static final int jap_read=0x7f050059;
+        public static final int jap_write=0x7f050058;
+        public static final int kanji_line_id=0x7f050053;
         public static final int kanjidict_dictionaries_container=0x7f050046;
         public static final int kanjidict_dictionaries_records=0x7f050047;
         public static final int kanjidict_dictionary_dict=0x7f050033;
@@ -987,7 +987,7 @@ containing a value of this type.
         public static final int kanjidict_grade_container=0x7f050038;
         public static final int kanjidict_kunyomi=0x7f050043;
         public static final int kanjidict_kunyomi_container=0x7f050042;
-        public static final int kanjidict_language=0x7f050054;
+        public static final int kanjidict_language=0x7f050056;
         public static final int kanjidict_literal=0x7f050035;
         public static final int kanjidict_meanings_container=0x7f050044;
         public static final int kanjidict_meanings_lines_container=0x7f050045;
@@ -1001,34 +1001,35 @@ containing a value of this type.
         public static final int kanjidict_skip_container=0x7f05003c;
         public static final int kanjidict_stroke_count=0x7f05003b;
         public static final int kanjidict_stroke_count_container=0x7f05003a;
-        public static final int kanjidict_translation=0x7f050055;
+        public static final int kanjidict_translation=0x7f050057;
         public static final int listMode=0x7f050002;
-        public static final int main_fragment=0x7f050059;
         public static final int normal=0x7f050001;
-        public static final int notification_image=0x7f05005c;
-        public static final int notification_text=0x7f05005e;
-        public static final int notification_title=0x7f05005d;
-        public static final int ntification_progressBar=0x7f05005f;
-        public static final int results_fragment_container=0x7f050060;
-        public static final int search=0x7f050061;
-        public static final int settings=0x7f050066;
+        public static final int notification_image=0x7f05005d;
+        public static final int notification_text=0x7f05005f;
+        public static final int notification_title=0x7f05005e;
+        public static final int ntification_progressBar=0x7f050060;
+        public static final int results_fragment_container=0x7f050061;
+        public static final int search=0x7f050062;
+        public static final int settings=0x7f050067;
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
         public static final int tabMode=0x7f050003;
-        public static final int translation=0x7f050058;
-        public static final int translation_alternative=0x7f05004c;
-        public static final int translation_alternative_container=0x7f05004b;
-        public static final int translation_kanji=0x7f050052;
-        public static final int translation_kanji_container=0x7f05004e;
-        public static final int translation_kanji_meaning=0x7f050053;
-        public static final int translation_kanji_meanings_container=0x7f05004f;
-        public static final int translation_language=0x7f050063;
-        public static final int translation_read=0x7f050048;
-        public static final int translation_romaji=0x7f05004a;
-        public static final int translation_translation=0x7f050064;
-        public static final int translation_translation_container=0x7f05004d;
-        public static final int translation_write=0x7f050049;
+        public static final int translation=0x7f05005a;
+        public static final int translation_alternative=0x7f05004e;
+        public static final int translation_alternative_container=0x7f05004d;
+        public static final int translation_container=0x7f050049;
+        public static final int translation_kanji=0x7f050054;
+        public static final int translation_kanji_container=0x7f050050;
+        public static final int translation_kanji_meaning=0x7f050055;
+        public static final int translation_kanji_meanings_container=0x7f050051;
+        public static final int translation_language=0x7f050064;
+        public static final int translation_read=0x7f05004a;
+        public static final int translation_romaji=0x7f05004c;
+        public static final int translation_select=0x7f050048;
+        public static final int translation_translation=0x7f050065;
+        public static final int translation_translation_container=0x7f05004f;
+        public static final int translation_write=0x7f05004b;
         public static final int useLogo=0x7f050004;
         public static final int wrap_content=0x7f050000;
     }
@@ -1067,15 +1068,14 @@ containing a value of this type.
         public static final int kanji_meaning=0x7f03001c;
         public static final int list_item=0x7f03001d;
         public static final int main_activity=0x7f03001e;
-        public static final int main_fragment=0x7f03001f;
-        public static final int notification=0x7f030020;
-        public static final int results_fragment=0x7f030021;
-        public static final int search_actionbar=0x7f030022;
-        public static final int settings_action_provider=0x7f030023;
-        public static final int sherlock_spinner_dropdown_item=0x7f030024;
-        public static final int sherlock_spinner_item=0x7f030025;
-        public static final int translation_language=0x7f030026;
-        public static final int translation_line=0x7f030027;
+        public static final int notification=0x7f03001f;
+        public static final int results_fragment=0x7f030020;
+        public static final int search_actionbar=0x7f030021;
+        public static final int settings_action_provider=0x7f030022;
+        public static final int sherlock_spinner_dropdown_item=0x7f030023;
+        public static final int sherlock_spinner_item=0x7f030024;
+        public static final int translation_language=0x7f030025;
+        public static final int translation_line=0x7f030026;
     }
     public static final class menu {
         public static final int menu=0x7f0c0000;
@@ -1205,12 +1205,14 @@ containing a value of this type.
         public static final int tramslation_kanji=0x7f0a0042;
         public static final int tramslation_kanji_no_meaning=0x7f0a0043;
         public static final int tramslation_romaji=0x7f0a003f;
+        /**  Display Translation 
+         */
+        public static final int tramslation_select_translation=0x7f0a003d;
         public static final int tramslation_title=0x7f0a003e;
         public static final int tramslation_translation=0x7f0a0041;
         /**  Display Translation 
- Display Translation 
          */
-        public static final int tramslation_unknown_translation=0x7f0a003d;
+        public static final int tramslation_unknown_translation=0x7f0a004f;
         public static final int unknown_last_update=0x7f0a0026;
         public static final int updating_in_progress=0x7f0a0025;
     }

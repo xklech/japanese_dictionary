@@ -32,6 +32,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
     private boolean dutch;
     private boolean german;
 	
+    private boolean changed = false;
 	
 	public interface OnLoadGetCharacterListener{
 		
@@ -99,18 +100,27 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	
 	@Override
 	public void onStart() {
-		if(updateLanguages()){
+		if(updateLanguages() || changed){
 			updateCharacter();
 		}
 		super.onStart();
 	}
 	
+	public void changeCharacter(JapaneseCharacter character){
+		japaneseCharacter = character;
+		if(this.isVisible()){
+			updateCharacter();
+		}
+	}
+	
 	private void updateCharacter(){
 		Log.i("DisplayCharacterInfo","Setting literal");
+		changed = false;
 		if(japaneseCharacter == null){
 			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
 			return;
 		}
+		
 		TextView literal = (TextView)getView().findViewById(R.id.kanjidict_literal);
 		literal.setText(japaneseCharacter.getLiteral());
 		

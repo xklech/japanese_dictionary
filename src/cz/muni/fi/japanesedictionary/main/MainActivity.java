@@ -40,6 +40,7 @@ public class MainActivity extends SherlockFragmentActivity
 				TabHost.OnTabChangeListener
 				{
 	
+	public static final String DUAL_PANE = "cz.muni.fi.japanesedictionary.mainactivity.dualpane";
 	public static final String PARSER_SERVICE = "cz.muni.fi.japanesedictionary.parser.ParserService";
 	public static final String SEARCH_PREFERENCES = "cz.muni.fi.japanesedictionary.main.search_preferences";
 	public static final String SEARCH_TEXT = "cz.muni.fi.japanesedictionary.edit_text_searched";
@@ -69,7 +70,7 @@ public class MainActivity extends SherlockFragmentActivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.i("MainActivity","Checking saved instance");
-		setContentView(R.layout.main_fragment);
+		setContentView(R.layout.main_activity);
 		database = new GlossaryReaderContract(getApplicationContext());
 		//setHasOptionsMenu(true);
 		// Start out with a progress indicator.
@@ -120,7 +121,6 @@ public class MainActivity extends SherlockFragmentActivity
 			Log.i("MainActivity","Setting info fragment");
 			DisplayTranslation displayTranslation = new DisplayTranslation();
 			ft.add(R.id.detail_fragment, displayTranslation,"displayFragment");
-			ft.addToBackStack("mainFragment");
 		}
 		ft.commit();
 	}
@@ -331,20 +331,16 @@ public class MainActivity extends SherlockFragmentActivity
 			// two frames layout
 			Log.i("MainActivity","Setting info fragment");
 			DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
-			if(fragment == null ){
+			if(fragment == null || !fragment.isVisible()){
 				DisplayTranslation displayFragment = new DisplayTranslation();
 				Bundle bundle = new Bundle();
 				bundle.putInt("TranslationId", index);
 				displayFragment.setArguments(bundle);
 				FragmentTransaction ft = fragmentManager.beginTransaction();
-				ft.replace(R.id.main_fragment, displayFragment,"displayFragment");
+				ft.replace(R.id.detail_fragment, displayFragment,"displayFragment");
 				ft.commit();
-			}else if(fragment.isDetached()){
-				fragment.setTranslation(getTranslationCallBack(index));
-				FragmentTransaction ft = fragmentManager.beginTransaction();
-				ft.replace(R.id.main_fragment, fragment,"displayFragment");
-				ft.commit();
-			}else{
+			}else {
+				//is visible
 				fragment.setTranslation(getTranslationCallBack(index));
 				fragment.updateTranslation();
 			}
@@ -366,9 +362,11 @@ public class MainActivity extends SherlockFragmentActivity
 		if(mAdapter == null && fragmentList != null){
 			mAdapter = fragmentList.getAdapter();
 		}
+		
 		if(mAdapter != null){
 			if(mAdapter.getCount() > index){
 				return mAdapter.getItem(index);
+				
 			}
 		}
 		return null;
@@ -387,14 +385,9 @@ public class MainActivity extends SherlockFragmentActivity
 		if(findViewById(R.id.detail_fragment) != null){
 			// two frames layout
 			Log.i("MainActivity","Setting info fragment");
-			DisplayCharacterInfo fragment = (DisplayCharacterInfo)fragmentManager.findFragmentByTag("displayCharacter");
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			if(fragment!= null && fragment.isDetached()){
-				fragmentTransaction.replace(R.id.detail_fragment, fragment,"displayCharacter");
-			}else{
-				DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
-				fragmentTransaction.replace(R.id.detail_fragment, displayCharacter,"displayCharacter");
-			}
+			DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
+			fragmentTransaction.replace(R.id.detail_fragment, displayCharacter,"displayCharacter");
 			fragmentTransaction.addToBackStack(null);
 			fragmentTransaction.commit();
 			return;
