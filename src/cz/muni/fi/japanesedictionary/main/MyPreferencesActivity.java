@@ -45,12 +45,7 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 						Toast.makeText(getApplicationContext(), R.string.external_storrage_failed_title, Toast.LENGTH_SHORT).show();
 					} else if (MainActivity.isMyServiceRunning(getApplicationContext())) {
 						Toast.makeText(getApplicationContext(), R.string.updating_in_progress, Toast.LENGTH_SHORT).show();
-					} else {
-						SharedPreferences pref = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES,0);
-						SharedPreferences.Editor editor = pref.edit();
-						editor.clear();
-						editor.commit();
-						
+					} else {					
 						
 						Intent intent = new Intent(getApplicationContext(), ParserService.class);
 						startService(intent);

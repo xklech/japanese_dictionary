@@ -160,7 +160,7 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 		    	IndexReader reader = IndexReader.open(dir);
 	    		searcher= new IndexSearcher(reader);
 	    	 }
-	    	TopScoreDocCollector collector = TopScoreDocCollector.create(100, true);
+	    	TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
 	    	searcher.search(q, collector);
 	    	ScoreDoc[] hits = collector.topDocs().scoreDocs;
 	    	Log.e("ResultLoader", String.valueOf(hits.length));
