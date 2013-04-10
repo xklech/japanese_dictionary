@@ -110,7 +110,9 @@ public class ResultFragmentList extends SherlockListFragment implements
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-    	//l.requestFocus();
+    	l.setItemChecked(position, true);
+    	//getListView().setSelection(position);
+    	mAdapter.notifyDataSetChanged();
     	mCallbackTranslation.onTranslationSelected(position);
     }
     
@@ -155,7 +157,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 			mLastTab = bundle.getString(MainActivity.PART_OF_TEXT);
 		}
 		
-		
+		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE );
 		if(savedInstanceState != null){
 			getLoaderManager().restartLoader(0, null, this);
 		}else{

@@ -3,13 +3,20 @@
 
   <!-- Selected --> 
   <item 
-    android:state_focused="true" 
-    android:state_pressed="false" 
+    android:state_selected="true"
     android:drawable="@drawable/abs__list_activated_holo" /> <!--  @drawable/tab_focus -->
-
+	
+	
   <!-- Pressed -->
   <item 
     android:state_pressed="true" 
     android:drawable="@drawable/abs__list_pressed_holo_dark" /> <!--  @drawable/tab_press -->
+
+
+  <!-- Pressed -->
+  <item 
+    android:drawable="@android:color/black" /> <!--  @drawable/tab_press -->
+
+
 
 </selector>
