@@ -29,7 +29,7 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 			
-			Log.e("Preferences", "Activity");
+			Log.e("Preferences", "Creating activity");
 			addPreferencesFromResource(R.xml.preferences);
 			
 			
@@ -40,17 +40,19 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 					ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 					NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 					if (networkInfo == null || !networkInfo.isConnected()) {
+						Log.w("MyPreferencesActivity","Update dictionary - no network connection");
 						Toast.makeText(getApplicationContext(), R.string.internet_connection_failed_title, Toast.LENGTH_SHORT).show();
 					} else if (!MainActivity.canWriteExternalStorage()) {
+						Log.w("MyPreferencesActivity","Update dictionary - can't write external storage");
 						Toast.makeText(getApplicationContext(), R.string.external_storrage_failed_title, Toast.LENGTH_SHORT).show();
 					} else if (MainActivity.isMyServiceRunning(getApplicationContext())) {
+						Log.w("MyPreferencesActivity","Update dictionary - update in progress");
 						Toast.makeText(getApplicationContext(), R.string.updating_in_progress, Toast.LENGTH_SHORT).show();
 					} else {					
-						
+						Log.i("MyPreferencesActivity","Update dictionary - launching service");
 						Intent intent = new Intent(getApplicationContext(), ParserService.class);
 						startService(intent);
 						Toast.makeText(getApplicationContext(), R.string.updating_in_progress, Toast.LENGTH_SHORT).show();
-
 					}
 					return false;
 				}
@@ -88,6 +90,7 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
 	            // app icon in action bar clicked; go home
+	        	Log.i("MyPreferencesActivity", "Home button clicked");
 	            Intent intent = new Intent(this, MainActivity.class);
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(intent);

@@ -1,6 +1,5 @@
 package cz.muni.fi.japanesedictionary.main;
 
-import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
@@ -52,8 +51,8 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	
 	private TranslationsAdapter mAdapter = null;
-	private GlossaryReaderContract database = null;
-	private JapaneseCharacter japaneseCharacter;
+	private GlossaryReaderContract mDatabase = null;
+	private JapaneseCharacter mJapaneseCharacter;
 	
 	private ResultFragmentList fragmentList = null;
 	
@@ -69,9 +68,9 @@ public class MainActivity extends SherlockFragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i("MainActivity","Checking saved instance");
+
 		setContentView(R.layout.main_activity);
-		database = new GlossaryReaderContract(getApplicationContext());
+		mDatabase = new GlossaryReaderContract(getApplicationContext());
 		//setHasOptionsMenu(true);
 		// Start out with a progress indicator.
 		Log.i("MainFragment", "Setting Tabs");
@@ -89,6 +88,7 @@ public class MainActivity extends SherlockFragmentActivity
 		mTabHost.addTab(mTabHost.newTabSpec("end").setIndicator(getText(R.string.search_end))
 				.setContent(new TabFactory(this)));
 		mTabHost.setOnTabChangedListener(this);
+		Log.i("MainActivity","Checking saved instance");
 		if(savedInstanceState != null){
 			mCurFilter = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
 			mLastTabId = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
@@ -147,21 +147,21 @@ public class MainActivity extends SherlockFragmentActivity
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		Log.i("ResultFragmentList", "Saving instance");
+		Log.i("MainActivity", "Saving instance");
 
 		if (mCurFilter != null && mCurFilter.length() > 0) {
-			Log.i("ResultFragmentList", "Instance saved");
+
 			outState.putString(MainActivity.SEARCH_TEXT, mCurFilter);
 		}
 		outState.putString(MainActivity.PART_OF_TEXT, mLastTabId);
-		Log.i("ResultFragmentList", "saving fragmen: " + mLastTabId);
+		Log.i("MainActivity", "Instance saved");
 		super.onSaveInstanceState(outState);
 	}
 	
 	
 	@Override
 	protected void onDestroy() {
-		database.close();
+		mDatabase.close();
 		super.onDestroy();
 	}
 
@@ -179,6 +179,7 @@ public class MainActivity extends SherlockFragmentActivity
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
 	            // app icon in action bar clicked; go home
+	        	Log.i("MainActivity", "Home button pressed");
 	            Intent intent = new Intent(this, MainActivity.class);
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	            startActivity(intent);
@@ -218,11 +219,11 @@ public class MainActivity extends SherlockFragmentActivity
         	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         	fragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
         	ft.replace(android.R.id.tabcontent, fragmentList, "resultFragmentList");
-        	Log.i("MainActivity","text changed - isnt visible");	
+        	Log.i("MainActivity","Text changed - launching new fragmentList");	
 
         	ft.commit();
         }else{
-        	Log.i("MainActivity","text changed is vidible");
+        	Log.i("MainActivity","Text changed - updating visible fragmentList");
         	fragmentList.search(mCurFilter, mLastTabId);
         }
         
@@ -246,11 +247,11 @@ public class MainActivity extends SherlockFragmentActivity
 	        	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 	        	fragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
 	        	ft.replace(android.R.id.tabcontent, fragmentList, "resultFragmentList");
-	        	Log.i("MainActivity","tab changed - isnt visible");	       
+	        	Log.i("MainActivity","tab changed - launching new fragmentList");	       
 	        	
 	        	ft.commit();
 	        }else{
-	        	Log.i("MainActivity","tab changed is vidible");
+	        	Log.i("MainActivity","tab changed - updating visible fragmentList");
 	        	fragmentList.search(mCurFilter, mLastTabId);
 	        }
 	        
@@ -281,7 +282,7 @@ public class MainActivity extends SherlockFragmentActivity
 
 
 	public void doPositiveClick() {
-		Log.i("MainActivity", "AlertBox: Download dictionary - download");
+		Log.i("MainActivity", "AlertBox: Download dictionary - confirm");
 		downloadDictionary();
 	}
 
@@ -311,8 +312,6 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 	}
 
-
-	@SuppressLint("NewApi")
 	public void showPreferences(View w){
 			Log.i("MainActivity", "Lauching preference Activity");
 			Intent intent = new Intent(getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
@@ -324,12 +323,12 @@ public class MainActivity extends SherlockFragmentActivity
 
 	@Override
 	public void onTranslationSelected(int index) {
-		Log.i("MainActivity","Item clicked: ");
+		Log.i("MainActivity","List Item clicked");
 		
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		if(findViewById(R.id.detail_fragment) != null){
 			// two frames layout
-			Log.i("MainActivity","Setting info fragment");
+			Log.i("MainActivity","Translation selected - Setting info fragment");
 			DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
 			if(fragment == null || !fragment.isVisible()){
 				DisplayTranslation displayFragment = new DisplayTranslation();
@@ -373,18 +372,17 @@ public class MainActivity extends SherlockFragmentActivity
 	}
 	
 	public GlossaryReaderContract getDatabse(){
-		return database;
+		return mDatabase;
 	}
 
 	@Override
 	public void showKanjiDetail(JapaneseCharacter character) {
-		japaneseCharacter  = character;
-		System.out.println("character: "+character);
-		
+		mJapaneseCharacter  = character;
+		Log.i("MainActivity","Setting DisplayCharacterInfo fragment");
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		if(findViewById(R.id.detail_fragment) != null){
 			// two frames layout
-			Log.i("MainActivity","Setting info fragment");
+
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
 			fragmentTransaction.replace(R.id.detail_fragment, displayCharacter,"displayCharacter");
@@ -402,7 +400,7 @@ public class MainActivity extends SherlockFragmentActivity
 
 	@Override
 	public JapaneseCharacter getJapaneseCharacter() {
-		return japaneseCharacter;
+		return mJapaneseCharacter;
 	}
 	
     

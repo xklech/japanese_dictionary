@@ -38,24 +38,25 @@ public class SaxDataHolder extends DefaultHandler{
 	private RemoteViews mNotificationView = null;
 	
 	private BroadcastReceiver mReceiverDone= new BroadcastReceiver() {
-		  @Override public void onReceive(Context context, Intent intent) { 
+		  @Override 
+		  public void onReceive(Context context, Intent intent) { 
 			  //		  intent can contain anydata 
-			  canceled = true;
+			  mCanceled = true;
 		  } };
 	
-	private boolean canceled = false;
+	private boolean mCanceled = false;
 		  
-	private IndexWriter w;
-	private Document doc;
-	private boolean japanese_keb;
-	private boolean japanese_reb;
-	private boolean english;
-	private boolean french;
-	private boolean dutch;
-	private boolean german;
-	private long startTime;
+	private IndexWriter mWriter;
+	private Document mDocument;
+	private boolean mJapaneseKeb;
+	private boolean mJapaneseReb;
+	private boolean mEnglish;
+	private boolean mFrench;
+	private boolean mDutch;
+	private boolean mGerman;
+	private long mStartTime;
 	
-	private JSONArray japanese_rebJSON;
+	private JSONArray mJapaneseRebJSON;
 	private JSONArray japanese_kebJSON;
 	
 	private JSONArray englishJSON;
@@ -76,7 +77,9 @@ public class SaxDataHolder extends DefaultHandler{
 	private int i = 0;
 	private int perc = 0;
 	private int percSave = 0;
+	
 	public static final int ENTRIES = 170000;
+	
 	public SaxDataHolder(File file,Context appContext,NotificationManager nM,
 			Notification notif,RemoteViews rV) throws IOException,SAXException{
         
@@ -89,9 +92,9 @@ public class SaxDataHolder extends DefaultHandler{
 		//Analyzer analyzer = new SimpleAnalyzer(Version.LUCENE_33);
     	Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
 		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36,analyzer);
-		w = new IndexWriter(dir, config);
+		mWriter = new IndexWriter(dir, config);
 		
-		startTime = System.currentTimeMillis();
+		mStartTime = System.currentTimeMillis();
 		
 		notificationTimeLeft = context.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
 		if(notificationTimeLeft.length != 2 ){
@@ -107,22 +110,22 @@ public class SaxDataHolder extends DefaultHandler{
 	
 	public void startElement(String uri, String localName,String qName, 
             Attributes attributes) throws SAXException {		
-		if(canceled){
+		if(mCanceled){
 			throw new SAXException("SAX terminated due to ParserService end.");
 		}
 		if("entry".equals(qName)){
 			//System.out.println("Entry "+ (++i));
-			doc = new Document();
+			mDocument = new Document();
 			englishJSONSense = new JSONArray();
 			frenchJSONSense = new JSONArray();
 			dutchJSONSense = new JSONArray();
 			germanJSONSense = new JSONArray();
-			japanese_rebJSON = new JSONArray();
+			mJapaneseRebJSON = new JSONArray();
 			japanese_kebJSON = new JSONArray();
 		}else if("reb".equals(qName)){
-			japanese_reb = true;
+			mJapaneseReb = true;
 		}else if("keb".equals(qName)){
-			japanese_keb = true;
+			mJapaneseKeb = true;
 		}else if("sense".equals(qName)){
 			
 			englishJSON = new JSONArray();
@@ -132,46 +135,46 @@ public class SaxDataHolder extends DefaultHandler{
 		}else if("gloss".equals(qName)){
 			if("eng".equals(attributes.getValue("xml:lang"))){
 				//english
-				english = true;
+				mEnglish = true;
 			}else if("fre".equals(attributes.getValue("xml:lang"))){
-				french = true;
+				mFrench = true;
 			}else if("dut".equals(attributes.getValue("xml:lang"))){
-				dutch = true;
+				mDutch = true;
 			}else if("ger".equals(attributes.getValue("xml:lang"))){
-				german = true;
+				mGerman = true;
 			}
 		}
 			
     }
 	
 	public void characters(char ch[], int start, int length) throws SAXException {
-		if(japanese_keb || japanese_reb){
-			doc.add(new Field("japanese","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
+		if(mJapaneseKeb || mJapaneseReb){
+			mDocument.add(new Field("japanese","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
 			//System.out.println(new String(ch,start,length));
-			if(japanese_keb){
+			if(mJapaneseKeb){
 				japanese_kebJSON.put(new String(ch,start,length));	
-				japanese_keb = false;
+				mJapaneseKeb = false;
 			}
-			if(japanese_reb){
-				japanese_rebJSON.put(new String(ch,start,length));		
-				japanese_reb = false;
+			if(mJapaneseReb){
+				mJapaneseRebJSON.put(new String(ch,start,length));		
+				mJapaneseReb = false;
 			}
-		}else if(english){
+		}else if(mEnglish){
 			englishJSON.put(new String(ch,start,length));
 			//doc.add(new Field("english",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
-			english = false;			
-		}else if(french){
+			mEnglish = false;			
+		}else if(mFrench){
 			frenchJSON.put(new String(ch,start,length));
 			//doc.add(new Field("french",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
-			french = false;			
-		}else if(dutch){
+			mFrench = false;			
+		}else if(mDutch){
 			dutchJSON.put(new String(ch,start,length));
 			//doc.add(new Field("dutch",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
-			dutch = false;			
-		}else if(german){
+			mDutch = false;			
+		}else if(mGerman){
 			germanJSON.put(new String(ch,start,length));
 			//doc.add(new Field("german",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
-			german = false;			
+			mGerman = false;			
 		}
 		
 	}
@@ -195,45 +198,45 @@ public class SaxDataHolder extends DefaultHandler{
 				}
 			}else if("entry".equals(qName)){
 				if(japanese_kebJSON.length()>0){
-					doc.add(new Field("japanese_keb",japanese_kebJSON.toString(),Field.Store.YES,Index.NO));
+					mDocument.add(new Field("japanese_keb",japanese_kebJSON.toString(),Field.Store.YES,Index.NO));
 				}
-				if(japanese_rebJSON.length()>0){
-					doc.add(new Field("japanese_reb",japanese_rebJSON.toString(),Field.Store.YES,Index.NO));
+				if(mJapaneseRebJSON.length()>0){
+					mDocument.add(new Field("japanese_reb",mJapaneseRebJSON.toString(),Field.Store.YES,Index.NO));
 				}
 				if(englishJSONSense.length()>0){
-					doc.add(new Field("english",englishJSONSense.toString(),Field.Store.YES,Index.NO));
+					mDocument.add(new Field("english",englishJSONSense.toString(),Field.Store.YES,Index.NO));
 					englishJSONSense = null;
 				}
 				if(frenchJSONSense.length()>0){
-					doc.add(new Field("french",frenchJSONSense.toString(),Field.Store.YES,Index.NO));	
+					mDocument.add(new Field("french",frenchJSONSense.toString(),Field.Store.YES,Index.NO));	
 					frenchJSONSense = null;
 				}
 				if(dutchJSONSense.length()>0){
-					doc.add(new Field("dutch",dutchJSONSense.toString(),Field.Store.YES,Index.NO));	
+					mDocument.add(new Field("dutch",dutchJSONSense.toString(),Field.Store.YES,Index.NO));	
 					dutchJSONSense = null;
 				}
 				if(germanJSONSense.length()>0){
-					doc.add(new Field("german",germanJSONSense.toString(),Field.Store.YES,Index.NO));	
+					mDocument.add(new Field("german",germanJSONSense.toString(),Field.Store.YES,Index.NO));	
 					germanJSONSense = null;
 				}				
 				
 				try {
 					i++;
 					//System.out.println(i);
-					w.addDocument(doc);
+					mWriter.addDocument(mDocument);
 					//System.out.println(doc.toString());
 					int persPub = Math.round((((float)i/ENTRIES)*100)) ;
 					
 	                if(perc < persPub){
 	                	if(percSave + 4 < persPub){
-	                		w.commit();
+	                		mWriter.commit();
 	                		System.out.println(persPub);
 	                		percSave = persPub;
 	                	}
 	                	
 	                	
-	                	long duration  = System.currentTimeMillis() - startTime;
-	                	startTime = System.currentTimeMillis();
+	                	long duration  = System.currentTimeMillis() - mStartTime;
+	                	mStartTime = System.currentTimeMillis();
 	                	duration = duration * (100-persPub);
 	                	
 	                	mNotificationView.setProgressBar(R.id.ntification_progressBar, 100, persPub, false);
@@ -254,7 +257,7 @@ public class SaxDataHolder extends DefaultHandler{
 				} catch (Exception e){
 					Log.e("SaxDataHolder", "Saving doc: Unknown exception: "+e.toString());
 				}
-	        	doc = null;
+				mDocument = null;
 	        }
 	    } 
 	
@@ -269,7 +272,7 @@ public class SaxDataHolder extends DefaultHandler{
 		LocalBroadcastManager.getInstance(context).unregisterReceiver(
 				mReceiverDone);
 			try {
-				w.close();
+				mWriter.close();
 			} catch (IOException e) {
 				Log.e("SaxDataHolder", "End of document - closinf lucene writer failed");
 			}

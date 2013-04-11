@@ -1,7 +1,7 @@
 package cz.muni.fi.japanesedictionary.main;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -21,9 +21,6 @@ import org.apache.lucene.util.Version;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
@@ -33,54 +30,30 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 
 public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
-	private Context context;
-	private String expression = null;
-	private String part;
-	private IndexSearcher searcher;
+	private Context mContext;
+	private String mExpression = null;
+	private String mPart;
+	private IndexSearcher mSearcher;
 
-	private String lastSearched = null;
-	private String lastPart = null;
+	private String mLastSearched = null;
+	private String mLastPart = null;
 	
-	private List<Translation> lastTranslations = null;
-	
-	private Handler handler = new ResultLoaderHandler(this);
+	private List<Translation> mLastTranslations = null;
 	
 	public ResultLoader(Context cont,String expr,String _part) {
 		super(cont);
-		context = cont;
-		part = _part;
-		expression = expr;
-		Log.e("ResultLoader", "part constructor: "+part);
-		
-	}
-	
-	public void setExpression(String exp){
-		Log.i("ResultLoader","set expression");
-		expression = exp;
-		this.onContentChanged();
-	}
-	
-	public void setWordPart(String _part){
-		Log.i("ResultLoader","set word part");
-		part = _part;
-		this.onContentChanged();
-	}
-	
-	public Handler getHandler(){
-		return handler;
-	}
-	
-	public String getExpression(){
-		return expression;
+		mContext = cont;
+		mPart = _part;
+		mExpression = expr;		
 	}
 
 	@Override
 	public List<Translation> loadInBackground() {
 		
-        SharedPreferences settings = context.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
+        SharedPreferences settings = mContext.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
         boolean validDictionary = settings.getBoolean("hasValidDictionary", false);
         String pathToDictionary = settings.getString("pathToDictionary", null);
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         boolean englishBool = sharedPrefs.getBoolean("language_english", false);
         boolean frenchBool = sharedPrefs.getBoolean("language_french", false);        
         boolean dutchBool = sharedPrefs.getBoolean("language_dutch", false);
@@ -88,37 +61,36 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         List<Translation> translations = new ArrayList<Translation>();
         
         if(!validDictionary){
-        	Log.e("ResultLoader", "No dictionary");
+        	Log.e("ResultLoader", "No jmdict dictionary found");
         	return null;
         }
         if(pathToDictionary == null){
-        	Log.e("ResultLoader", "No path to dictionary");
+        	Log.e("ResultLoader", "No path to jmdict dictionary");
         	return null;
         }
         File file = new File(pathToDictionary);
         if(file == null || !file.canRead()){
-        	Log.e("ResultLoader", "Cant read dictionary directory");
+        	Log.e("ResultLoader", "Cant read jmdict dictionary directory");
         	return null;
         }
         
-        if((expression == null && lastSearched == null && lastTranslations != null) || ((lastSearched != null && lastSearched.equals(expression)) && (lastPart != null && lastPart.equals(part)))){
+        if((mExpression == null && mLastSearched == null && mLastTranslations != null) || ((mLastSearched != null && mLastSearched.equals(mExpression)) && (mLastPart != null && mLastPart.equals(mPart)))){
         	Log.i("ResultLoader","Search and part are the same, return old translation list");
-        	return lastTranslations;
+        	return mLastTranslations;
         }
         
-        if(expression == null){
+        if(mExpression == null){
         	//spusteni bez vyhledani
-        	Log.i("ResultLoader","First run - last 10 translations: "+expression);
-        	GlossaryReaderContract database = new GlossaryReaderContract(context);
+        	Log.i("ResultLoader","First run - last 10 translations ");
+        	GlossaryReaderContract database = new GlossaryReaderContract(mContext);
         	translations = database.getLastTranslations(10);
         	database.close();
-        	lastTranslations = translations;
+        	mLastTranslations = translations;
         	return translations;
 
-
         }
-        if(expression.length() < 1){
-        	Log.i("ResultLoader", "No expression to translate");
+        if(mExpression.length() < 1){
+        	Log.w("ResultLoader", "No expression to translate");
         	return null;
         }
         
@@ -129,47 +101,38 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
     	try{
     		QueryParser query = new QueryParser(Version.LUCENE_36, "japanese", analyzer);
     		query.setPhraseSlop(0);
-    		String search;
-    		Log.e("ResultLoader", "part search: "+part);
-
+    		String search;    		
     		
-    		
-    		if(Pattern.matches("\\w*", expression)){
+    		if(Pattern.matches("\\w*", mExpression)){
     			//only romaji
-    			
-    			Log.i("ResultLoader","Only letters :"+ RomanizationEnum.Hepburn.toHiragana(expression));
-    			expression = RomanizationEnum.Hepburn.toHiragana(expression);
+    			Log.i("ResultLoader","Only letters, converting to hiragana. ");
+    			mExpression = RomanizationEnum.Hepburn.toHiragana(mExpression);
     		}
-    		if("end".equals(part)){
-    			Log.i("ResultLoader","end");
-    			search = "\""+expression + " lucenematch\"";
-    		}else if("begining".equals(part)){
-    			Log.i("ResultLoader","begining");
-    			search = "\"lucenematch " + expression+"\"";	
-    		}else if("middle".equals(part)){
-    			Log.i("ResultLoader","middle");
-    			search = expression;
+    		if("end".equals(mPart)){
+    			search = "\""+mExpression + " lucenematch\"";
+    		}else if("begining".equals(mPart)){
+    			search = "\"lucenematch " + mExpression+"\"";	
+    		}else if("middle".equals(mPart)){
+    			search = mExpression;
     		}else {
-    			Log.i("ResultLoader","exactly same");
-    			search = "\"lucenematch "+expression + " lucenematch\"";
+    			search = "\"lucenematch "+mExpression + " lucenematch\"";
     		}
     		Log.i("ResultLoader"," Searching for: "+search);
     		Query q = query.parse(search); 
-	    	 if( searcher == null){
+	    	 if( mSearcher == null){
 	 	    	Directory dir = FSDirectory.open(file);
 		    	IndexReader reader = IndexReader.open(dir);
-	    		searcher= new IndexSearcher(reader);
+		    	mSearcher= new IndexSearcher(reader);
 	    	 }
 	    	TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
-	    	searcher.search(q, collector);
+	    	mSearcher.search(q, collector);
 	    	ScoreDoc[] hits = collector.topDocs().scoreDocs;
-	    	Log.e("ResultLoader", String.valueOf(hits.length));
+	    	Log.i("ResultLoader", "Found: "+String.valueOf(hits.length)+" hits");
 	    	for(int i=0;i<hits.length;++i) {
 	    	    int docId = hits[i].doc;
-	    	    Document d = searcher.doc(docId);
+	    	    Document d = mSearcher.doc(docId);
 	    	    
 	    	    Translation translation = new Translation();
-	    	    //Log.e("df", d.toString());
 	    	    String japanese_keb = d.get("japanese_keb");
 	    	    if(japanese_keb != null && japanese_keb.length()!=0 ){
 	    	    	translation.parseJapaneseKeb(japanese_keb);
@@ -211,13 +174,17 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	    	    }
 	    	}
 	    	
+    	}catch(IOException ex){
+    		Log.e("ResultLoader","IO Exception:  " + ex.toString());
+    		return null;
     	}catch(Exception ex){
-    		Log.e("ResultLoader","vyjimka hledani: " + ex.toString());
+    		Log.e("ResultLoader","Exception: " + ex.toString());
+    		return null;
     	}
 
-		lastPart = part;
-		lastSearched = expression;
-		lastTranslations = translations.isEmpty()?null:translations;
+    	mLastPart = mPart;
+		mLastSearched = mExpression;
+		mLastTranslations = translations.isEmpty()?null:translations;
     	
 		return translations.isEmpty()?null:translations;
 	}
@@ -231,31 +198,5 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         forceLoad();
     }
 	
-    
-    static class ResultLoaderHandler extends Handler {
-        private final WeakReference<ResultLoader> mLoader; 
-
-        ResultLoaderHandler(ResultLoader loader) {
-        	mLoader = new WeakReference<ResultLoader>(loader);
-        }
-        @Override
-        public void handleMessage(Message msg)
-        {
-        	ResultLoader loader = mLoader.get();
-             if (loader != null) { 
-            	 Bundle bundle = msg.getData();
-            	 String translation = bundle.getString(MainActivity.HANDLER_BUNDLE_TRANSLATION);
-            	 if(translation != null){
-            		 loader.setExpression(translation);
-            		 return;
-                 }
-            	 String part = bundle.getString(MainActivity.HANDLER_BUNDLE_TAB);
-            	 if(part != null){
-            		 loader.setWordPart(part);
-            		 return;
-                 }
-             }
-        }
-    }
         
 }

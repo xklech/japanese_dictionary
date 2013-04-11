@@ -515,10 +515,15 @@ public class ParserService extends IntentService{
 	}
 	
 	
-	//delete directory
-	static private boolean deleteDirectory(File path) {
-	    if( path.exists() ) {
-	      File[] files = path.listFiles();
+	/**
+	 * Deletes given directory 
+	 * 
+	 * @param directory directory to be deleted 
+	 * @return true on succes
+	 */
+	static private boolean deleteDirectory(File directory) {
+	    if( directory.exists() ) {
+	      File[] files = directory.listFiles();
 	      for(int i=0; i<files.length; i++) {
 	         if(files[i].isDirectory()) {
 	           deleteDirectory(files[i]);
@@ -528,7 +533,8 @@ public class ParserService extends IntentService{
 	         }
 	      }
 	    }
-	    return( path.delete() );
+	    return( directory.delete() );
 	  }
+	
 
 }

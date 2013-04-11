@@ -5,6 +5,7 @@
     android:orientation="vertical" 
     android:clickable="false"
     android:focusable="false"
+	android:background="@drawable/list_item_selector"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,6 +27,7 @@
             android:focusable="false"
             android:layout_marginLeft="10dp"
             />
+ <!--  @android:color/primary_text_dark -->
         <TextView
             android:id="@+id/jap_read"
             android:layout_width="wrap_content"

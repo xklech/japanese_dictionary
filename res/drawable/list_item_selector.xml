@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android"> 
-
-  <!-- Selected --> 
-  <item 
-    android:state_selected="true"
-    android:drawable="@drawable/abs__list_activated_holo" /> <!--  @drawable/tab_focus -->
-	
-	
-  <!-- Pressed -->
-  <item 
-    android:state_pressed="true" 
-    android:drawable="@drawable/abs__list_pressed_holo_dark" /> <!--  @drawable/tab_press -->
-
-
-  <!-- Pressed -->
-  <item 
-    android:drawable="@android:color/black" /> <!--  @drawable/tab_press -->
-
-
-
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+ android:exitFadeDuration="@android:integer/config_shortAnimTime">
+  
+<item android:state_activated="true" android:drawable="@drawable/abs__list_activated_holo" />
+<item android:drawable="@android:color/transparent" />
 </selector>

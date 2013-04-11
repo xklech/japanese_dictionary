@@ -22,23 +22,23 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
 	}
 	
 	
-    private Context context;
-    boolean english;
-    boolean french;
-    boolean dutch;
-    boolean german;
-    LayoutInflater inflater;
+    private Context mContext;
+    boolean mEnglish;
+    boolean mFrench;
+    boolean mDutch;
+    boolean mGerman;
+    LayoutInflater mInflater;
     
     
     public TranslationsAdapter(Context cont) {
         super(cont, R.layout.list_item);
-        context = cont;
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        english = sharedPrefs.getBoolean("language_english", false);
-        french = sharedPrefs.getBoolean("language_french", false);        
-        dutch = sharedPrefs.getBoolean("language_dutch", false);
-        german = sharedPrefs.getBoolean("language_german", false);
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mContext = cont;
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mEnglish = sharedPrefs.getBoolean("language_english", false);
+        mFrench = sharedPrefs.getBoolean("language_french", false);        
+        mDutch = sharedPrefs.getBoolean("language_dutch", false);
+        mGerman = sharedPrefs.getBoolean("language_german", false);
+        mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     
@@ -60,7 +60,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     public View getView(int position, View convertView, ViewGroup parent) {
     	TranslationsViewHolder holder;
         if (convertView == null) {
-        	convertView = inflater.inflate(R.layout.list_item, parent,false);    
+        	convertView = mInflater.inflate(R.layout.list_item, parent,false);    
             holder = new TranslationsViewHolder();
             holder.read = (TextView)convertView.findViewById(R.id.jap_read);
             holder.write = (TextView)convertView.findViewById(R.id.jap_write);
@@ -80,19 +80,19 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         }else{
         	holder.write.setVisibility(View.GONE);
         }
-        if(english){
+        if(mEnglish){
             if(item.getEnglishSense() != null){
             	holder.translation.setText(item.getEnglishSense().get(0).get(0));
             } 
-        }else if(german){
+        }else if(mGerman){
             if(item.getGermanSense() != null){
             	holder.translation.setText(item.getGermanSense().get(0).get(0));
             }       	
-        }else if(french){
+        }else if(mFrench){
             if(item.getFrenchSense() != null){
             	holder.translation.setText(item.getFrenchSense().get(0).get(0));
             }       	
-        }else if(dutch){
+        }else if(mDutch){
             if(item.getDutchSense() != null){
             	holder.translation.setText(item.getDutchSense().get(0).get(0));
             }       	

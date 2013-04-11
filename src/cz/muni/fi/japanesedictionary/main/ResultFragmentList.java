@@ -32,8 +32,8 @@ public class ResultFragmentList extends SherlockListFragment implements
 	
 	private String mLastSearched;
 	private String mLastTab;
-	private boolean dualPane = false;
-	private IncomingHandler handler;
+	private boolean mDualPane = false;
+	private IncomingHandler mHandler;
 	
 	static class IncomingHandler extends Handler {
 	    private final WeakReference<MainActivity> mActivity; 
@@ -47,9 +47,9 @@ public class ResultFragmentList extends SherlockListFragment implements
 	    	
 	    	MainActivity activity = mActivity.get();
 	         if (activity != null) {
-	        	 Log.e("ResultFragmentList","received message");
+	        	 Log.i("ResultFragmentList","First run, select first translation");
 	        	 activity.onTranslationSelected(0);
-	         }else Log.e("ResultFragmentList","received message - null");
+	         }
 	    }
 	}
 	
@@ -84,12 +84,10 @@ public class ResultFragmentList extends SherlockListFragment implements
 		Log.i("ResultFragmentList", "Saving instance");
 
 		if (mLastSearched != null) {
-			Log.i("ResultFragmentList", "Instance saved");
 			outState.putString(MainActivity.SEARCH_TEXT, mLastSearched);
 		}
-		outState.putBoolean(MainActivity.DUAL_PANE, dualPane);
+		outState.putBoolean(MainActivity.DUAL_PANE, mDualPane);
 		outState.putString(MainActivity.PART_OF_TEXT, mLastTab);
-		Log.i("ResultFragmentList", "saving fragmen: " + mLastTab);
 		super.onSaveInstanceState(outState);
 	}
 
@@ -110,9 +108,9 @@ public class ResultFragmentList extends SherlockListFragment implements
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-    	l.setItemChecked(position, true);
-    	//getListView().setSelection(position);
-    	mAdapter.notifyDataSetChanged();
+    	if(mDualPane){
+    		l.setItemChecked(position, true);
+    	}
     	mCallbackTranslation.onTranslationSelected(position);
     }
     
@@ -120,10 +118,11 @@ public class ResultFragmentList extends SherlockListFragment implements
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		setListShown(false);
+		Log.i("ResultFragmentList", "onViewCreated called - setting fragment");
 		if(getActivity().findViewById(R.id.detail_fragment) != null){
 			//dualPane
-			dualPane = true;
-			handler =  new IncomingHandler((MainActivity)getActivity());
+			mDualPane = true;
+			mHandler =  new IncomingHandler((MainActivity)getActivity());
 		}
 		SharedPreferences settings = getActivity().getSharedPreferences(
 				ParserService.DICTIONARY_PREFERENCES, 0);
@@ -150,9 +149,8 @@ public class ResultFragmentList extends SherlockListFragment implements
 		if(savedInstanceState != null){
 			mLastSearched = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
 			mLastTab = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
-			dualPane = savedInstanceState.getBoolean(MainActivity.DUAL_PANE, false);
+			mDualPane = savedInstanceState.getBoolean(MainActivity.DUAL_PANE, false);
 		}else if (bundle != null) {
-			Log.e("ResultFragmentList", "Bundle: "+bundle);
 			mLastSearched = bundle.getString(MainActivity.SEARCH_TEXT);
 			mLastTab = bundle.getString(MainActivity.PART_OF_TEXT);
 		}
@@ -176,7 +174,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	@Override
 	public void onLoadFinished(Loader<List<Translation>> loader,
 			List<Translation> data) {
-		System.out.println("Loader finished");
+		Log.i("ResultFragmentList", "Loader has finished loading data");
 		// Set the new data in the adapter.
 		mAdapter.setData(data);
 
@@ -186,9 +184,9 @@ public class ResultFragmentList extends SherlockListFragment implements
 		} else {
 			setListShownNoAnimation(true);
 		}
-		if(dualPane && data!= null && data.size() > 0){
-			Log.e("ResultFragmentList","dual pane, display last");
-			handler.sendEmptyMessage(0);
+		if(mDualPane && data!= null && data.size() > 0 && mLastSearched == null){
+			Log.i("ResultFragmentList","dual pane, display last - send massage");
+			mHandler.sendEmptyMessage(0);
 		}
 
 	}
@@ -220,6 +218,9 @@ public class ResultFragmentList extends SherlockListFragment implements
 	public void search(String expression,String part){
 		this.mLastSearched = expression;
 		this.mLastTab = part;
+		if(mDualPane){
+			getListView().setItemChecked(getListView().getCheckedItemPosition(), false);
+		}
         getLoaderManager().restartLoader(0, null, this);
 	}
 	

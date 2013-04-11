@@ -28,12 +28,12 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
 
 public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCharacter>>{
 
-	private Context context;
-	private IndexSearcher searcher;
-	DisplayTranslation fragment;
+	private Context mContext;
+	private IndexSearcher mSearcher;
+	DisplayTranslation mFragment;
 	public CharacterLoader(Context _context, DisplayTranslation _fragment){
-		context = _context;
-		fragment = _fragment;
+		mContext = _context;
+		mFragment = _fragment;
 	}
 	
 	
@@ -45,7 +45,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 		if(characterList == null || characterList.length() <1){
 			return null;
 		}
-		SharedPreferences settings = context.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
+		SharedPreferences settings = mContext.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
         boolean validDictionary = settings.getBoolean("hasValidKanjiDictionary", false);
         String pathToDictionary = settings.getString("pathToKanjiDictionary", null);
         if(!validDictionary){
@@ -58,7 +58,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
         }
         File file = new File(pathToDictionary);
         if(file == null || !file.canRead()){
-        	Log.e("ResultLoader", "Cant read dictionary directory");
+        	Log.e("CharacterLoader", "Can't read dictionary directory");
         	return null;
         }
         StringBuffer searchBuilder = new StringBuffer();
@@ -66,7 +66,6 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
         // search string
         for(int i =0;i< characterListSize ; i++){
         	searchBuilder.append('"' +  String.valueOf(characterList.charAt(i)) + '"');
-        	System.out.println(String.valueOf(characterList.charAt(i)));
         	if( i+1 < characterListSize){
         		searchBuilder.append(' '); // in lucene space serve as OR
         	}
@@ -81,20 +80,19 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 
     		Log.i("CharacterLoader", "Input string: "+characterList);
     		Query q = query.parse(search); 
-	    	if( searcher == null){
+	    	if( mSearcher == null){
 	    		Directory dir = FSDirectory.open(file);
 		    	IndexReader reader = IndexReader.open(dir);
-	    		searcher= new IndexSearcher(reader);
+		    	mSearcher= new IndexSearcher(reader);
 	    	}
 	    	TopScoreDocCollector collector = TopScoreDocCollector.create(100, true);
-	    	searcher.search(q, collector);
+	    	mSearcher.search(q, collector);
 	    	ScoreDoc[] hits = collector.topDocs().scoreDocs;
-	    	Log.e("CharacterLoader", "Searched for: "+search+" Find characters: "+String.valueOf(hits.length));
 	    	
 	    	Map<String, JapaneseCharacter> result = new HashMap<String, JapaneseCharacter>();
 	    	for(ScoreDoc document : hits){
 	    		int docId = document.doc;
-	    		Document d = searcher.doc(docId);
+	    		Document d = mSearcher.doc(docId);
 
 	    		JapaneseCharacter japanCharacter = new JapaneseCharacter();
 	    	    String literal = d.get("literal");
@@ -199,8 +197,8 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	
 	@Override
 	protected void onPostExecute(Map<String, JapaneseCharacter> result) {
-		fragment.setCharacters(result);
-		fragment.displayCharacters();
+		mFragment.setCharacters(result);
+		mFragment.displayCharacters();
 		//handler.sendEmptyMessage(0);
 		super.onPostExecute(result);
 	}
