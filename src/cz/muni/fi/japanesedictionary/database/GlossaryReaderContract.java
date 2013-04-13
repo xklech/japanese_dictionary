@@ -15,8 +15,7 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
 public class GlossaryReaderContract extends SQLiteOpenHelper {
 	
     private static final int DATABASE_VERSION = 1;
-   
-    
+
     // Database Name
     private static final String DATABASE_NAME = "JapaneseDictionary.db";
 	

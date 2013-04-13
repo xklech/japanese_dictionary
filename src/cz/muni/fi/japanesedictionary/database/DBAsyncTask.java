@@ -6,10 +6,10 @@ import android.os.AsyncTask;
 
 public class DBAsyncTask extends AsyncTask<Translation, Void, Void>{
 
-	GlossaryReaderContract database;
+	GlossaryReaderContract mDatabase;
 	
 	public DBAsyncTask(GlossaryReaderContract _database){
-		database = _database;
+		mDatabase = _database;
 	}
 	
 	@Override
@@ -18,7 +18,7 @@ public class DBAsyncTask extends AsyncTask<Translation, Void, Void>{
 		if(translation == null){
 			return null;
 		}
-		database.saveTranslation(translation);
+		mDatabase.saveTranslation(translation);
 		
 		return null;
 	}

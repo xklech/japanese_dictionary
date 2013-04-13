@@ -54,7 +54,7 @@ public class MainActivity extends SherlockFragmentActivity
 	private GlossaryReaderContract mDatabase = null;
 	private JapaneseCharacter mJapaneseCharacter;
 	
-	private ResultFragmentList fragmentList = null;
+	private ResultFragmentList mFragmentList = null;
 	
 	private SearchView mSearchView;
 	
@@ -71,7 +71,7 @@ public class MainActivity extends SherlockFragmentActivity
 
 		setContentView(R.layout.main_activity);
 		mDatabase = new GlossaryReaderContract(getApplicationContext());
-		//setHasOptionsMenu(true);
+
 		// Start out with a progress indicator.
 		Log.i("MainFragment", "Setting Tabs");
 		mTabHost = (TabHost) this.findViewById(android.R.id.tabhost);
@@ -92,7 +92,7 @@ public class MainActivity extends SherlockFragmentActivity
 		if(savedInstanceState != null){
 			mCurFilter = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
 			mLastTabId = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
-			fragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag("resultFragmentList");
+			mFragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag("resultFragmentList");
 			if(mLastTabId == null || mLastTabId.length()==0){
 				mLastTabId = "exact";
 			}else{
@@ -111,11 +111,11 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		
 		Log.i("MainActivity","Setting layout");
-		fragmentList = new ResultFragmentList();
-		fragmentList.setRetainInstance(true);
+		mFragmentList = new ResultFragmentList();
+		mFragmentList.setRetainInstance(true);
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		Log.i("MainActivity","Setting main fragment");
-		ft.add(android.R.id.tabcontent, fragmentList,"resultFragmentList");
+		ft.add(android.R.id.tabcontent, mFragmentList,"resultFragmentList");
 		if(findViewById(R.id.detail_fragment) != null){
 			// two frames layout
 			Log.i("MainActivity","Setting info fragment");
@@ -214,17 +214,17 @@ public class MainActivity extends SherlockFragmentActivity
         }
 		//fragmentList = getSupportFragmentManager().findFragmentByTag("")
         mCurFilter = newText;
-        if(!fragmentList.isVisible()){
+        if(!mFragmentList.isVisible()){
         	getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        	fragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
-        	ft.replace(android.R.id.tabcontent, fragmentList, "resultFragmentList");
+        	mFragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
+        	ft.replace(android.R.id.tabcontent, mFragmentList, "resultFragmentList");
         	Log.i("MainActivity","Text changed - launching new fragmentList");	
 
         	ft.commit();
         }else{
         	Log.i("MainActivity","Text changed - updating visible fragmentList");
-        	fragmentList.search(mCurFilter, mLastTabId);
+        	mFragmentList.search(mCurFilter, mLastTabId);
         }
         
         
@@ -241,18 +241,18 @@ public class MainActivity extends SherlockFragmentActivity
 
 		if(tabId != mLastTabId){
 			mLastTabId = tabId;
-	        if(!fragmentList.isVisible()){
+	        if(!mFragmentList.isVisible()){
 	        	//clear backstack
 	        	getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 	        	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-	        	fragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
-	        	ft.replace(android.R.id.tabcontent, fragmentList, "resultFragmentList");
+	        	mFragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
+	        	ft.replace(android.R.id.tabcontent, mFragmentList, "resultFragmentList");
 	        	Log.i("MainActivity","tab changed - launching new fragmentList");	       
 	        	
 	        	ft.commit();
 	        }else{
 	        	Log.i("MainActivity","tab changed - updating visible fragmentList");
-	        	fragmentList.search(mCurFilter, mLastTabId);
+	        	mFragmentList.search(mCurFilter, mLastTabId);
 	        }
 	        
 		}
@@ -358,8 +358,8 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	@Override
 	public Translation getTranslationCallBack(int index){
-		if(mAdapter == null && fragmentList != null){
-			mAdapter = fragmentList.getAdapter();
+		if(mAdapter == null && mFragmentList != null){
+			mAdapter = mFragmentList.getAdapter();
 		}
 		
 		if(mAdapter != null){

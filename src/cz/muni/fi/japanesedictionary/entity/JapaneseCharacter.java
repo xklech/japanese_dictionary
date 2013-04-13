@@ -30,177 +30,177 @@ public class JapaneseCharacter {
 	public static final String SAVE_CHARACTER_NANORI = "cz.muni.fi.japanesedictionary.japanesecharacter.nanori";
 
 	
-	private String literal;
-	private int radicalClassic;
-	private int grade;
-	private int strokeCount;
-	private String skip;
-	private Map<String, String> dicRef;
-	private List<String> rmGroupJaOn;
-	private List<String> rmGroupJaKun;
-	private List<String> meaningEnglish;
-	private List<String> meaningFrench;
+	private String mLiteral;
+	private int mRadicalClassic;
+	private int mGrade;
+	private int mStrokeCount;
+	private String mSkip;
+	private Map<String, String> mDicRef;
+	private List<String> mRMGroupJaOn;
+	private List<String> mRMmGroupJaKun;
+	private List<String> mMeaningEnglish;
+	private List<String> mMeaningFrench;
 	/*
 	 *  dutch and german aren't in current kanjidict 2
 	 */
-	private List<String> meaningDutch;
-	private List<String> meaningGerman;
+	private List<String> mMeaningDutch;
+	private List<String> mMeaningGerman;
 	
-	private List<String> nanori;
+	private List<String> mNanori;
 	
 	@Override
 	public String toString() {
-		return "JapaneseCharacter [literal=" + literal + ", radicalClassic="
-				+ radicalClassic + ", grade=" + grade + ", strokeCount="
-				+ strokeCount + ", dicRef=" + dicRef + ", rmGroupJaOn="
-				+ rmGroupJaOn + ", rmGroupJaKun=" + rmGroupJaKun
-				+ ", meaningEnglish=" + meaningEnglish + ", meaningFrench="
-				+ meaningFrench + ", meaningDutch=" + meaningDutch
-				+ ", meaningGerman=" + meaningGerman + ", nanori=" + nanori
+		return "JapaneseCharacter [literal=" + mLiteral + ", radicalClassic="
+				+ mRadicalClassic + ", grade=" + mGrade + ", strokeCount="
+				+ mStrokeCount + ", dicRef=" + mDicRef + ", rmGroupJaOn="
+				+ mRMGroupJaOn + ", rmGroupJaKun=" + mRMmGroupJaKun
+				+ ", meaningEnglish=" + mMeaningEnglish + ", meaningFrench="
+				+ mMeaningFrench + ", meaningDutch=" + mMeaningDutch
+				+ ", meaningGerman=" + mMeaningGerman + ", nanori=" + mNanori
 				+ "]";
 	}
 	
 	public JapaneseCharacter(){
-		literal = null;
-		radicalClassic = 0;
-		grade = 0;
-		strokeCount = 0;
-		dicRef = new HashMap<String,String>();
-		rmGroupJaOn = new ArrayList<String>();
-		rmGroupJaKun = new ArrayList<String>();
-		meaningEnglish = new ArrayList<String>();
-		meaningFrench = new ArrayList<String>();
-		meaningDutch = new ArrayList<String>();
-		meaningGerman = new ArrayList<String>();
-		nanori = new ArrayList<String>();
+		mLiteral = null;
+		mRadicalClassic = 0;
+		mGrade = 0;
+		mStrokeCount = 0;
+		mDicRef = new HashMap<String,String>();
+		mRMGroupJaOn = new ArrayList<String>();
+		mRMmGroupJaKun = new ArrayList<String>();
+		mMeaningEnglish = new ArrayList<String>();
+		mMeaningFrench = new ArrayList<String>();
+		mMeaningDutch = new ArrayList<String>();
+		mMeaningGerman = new ArrayList<String>();
+		mNanori = new ArrayList<String>();
 	}
 
 	public void setLiteral(String value){
-		this.literal = value;
+		this.mLiteral = value;
 	}
 	
 	public void setRadicalClassic(int value){
-		this.radicalClassic = value;
+		this.mRadicalClassic = value;
 	}
 	
 	public void setGrade(int value){
-		this.grade = value;
+		this.mGrade = value;
 	}
 	
 	public void setStrokeCount(int value){
-		this.strokeCount = value;
+		this.mStrokeCount = value;
 	}
 
 	public void setSkip(String skip) {
-		this.skip = skip;
+		this.mSkip = skip;
 	}
 
 	public void addDicRef(String key,String value){
 		if(key == null || key.length() < 1 || value == null || value.length() < 1){
 			return ;
 		}
-		dicRef.put(key, value);
+		mDicRef.put(key, value);
 	}
 	
 	public void addRmGroupJaOn(String value){
 		if(value == null || value.length() < 1){
 			return;
 		}
-		rmGroupJaOn.add(value);
+		mRMGroupJaOn.add(value);
 	}
 	
 	public void addRmGroupJaKun(String value){
 		if(value == null || value.length() < 1){
 			return;
 		}
-		rmGroupJaKun.add(value);
+		mRMmGroupJaKun.add(value);
 	}
 	
 	public void addMeaningEnglish(String value){
 		if(value == null || value.length() < 1){
 			return;
 		}
-		meaningEnglish.add(value);
+		mMeaningEnglish.add(value);
 	}
 	
 	public void addMeaningFrench(String value){
 		if(value == null || value.length() < 1){
 			return;
 		}
-		meaningFrench.add(value);
+		mMeaningFrench.add(value);
 	}	
 	
 	public void addMeaningDutch(String value){
 		if(value == null || value.length() < 1){
 			return;
 		}
-		meaningDutch.add(value);
+		mMeaningDutch.add(value);
 	}	
 
 	public void addMeaningGerman(String value){
 		if(value == null || value.length() < 1){
 			return;
 		}
-		meaningGerman.add(value);
+		mMeaningGerman.add(value);
 	}	
 	
 	public void addNanori(String value){
 		if(value == null || value.length() < 1){
 			return;
 		}
-		nanori.add(value);
+		mNanori.add(value);
 	}
 	
 	public String getLiteral() {
-		return literal;
+		return mLiteral;
 	}
 
 	public int getRadicalClassic() {
-		return radicalClassic;
+		return mRadicalClassic;
 	}
 
 	public int getGrade() {
-		return grade;
+		return mGrade;
 	}
 
 	public int getStrokeCount() {
-		return strokeCount;
+		return mStrokeCount;
 	}
 
 	public String getSkip() {
-		return skip;
+		return mSkip;
 	}
 	
 	public Map<String, String> getDicRef() {
-		return dicRef.size() < 1? null : dicRef;
+		return mDicRef.size() < 1? null : mDicRef;
 	}
 
 	public List<String> getRmGroupJaOn() {
-		return rmGroupJaOn.size() < 1? null : rmGroupJaOn;
+		return mRMGroupJaOn.size() < 1? null : mRMGroupJaOn;
 	}
 
 	public List<String> getRmGroupJaKun() {
-		return rmGroupJaKun.size() < 1? null : rmGroupJaKun;
+		return mRMmGroupJaKun.size() < 1? null : mRMmGroupJaKun;
 	}
 
 	public List<String> getMeaningEnglish() {
-		return meaningEnglish.size() < 1? null : meaningEnglish;
+		return mMeaningEnglish.size() < 1? null : mMeaningEnglish;
 	}
 
 	public List<String> getMeaningFrench() {
-		return  meaningEnglish.size() < 1? null : meaningFrench;
+		return  mMeaningFrench.size() < 1? null : mMeaningFrench;
 	}
 
 	public List<String> getMeaningDutch() {
-		return meaningDutch.size() < 1? null : meaningDutch;
+		return mMeaningDutch.size() < 1? null : mMeaningDutch;
 	}
 
 	public List<String> getMeaningGerman() {
-		return meaningGerman.size() < 1? null : meaningGerman;
+		return mMeaningGerman.size() < 1? null : mMeaningGerman;
 	}
 
 	public List<String> getNanori() {
-		return nanori.size() < 1? null : nanori;
+		return mNanori.size() < 1? null : mNanori;
 	}
 
 	public void parseDicRef(String jsonString){

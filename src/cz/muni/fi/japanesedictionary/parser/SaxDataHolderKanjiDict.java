@@ -40,56 +40,56 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	private BroadcastReceiver mReceiverInterrupted= new BroadcastReceiver() {
 		  @Override public void onReceive(Context context, Intent intent) { 
 			  //		  intent can contain anydata 
-			  canceled = true;
+			  mCanceled = true;
 		  } };
 	
-	private boolean canceled = false;
-	private IndexWriter w;
-	private Document doc;
-	private long startTime;
+	private boolean mCanceled = false;
+	private IndexWriter mWriter;
+	private Document mDoc;
+	private long mStartTime;
 	
-	String[] notificationTimeLeft;
+	private String[] mNotificationTimeLeft;
 	
-	private Context context;
-	private int i = 0;
-	private int perc = 0;
-	private int percSave = 0;
-	public static final int ENTRIES = 13150; // curently 13108
+	private Context mContext;
+	private int mCountDone = 0;
+	private int mPerc = 0;
+	private int mPercSave = 0;
+	public static final int ENTRIES_COUNT = 13150; // curently 13108
 	
 	
 	//parsing
-	private boolean literal;
-	private boolean radicalClassic;
-	private boolean grade;
-	private boolean strokeCount;
-	private boolean dicRef;
+	private boolean mLiteral;
+	private boolean mRadicalClassic;
+	private boolean mGrade;
+	private boolean mStrokeCount;
+	private boolean mDicRef;
 
-	private boolean queryCodeSkip;
-	private boolean rmGroupJaOn;
-	private boolean rmGroupJaKun;
-	private boolean meaningEnglish;
-	private boolean meaningFrench;
+	private boolean mQueryCodeSkip;
+	private boolean mRMGroupJaOn;
+	private boolean mRMGroupJaKun;
+	private boolean mMeaningEnglish;
+	private boolean mMeaningFrench;
 	/*
 	 *  dutch and german aren't in current kanjidict 2
 	 */
-	private boolean meaningDutch;
-	private boolean meaningGerman;
+	private boolean mMeaningDutch;
+	private boolean mMeaningGerman;
 	
-	private boolean nanori;
+	private boolean mNanori;
 	
-	private JSONObject valueDicRef;
-	private String dicRefKey;
-	private JSONArray valueRmGroupJaOn;
-	private JSONArray valueRmGroupJaKun;
-	private JSONArray valueMeaningEnglish;
-	private JSONArray valueMeaningFrench;
+	private JSONObject mValueDicRef;
+	private String mDicRefKey;
+	private JSONArray mValueRmGroupJaOn;
+	private JSONArray mValueRmGroupJaKun;
+	private JSONArray mValueMeaningEnglish;
+	private JSONArray mValueMeaningFrench;
 	/*
 	 *  dutch and german aren't in current kanjidict 2
 	 */
-	private JSONArray valueMeaningDutch;
-	private JSONArray valueMeaningGerman;
+	private JSONArray mValueMeaningDutch;
+	private JSONArray mValueMeaningGerman;
 	
-	private JSONArray valueNanori;
+	private JSONArray mValueNanori;
 	
 	public SaxDataHolderKanjiDict(File file,Context appContext,NotificationManager nM,
 			Notification notif,RemoteViews rV) throws IOException,SAXException{
@@ -98,17 +98,17 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			Log.e("SaxDataHolderKanjiDict", "SaxDataHolderKanjiDict - dictionary directory is null");
 			throw new IllegalArgumentException("SaxParser: dictionary directory is null");
 		}
-		context = appContext;
+		mContext = appContext;
 		Directory dir = FSDirectory.open(file);
     	Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
 		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36,analyzer);
-		w = new IndexWriter(dir, config);
+		mWriter = new IndexWriter(dir, config);
 		
-		startTime = System.currentTimeMillis();
+		mStartTime = System.currentTimeMillis();
 		
-		notificationTimeLeft = context.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
-		if(notificationTimeLeft.length != 2 ){
-			mNotificationView.setTextViewText(R.id.notification_text, context.getString(R.string.dictionary_parsing_in_progress_time_left));
+		mNotificationTimeLeft = mContext.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
+		if(mNotificationTimeLeft.length != 2 ){
+			mNotificationView.setTextViewText(R.id.notification_text, mContext.getString(R.string.dictionary_parsing_in_progress_time_left));
 		}
 		mNotifyManager = nM;
 		mNotification = notif;
@@ -120,7 +120,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	@Override
 	public void startDocument() throws SAXException {
 		Log.i("SaxDataHolderKanjiDict", "Start of document");
-		LocalBroadcastManager.getInstance(context).registerReceiver(
+		LocalBroadcastManager.getInstance(mContext).registerReceiver(
 				mReceiverInterrupted, new IntentFilter("serviceCanceled"));
 		super.startDocument();
 	}
@@ -128,55 +128,55 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		if(canceled){
+		if(mCanceled){
 			throw new SAXException("SAX terminated due to ParserService end.");
 		}
 		if("character".equals(qName)){
-			doc = new Document();
-			valueDicRef = new JSONObject();
-			valueRmGroupJaOn = new JSONArray();
-			valueRmGroupJaKun = new JSONArray();
-			valueMeaningEnglish = new JSONArray();
-			valueMeaningFrench = new JSONArray();
+			mDoc = new Document();
+			mValueDicRef = new JSONObject();
+			mValueRmGroupJaOn = new JSONArray();
+			mValueRmGroupJaKun = new JSONArray();
+			mValueMeaningEnglish = new JSONArray();
+			mValueMeaningFrench = new JSONArray();
 			/*
 			 *  dutch and german aren't in current kanjidict 2
 			 */
-			valueMeaningDutch = new JSONArray();
-			valueMeaningGerman = new JSONArray();
+			mValueMeaningDutch = new JSONArray();
+			mValueMeaningGerman = new JSONArray();
 			
-			valueNanori = new JSONArray();
+			mValueNanori = new JSONArray();
 		}else if("literal".equals(qName)){
-			literal = true;
+			mLiteral = true;
 		}else if("rad_value".equals(qName) && "classical".equals(attributes.getValue("rad_type"))){
-			radicalClassic = true;
+			mRadicalClassic = true;
 		}else if("grade".equals(qName)){
-			grade = true;
+			mGrade = true;
 		}else if("stroke_count".equals(qName)){
-			strokeCount = true;
+			mStrokeCount = true;
 		}else if("dic_ref".equals(qName)){
-			dicRef = true;
-			dicRefKey = attributes.getValue("dr_type");
+			mDicRef = true;
+			mDicRefKey = attributes.getValue("dr_type");
 		}else if("q_code".equals(qName) && "skip".equals(attributes.getValue("qc_type"))){
-			queryCodeSkip = true;
+			mQueryCodeSkip = true;
 		}else if("reading".equals(qName)){
 			if("ja_on".equals(attributes.getValue("r_type"))){
-				rmGroupJaOn = true;
+				mRMGroupJaOn = true;
 			}else if("ja_kun".equals(attributes.getValue("r_type"))){
-				rmGroupJaKun = true;
+				mRMGroupJaKun = true;
 			}
 		}else if("meaning".equals(qName)){
 			if(attributes.getValue("m_lang") == null){
 				//english
-				meaningEnglish = true;
+				mMeaningEnglish = true;
 			}else if("fr".equals(attributes.getValue("m_lang"))){
-				meaningFrench = true;
+				mMeaningFrench = true;
 			}else if("du".equals(attributes.getValue("m_lang"))){
-				meaningDutch = true;
+				mMeaningDutch = true;
 			}else if("ge".equals(attributes.getValue("m_lang"))){
-				meaningGerman = true;
+				mMeaningGerman = true;
 			}
 		}else if("nanori".equals(qName)){
-			nanori = true;
+			mNanori = true;
 		}
 		super.startElement(uri, localName, qName, attributes);
 	}
@@ -185,61 +185,61 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
-		if(literal){
-			doc.add(new Field("literal",new String(ch,start,length),Field.Store.YES, Index.ANALYZED));
-			literal = false;
-		}else if(radicalClassic){
+		if(mLiteral){
+			mDoc.add(new Field("literal",new String(ch,start,length),Field.Store.YES, Index.ANALYZED));
+			mLiteral = false;
+		}else if(mRadicalClassic){
 				String value = tryParseNumber(new String(ch,start,length));
 				if(value != null){
-					doc.add(new Field("radicalClassic",value,Field.Store.YES,Index.NO));
+					mDoc.add(new Field("radicalClassic",value,Field.Store.YES,Index.NO));
 				}
-				radicalClassic = false;
-		}else if(grade){
+				mRadicalClassic = false;
+		}else if(mGrade){
 			String value = tryParseNumber(new String(ch,start,length));
 			if(value != null){
-				doc.add(new Field("grade",value,Field.Store.YES,Index.NO));
+				mDoc.add(new Field("grade",value,Field.Store.YES,Index.NO));
 			}
-			grade = false;
-		}else if(strokeCount){
+			mGrade = false;
+		}else if(mStrokeCount){
 			String value = tryParseNumber(new String(ch,start,length));
 			if(value != null){
-				doc.add(new Field("strokeCount",value,Field.Store.YES,Index.NO));
+				mDoc.add(new Field("strokeCount",value,Field.Store.YES,Index.NO));
 			}
-			strokeCount = false;
-		}else if(dicRef){
-			if(dicRefKey != null){
+			mStrokeCount = false;
+		}else if(mDicRef){
+			if(mDicRefKey != null){
 				try {
-					valueDicRef.put(dicRefKey, new String(ch,start,length));
+					mValueDicRef.put(mDicRefKey, new String(ch,start,length));
 				} catch (JSONException e) {
 					Log.w("SaxDataHolderKanjiDict", "valueDicRef.put failed");
 				}
-				dicRefKey = null;
-				dicRef = false;
+				mDicRefKey = null;
+				mDicRef = false;
 			}
-		}else if(queryCodeSkip){
-			doc.add(new Field("queryCodeSkip",new String(ch,start,length),Field.Store.YES,Index.NO));
-			queryCodeSkip = false;
-		}else if(rmGroupJaOn){
-			valueRmGroupJaOn.put(new String(ch,start,length));
-			rmGroupJaOn = false;
-		}else if(rmGroupJaKun){
-			valueRmGroupJaKun.put(new String(ch,start,length));
-			rmGroupJaKun = false;
-		}else if(nanori){
-			valueNanori.put(new String(ch,start,length));
-			nanori = false;
-		}else if(meaningEnglish){
-			valueMeaningEnglish.put(new String(ch,start,length));
-			meaningEnglish = false;
-		}else if(meaningFrench){
-			valueMeaningFrench.put(new String(ch,start,length));
-			meaningFrench = false;
-		}else if(meaningDutch){
-			valueMeaningDutch.put(new String(ch,start,length));
-			meaningDutch = false;
-		}else if(meaningGerman){
-			valueMeaningGerman.put(new String(ch,start,length));
-			meaningGerman = false;
+		}else if(mQueryCodeSkip){
+			mDoc.add(new Field("queryCodeSkip",new String(ch,start,length),Field.Store.YES,Index.NO));
+			mQueryCodeSkip = false;
+		}else if(mRMGroupJaOn){
+			mValueRmGroupJaOn.put(new String(ch,start,length));
+			mRMGroupJaOn = false;
+		}else if(mRMGroupJaKun){
+			mValueRmGroupJaKun.put(new String(ch,start,length));
+			mRMGroupJaKun = false;
+		}else if(mNanori){
+			mValueNanori.put(new String(ch,start,length));
+			mNanori = false;
+		}else if(mMeaningEnglish){
+			mValueMeaningEnglish.put(new String(ch,start,length));
+			mMeaningEnglish = false;
+		}else if(mMeaningFrench){
+			mValueMeaningFrench.put(new String(ch,start,length));
+			mMeaningFrench = false;
+		}else if(mMeaningDutch){
+			mValueMeaningDutch.put(new String(ch,start,length));
+			mMeaningDutch = false;
+		}else if(mMeaningGerman){
+			mValueMeaningGerman.put(new String(ch,start,length));
+			mMeaningGerman = false;
 		}
 		super.characters(ch, start, length);
 	}
@@ -249,62 +249,62 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			throws SAXException {
 		
 		if("character".equals(qName)){
-			if(valueDicRef.length() > 0){
-				doc.add(new Field("dicRef",valueDicRef.toString(),Field.Store.YES,Index.NO));
+			if(mValueDicRef.length() > 0){
+				mDoc.add(new Field("dicRef",mValueDicRef.toString(),Field.Store.YES,Index.NO));
 			}
-			if(valueRmGroupJaOn.length() > 0){
-				doc.add(new Field("rmGroupJaOn",valueRmGroupJaOn.toString(),Field.Store.YES,Index.NO));
+			if(mValueRmGroupJaOn.length() > 0){
+				mDoc.add(new Field("rmGroupJaOn",mValueRmGroupJaOn.toString(),Field.Store.YES,Index.NO));
 			}
-			if(valueRmGroupJaKun.length() > 0){
-				doc.add(new Field("rmGroupJaKun",valueRmGroupJaKun.toString(),Field.Store.YES,Index.NO));
+			if(mValueRmGroupJaKun.length() > 0){
+				mDoc.add(new Field("rmGroupJaKun",mValueRmGroupJaKun.toString(),Field.Store.YES,Index.NO));
 			}
-			if(valueMeaningEnglish.length() > 0){
-				doc.add(new Field("meaningEnglish",valueMeaningEnglish.toString(),Field.Store.YES,Index.NO));
+			if(mValueMeaningEnglish.length() > 0){
+				mDoc.add(new Field("meaningEnglish",mValueMeaningEnglish.toString(),Field.Store.YES,Index.NO));
 			}
-			if(valueMeaningFrench.length() > 0){
-				doc.add(new Field("meaningFrench",valueMeaningFrench.toString(),Field.Store.YES,Index.NO));
+			if(mValueMeaningFrench.length() > 0){
+				mDoc.add(new Field("meaningFrench",mValueMeaningFrench.toString(),Field.Store.YES,Index.NO));
 			}
 			/*
 			 *  dutch and german aren't in current kanjidict 2
 			 */
-			if(valueMeaningDutch.length() > 0){
-				doc.add(new Field("meaningDutch",valueMeaningDutch.toString(),Field.Store.YES,Index.NO));
+			if(mValueMeaningDutch.length() > 0){
+				mDoc.add(new Field("meaningDutch",mValueMeaningDutch.toString(),Field.Store.YES,Index.NO));
 			}
-			if(valueMeaningGerman.length() > 0){
-				doc.add(new Field("meaningGerman",valueMeaningGerman.toString(),Field.Store.YES,Index.NO));
+			if(mValueMeaningGerman.length() > 0){
+				mDoc.add(new Field("meaningGerman",mValueMeaningGerman.toString(),Field.Store.YES,Index.NO));
 			}
-			if(valueNanori.length() > 0){
-				doc.add(new Field("nanori",valueNanori.toString(),Field.Store.YES,Index.NO));
+			if(mValueNanori.length() > 0){
+				mDoc.add(new Field("nanori",mValueNanori.toString(),Field.Store.YES,Index.NO));
 			}
 
 			try {
-				i++;
+				mCountDone++;
 				//System.out.println(i);
-				w.addDocument(doc);
+				mWriter.addDocument(mDoc);
 				//System.out.println(doc.toString());
-				int persPub = Math.round((((float)i/ENTRIES)*100)) ;
+				int persPub = Math.round((((float)mCountDone/ENTRIES_COUNT)*100)) ;
 				
-                if(perc < persPub){
-                	if(percSave + 4 < persPub){
-                		w.commit();
+                if(mPerc < persPub){
+                	if(mPercSave + 4 < persPub){
+                		mWriter.commit();
                 		Log.i("SaxDataHolderKanjiDict", "SaxDataHolder progress saved - " + persPub + " %");
-                		percSave = persPub;
+                		mPercSave = persPub;
                 	}
                 	
                 	
-                	long duration  = System.currentTimeMillis() - startTime;
-                	startTime = System.currentTimeMillis();
+                	long duration  = System.currentTimeMillis() - mStartTime;
+                	mStartTime = System.currentTimeMillis();
                 	duration = duration * (100-persPub);
                 	
                 	mNotificationView.setProgressBar(R.id.ntification_progressBar, 100, persPub, false);
-                	if(notificationTimeLeft.length ==2){
+                	if(mNotificationTimeLeft.length ==2){
                 		int timeLeft = Math.round(duration/60000);
-                		mNotificationView.setTextViewText(R.id.notification_text, notificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + notificationTimeLeft[1] );
+                		mNotificationView.setTextViewText(R.id.notification_text, mNotificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + mNotificationTimeLeft[1] );
                 	}
                 	mNotification.contentView = mNotificationView;
 	                mNotifyManager.notify(0, mNotification);
                 	
-	                perc = persPub;
+	                mPerc = persPub;
 	                
                 }
 			} catch (CorruptIndexException e) {
@@ -314,7 +314,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			} catch (Exception e){
 				Log.e("SaxDataHolderKanjiDict", "Saving doc: Unknown exception: "+e.toString());
 			}
-        	doc = null;
+			mDoc = null;
 		}
 		
 		super.endElement(uri, localName, qName);
@@ -324,10 +324,10 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	
 	public void endDocument(){ 
 		Log.i("SaxDataHolderKanjiDict", "End of document");
-		LocalBroadcastManager.getInstance(context).unregisterReceiver(
+		LocalBroadcastManager.getInstance(mContext).unregisterReceiver(
 				mReceiverInterrupted);
 			try {
-				w.close();
+				mWriter.close();
 			} catch (IOException e) {
 				Log.e("SaxDataHolderKanjiDict", "End of document - closinf lucene writer failed");
 			}

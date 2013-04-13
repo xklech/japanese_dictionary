@@ -57,28 +57,28 @@ public class SaxDataHolder extends DefaultHandler{
 	private long mStartTime;
 	
 	private JSONArray mJapaneseRebJSON;
-	private JSONArray japanese_kebJSON;
+	private JSONArray mJapaneseKebJSON;
 	
-	private JSONArray englishJSON;
-	private JSONArray englishJSONSense;
+	private JSONArray mEnglishJSON;
+	private JSONArray mEnglishJSONSense;
 	
-	private JSONArray frenchJSON;
-	private JSONArray frenchJSONSense;	
+	private JSONArray mFrenchJSON;
+	private JSONArray mFrenchJSONSense;	
 	
-	private JSONArray dutchJSON;
-	private JSONArray dutchJSONSense;	
+	private JSONArray mDutchJSON;
+	private JSONArray mDutchJSONSense;	
 	
-	private JSONArray germanJSON;
-	private JSONArray germanJSONSense;
+	private JSONArray mGermanJSON;
+	private JSONArray mGermanJSONSense;
 	
-	String[] notificationTimeLeft;
+	private String[] mNotificationTimeLeft;
 	
-	private Context context;
-	private int i = 0;
-	private int perc = 0;
-	private int percSave = 0;
+	private Context mContext;
+	private int mCountDone = 0;
+	private int mPerc = 0;
+	private int mPercSave = 0;
 	
-	public static final int ENTRIES = 170000;
+	public static final int ENTRIES_COUNT = 170000;
 	
 	public SaxDataHolder(File file,Context appContext,NotificationManager nM,
 			Notification notif,RemoteViews rV) throws IOException,SAXException{
@@ -87,7 +87,7 @@ public class SaxDataHolder extends DefaultHandler{
 			Log.e("SaxDataHolder", "SaxDataHolder - dictionary directory is null");
 			throw new IllegalArgumentException("SaxParser: dictiona< ry directory is null");
 		}
-		context = appContext;
+		mContext = appContext;
 		Directory dir = FSDirectory.open(file);
 		//Analyzer analyzer = new SimpleAnalyzer(Version.LUCENE_33);
     	Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
@@ -96,9 +96,9 @@ public class SaxDataHolder extends DefaultHandler{
 		
 		mStartTime = System.currentTimeMillis();
 		
-		notificationTimeLeft = context.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
-		if(notificationTimeLeft.length != 2 ){
-			mNotificationView.setTextViewText(R.id.notification_text, context.getString(R.string.dictionary_parsing_in_progress_time_left));
+		mNotificationTimeLeft = mContext.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
+		if(mNotificationTimeLeft.length != 2 ){
+			mNotificationView.setTextViewText(R.id.notification_text, mContext.getString(R.string.dictionary_parsing_in_progress_time_left));
 		}
 		mNotifyManager = nM;
 		mNotification = notif;
@@ -116,22 +116,22 @@ public class SaxDataHolder extends DefaultHandler{
 		if("entry".equals(qName)){
 			//System.out.println("Entry "+ (++i));
 			mDocument = new Document();
-			englishJSONSense = new JSONArray();
-			frenchJSONSense = new JSONArray();
-			dutchJSONSense = new JSONArray();
-			germanJSONSense = new JSONArray();
+			mEnglishJSONSense = new JSONArray();
+			mFrenchJSONSense = new JSONArray();
+			mDutchJSONSense = new JSONArray();
+			mGermanJSONSense = new JSONArray();
 			mJapaneseRebJSON = new JSONArray();
-			japanese_kebJSON = new JSONArray();
+			mJapaneseKebJSON = new JSONArray();
 		}else if("reb".equals(qName)){
 			mJapaneseReb = true;
 		}else if("keb".equals(qName)){
 			mJapaneseKeb = true;
 		}else if("sense".equals(qName)){
 			
-			englishJSON = new JSONArray();
-			frenchJSON = new JSONArray();
-			dutchJSON = new JSONArray();
-			germanJSON = new JSONArray();
+			mEnglishJSON = new JSONArray();
+			mFrenchJSON = new JSONArray();
+			mDutchJSON = new JSONArray();
+			mGermanJSON = new JSONArray();
 		}else if("gloss".equals(qName)){
 			if("eng".equals(attributes.getValue("xml:lang"))){
 				//english
@@ -152,7 +152,7 @@ public class SaxDataHolder extends DefaultHandler{
 			mDocument.add(new Field("japanese","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
 			//System.out.println(new String(ch,start,length));
 			if(mJapaneseKeb){
-				japanese_kebJSON.put(new String(ch,start,length));	
+				mJapaneseKebJSON.put(new String(ch,start,length));	
 				mJapaneseKeb = false;
 			}
 			if(mJapaneseReb){
@@ -160,19 +160,19 @@ public class SaxDataHolder extends DefaultHandler{
 				mJapaneseReb = false;
 			}
 		}else if(mEnglish){
-			englishJSON.put(new String(ch,start,length));
+			mEnglishJSON.put(new String(ch,start,length));
 			//doc.add(new Field("english",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
 			mEnglish = false;			
 		}else if(mFrench){
-			frenchJSON.put(new String(ch,start,length));
+			mFrenchJSON.put(new String(ch,start,length));
 			//doc.add(new Field("french",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
 			mFrench = false;			
 		}else if(mDutch){
-			dutchJSON.put(new String(ch,start,length));
+			mDutchJSON.put(new String(ch,start,length));
 			//doc.add(new Field("dutch",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
 			mDutch = false;			
 		}else if(mGerman){
-			germanJSON.put(new String(ch,start,length));
+			mGermanJSON.put(new String(ch,start,length));
 			//doc.add(new Field("german",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
 			mGerman = false;			
 		}
@@ -184,54 +184,54 @@ public class SaxDataHolder extends DefaultHandler{
 	public void endElement(String uri, String localName, 
 	        String qName) throws SAXException { 
 			if("sense".equals(qName)){
-				if(englishJSON.length()>0){
-					englishJSONSense.put(englishJSON);
+				if(mEnglishJSON.length()>0){
+					mEnglishJSONSense.put(mEnglishJSON);
 				}
-				if(frenchJSON.length()>0){
-					frenchJSONSense.put(frenchJSON);
+				if(mFrenchJSON.length()>0){
+					mFrenchJSONSense.put(mFrenchJSON);
 				}
-				if(dutchJSON.length()>0){
-					dutchJSONSense.put(dutchJSON);
+				if(mDutchJSON.length()>0){
+					mDutchJSONSense.put(mDutchJSON);
 				}
-				if(germanJSON.length()>0){
-					germanJSONSense.put(germanJSON);
+				if(mGermanJSON.length()>0){
+					mGermanJSONSense.put(mGermanJSON);
 				}
 			}else if("entry".equals(qName)){
-				if(japanese_kebJSON.length()>0){
-					mDocument.add(new Field("japanese_keb",japanese_kebJSON.toString(),Field.Store.YES,Index.NO));
+				if(mJapaneseKebJSON.length()>0){
+					mDocument.add(new Field("japanese_keb",mJapaneseKebJSON.toString(),Field.Store.YES,Index.NO));
 				}
 				if(mJapaneseRebJSON.length()>0){
 					mDocument.add(new Field("japanese_reb",mJapaneseRebJSON.toString(),Field.Store.YES,Index.NO));
 				}
-				if(englishJSONSense.length()>0){
-					mDocument.add(new Field("english",englishJSONSense.toString(),Field.Store.YES,Index.NO));
-					englishJSONSense = null;
+				if(mEnglishJSONSense.length()>0){
+					mDocument.add(new Field("english",mEnglishJSONSense.toString(),Field.Store.YES,Index.NO));
+					mEnglishJSONSense = null;
 				}
-				if(frenchJSONSense.length()>0){
-					mDocument.add(new Field("french",frenchJSONSense.toString(),Field.Store.YES,Index.NO));	
-					frenchJSONSense = null;
+				if(mFrenchJSONSense.length()>0){
+					mDocument.add(new Field("french",mFrenchJSONSense.toString(),Field.Store.YES,Index.NO));	
+					mFrenchJSONSense = null;
 				}
-				if(dutchJSONSense.length()>0){
-					mDocument.add(new Field("dutch",dutchJSONSense.toString(),Field.Store.YES,Index.NO));	
-					dutchJSONSense = null;
+				if(mDutchJSONSense.length()>0){
+					mDocument.add(new Field("dutch",mDutchJSONSense.toString(),Field.Store.YES,Index.NO));	
+					mDutchJSONSense = null;
 				}
-				if(germanJSONSense.length()>0){
-					mDocument.add(new Field("german",germanJSONSense.toString(),Field.Store.YES,Index.NO));	
-					germanJSONSense = null;
+				if(mGermanJSONSense.length()>0){
+					mDocument.add(new Field("german",mGermanJSONSense.toString(),Field.Store.YES,Index.NO));	
+					mGermanJSONSense = null;
 				}				
 				
 				try {
-					i++;
+					mCountDone++;
 					//System.out.println(i);
 					mWriter.addDocument(mDocument);
 					//System.out.println(doc.toString());
-					int persPub = Math.round((((float)i/ENTRIES)*100)) ;
+					int persPub = Math.round((((float)mCountDone/ENTRIES_COUNT)*100)) ;
 					
-	                if(perc < persPub){
-	                	if(percSave + 4 < persPub){
+	                if(mPerc < persPub){
+	                	if(mPercSave + 4 < persPub){
 	                		mWriter.commit();
 	                		System.out.println(persPub);
-	                		percSave = persPub;
+	                		mPercSave = persPub;
 	                	}
 	                	
 	                	
@@ -240,15 +240,15 @@ public class SaxDataHolder extends DefaultHandler{
 	                	duration = duration * (100-persPub);
 	                	
 	                	mNotificationView.setProgressBar(R.id.ntification_progressBar, 100, persPub, false);
-	                	if(notificationTimeLeft.length ==2){
+	                	if(mNotificationTimeLeft.length ==2){
 	                		int timeLeft = Math.round(duration/60000);
-	                		mNotificationView.setTextViewText(R.id.notification_text, notificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + notificationTimeLeft[1] );
+	                		mNotificationView.setTextViewText(R.id.notification_text, mNotificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + mNotificationTimeLeft[1] );
 	                	}
 	                	mNotification.contentView = mNotificationView;
 		                mNotifyManager.notify(0, mNotification);
 	                	
-		                perc = persPub;
-		                Log.i("SaxDataHolder", "SaxDataHolder progress saved - " + perc + " %");
+		                mPerc = persPub;
+		                Log.i("SaxDataHolder", "SaxDataHolder progress saved - " + mPerc + " %");
 	                }
 				} catch (CorruptIndexException e) {
 					Log.e("SaxDataHolder", "Saving doc - Adding document to lucene indexer failed: "+e.toString());
@@ -263,13 +263,13 @@ public class SaxDataHolder extends DefaultHandler{
 	
 	public void startDocument(){
 		Log.i("SaxDataHolder", "Start of document");
-		LocalBroadcastManager.getInstance(context).registerReceiver(
+		LocalBroadcastManager.getInstance(mContext).registerReceiver(
 				mReceiverDone, new IntentFilter("serviceCanceled"));
 	}
 	
 	public void endDocument(){ 
 		Log.i("SaxDataHolder", "End of document");
-		LocalBroadcastManager.getInstance(context).unregisterReceiver(
+		LocalBroadcastManager.getInstance(mContext).unregisterReceiver(
 				mReceiverDone);
 			try {
 				mWriter.close();

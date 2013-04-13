@@ -21,90 +21,90 @@ public class Translation {
 	public static final String SAVE_GERMAN = "cz.muni.fi.japanesedictionary.german";
 	
 	
-	private List<String> jap_keb;
-	private List<String> jap_reb;
-	private List<List<String>> english;
-	private List<List<String>> french;
-	private List<List<String>> dutch;
-	private List<List<String>> german;
+	private List<String> mJapKeb;
+	private List<String> mJapReb;
+	private List<List<String>> mEnglish;
+	private List<List<String>> mFrench;
+	private List<List<String>> mDutch;
+	private List<List<String>> mGerman;
 	
 	@Override
 	public String toString() {
-		return "Translation [jap_keb=" + jap_keb + ", jap_reb=" + jap_reb
-				+ ", english=" + english + ", french=" + french + ", dutch="
-				+ dutch + ", german=" + german + "]";
+		return "Translation [jap_keb=" + mJapKeb + ", jap_reb=" + mJapReb
+				+ ", english=" + mEnglish + ", french=" + mFrench + ", dutch="
+				+ mDutch + ", german=" + mGerman + "]";
 	}
 
 	public Translation(){
-		jap_keb = new ArrayList<String>();
-		jap_reb = new ArrayList<String>();
-		english = new ArrayList<List<String>>();
-		french = new ArrayList<List<String>>();
-		dutch = new ArrayList<List<String>>();
-		german = new ArrayList<List<String>>();
+		mJapKeb = new ArrayList<String>();
+		mJapReb = new ArrayList<String>();
+		mEnglish = new ArrayList<List<String>>();
+		mFrench = new ArrayList<List<String>>();
+		mDutch = new ArrayList<List<String>>();
+		mGerman = new ArrayList<List<String>>();
 	}
 	
 	public void addJapKeb(String keb){
 		if(keb == null || keb.length() < 1){
 			return ;
 		}
-		jap_keb.add(keb);
+		mJapKeb.add(keb);
 	}
 	
 	public void addJapReb(String reb){
 		if(reb == null || reb.length() < 1){
 			return ;
 		}
-		jap_reb.add(reb);
+		mJapReb.add(reb);
 	}
 	
 	public void addEnglishSense(List<String> sense){
 		if(sense == null || sense.size() < 1){
 			return ;
 		}
-		english.add(sense);
+		mEnglish.add(sense);
 	}
 	public void addFrenchSense(List<String> sense){
 		if(sense == null || sense.size() < 1){
 			return ;
 		}
-		french.add(sense);
+		mFrench.add(sense);
 	}
 	public void addDutchSense(List<String> sense){
 		if(sense == null || sense.size() < 1){
 			return ;
 		}
-		dutch.add(sense);
+		mDutch.add(sense);
 	}
 	public void addGermanSense(List<String> sense){
 		if(sense == null || sense.size() < 1){
 			return ;
 		}
-		german.add(sense);
+		mGerman.add(sense);
 	}
 	
 	public List<String> getJapaneseKeb(){
-		return jap_keb.isEmpty()?null:jap_keb;
+		return mJapKeb.isEmpty()?null:mJapKeb;
 	}
 	
 	public List<String> getJapaneseReb(){
-		return jap_reb.isEmpty()?null:jap_reb;
+		return mJapReb.isEmpty()?null:mJapReb;
 	}
 	
 	public List<List<String>> getEnglishSense(){
-		return english.isEmpty()?null:english;
+		return mEnglish.isEmpty()?null:mEnglish;
 	}
 	
 	public List<List<String>> getFrenchSense(){
-		return french.isEmpty()?null:french;
+		return mFrench.isEmpty()?null:mFrench;
 	}
 	
 	public List<List<String>> getDutchSense(){
-		return dutch.isEmpty()?null:dutch;
+		return mDutch.isEmpty()?null:mDutch;
 	}
 	
 	public List<List<String>> getGermanSense(){
-		return german.isEmpty()?null:german;
+		return mGerman.isEmpty()?null:mGerman;
 	}
 	
 	public void parseJapaneseKeb(String jsonString){
