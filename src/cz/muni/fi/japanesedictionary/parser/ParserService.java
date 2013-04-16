@@ -39,7 +39,12 @@ import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.main.MainActivity;
 
 
-
+/**
+ * Service for downloading and aprsing dictionaries.
+ * 
+ * @author Jaroslav Klech
+ *
+ */
 public class ParserService extends IntentService{
 	
 	public static final String DICTIONARY_PATH = "http://index.aerolines.cz/JMdict.gz";
@@ -53,7 +58,7 @@ public class ParserService extends IntentService{
 	RemoteViews mNotificationView = null;
 	boolean canceled = false;
 	boolean complete = false;
-
+	
 	public ParserService(){
 		super("ParserService");
 	}
@@ -86,7 +91,9 @@ public class ParserService extends IntentService{
 	
 	}
 	
-	
+	/**
+	 * Downloads dictionaries.
+	 */
 	@Override
 	protected void onHandleIntent(Intent arg0) {
 		boolean downloadedJapDict = false;
@@ -286,7 +293,16 @@ public class ParserService extends IntentService{
 		stopSelf();
 	}
 	
-	
+	/**
+	 * Parse downloaded JMdict dictionary.
+	 * 
+	 * @param path to the dictionary gziped file
+	 * @return path to lucene folder for jmdict
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 */
 	private String parseDictionary(String path) throws InterruptedException, IOException, ParserConfigurationException, SAXException{
         
 		mNotificationView.setTextViewText(R.id.notification_text, getString(R.string.dictionary_parsing_in_progress));
@@ -367,7 +383,17 @@ public class ParserService extends IntentService{
 		return null;
 
 	}
-	
+
+	/**
+	 * Parse downloaded KanjiDict2 dictionary.
+	 * 
+	 * @param path to the KanjiDict2 dictionary gziped file 
+	 * @return path to lucene folder for kanjidict2
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 */
 	private String parseKanjiDict(String path) 
 			throws InterruptedException, IOException, ParserConfigurationException, SAXException{
 		Log.i("ParserService","Parsing kanji dict");
@@ -451,7 +477,13 @@ public class ParserService extends IntentService{
 
 	}
 	
-	
+	/**
+	 * Called when parsing was succesfully done. Sets shared preferences
+	 * and broadcast downloadingDictinaryServiceDone intent.
+	 * 
+	 * @param dictionaryPath path to JMdict dictionary
+	 * @param kanjiDictPath path to kanjidict2 dictionary
+	 */
 	private void serviceSuccessfullyDone(String dictionaryPath,String kanjiDictPath){
 		Log.i("ParserService", "Parsing dictionary - parsing succesfully done, saving preferences");
         SharedPreferences settings = getSharedPreferences(DICTIONARY_PREFERENCES, 0);
@@ -484,6 +516,10 @@ public class ParserService extends IntentService{
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);	
 	}
 	
+	/**
+	 * Closes IO streams. If service wasn't done succesfully changes notification and
+	 * broadcasts serviceCanceled intent.
+	 */
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
@@ -498,6 +534,9 @@ public class ParserService extends IntentService{
 		}
 	}
 	
+	/**
+	 * Tries to close IO streams.
+	 */
 	private void closeIOStreams(){
 		if(input != null){
 			try {

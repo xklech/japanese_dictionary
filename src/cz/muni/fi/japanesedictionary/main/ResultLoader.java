@@ -29,6 +29,13 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 
+
+/**
+ * Loader for ResultFragmentList. Searches JMdict for match with expression.
+ * 
+ * @author Jaroslav Klech
+ *
+ */
 public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	private Context mContext;
 	private String mExpression = null;
@@ -40,13 +47,25 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
 	
 	private List<Translation> mLastTranslations = null;
 	
-	public ResultLoader(Context cont,String expr,String _part) {
+	/**
+	 * Constructor for ResultLoader
+	 * 
+	 * @param cont environment context
+	 * @param expr expressiont o be searched for
+	 * @param part part of word to be searched in
+	 */
+	public ResultLoader(Context cont,String expr,String part) {
 		super(cont);
 		mContext = cont;
-		mPart = _part;
+		mPart = part;
 		mExpression = expr;		
 	}
-
+	
+	/**
+	 *  Takes expression and word part and search JMDict for records.
+	 *  
+	 *  @return List<Translation> if found returns list of translation else null
+	 */
 	@Override
 	public List<Translation> loadInBackground() {
 		
@@ -80,7 +99,7 @@ public class ResultLoader extends AsyncTaskLoader<List<Translation>>{
         }
         
         if(mExpression == null){
-        	//spusteni bez vyhledani
+        	//first run 
         	Log.i("ResultLoader","First run - last 10 translations ");
         	GlossaryReaderContract database = new GlossaryReaderContract(mContext);
         	translations = database.getLastTranslations(10);

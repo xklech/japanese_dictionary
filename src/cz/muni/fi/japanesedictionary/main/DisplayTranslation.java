@@ -24,6 +24,12 @@ import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 
+/**
+ * Fragment which displays translation info
+ * @author Jaroslav Klech
+ *
+ */
+
 public class DisplayTranslation extends SherlockFragment {
 	
 	private OnCreateTranslationListener mCallbackTranslation;
@@ -110,11 +116,22 @@ public class DisplayTranslation extends SherlockFragment {
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
+	/**
+	 * Change displayed transwlation
+	 * 
+	 * @param tran translation to be changed
+	 */
 	public void setTranslation(Translation tran){
 		this.mTranslation = tran;
+		if(this.isVisible()){
+			updateTranslation();
+		}
 	}
 	
-	
+	/**
+	 * Updates Fragment view acording to saved translation.
+	 * 
+	 */
 	public void updateTranslation(){
 		Log.i("DisplayTranslation","Update translation");
 		
@@ -292,6 +309,9 @@ public class DisplayTranslation extends SherlockFragment {
     	}        
 	}
 	
+	/**
+	 * Displays map of characters to user. Called from CharacterLoader after loading has been done.
+	 */
 	public void displayCharacters(){
 		if(mCharacters == null || mCharacters.size() < 1 || getView() == null){
 			return ;
@@ -390,11 +410,23 @@ public class DisplayTranslation extends SherlockFragment {
 		
 	}
 	
-	
+	/**
+	 * Sets new character info and if the fragment is visible then changes UI
+	 * @param characters map of characters to be displayed
+	 */
 	public void setCharacters(Map<String, JapaneseCharacter> characters) {
 		this.mCharacters = characters;
+		if(this.isVisible()){
+			this.displayCharacters();
+		}
 	}
 		
+	/**
+	 * Updates language preferences
+	 * 
+	 * @return true if some language was changed
+	 * 	       false if there wasn't change
+	 */
     private boolean updateLanguages(){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean changed = false;

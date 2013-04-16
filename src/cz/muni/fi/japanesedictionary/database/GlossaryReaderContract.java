@@ -12,6 +12,11 @@ import android.provider.BaseColumns;
 import android.util.Log;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 
+/**
+ * SQLite helper for managing database.
+ * @author Jaroslav Klech
+ *
+ */
 public class GlossaryReaderContract extends SQLiteOpenHelper {
 	
     private static final int DATABASE_VERSION = 1;
@@ -67,7 +72,10 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 	
-	// add translation
+	/**
+	 * Saves given translation to database
+	 * @param translation translation to be saved into database
+	 */
 	public void saveTranslation(Translation translation){
 		SQLiteDatabase db = this.getWritableDatabase();	
 		ContentValues values = translation.createContentValuesFromTranslation();
@@ -80,7 +88,11 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 		db.close();
 	}
 	
-	//select translation
+	/**
+	 * Returns last translations saved in database
+	 * @param count count of translation to be returned
+	 * @return List<Translation> list of translation or null if there aren't any translations
+	 */
 	public List<Translation> getLastTranslations(int count){
 		if(count < 1){
 			return null;

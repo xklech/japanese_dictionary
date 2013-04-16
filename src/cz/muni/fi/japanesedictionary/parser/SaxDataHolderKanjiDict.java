@@ -33,6 +33,13 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+
+/**
+ * Sax data holder for kanjidict2 xml.
+ * 
+ * @author Jaroslav Klech
+ *
+ */
 public class SaxDataHolderKanjiDict extends DefaultHandler{
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
@@ -91,6 +98,18 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	
 	private JSONArray mValueNanori;
 	
+	
+	/**
+	 * SaxDataHolderKanjiDict constructor
+	 * 
+	 * @param file lucene dictionary for saving documents
+	 * @param appContext environment context
+	 * @param nM instance of notification manager
+	 * @param notif prepared notification 
+	 * @param rV RemoteView for notification
+	 * @throws IOException
+	 * @throws IllegalArgumentException if directory doesn't exist
+	 */
 	public SaxDataHolderKanjiDict(File file,Context appContext,NotificationManager nM,
 			Notification notif,RemoteViews rV) throws IOException,SAXException{
         
@@ -321,7 +340,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	}
 	
 	
-	
+	@Override
 	public void endDocument(){ 
 		Log.i("SaxDataHolderKanjiDict", "End of document");
 		LocalBroadcastManager.getInstance(mContext).unregisterReceiver(
@@ -337,9 +356,10 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	
 	
 	/**
-	 * private functions
+	 * Verifies whether given stringis number.
+	 * @param parse strimng to be parsed as number
+	 * @return original string or null if it isn't number
 	 */
-	
 	private String tryParseNumber(String parse){
 		if(parse == null){
 			return null;

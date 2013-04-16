@@ -26,18 +26,34 @@ import android.util.Log;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
+/**
+ * AsyncTask loader for characters. Search for character info in background.
+ * @author PC
+ *
+ */
 public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCharacter>>{
 
 	private Context mContext;
 	private IndexSearcher mSearcher;
 	DisplayTranslation mFragment;
+	
+	/**
+	 * Consturctor for CharacterLoader
+	 * @param _context environment context
+	 * @param _fragment Translation fragment to which characters are to be returned
+	 */
 	public CharacterLoader(Context _context, DisplayTranslation _fragment){
 		mContext = _context;
 		mFragment = _fragment;
 	}
 	
 	
-	
+	/**
+	 * Searchs for japanese characters in KanjiDict2.
+	 * 
+	 * @param params string which contains characters
+	 * @return Map<String, JapaneseCharacter> if some characters were found returns map else null
+	 */
 	@Override
 	protected Map<String, JapaneseCharacter> doInBackground(
 			String... params) {
@@ -195,11 +211,13 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 		return null;
 	}
 	
+	/**
+	 * Called after loading is done. Runs in UI thread and sets characters to fragment.
+	 */
 	@Override
 	protected void onPostExecute(Map<String, JapaneseCharacter> result) {
 		mFragment.setCharacters(result);
-		mFragment.displayCharacters();
-		//handler.sendEmptyMessage(0);
+		
 		super.onPostExecute(result);
 	}
 	

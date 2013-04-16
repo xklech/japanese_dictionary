@@ -12,6 +12,11 @@ import android.content.ContentValues;
 import android.os.Bundle;
 import android.util.Log;
 
+/**
+ * Entity class for translation
+ * @author Jaroslav Klech
+ *
+ */
 public class Translation {
 	public static final String SAVE_JAPANESE_KEB = "cz.muni.fi.japanesedictionary.japanese_keb";
 	public static final String SAVE_JAPANESE_REB = "cz.muni.fi.japanesedictionary.japanese_reb";
@@ -107,6 +112,11 @@ public class Translation {
 		return mGerman.isEmpty()?null:mGerman;
 	}
 	
+	/**
+	 * Takes json string and parses it list of Japanese Keb.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseJapaneseKeb(String jsonString){
     	if(jsonString != null){
     		List<String> japKeb = null;
@@ -123,7 +133,12 @@ public class Translation {
 	    	}
     	}
 	}
-	
+
+	/**
+	 * Takes json string and parses it list of Japanese Reb.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseJapaneseReb(String jsonString){
     	if(jsonString != null){
     		List<String> japReb = null;
@@ -140,7 +155,13 @@ public class Translation {
 	    	}
     	}
 	}	
-	
+
+	/**
+	 * Universal private function for parsing one JSONArray sense
+	 * 
+	 * @param sense  JSONArray which should be parset to sense
+	 * @return List<String> returns list of parsed senses
+	 */
 	private List<String> parseOneSense(JSONArray sense){
 		if(sense == null){
 			return null;
@@ -159,6 +180,11 @@ public class Translation {
 		return senseTranslation;
 	}
 	
+	/**
+	 * Takes json string and parses it list of English meanings.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseEnglish(String jsonString){
     	if(jsonString == null){
     		return ;
@@ -183,7 +209,13 @@ public class Translation {
 			}
     	}
 	}
-	
+
+
+	/**
+	 * Takes json string and parses it list of Dutch meanings.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseDutch(String jsonString){
     	if(jsonString == null){
     		return ;
@@ -208,7 +240,12 @@ public class Translation {
 			}
     	}
 	}	
-	
+
+	/**
+	 * Takes json string and parses it list of French meanings.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseFrench(String jsonString){
     	if(jsonString == null){
     		return ;
@@ -233,7 +270,12 @@ public class Translation {
 			}
     	}
 	}	
-		
+
+	/**
+	 * Takes json string and parses it list of German meanings.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */	
 	public void parseGerman(String jsonString){
     	if(jsonString == null){
     		return ;
@@ -259,7 +301,13 @@ public class Translation {
     	}
 	}
 	
-	
+	/**
+	 *  Adds Translation to given bundle.
+	 * 
+	 * @param bundle - bundle in which translation should be saved
+	 * 				 - in case of null empty bundle is created
+	 * @return Bundle returns bundle which contains Translation
+	 */
 	public Bundle createBundleFromTranslation(Bundle bundle){
 		if(bundle == null){
 			bundle = new Bundle();
@@ -289,7 +337,12 @@ public class Translation {
 		}
 		return bundle;
 	}
-	
+
+	/**
+	 * Creates ContentValues from translations for purpose of saving in database.
+	 * 
+	 * @return ContentValues contains saved Translation
+	 */
 	public ContentValues createContentValuesFromTranslation(){
 		ContentValues values = new ContentValues();
 		if(this.getJapaneseKeb() != null && this.getJapaneseKeb().size() > 0){
@@ -318,8 +371,16 @@ public class Translation {
 		return values;
 	}
 	
-	
+	/**
+	 *	Creates new instance of Translation from saved instance in given bundle.
+	 * 
+	 * @param bundle bundle with saved Translation
+	 * @return returns new instance of Translation or null if bundle is null
+	 */
 	public static Translation newInstanceFromBundle(Bundle bundle){
+		if(bundle == null){
+			return null;
+		}
 		Translation translation = new Translation();
 		
     	String japaneseKeb = bundle.getString(SAVE_JAPANESE_KEB);
@@ -341,7 +402,7 @@ public class Translation {
 	
 	
 	/**
-	 * Taks list of senses and convert it to ona JSONArray
+	 * Takes list of senses and convert it to one JSONArray
 	 * 
 	 * @param senses - List of senses
 	 * @return coverted JSONArray

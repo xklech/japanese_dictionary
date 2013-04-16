@@ -6,6 +6,7 @@
     <!-- ParserService -->
     <string name="dictionary_download_title">Stahuji slovník</string>
     <string name="dictionary_download_in_progress">Probíhá stahování slovníku</string>
+    <string name="dictionary_kanji_download_title">Stahuji slovník znaků kanji</string>
     <string name="dictionary_download_complete">Stahování kompletní</string>
     <string name="dictionary_parsing_in_progress">Probíhá zpracování slovníku.</string>
     <string name="dictionary_parsing_in_progress_time_left">Probíhá zpracování slovníku. Zbývá: t_l min.</string>
@@ -18,7 +19,7 @@
     <string name="download_dictionary_question">Chcete nyní stáhnout slovník? Vyžadováno připojení k internetu.</string>
     <string name="download">Stáhnout</string>
     <string name="storno">Zrušit</string>
-    <string name="currently_downloading_dictionary">Stahujislovník, prosím vyčkejte</string>
+    <string name="currently_downloading_dictionary">Stahuji slovník, prosím vyčkejte</string>
     <string name="internet_connection_failed_title">Připojení k internetu selhalo</string>
     <string name="internet_connection_failed_message">Připojení k internetu není k dispozici</string>
     <string name="external_storrage_failed_title">Nedostupné externí uložiště </string>
@@ -36,6 +37,7 @@
     <string name="language_german">Německy</string>  
     
     <!--  Preferences -->
+    <string name="preferences_language_setting">Nastavení jazyků</string>
     <string name="preferences_english_do">Překládat do angličtiny</string>
     <string name="preferences_english_dont">Nepřekládat do angličtiny</string>
     <string name="preferences_french_do">Překládat do francouzštiny</string>
@@ -46,7 +48,7 @@
     <string name="preferences_german_dont">Nepřekládat do němčiny</string>
  	<string name="preferences_update_dictionary">Aktualizovat slovník</string>
  	<string name="preferences_dictionary_info">Slovník nenalezen</string>
- 	<string name="preferences">Preferences</string>
+ 	<string name="preferences">Nastavení</string>
  	
    <!-- Tabs -->
    <string name="search_exact">Přesně</string>
@@ -56,7 +58,7 @@
  	
    
    <!-- Display Translation -->
-   <string name="tramslation_unknown_translation">Neznámý překlad</string>
+   <string name="tramslation_select_translation">Vyberte překlad</string>
    <string name="tramslation_title">Detail záznamu</string>
    <string name="tramslation_romaji">Romaji</string>  
    <string name="tramslation_alternative">Alternativy</string> 
@@ -65,8 +67,15 @@
    <string name="tramslation_kanji_no_meaning">Žádné známe významy ve zvoleném jazyce</string> 
    
    <!-- Display character info -->
-   <string name="character_unknown_translation">Neznámý znak</string>
+   <string name="character_unknown_character">Neznámý znak</string>
    <string name="character_title">Detail znaku</string>
-
-   
+   <string name="kanjidict_radical_text">Radical</string>
+   <string name="kanjidict_grade_text">Stupeň</string>   
+   <string name="kanjidict_stroke_count_text">Počet tahů</string>   
+   <string name="kanjidict_dictionaries">Odkazy na slovníky</string>  
+   <string name="kanjidict_skip_text">SKIP</string>  
+   <string name="kanjidict_nanori_text">Nanori</string>  
+   <string name="kanjidict_meanings">Významy</string>  
+   <string name="kanjidict_onyomi_text">Onyomi</string>  
+   <string name="kanjidict_kunyomi_text">Kunyomi</string>  
 </resources>

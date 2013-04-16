@@ -26,6 +26,13 @@ import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
+
+/**
+ * Fragment list for displaying search results.
+ * 
+ * @author Jaroslav Klech
+ *
+ */
 public class ResultFragmentList extends SherlockListFragment implements
 		LoaderManager.LoaderCallbacks<List<Translation>> {
 	private TranslationsAdapter mAdapter;
@@ -35,42 +42,67 @@ public class ResultFragmentList extends SherlockListFragment implements
 	private boolean mDualPane = false;
 	private IncomingHandler mHandler;
 	
+	/**
+	 * Handler setting first translation as selected in dualpane mode in first run.
+	 * @author Jaroslav Klech
+	 *
+	 */
 	static class IncomingHandler extends Handler {
-	    private final WeakReference<MainActivity> mActivity; 
+	    private final WeakReference<ResultFragmentList> mFragment; 
 
-	    IncomingHandler(MainActivity activity) {
-	    	mActivity = new WeakReference<MainActivity>(activity);
+	    IncomingHandler(ResultFragmentList fragment) {
+	    	mFragment = new WeakReference<ResultFragmentList>(fragment);
 	    }
+	    
+	    /**
+	     *  Sets first list item checked and if fragment is attached displays item using activity
+	     * 
+	     *  @param any message
+	     */
 	    @Override
 	    public void handleMessage(Message msg)
 	    {
 	    	
-	    	MainActivity activity = mActivity.get();
-	         if (activity != null) {
+	    	ResultFragmentList fragment = mFragment.get();
+	         if (fragment != null) {
 	        	 Log.i("ResultFragmentList","First run, select first translation");
-	        	 activity.onTranslationSelected(0);
+	        	 if(fragment.isVisible()){
+	        		 //is visible to user and attached to activity
+	        		 fragment.getListView().setItemChecked(0, true);
+	        		((MainActivity)fragment.getActivity()).onTranslationSelected(0);
+	        	 } 
 	         }
 	    }
 	}
 	
-    public static ResultFragmentList newInstance(String search,String tab) {
+	/**
+	 * Creates new instance of ResultFragment with params put in bundle
+	 * 
+	 * @param search string to be searched for
+	 * @param part part of word to be searched in
+	 * @return new instance of ResultFragmentList
+	 */
+    public static ResultFragmentList newInstance(String search,String part) {
     	ResultFragmentList f = new ResultFragmentList();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putString(MainActivity.SEARCH_TEXT, search);
-        args.putString(MainActivity.PART_OF_TEXT, tab);
+        args.putString(MainActivity.PART_OF_TEXT, part);
         f.setArguments(args);
 
         return f;
     }
 
-	
+    /**
+     * Broadcast receiver listening to ParserService whether parsing dictionary was done
+     */
 	private BroadcastReceiver mReceiverDone= new BroadcastReceiver() {
 		  @Override public void onReceive(Context context, Intent intent) { 
 			  //		  intent can contain anydata 
 			  ResultFragmentList.this.setEmptyText(getString(R.string.nothing_found));
 		  } };
+		  
 	private OnTranslationSelectedListener mCallbackTranslation;
 		  
 		  
@@ -105,7 +137,7 @@ public class ResultFragmentList extends SherlockListFragment implements
         }
     }
 
-
+    
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
     	if(mDualPane){
@@ -122,7 +154,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 		if(getActivity().findViewById(R.id.detail_fragment) != null){
 			//dualPane
 			mDualPane = true;
-			mHandler =  new IncomingHandler((MainActivity)getActivity());
+			mHandler =  new IncomingHandler(this);
 		}
 		SharedPreferences settings = getActivity().getSharedPreferences(
 				ParserService.DICTIONARY_PREFERENCES, 0);
@@ -170,7 +202,10 @@ public class ResultFragmentList extends SherlockListFragment implements
 	}
 
 
-
+	/**
+	 * Called when ResultLoader has finished. Sets new data to adapter.
+	 * If in dual pane layout and first run sets first item as displayed.
+	 */
 	@Override
 	public void onLoadFinished(Loader<List<Translation>> loader,
 			List<Translation> data) {
@@ -210,16 +245,30 @@ public class ResultFragmentList extends SherlockListFragment implements
 				mReceiverDone);
 	}
 	
+	/**
+	 * Returns TranslationAdapter from ListFragment
+	 * @return TranslationsAdapter adapter from list fragment
+	 */
 	public TranslationsAdapter getAdapter(){
 		return mAdapter;
 	}
 
-
+	/**
+	 * Runs new search for translations according to new expression and word part.
+	 * 
+	 * @param expression to be searched for
+	 * @param part to be searched in
+	 */
 	public void search(String expression,String part){
 		this.mLastSearched = expression;
 		this.mLastTab = part;
 		if(mDualPane){
 			getListView().setItemChecked(getListView().getCheckedItemPosition(), false);
+		}
+		if (isResumed()) {
+			setListShown(false);
+		} else {
+			setListShownNoAnimation(false);
 		}
         getLoaderManager().restartLoader(0, null, this);
 	}

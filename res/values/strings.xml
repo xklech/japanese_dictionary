@@ -69,7 +69,7 @@
    
    
    <!-- Display character info -->
-   <string name="character_unknown_translation">Unknown character</string>
+   <string name="character_unknown_character">Unknown character</string>
    <string name="character_title">Character detail</string>
    <string name="kanjidict_radical_text">Radical</string>
    <string name="kanjidict_grade_text">Grade</string>   

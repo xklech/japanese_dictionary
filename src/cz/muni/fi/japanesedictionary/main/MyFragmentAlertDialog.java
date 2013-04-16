@@ -10,8 +10,21 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 
 import cz.muni.fi.japanesedictionary.R;
 
+/**
+ * Fragment alert dialog for displaying error messages and promt to user.
+ * @author Jaroslav Klech
+ *
+ */
 public class MyFragmentAlertDialog extends SherlockDialogFragment {
 
+		/**
+		 * Creates new instance of MyFragmentAlertDialog
+		 * 
+		 * @param title title to be set for AlertDialog
+		 * @param message message to be set for AlertDialog
+		 * @param negative determins whether dialog has only storno button
+		 * @return MyFragmentAlertDialog new instance of MyFragmentAlertDialog
+		 */
 		public static MyFragmentAlertDialog newInstance(int title, int message,
 				boolean negative) {
 			MyFragmentAlertDialog frag = new MyFragmentAlertDialog();
@@ -23,6 +36,7 @@ public class MyFragmentAlertDialog extends SherlockDialogFragment {
 			return frag;
 		}
 
+		
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			int title = getArguments().getInt("title");

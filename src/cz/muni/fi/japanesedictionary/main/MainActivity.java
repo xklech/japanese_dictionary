@@ -30,6 +30,12 @@ import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
+
+/**
+ * Main Activity for JapaneseDictionary. Works with all fragments.
+ * @author Jaroslav Klech
+ *
+ */
 public class MainActivity extends SherlockFragmentActivity
 	implements ResultFragmentList.OnTranslationSelectedListener,
 				DisplayTranslation.OnCreateTranslationListener,
@@ -61,8 +67,15 @@ public class MainActivity extends SherlockFragmentActivity
 	private TabHost mTabHost;
 	private String mLastTabId;
 	private String mCurFilter;
-	public void setAdapter(TranslationsAdapter _adapter){
-		mAdapter = _adapter;
+	
+	
+	/**
+	 * Sets TranslationAdapter from ListFragment 
+	 * 
+	 * @param adapter adapter to be set
+	 */
+	public void setAdapter(TranslationsAdapter adapter){
+		mAdapter = adapter;
 	}
 	
 	@Override
@@ -106,10 +119,6 @@ public class MainActivity extends SherlockFragmentActivity
 			mTabHost.setCurrentTabByTag(mLastTabId);
 		}
 
-
-		
-		
-		
 		Log.i("MainActivity","Setting layout");
 		mFragmentList = new ResultFragmentList();
 		mFragmentList.setRetainInstance(true);
@@ -145,12 +154,15 @@ public class MainActivity extends SherlockFragmentActivity
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	
+	/**
+	 *  Saves current searched text and current selected tab index.
+	 */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		Log.i("MainActivity", "Saving instance");
 
 		if (mCurFilter != null && mCurFilter.length() > 0) {
-
 			outState.putString(MainActivity.SEARCH_TEXT, mCurFilter);
 		}
 		outState.putString(MainActivity.PART_OF_TEXT, mLastTabId);
@@ -165,15 +177,24 @@ public class MainActivity extends SherlockFragmentActivity
 		super.onDestroy();
 	}
 
+	/**
+	 * Overrides SearchView onClose behavior. Does not erase text.
+	 * 
+	 */
 	@Override
 	public boolean onClose() {
-        if (!TextUtils.isEmpty(mSearchView.getQuery())) {
-            //mSearchView.setQuery("", false);
-        }
+		
         return true;
-
 	}
 	
+	
+	/**
+	 * Listener for menu item selected.
+	 * 
+	 * @item - home item selected, restarts main activity
+	 * 		 - settings item selceted, launches new MypreferenceActivity
+	 * 		 - other item, default behavior
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
@@ -194,13 +215,22 @@ public class MainActivity extends SherlockFragmentActivity
 	    }
 	}
 
+	
+	/**
+	 * On SearchView submit button hide keyboard. Search is done on text change.
+	 */
 	@Override
 	public boolean onQueryTextSubmit(String query) {
 		mSearchView.clearFocus();
 		return true;
 	}
 
-
+	/**
+	 * Listener for SearchView text cahnged. Calls search method on ResultFragmentList
+	 * and displays new set of entries.
+	 * 
+	 * @param newText changed text in SearchView
+	 */
 	@Override
 	public boolean onQueryTextChange(String newText) {
         String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
@@ -212,7 +242,6 @@ public class MainActivity extends SherlockFragmentActivity
         if (mCurFilter != null && mCurFilter.equals(newFilter)) {
             return true;
         }
-		//fragmentList = getSupportFragmentManager().findFragmentByTag("")
         mCurFilter = newText;
         if(!mFragmentList.isVisible()){
         	getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -234,7 +263,12 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	
 
-
+	/**
+	 * Called if tab is changed. Calls search method on ResultFragmentList
+	 * and displays new set of entries.
+	 * 
+	 * @param tabId id of changed tab
+	 */
 	@Override
 	public void onTabChanged(String tabId) {
 		Log.i("MainActivity", "Tab changed: " + tabId);
@@ -261,14 +295,23 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	
 	
-	
+	/**
+	 * Determins whether external storage is writable
+	 * 
+	 * @return true if external storage is writable else false
+	 */
 	public static boolean canWriteExternalStorage() {
 		return Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED);
 	}
 
 
-
+	/**
+	 * Determines whether ParserService is already running
+	 * 
+	 * @param context Context of environment
+	 * @return true if ParserService is running else false
+	 */
 	public static boolean isMyServiceRunning(Context context) {
 		ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager
@@ -280,18 +323,26 @@ public class MainActivity extends SherlockFragmentActivity
 		return false;
 	}
 
-
+	/**
+	 * Positive choice in alert box, starts parsing dictionary
+	 */
 	public void doPositiveClick() {
 		Log.i("MainActivity", "AlertBox: Download dictionary - confirm");
 		downloadDictionary();
 	}
 
+	/**
+	 * Negativ click of alert box, storno
+	 */
 	public void doNegativeClick() {
 		Log.i("MainActivity", "AlertBox: Download dictonary - storno");
 	}
 
 	
-
+	/**
+	 * Controls internet connection, whether external storage is writalbe and ParserService isn't running. 
+	 * If everything is alright, launches new ParserService.
+	 */
 	public void downloadDictionary() {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -312,6 +363,12 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 	}
 
+	/**
+	 * OnClickListener to preference item in action bar.
+	 * After click launches new MyPreferenceActivity
+	 * 
+	 * @param w passed view
+	 */
 	public void showPreferences(View w){
 			Log.i("MainActivity", "Lauching preference Activity");
 			Intent intent = new Intent(getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
@@ -320,7 +377,12 @@ public class MainActivity extends SherlockFragmentActivity
 	}
 
 
-
+	/**
+	 * Callback method from ResultFragmentList. Responds to click on list item.
+	 * Launches new DetailFragment or updates old in two pane layout on tablet.
+	 * 
+	 * @param index index of item in ResultFragmentList
+	 */
 	@Override
 	public void onTranslationSelected(int index) {
 		Log.i("MainActivity","List Item clicked");
@@ -341,7 +403,6 @@ public class MainActivity extends SherlockFragmentActivity
 			}else {
 				//is visible
 				fragment.setTranslation(getTranslationCallBack(index));
-				fragment.updateTranslation();
 			}
 			return;
 		}
@@ -356,6 +417,12 @@ public class MainActivity extends SherlockFragmentActivity
 		
 	}
 	
+	/**
+	 * CallBack method for DisplayTranslation fragment. Returns translation which should be displayed
+	 * 
+	 * @param index index of item in ResultFragmentList
+	 * @return Translation translation selected from fragment lsit adapter
+	 */
 	@Override
 	public Translation getTranslationCallBack(int index){
 		if(mAdapter == null && mFragmentList != null){
@@ -371,40 +438,53 @@ public class MainActivity extends SherlockFragmentActivity
 		return null;
 	}
 	
+	/**
+	 * Returns reference to instance of SQLite database
+	 * 
+	 * @return GlossaryReaderContract instance of database
+	 */
 	public GlossaryReaderContract getDatabse(){
 		return mDatabase;
 	}
 
+	/**
+	 * CallBack method for DisplayTranslation fragment. Launches new DisplayCharacterInfo fragment.
+	 * 
+	 * @param character JapaneseCharacter to be displayed
+	 */
 	@Override
 	public void showKanjiDetail(JapaneseCharacter character) {
 		mJapaneseCharacter  = character;
 		Log.i("MainActivity","Setting DisplayCharacterInfo fragment");
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		if(findViewById(R.id.detail_fragment) != null){
-			// two frames layout
-
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
-			fragmentTransaction.replace(R.id.detail_fragment, displayCharacter,"displayCharacter");
-			fragmentTransaction.addToBackStack(null);
-			fragmentTransaction.commit();
-			return;
-		}
 		
+		// decides whether using two pane layout or replace fragment list
+		final int container = (findViewById(R.id.detail_fragment) != null) ?R.id.detail_fragment:android.R.id.tabcontent;		
+		
+		FragmentManager fragmentManager = getSupportFragmentManager();
 		DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.replace(android.R.id.tabcontent, displayCharacter,"displayCharacter");
+		fragmentTransaction.replace(container, displayCharacter,"displayCharacter");
 		fragmentTransaction.addToBackStack(null);
 		fragmentTransaction.commit();
 	}
 
+	
+	/**
+	 * CallBack for DisplayCharacterInfo fragment. Returns JapaneseCharacter which
+	 * should be displayed to user.
+	 * 
+	 * @return JapaneseCharacter
+	 */
 	@Override
 	public JapaneseCharacter getJapaneseCharacter() {
 		return mJapaneseCharacter;
 	}
 	
     
-
+	/**
+	 * Tab factory for creating new tabs
+	 * @author Jaroslav Klech
+	 */
 	static class TabFactory implements TabHost.TabContentFactory {
 		private final Context mContext;
 

@@ -30,13 +30,18 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import cz.muni.fi.japanesedictionary.R;
 
-
+/**
+ * Sax data holder for JMdict xml.
+ * 
+ * @author Jaroslav Klech
+ *
+ */
 public class SaxDataHolder extends DefaultHandler{
 	
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
 	private RemoteViews mNotificationView = null;
-	
+
 	private BroadcastReceiver mReceiverDone= new BroadcastReceiver() {
 		  @Override 
 		  public void onReceive(Context context, Intent intent) { 
@@ -80,12 +85,23 @@ public class SaxDataHolder extends DefaultHandler{
 	
 	public static final int ENTRIES_COUNT = 170000;
 	
+	/**
+	 * SaxDataHolder constructor
+	 * 
+	 * @param file lucene dictionary for saving documents
+	 * @param appContext environment context
+	 * @param nM instance of notification manager
+	 * @param notif prepared notification 
+	 * @param rV RemoteView for notification
+	 * @throws IOException
+	 * @throws IllegalArgumentException if directory doesn't exist
+	 */
 	public SaxDataHolder(File file,Context appContext,NotificationManager nM,
-			Notification notif,RemoteViews rV) throws IOException,SAXException{
+			Notification notif,RemoteViews rV) throws IOException,IllegalArgumentException{
         
 		if(file == null){
 			Log.e("SaxDataHolder", "SaxDataHolder - dictionary directory is null");
-			throw new IllegalArgumentException("SaxParser: dictiona< ry directory is null");
+			throw new IllegalArgumentException("SaxParser: dictionary directory is null");
 		}
 		mContext = appContext;
 		Directory dir = FSDirectory.open(file);
@@ -107,7 +123,8 @@ public class SaxDataHolder extends DefaultHandler{
 	}
 	
 	
-	
+
+	@Override
 	public void startElement(String uri, String localName,String qName, 
             Attributes attributes) throws SAXException {		
 		if(mCanceled){
@@ -147,6 +164,7 @@ public class SaxDataHolder extends DefaultHandler{
 			
     }
 	
+	@Override
 	public void characters(char ch[], int start, int length) throws SAXException {
 		if(mJapaneseKeb || mJapaneseReb){
 			mDocument.add(new Field("japanese","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
@@ -180,7 +198,7 @@ public class SaxDataHolder extends DefaultHandler{
 	}
 	
 	
-	
+	@Override
 	public void endElement(String uri, String localName, 
 	        String qName) throws SAXException { 
 			if("sense".equals(qName)){
@@ -261,12 +279,14 @@ public class SaxDataHolder extends DefaultHandler{
 	        }
 	    } 
 	
+	@Override
 	public void startDocument(){
 		Log.i("SaxDataHolder", "Start of document");
 		LocalBroadcastManager.getInstance(mContext).registerReceiver(
 				mReceiverDone, new IntentFilter("serviceCanceled"));
 	}
 	
+	@Override
 	public void endDocument(){ 
 		Log.i("SaxDataHolder", "End of document");
 		LocalBroadcastManager.getInstance(mContext).unregisterReceiver(

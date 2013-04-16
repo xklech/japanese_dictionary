@@ -13,8 +13,19 @@ import android.widget.TextView;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 
+/**
+ * Adapter for ResultFragmentList.
+ * 
+ * @author Jaroslav Klech 
+ *
+ */
 public class TranslationsAdapter extends ArrayAdapter<Translation>{
     
+	/**
+	 * Static Translation holder for item View.
+	 * @author Jaroslav Klech
+	 *
+	 */
 	static class TranslationsViewHolder {
 	    TextView read;
 	    TextView write;
@@ -29,7 +40,10 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     boolean mGerman;
     LayoutInflater mInflater;
     
-    
+    /**
+     * Constructor for TranslationsAdapter. Sets languages.
+     * @param cont Enviroment context
+     */
     public TranslationsAdapter(Context cont) {
         super(cont, R.layout.list_item);
         mContext = cont;
@@ -41,7 +55,11 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    
+    /**
+     * Sets data tu adapter. And notifies change of list.
+     * 
+     * @param data list to be set to adapter
+     */
     public void setData(List<Translation> data) {
         clear();
         if (data != null) {
@@ -54,7 +72,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     
 
     /**
-     * Populate new items in the list.
+     * Constructs view for itemin list.
      */
     @Override 
     public View getView(int position, View convertView, ViewGroup parent) {

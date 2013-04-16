@@ -1133,7 +1133,7 @@ containing a value of this type.
         /**  Display character info 
  Display character info 
          */
-        public static final int character_unknown_translation=0x7f0a0044;
+        public static final int character_unknown_character=0x7f0a0044;
         public static final int currently_downloading_dictionary=0x7f0a001e;
         public static final int dictionary_download_complete=0x7f0a0014;
         public static final int dictionary_download_in_progress=0x7f0a0012;
@@ -1179,8 +1179,6 @@ containing a value of this type.
         public static final int preferences_dictionary_info=0x7f0a0037;
         public static final int preferences_dutch_do=0x7f0a0032;
         public static final int preferences_dutch_dont=0x7f0a0033;
-        /**   Preferences 
-         */
         public static final int preferences_english_do=0x7f0a002e;
         public static final int preferences_english_dont=0x7f0a002f;
         public static final int preferences_french_do=0x7f0a0030;
@@ -1188,6 +1186,7 @@ containing a value of this type.
         public static final int preferences_german_do=0x7f0a0034;
         public static final int preferences_german_dont=0x7f0a0035;
         /**   Preferences 
+  Preferences 
          */
         public static final int preferences_language_setting=0x7f0a002d;
         public static final int preferences_update_dictionary=0x7f0a0036;
@@ -1206,13 +1205,11 @@ containing a value of this type.
         public static final int tramslation_kanji_no_meaning=0x7f0a0043;
         public static final int tramslation_romaji=0x7f0a003f;
         /**  Display Translation 
+ Display Translation 
          */
         public static final int tramslation_select_translation=0x7f0a003d;
         public static final int tramslation_title=0x7f0a003e;
         public static final int tramslation_translation=0x7f0a0041;
-        /**  Display Translation 
-         */
-        public static final int tramslation_unknown_translation=0x7f0a004f;
         public static final int unknown_last_update=0x7f0a0026;
         public static final int updating_in_progress=0x7f0a0025;
     }

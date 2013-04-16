@@ -13,6 +13,11 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.util.Log;
 
+/**
+ * Entity class for japanese character
+ * @author Jaroslav Klech
+ *
+ */
 public class JapaneseCharacter {
 
 	public static final String SAVE_CHARACTER_LITERAL = "cz.muni.fi.japanesedictionary.japanesecharacter.literal";
@@ -203,6 +208,12 @@ public class JapaneseCharacter {
 		return mNanori.size() < 1? null : mNanori;
 	}
 
+	
+	/**
+	 * Takes json string and parses it to map of dictionary references.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseDicRef(String jsonString){
 		if(jsonString == null  || jsonString.length() < 1){
 			return ;
@@ -238,6 +249,11 @@ public class JapaneseCharacter {
 		
 	}
 	
+	/**
+	 * Takes json string and parses it to list of Onyomi.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseRmGroupJaOn(String jsonString){
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
@@ -256,7 +272,11 @@ public class JapaneseCharacter {
     	}
 	}
 	
-	
+	/**
+	 * Takes json string and parses it to list of Kunyomi.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseRmGroupJaKun(String jsonString){
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
@@ -275,6 +295,11 @@ public class JapaneseCharacter {
     	}
 	}
 	
+	/**
+	 * Takes json string and parses it to list of english meanings.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseMeaningEnglish(String jsonString){
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
@@ -293,6 +318,12 @@ public class JapaneseCharacter {
     	}
 	}
 
+	
+	/**
+	 * Takes json string and parses it to list of french meanings.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseMeaningFrench(String jsonString){
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
@@ -311,6 +342,11 @@ public class JapaneseCharacter {
     	}
 	}
 	
+	/**
+	 * Takes json string and parses it to list of dutch meanings.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseMeaningDutch(String jsonString){
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
@@ -329,6 +365,11 @@ public class JapaneseCharacter {
     	}
 	}
 	
+	/**
+	 * Takes json string and parses it to list of german meanings.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseMeaningGerman(String jsonString){
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
@@ -346,7 +387,12 @@ public class JapaneseCharacter {
     		this.addMeaningGerman(str);
     	}
 	}
-	
+
+	/**
+	 * Takes json string and parses it to list of nanori.
+	 * 
+	 * @param jsonString - JSON string to be parsed
+	 */
 	public void parseNanori(String jsonString){
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
@@ -365,7 +411,11 @@ public class JapaneseCharacter {
     	}
 	}
 	
-	
+	/**
+	 * Universal privatemethod for parsing JSON array.
+	 * 
+	 * @param sense - JSONArray to be parsed
+	 */
 	private List<String> parseOneJSONArray(JSONArray sense){
 		if(sense == null){
 			return null;
@@ -384,7 +434,13 @@ public class JapaneseCharacter {
 		return temp;
 	}
 	
-
+	/**
+	 *	Adds JapaneseCharater to given bundle.
+	 * 
+	 * @param bundle - bundle in which character should be saved
+	 * 				 - in case of null empty bundle is created
+	 * @return Bundle returns bundle which contains CharacterInfo
+	 */
 	public Bundle createBundleFromJapaneseCharacter(Bundle bundle){
 		if(bundle == null){
 			bundle = new Bundle();
@@ -431,8 +487,17 @@ public class JapaneseCharacter {
 		
 		return bundle;
 	}
-	
+
+	/**
+	 *	Creates new instance of JapaneseCharacter from saved instance in given bundle.
+	 * 
+	 * @param bundle bundle with saved JapaneseCharacter
+	 * @return returns new instance of JapaneseCharacter or null if bundle is null
+	 */
 	public static JapaneseCharacter newInstanceFromBundle(Bundle bundle){
+		if(bundle == null){
+			return null;
+		}
 		JapaneseCharacter japaneseCharacter = new JapaneseCharacter();
 		japaneseCharacter.setLiteral(bundle.getString(SAVE_CHARACTER_LITERAL));
 		japaneseCharacter.setRadicalClassic(bundle.getInt(SAVE_CHARACTER_RADICAL,0));

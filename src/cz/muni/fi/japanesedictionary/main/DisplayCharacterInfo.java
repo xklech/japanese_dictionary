@@ -21,6 +21,11 @@ import com.actionbarsherlock.app.SherlockFragment;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 
+/**
+ * Fragment which displays japanese character info
+ * @author Jaroslav Klech
+ *
+ */
 public class DisplayCharacterInfo extends SherlockFragment{
 	
 	private JapaneseCharacter mJapaneseCharacter;
@@ -89,9 +94,8 @@ public class DisplayCharacterInfo extends SherlockFragment{
 			if(mJapaneseCharacter != null){
 				Log.i("DisplayCharacterInfo","Update fragment view");
 			}else{
-				Log.i("DisplayCharacterInfo","Construct from bundle");
+				Log.i("DisplayCharacterInfo","Get japanese character from activity");
 				mJapaneseCharacter =  mCallbackCharacter.getJapaneseCharacter();
-				
 			}
 		}
 
@@ -106,6 +110,11 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		super.onStart();
 	}
 	
+	/**
+	 * Change displayed japanese character
+	 * 
+	 * @param character to be changed
+	 */
 	public void changeCharacter(JapaneseCharacter character){
 		mJapaneseCharacter = character;
 		if(this.isVisible()){
@@ -113,11 +122,15 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}
 	}
 	
+	/**
+	 * Updates Fragment view acording to saved japanese character.
+	 * 
+	 */
 	private void updateCharacter(){
 		Log.i("DisplayCharacterInfo","Setting literal");
 		mChanged = false;
 		if(mJapaneseCharacter == null){
-			Toast.makeText(getActivity(), R.string.tramslation_unknown_translation, Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.character_unknown_character, Toast.LENGTH_LONG).show();
 			return;
 		}
 		
@@ -330,7 +343,11 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		
 	}
 	
-	
+	/**
+	 * Constructs map of dictionary references
+	 * 
+	 * @return Map<String, String> dictionary references
+	 */
 	public static final Map<String, String> getDictionaryCodes(){
 		Map<String, String> dictionaryCodes = new HashMap<String,String>();
 		dictionaryCodes.put("nelson_c", "Modern Reader's Japanese-English Character Dictionary");
@@ -357,7 +374,12 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		return dictionaryCodes;
 	}
 	
-	
+	/**
+	 * Updates language preferences
+	 * 
+	 * @return true if some language was changed
+	 * 	       false if there wasn't change
+	 */
     private boolean updateLanguages(){
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean changed = false;

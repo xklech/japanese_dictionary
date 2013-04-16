@@ -21,7 +21,14 @@ import com.actionbarsherlock.view.MenuItem;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
+/**
+ * Preference activity for JapaneseDictionary. Containst language settings and update dictionaries info.
+ * 
+ * @author Jaroslav Klech
+ *
+ */
 public class MyPreferencesActivity extends SherlockPreferenceActivity {
+
 
 
 	@SuppressWarnings("deprecation")
@@ -34,6 +41,7 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 			
 			
 			PreferenceScreen preferenceScreen = (PreferenceScreen)findPreference("update_dictionary");
+			//ads OnPreferenceClickListener on preference view for updating dictionary
 			preferenceScreen.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
