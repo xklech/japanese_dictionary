@@ -34,6 +34,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.main.MainActivity;
@@ -439,7 +440,8 @@ public class ParserService extends IntentService{
         	downloadedFile.delete();
         	Log.i("ParserService", "Parsing KanjiDict - downloaded file deleted");
         	mNotificationView.setTextViewText(R.id.notification_text, getString(R.string.dictionary_download_complete));
-        	mNotificationView.setProgressBar(R.id.ntification_progressBar, 0, 0, true);       	
+        	mNotificationView.setProgressBar(R.id.ntification_progressBar, 0, 0, true); 
+        	mNotificationView.setViewVisibility(R.id.ntification_progressBar, View.GONE);
         	mNotification.contentView = mNotificationView;
      
     		Intent intent = new Intent(getApplicationContext(), MainActivity.class);

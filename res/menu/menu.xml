@@ -4,7 +4,7 @@
         android:id="@+id/action_search"
         android:title="@string/actionbar_search"
     	android:icon="@android:drawable/ic_menu_search"
-    	android:showAsAction="always"
+    	android:showAsAction="ifRoom"
     	android:actionViewClass="com.actionbarsherlock.widget.SearchView"
     	/>
 	<item 
