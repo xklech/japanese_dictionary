@@ -48,7 +48,7 @@ import cz.muni.fi.japanesedictionary.main.MainActivity;
  */
 public class ParserService extends IntentService{
 	
-	public static final String DICTIONARY_PATH = "http://index.aerolines.cz/JMdict.gz";
+	public static final String DICTIONARY_PATH = "ftp://ftp.monash.edu.au/pub/nihongo/JMdict.gz";
 	public static final String KANJIDICT_PATH = "http://www.csse.monash.edu.au/~jwb/kanjidic2/kanjidic2.xml.gz";
 	public static final String DICTIONARY_PREFERENCES = "cz.muni.fi.japanesedictionary";
 	
