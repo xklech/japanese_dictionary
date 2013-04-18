@@ -210,6 +210,11 @@ public class MainActivity extends SherlockFragmentActivity
     			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
     			startActivity(intentSetting);
     			return true;
+	        case R.id.about:
+    			Log.i("MainActivity", "Lauching preference Activity");
+    			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
+    			startActivity(intentAbout);
+    			return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

@@ -30,6 +30,7 @@
     <string name="unknown_last_update">Poslední aktualizace neznámá</string>
     <string name="last_update">Poslední aktualizace:</string>
     <string name="actionbar_search">Hledat</string>
+    
     <!-- Languages -->
     <string name="language_english">Anglicky</string>
     <string name="language_french">Francouzsky</string>
@@ -78,4 +79,12 @@
    <string name="kanjidict_meanings">Významy</string>  
    <string name="kanjidict_onyomi_text">Onyomi</string>  
    <string name="kanjidict_kunyomi_text">Kunyomi</string>  
+   
+   <!--About -->
+   <string name="about_title">O aplikaci</string>
+   <string name="about_unknown">neznámá</string>
+   <string name="about_version">Verze:  </string>
+   <string name="about_creator">Vytvořil: </string>
+   <string name="about_dictionary">Tato aplikace využívá JMDict a KANJIDIC2 slovníkové soubory. Tyto soubory jsou majetkem Electronic Dictionary Research and Development Group, a jsou užívány v souladu s licencí skupiny. </string>
+
 </resources>
