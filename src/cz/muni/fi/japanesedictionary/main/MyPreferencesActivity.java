@@ -89,7 +89,7 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportActionBar().setHomeButtonEnabled(true);
-
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		return super.onCreateOptionsMenu(menu);
 	}
 	

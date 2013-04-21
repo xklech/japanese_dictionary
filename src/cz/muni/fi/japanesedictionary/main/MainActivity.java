@@ -142,8 +142,8 @@ public class MainActivity extends SherlockFragmentActivity
 	    MenuInflater inflater = getSupportMenuInflater();
 	    inflater.inflate(R.menu.menu, menu);
 		Log.i("MainFragment", "Setting menu ");
-		getSupportActionBar().setHomeButtonEnabled(true);
-		
+		getSupportActionBar().setHomeButtonEnabled(false);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         // Place an action bar item for searching.
         MenuItem searchItem = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) searchItem.getActionView();
@@ -211,7 +211,7 @@ public class MainActivity extends SherlockFragmentActivity
     			startActivity(intentSetting);
     			return true;
 	        case R.id.about:
-    			Log.i("MainActivity", "Lauching preference Activity");
+    			Log.i("MainActivity", "Lauching About Activity");
     			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
     			startActivity(intentAbout);
     			return true;
@@ -363,7 +363,6 @@ public class MainActivity extends SherlockFragmentActivity
 			newFragment.show(getSupportFragmentManager(), "dialog");
 		} else if (!isMyServiceRunning(getApplicationContext())) {
 			Intent intent = new Intent(this, ParserService.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			startService(intent);
 		}
 	}
