@@ -70,9 +70,21 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         notifyDataSetChanged();
     }
     
+    /**
+     * Adds individual Translation to adapter
+     * 
+     * @param translation to be added if not null
+     */
+    public void addListItem(Translation translation){
+    	if(translation != null){
+    		add(translation);
+    		notifyDataSetChanged();
+    	}
+    }
+    
 
     /**
-     * Constructs view for itemin list.
+     * Constructs view for item in list.
      */
     @Override 
     public View getView(int position, View convertView, ViewGroup parent) {

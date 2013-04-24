@@ -16,7 +16,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
-import cz.muni.fi.japanesedictionary.engine.MainActivity;
 
 /**
  * AboutActivity provides information about application.

@@ -13,7 +13,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
-import cz.muni.fi.japanesedictionary.engine.MainActivity;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 
 public class DisplayTranslationActivity extends SherlockFragmentActivity
@@ -99,7 +98,11 @@ public class DisplayTranslationActivity extends SherlockFragmentActivity
 	
 	
 	
-	
+	/**
+	 * CallBack method for DisplayTranslation fragment. Launches new DisplayCharacterInfo fragment.
+	 * 
+	 * @param character JapaneseCharacter to be displayed
+	 */
 	@Override
 	public void showKanjiDetail(JapaneseCharacter character) {
 		Log.i("DisplayTranslationActivity","Setting DisplayCharacterInfo Activity");

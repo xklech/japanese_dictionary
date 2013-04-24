@@ -12,7 +12,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
-import cz.muni.fi.japanesedictionary.engine.MainActivity;
 
 public class DisplayCharacterInfoActivity extends SherlockFragmentActivity
 		{

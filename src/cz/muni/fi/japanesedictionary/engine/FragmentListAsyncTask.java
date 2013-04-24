@@ -29,16 +29,30 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 
+/**
+ * Loader for ResultFragmentList. Searches JMdict for match with expression.
+ * 
+ * @author Jaroslav Klech
+ *
+ */
 public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<Translation>> {
 
 	private Context mContext;
 	final private SearchListener mSearchListener;
-	
+	/**
+	 * Constructor for FragmentListAsyncTask
+	 * 
+	 * @param list List implementing SearchListener
+	 * @param cont environment context
+	 */
 	public FragmentListAsyncTask(SearchListener list, Context context){
 		mSearchListener = list;
 		mContext = context;
 	}
 	
+	/**
+	 * Loads translation using Lucene 
+	 */
 	@Override
 	protected List<Translation> doInBackground(String... params) {
 		String expression = params[0];
@@ -55,36 +69,34 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
         final List<Translation> translations = new ArrayList<Translation>();
         
         if(!validDictionary){
-        	Log.e("ResultLoader", "No jmdict dictionary found");
+        	Log.e("FragmentListAsyncTask", "No jmdict dictionary found");
         	return null;
         }
         if(pathToDictionary == null){
-        	Log.e("ResultLoader", "No path to jmdict dictionary");
+        	Log.e("FragmentListAsyncTask", "No path to jmdict dictionary");
         	return null;
         }
         File file = new File(pathToDictionary);
         if(file == null || !file.canRead()){
-        	Log.e("ResultLoader", "Cant read jmdict dictionary directory");
+        	Log.e("FragmentListAsyncTask", "Cant read jmdict dictionary directory");
         	return null;
         }
         
         if(expression == null){
         	//first run 
-        	Log.i("ResultLoader","First run - last 10 translations ");
+        	Log.i("FragmentListAsyncTask","First run - last 10 translations ");
         	GlossaryReaderContract database = new GlossaryReaderContract(mContext);
         	List<Translation> translationsTemp = database.getLastTranslations(10);
         	database.close();
-        	for(Translation trans:translationsTemp){
-        		mSearchListener.onResultFound(trans);
-        	}
         	return translationsTemp;
         }
         
         if(expression.length() < 1){
-        	Log.w("ResultLoader", "No expression to translate");
+        	Log.w("FragmentListAsyncTask", "No expression to translate");
         	return null;
         }
         Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
+        IndexSearcher searcher = null;
     	try{
     		QueryParser query = new QueryParser(Version.LUCENE_36, "japanese", analyzer);
     		query.setPhraseSlop(0);
@@ -92,7 +104,7 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
     		
     		if(Pattern.matches("\\w*", expression)){
     			//only romaji
-    			Log.i("ResultLoader","Only letters, converting to hiragana. ");
+    			Log.i("FragmentListAsyncTask","Only letters, converting to hiragana. ");
     			expression = RomanizationEnum.Hepburn.toHiragana(expression);
     		}
     		if("end".equals(part)){
@@ -104,17 +116,18 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
     		}else {
     			search = "\"lucenematch "+expression + " lucenematch\"";
     		}
-    		Log.i("ResultLoader"," Searching for: "+search);
+    		Log.i("FragmentListAsyncTask"," Searching for: "+search);
     		Query q = query.parse(search); 
     		
  	    	Directory dir = FSDirectory.open(file);
 	    	IndexReader reader = IndexReader.open(dir);
-	    	final IndexSearcher searcher= new IndexSearcher(reader);
+	    	searcher= new IndexSearcher(reader);
 	    	
 	    	Collector collector = new Collector(){
 	    		int max = 1000;
 	    		int count = 0;
-	    		int docBase;
+	    		IndexReader reader;
+	    		
 				@Override
 				public boolean acceptsDocsOutOfOrder() {
 					return true;
@@ -123,7 +136,7 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
 				@Override
 				public void collect(int docID) throws IOException {
 					
-					Document d = searcher.doc(docID+docBase);
+					Document d = reader.document(docID);
 					Translation translation = new Translation();
 		    	    String japanese_keb = d.get("japanese_keb");
 		    	    if(japanese_keb != null && japanese_keb.length()!=0 ){
@@ -165,19 +178,23 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
 		    	    	
 		    	    	count++;
 		    	    	if(count < max){
-		    	    		mSearchListener.onResultFound(translation);
-		    	    		translations.add(translation);
+		    	    		if(!FragmentListAsyncTask.this.isCancelled()){
+		    	    			FragmentListAsyncTask.this.publishProgress(translation);
+			    	    		translations.add(translation);
+		    	    		}else{
+		    	    			translations.clear();
+			    	    		throw new IOException("Max exceeded");
+		    	    		}
 		    	    	}else{
-		    	    		searcher.close();
 		    	    		throw new IOException("Max exceeded");
 		    	    	}
 		    	    }
 				}
 
 				@Override
-				public void setNextReader(IndexReader arg0, int base)
+				public void setNextReader(IndexReader _reader, int base)
 						throws IOException {
-					docBase = base;
+					reader = _reader;
 				}
 
 				@Override
@@ -190,14 +207,42 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
 	    	searcher.search(q, collector);
 	    	searcher.close();
     	}catch(IOException ex){
-    		Log.e("ResultLoader","IO Exception:  " + ex.toString());
+    		Log.e("FragmentListAsyncTask","IO Exception:  " + ex.toString());
+    		try {
+				searcher.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
     		return translations;
     	}catch(Exception ex){
-    		Log.e("ResultLoader","Exception: " + ex.toString());
+    		Log.e("FragmentListAsyncTask","Exception: " + ex.toString());
     		return null;
     	}
     	
 		return translations.isEmpty()?null:translations;
+	}
+	
+	/**
+	 * Adding individual translations to list fragment
+	 */
+	@Override
+	protected void onProgressUpdate(Translation... values) {
+		if(!isCancelled()){
+			mSearchListener.onResultFound(values[0]);
+		}
+		super.onProgressUpdate(values);
+	}
+	
+	/**
+	 * Sets list of translations to list fragment
+	 */
+	@Override
+	protected void onPostExecute(List<Translation> result) {
+		if(!isCancelled()){
+			mSearchListener.onLoadFinished(result);
+		}
+
+		super.onPostExecute(result);
 	}
 
 	

@@ -13,8 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
@@ -23,8 +21,8 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 import cz.muni.fi.japanesedictionary.R;
-import cz.muni.fi.japanesedictionary.engine.MainActivity;
-import cz.muni.fi.japanesedictionary.engine.ResultLoader;
+import cz.muni.fi.japanesedictionary.engine.FragmentListAsyncTask;
+import cz.muni.fi.japanesedictionary.engine.SearchListener;
 import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
@@ -37,13 +35,21 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
  *
  */
 public class ResultFragmentList extends SherlockListFragment implements
-		LoaderManager.LoaderCallbacks<List<Translation>> {
+		SearchListener{
 	private TranslationsAdapter mAdapter;
 	
 	private String mLastSearched;
 	private String mLastTab;
 	private boolean mDualPane = false;
 	private IncomingHandler mHandler;
+	
+	private FragmentListAsyncTask mLoader;
+	
+	List<Translation> mTranslationsExact;
+	List<Translation> mTranslationsBegin;
+	List<Translation> mTranslationsMiddle;
+	List<Translation> mTranslationsEnd;
+	
 	
 	/**
 	 * Handler setting first translation as selected in dualpane mode in first run.
@@ -190,49 +196,47 @@ public class ResultFragmentList extends SherlockListFragment implements
 			mLastTab = bundle.getString(MainActivity.PART_OF_TEXT);
 		}
 		
+		mLoader = new FragmentListAsyncTask(this, getActivity());
+		mLoader.execute(mLastSearched,mLastTab);
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE );
-		if(savedInstanceState != null){
-			getLoaderManager().restartLoader(0, null, this);
-		}else{
-			getLoaderManager().initLoader(0, null, this);
-		}
+
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
-	@Override
-	public Loader<List<Translation>> onCreateLoader(int arg0, Bundle arg1) {
-		return new ResultLoader(getActivity(), mLastSearched, mLastTab);
-	}
 
 
 	/**
-	 * Called when ResultLoader has finished. Sets new data to adapter.
+	 * Called when FragmentListAsyncTask has finished. Sets new data to adapter.
 	 * If in dual pane layout and first run sets first item as displayed.
 	 */
-	@Override
-	public void onLoadFinished(Loader<List<Translation>> loader,
-			List<Translation> data) {
+	public void onLoadFinished(	List<Translation> data) {
 		Log.i("ResultFragmentList", "Loader has finished loading data");
 		// Set the new data in the adapter.
-		mAdapter.setData(data);
-
-		// The list should now be shown.
-		if (isResumed()) {
-			setListShown(true);
-		} else {
-			setListShownNoAnimation(true);
+		if(data!= null && data.size() > 0 && mAdapter.isEmpty()){
+			System.out.println("zobrazit vse");
+			mAdapter.setData(data);
+			if (isResumed()) {
+				setListShown(true);
+			} else {
+				setListShownNoAnimation(true);
+			}
 		}
-		if(mDualPane && data!= null && data.size() > 0 && mLastSearched == null){
+		if("exact".equals(mLastTab)){
+			mTranslationsExact = data;
+		}else if("begining".equals(mLastTab)){
+				mTranslationsBegin = data;
+		}else if("middle".equals(mLastTab)){
+				mTranslationsMiddle = data;
+		}else if("end".equals(mLastTab)){
+				mTranslationsEnd = data;
+		} 
+		if(mDualPane && mAdapter.getCount() > 0 && mLastSearched == null){
 			Log.i("ResultFragmentList","dual pane, display last - send massage");
 			mHandler.sendEmptyMessage(0);
 		}
 
 	}
-	
-	@Override
-	public void onLoaderReset(Loader<List<Translation>> arg0) {
-		mAdapter.setData(null);
-	}
+
 
 	@Override
 	public void onResume() {
@@ -263,17 +267,84 @@ public class ResultFragmentList extends SherlockListFragment implements
 	 * @param part to be searched in
 	 */
 	public void search(String expression,String part){
+		if(expression == null && this.mLastSearched == null){
+			return ;
+		}
+		
+		if(expression != mLastSearched){
+			System.out.println("nuluju");
+			mTranslationsExact = null;
+			mTranslationsBegin = null;
+			mTranslationsMiddle = null;
+			mTranslationsEnd = null;
+		}
+		
+		if(expression == mLastSearched){
+			if("exact".equals(part)){
+				if(mTranslationsExact != null){
+					changeAdapterValues(mTranslationsExact);
+					this.mLastTab = part;
+					return;
+				}
+			}else if("begining".equals(part)){
+				if(mTranslationsBegin != null){
+					changeAdapterValues(mTranslationsBegin);
+					this.mLastTab = part;
+					return;
+				}	
+			}else if("middle".equals(part)){
+				if(mTranslationsMiddle != null){
+					changeAdapterValues(mTranslationsMiddle);
+					this.mLastTab = part;
+					return;
+				}	
+			}else if("end".equals(part)){
+				if(mTranslationsEnd != null){
+					changeAdapterValues(mTranslationsEnd);
+					this.mLastTab = part;
+					return;
+				}	
+			} 
+			
+		}
 		this.mLastSearched = expression;
 		this.mLastTab = part;
 		if(mDualPane){
 			getListView().setItemChecked(getListView().getCheckedItemPosition(), false);
 		}
-		if (isResumed()) {
-			setListShown(false);
-		} else {
-			setListShownNoAnimation(false);
+		if(mLoader != null){
+			mLoader.cancel(true);
 		}
-        getLoaderManager().restartLoader(0, null, this);
+		mAdapter.clear();
+		mLoader = new FragmentListAsyncTask(this, getActivity());
+		mLoader.execute(expression,part);
+	}
+
+
+	/**
+	 * Changes adapter data with given list of translations.
+	 * 
+	 * @param data list of translations
+	 */
+	private void changeAdapterValues(List<Translation> data){
+		mAdapter.clear();
+		mAdapter.addAll(data);
+		mAdapter.notifyDataSetChanged();
+	}
+
+	/**
+	 * Adds individual Translations from loader
+	 * 
+	 * @param translation to be added
+	 */
+	@Override
+	public void onResultFound(Translation translation) {
+		mAdapter.addListItem(translation);
+		if (isResumed()) {
+			setListShown(true);
+		} else {
+			setListShownNoAnimation(true);
+		}
 	}
 	
 

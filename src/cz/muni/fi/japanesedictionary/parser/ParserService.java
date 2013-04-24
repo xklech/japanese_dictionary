@@ -40,7 +40,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import cz.muni.fi.japanesedictionary.R;
-import cz.muni.fi.japanesedictionary.engine.MainActivity;
+import cz.muni.fi.japanesedictionary.main.MainActivity;
 
 /**
  * Service for downloading and aprsing dictionaries.
@@ -55,7 +55,7 @@ public class ParserService extends IntentService {
 	public static final String DICTIONARY_PREFERENCES = "cz.muni.fi.japanesedictionary";
 
 
-	private boolean connected = true;
+	private boolean mConnected = true;
 	
 	private URL mDownloadJMDictFrom = null;
 	private File mDownloadJMDictTo = null;
@@ -70,19 +70,19 @@ public class ParserService extends IntentService {
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
 	private RemoteViews mNotificationView = null;
-	private boolean complete = false;
+	private boolean mComplete = false;
 
-	private BroadcastReceiver internetReceiver = new BroadcastReceiver() {
+	private BroadcastReceiver mInternetReceiver = new BroadcastReceiver() {
 
 		@Override
 		public void onReceive(Context arg0, Intent intent) {
 	        boolean noConnectivity = intent.getBooleanExtra(
 	                ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);;
 			if (noConnectivity) {
-				connected = false;
+				mConnected = false;
 				Log.i("ParserService","Connection lost");
 			}else{
-				connected = true;
+				mConnected = true;
 				if(mDownloadInProgress){
 					try {
 						downloadDictionaries();
@@ -134,7 +134,7 @@ public class ParserService extends IntentService {
 		
 		startForeground(0,mNotification);
 		
-		this.registerReceiver(internetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+		this.registerReceiver(mInternetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 		
 		SharedPreferences sharedPrefs = PreferenceManager
@@ -225,7 +225,7 @@ public class ParserService extends IntentService {
 		int perc = 0;
 		long lastUpdate = (new Date()).getTime();
 		while (true) {
-			if (!connected) {
+			if (!mConnected) {
 				closeIOStreams(input, output);
 				mCurrentlyDownloading = false;
 				return false;
@@ -269,11 +269,14 @@ public class ParserService extends IntentService {
 			
 
 		}
-		
 
 	}
 
-	
+	/**
+	 * Downloads dictionaries and launches parseDictionaries()
+	 * 
+	 * @throws IOException
+	 */
 	private void downloadDictionaries() throws IOException{
 		if(!mDownloadInProgress || mCurrentlyDownloading){
 			return;
@@ -323,6 +326,13 @@ public class ParserService extends IntentService {
 		}
 	}
 	
+	/**
+	 * Parses downloaded dictionaries
+	 * 
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 */
 	private void parseDictionaries() throws IOException, ParserConfigurationException, SAXException{
 		String japDictAbsolutePath = parseDictionary(mDownloadJMDictTo.getPath());
 		String japKanjiDictAbsolutePath = parseKanjiDict(mDownloadKanjidicTo.getPath());
@@ -411,8 +421,7 @@ public class ParserService extends IntentService {
 	/**
 	 * Parse downloaded JMdict dictionary.
 	 * 
-	 * @param path
-	 *            to the dictionary gziped file
+	 * @param path to the dictionary gziped file
 	 * @return path to lucene folder for jmdict
 	 * @throws InterruptedException
 	 * @throws IOException
@@ -487,7 +496,7 @@ public class ParserService extends IntentService {
 			mNotification.contentIntent = resultPendingIntent;
 			mNotifyManager.notify(0, mNotification);
 
-			complete = true;
+			mComplete = true;
 
 			if (renameFolder) {
 				Log.i("ParserService", "Parsing dictionary - rename folders");
@@ -517,8 +526,7 @@ public class ParserService extends IntentService {
 	/**
 	 * Parse downloaded KanjiDict2 dictionary.
 	 * 
-	 * @param path
-	 *            to the KanjiDict2 dictionary gziped file
+	 * @param path to the KanjiDict2 dictionary gziped file
 	 * @return path to lucene folder for kanjidict2
 	 * @throws InterruptedException
 	 * @throws IOException
@@ -592,7 +600,7 @@ public class ParserService extends IntentService {
 			mNotification.contentIntent = resultPendingIntent;
 			mNotifyManager.notify(0, mNotification);
 
-			complete = true;
+			mComplete = true;
 
 			if (renameFolder) {
 				Log.i("ParserService", "Parsing KanjiDict - rename folders");
@@ -624,10 +632,8 @@ public class ParserService extends IntentService {
 	 * Called when parsing was succesfully done. Sets shared preferences and
 	 * broadcast downloadingDictinaryServiceDone intent.
 	 * 
-	 * @param dictionaryPath
-	 *            path to JMdict dictionary
-	 * @param kanjiDictPath
-	 *            path to kanjidict2 dictionary
+	 * @param dictionaryPath path to JMdict dictionary
+	 * @param kanjiDictPath path to kanjidict2 dictionary
 	 */
 	private void serviceSuccessfullyDone(String dictionaryPath,
 			String kanjiDictPath) {
@@ -673,8 +679,8 @@ public class ParserService extends IntentService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		this.unregisterReceiver(internetReceiver);
-		if (!complete) {
+		this.unregisterReceiver(mInternetReceiver);
+		if (!mComplete) {
 			mNotificationView.setTextViewText(R.id.notification_text,
 					getString(R.string.dictionary_download_interrupted));
 			mNotification.contentView = mNotificationView;
@@ -709,8 +715,7 @@ public class ParserService extends IntentService {
 	/**
 	 * Deletes given directory
 	 * 
-	 * @param directory
-	 *            directory to be deleted
+	 * @param directory directory to be deleted
 	 * @return true on succes
 	 */
 	static private boolean deleteDirectory(File directory) {
