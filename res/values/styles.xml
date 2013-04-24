@@ -10,13 +10,6 @@
 
     </style>
     
-    <style name="MyTheme" parent="@style/Theme.Sherlock">
-        <item name="android:tabWidgetStyle">@style/LightTabWidget</item>
-    </style>
-
-    <style name="LightTabWidget" parent="@android:style/Widget.TabWidget">
-        <item name="android:textSize">14sp</item>
-    </style>
     
     <style name="ListItemWrite">
       <item name="android:textColor">?android:attr/textColorHighlight</item>

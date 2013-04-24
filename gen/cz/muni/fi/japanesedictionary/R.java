@@ -1233,9 +1233,7 @@ About
         public static final int AppTheme=0x7f0b0059;
         public static final int DialogWindowTitle_Sherlock=0x7f0b0036;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0b0037;
-        public static final int LightTabWidget=0x7f0b005d;
-        public static final int ListItemWrite=0x7f0b005e;
-        public static final int MyTheme=0x7f0b005c;
+        public static final int ListItemWrite=0x7f0b005c;
         public static final int NotificationText=0x7f0b005a;
         public static final int NotificationTitle=0x7f0b005b;
         public static final int Sherlock___TextAppearance_Small=0x7f0b004a;

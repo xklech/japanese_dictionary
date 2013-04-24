@@ -23,7 +23,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
-import com.actionbarsherlock.widget.SearchView.OnCloseListener;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
 import cz.muni.fi.japanesedictionary.R;
@@ -43,7 +42,6 @@ public class MainActivity extends SherlockFragmentActivity
 	implements ResultFragmentList.OnTranslationSelectedListener,
 				DisplayTranslation.OnCreateTranslationListener,
 				OnQueryTextListener, 
-				OnCloseListener,
 				TabListener
 				{
 	
@@ -139,8 +137,8 @@ public class MainActivity extends SherlockFragmentActivity
         MenuItem searchItem = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) searchItem.getActionView();
         mSearchView.setOnQueryTextListener(this);
-        mSearchView.setOnCloseListener(this);
         mSearchView.setIconifiedByDefault(false);
+
         mSearchView.setQuery(mCurFilter, true);
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -168,15 +166,6 @@ public class MainActivity extends SherlockFragmentActivity
 		super.onDestroy();
 	}
 
-	/**
-	 * Overrides SearchView onClose behavior. Does not erase text.
-	 * 
-	 */
-	@Override
-	public boolean onClose() {
-		
-        return true;
-	}
 	
 	
 	/**

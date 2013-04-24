@@ -492,9 +492,7 @@ int string updating_in_progress 0x7f0a0025
 int style AppTheme 0x7f0b0059
 int style DialogWindowTitle_Sherlock 0x7f0b0036
 int style DialogWindowTitle_Sherlock_Light 0x7f0b0037
-int style LightTabWidget 0x7f0b005d
-int style ListItemWrite 0x7f0b005e
-int style MyTheme 0x7f0b005c
+int style ListItemWrite 0x7f0b005c
 int style NotificationText 0x7f0b005a
 int style NotificationTitle 0x7f0b005b
 int style Sherlock___TextAppearance_Small 0x7f0b004a

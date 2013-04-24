@@ -282,25 +282,25 @@ public class ResultFragmentList extends SherlockListFragment implements
 		if(expression == mLastSearched){
 			if("exact".equals(part)){
 				if(mTranslationsExact != null){
-					changeAdapterValues(mTranslationsExact);
+					mAdapter.setData(mTranslationsExact);
 					this.mLastTab = part;
 					return;
 				}
 			}else if("begining".equals(part)){
 				if(mTranslationsBegin != null){
-					changeAdapterValues(mTranslationsBegin);
+					mAdapter.setData(mTranslationsBegin);
 					this.mLastTab = part;
 					return;
 				}	
 			}else if("middle".equals(part)){
 				if(mTranslationsMiddle != null){
-					changeAdapterValues(mTranslationsMiddle);
+					mAdapter.setData(mTranslationsMiddle);
 					this.mLastTab = part;
 					return;
 				}	
 			}else if("end".equals(part)){
 				if(mTranslationsEnd != null){
-					changeAdapterValues(mTranslationsEnd);
+					mAdapter.setData(mTranslationsEnd);
 					this.mLastTab = part;
 					return;
 				}	
@@ -321,16 +321,6 @@ public class ResultFragmentList extends SherlockListFragment implements
 	}
 
 
-	/**
-	 * Changes adapter data with given list of translations.
-	 * 
-	 * @param data list of translations
-	 */
-	private void changeAdapterValues(List<Translation> data){
-		mAdapter.clear();
-		mAdapter.addAll(data);
-		mAdapter.notifyDataSetChanged();
-	}
 
 	/**
 	 * Adds individual Translations from loader
@@ -340,10 +330,12 @@ public class ResultFragmentList extends SherlockListFragment implements
 	@Override
 	public void onResultFound(Translation translation) {
 		mAdapter.addListItem(translation);
-		if (isResumed()) {
-			setListShown(true);
-		} else {
-			setListShownNoAnimation(true);
+		if(this.isVisible()){
+			if (isResumed()) {
+				setListShown(true);
+			} else {
+				setListShownNoAnimation(true);
+			}
 		}
 	}
 	

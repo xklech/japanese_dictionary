@@ -82,7 +82,6 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     	}
     }
     
-
     /**
      * Constructs view for item in list.
      */
