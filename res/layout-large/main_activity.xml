@@ -1,65 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:baselineAligned="false"
-    >
-	<LinearLayout 
-	    android:layout_height="match_parent"
-	    android:layout_width="0dp"
-	    android:layout_weight="2"
-	    android:orientation="vertical"
-	    >
-		<TabHost
-			android:id="@android:id/tabhost"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-			
-			<LinearLayout
-			android:orientation="vertical"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:descendantFocusability="beforeDescendants"
-			android:focusableInTouchMode="true"
-			>
-			
-				<TabWidget
-				android:id="@android:id/tabs"
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_weight="0"/>
-				
-				
-				<FrameLayout
-				android:id="@+android:id/tabcontent"
-				android:layout_width="match_parent"
-				android:layout_height="0dp"
-				android:layout_weight="1">
-				<ListView android:id="@android:id/list"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:drawSelectorOnTop="false"
-				/>
-				
-				
-				</FrameLayout>
-			</LinearLayout>
-		</TabHost>
-	</LinearLayout>
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:descendantFocusability="beforeDescendants"
+	android:focusableInTouchMode="true"
+	android:baselineAligned="false"
+	>
 
-	<LinearLayout
-	    android:layout_width="0dp"
-	    android:layout_height="match_parent"
-	    android:layout_weight="3"
-	    android:baselineAligned="false"
-	    >
-		<FrameLayout 
-	    	android:id="@+id/detail_fragment"
-	    	android:layout_width="match_parent"
-	    	android:layout_height="match_parent"
-		    />
-	</LinearLayout> 
+	<FrameLayout
+		android:id="@+id/main_fragment_container"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="2"
+		/>
+
+	<FrameLayout 
+    	android:id="@+id/detail_fragment"
+    	android:layout_width="0dp"
+    	android:layout_height="wrap_content"
+    	android:layout_weight="3"
+	    />
+
 </LinearLayout>

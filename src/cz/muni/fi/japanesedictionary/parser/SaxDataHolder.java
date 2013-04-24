@@ -116,6 +116,7 @@ public class SaxDataHolder extends DefaultHandler{
 		if(mNotificationTimeLeft.length != 2 ){
 			mNotificationView.setTextViewText(R.id.notification_text, mContext.getString(R.string.dictionary_parsing_in_progress_time_left));
 		}
+
 		mNotifyManager = nM;
 		mNotification = notif;
 		mNotificationView = rV;

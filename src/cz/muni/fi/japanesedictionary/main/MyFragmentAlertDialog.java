@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockDialogFragment;
 
 import cz.muni.fi.japanesedictionary.R;
+import cz.muni.fi.japanesedictionary.engine.MainActivity;
 
 /**
  * Fragment alert dialog for displaying error messages and promt to user.

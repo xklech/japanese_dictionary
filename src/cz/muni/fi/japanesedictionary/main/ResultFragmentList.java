@@ -23,6 +23,9 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 import cz.muni.fi.japanesedictionary.R;
+import cz.muni.fi.japanesedictionary.engine.MainActivity;
+import cz.muni.fi.japanesedictionary.engine.ResultLoader;
+import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 

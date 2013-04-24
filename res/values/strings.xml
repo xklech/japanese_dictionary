@@ -16,7 +16,7 @@
     <string name="parsing_downloaded_dictionary">Parsing downloaded dictionaries</string>
     <string name="no_dictionary_found">No dictionary found</string>
     <string name="nothing_found">Nothing found</string>
-    <string name="download_dictionary_question">Do you want to download dictionary? \nInternet connection required.\nSize: 11 MB</string>
+    <string name="download_dictionary_question">Do you want to download dictionary? \nInternet connection required.\nSize: 12 MB</string>
     <string name="download">Download</string>
     <string name="storno">Storno</string>
     <string name="currently_downloading_dictionary">Currently downloading dictionary please wait</string>
@@ -25,7 +25,7 @@
     <string name="external_storrage_failed_title">External storrage unavailable</string>
     <string name="external_storrage_failed_message">External storrage is not available</string>  
     <string name="search_translation">Search translation</string> 
-    <string name="menu_setting">Setting</string> 
+    <string name="menu_setting">Settings</string> 
     <string name="updating_in_progress">Updating dictionary in progress, please wait</string>
     <string name="unknown_last_update">Last update unknown</string>
     <string name="last_update">Last update: </string>
@@ -38,15 +38,15 @@
     <string name="language_german">German</string>  
     
     <!--  Preferences -->
-    <string name="preferences_language_setting">Language setting</string>
-    <string name="preferences_english_do">Translate to English</string>
-    <string name="preferences_english_dont">Do not translate to English</string>
-    <string name="preferences_french_do">Translate to French</string>
-    <string name="preferences_french_dont">Do not translate to French</string>
-    <string name="preferences_dutch_do">Translate to Dutch</string>
-    <string name="preferences_dutch_dont">Do not translate to Dutch</string>
-    <string name="preferences_german_do">Translate to German</string>
-    <string name="preferences_german_dont">Do not translate to German</string>
+    <string name="preferences_language_setting">Language settings</string>
+    <string name="preferences_english_do">Translate English</string>
+    <string name="preferences_english_dont">Do not translate English</string>
+    <string name="preferences_french_do">Translate French</string>
+    <string name="preferences_french_dont">Do not translate French</string>
+    <string name="preferences_dutch_do">Translate Dutch</string>
+    <string name="preferences_dutch_dont">Do not translate Dutch</string>
+    <string name="preferences_german_do">Translate German</string>
+    <string name="preferences_german_dont">Do not translate German</string>
  	<string name="preferences_update_dictionary">Update dictionary</string>
  	<string name="preferences_dictionary_info">No dictionary found</string>
  	<string name="preferences">Preferences</string>

@@ -3,7 +3,6 @@ package cz.muni.fi.japanesedictionary.main;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,21 +28,12 @@ import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 public class DisplayCharacterInfo extends SherlockFragment{
 	
 	private JapaneseCharacter mJapaneseCharacter;
-	private OnLoadGetCharacterListener mCallbackCharacter;
 	private LayoutInflater mInflater;
 
 	private boolean mEnglish;
     private boolean mFrench;        
     private boolean mDutch;
     private boolean mGerman;
-	
-    private boolean mChanged = false;
-	
-	public interface OnLoadGetCharacterListener{
-		
-		public JapaneseCharacter getJapaneseCharacter();
-		
-	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -54,18 +44,6 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		super.onSaveInstanceState(outState);
 	}
 	
-	
-	
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-        	mCallbackCharacter = (OnLoadGetCharacterListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnLoadGetCharacterListener");
-        }
-    }
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,13 +68,10 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		if(savedInstanceState == null){
-			if(mJapaneseCharacter != null){
-				Log.i("DisplayCharacterInfo","Update fragment view");
-			}else{
-				Log.i("DisplayCharacterInfo","Get japanese character from activity");
-				mJapaneseCharacter =  mCallbackCharacter.getJapaneseCharacter();
-			}
+		if(mJapaneseCharacter ==null){
+			Log.i("DisplayCharacterInfo","Get japanese character from bundle");
+			Bundle bundle = getArguments();
+			mJapaneseCharacter = JapaneseCharacter.newInstanceFromBundle(bundle);
 		}
 
 		
@@ -104,23 +79,12 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	
 	@Override
 	public void onStart() {
-		if(updateLanguages() || mChanged){
+		if(updateLanguages()){
 			updateCharacter();
 		}
 		super.onStart();
 	}
 	
-	/**
-	 * Change displayed japanese character
-	 * 
-	 * @param character to be changed
-	 */
-	public void changeCharacter(JapaneseCharacter character){
-		mJapaneseCharacter = character;
-		if(this.isVisible()){
-			updateCharacter();
-		}
-	}
 	
 	/**
 	 * Updates Fragment view acording to saved japanese character.
@@ -128,7 +92,6 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	 */
 	private void updateCharacter(){
 		Log.i("DisplayCharacterInfo","Setting literal");
-		mChanged = false;
 		if(mJapaneseCharacter == null){
 			Toast.makeText(getActivity(), R.string.character_unknown_character, Toast.LENGTH_LONG).show();
 			return;
@@ -136,6 +99,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		
 		TextView literal = (TextView)getView().findViewById(R.id.kanjidict_literal);
 		literal.setText(mJapaneseCharacter.getLiteral());
+		getSherlockActivity().getSupportActionBar().setTitle(mJapaneseCharacter.getLiteral());
 		
 		if(mJapaneseCharacter.getRadicalClassic() != 0){
 			Log.i("DisplayCharacterInfo","Setting radical: " + mJapaneseCharacter.getRadicalClassic());

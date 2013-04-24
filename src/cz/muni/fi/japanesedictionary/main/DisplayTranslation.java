@@ -20,6 +20,8 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.DBAsyncTask;
+import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
+import cz.muni.fi.japanesedictionary.engine.CharacterLoader;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
@@ -47,9 +49,7 @@ public class DisplayTranslation extends SherlockFragment {
     
     
 	public interface OnCreateTranslationListener{
-		
-		public Translation getTranslationCallBack(int index);
-		
+		public GlossaryReaderContract getDatabse();
 		public void showKanjiDetail(JapaneseCharacter character);
 	}
 	
@@ -108,8 +108,7 @@ public class DisplayTranslation extends SherlockFragment {
 		if(savedInstanceState == null){
 			Bundle bundle = getArguments();
 			if(bundle != null){
-				int index = bundle.getInt("TranslationId");
-				mTranslation =  mCallbackTranslation.getTranslationCallBack(index);
+				mTranslation =  Translation.newInstanceFromBundle(bundle);
 			}
 		}
 		
@@ -158,7 +157,8 @@ public class DisplayTranslation extends SherlockFragment {
         if(mTranslation.getJapaneseReb() != null){
         	String reading = mTranslation.getJapaneseReb().get(0);
         	read.setText(reading);
-        	DBAsyncTask saveTranslation   = new DBAsyncTask(((MainActivity)getActivity()).getDatabse());
+        	getSherlockActivity().getSupportActionBar().setTitle(reading);
+        	DBAsyncTask saveTranslation   = new DBAsyncTask(mCallbackTranslation.getDatabse());
         	if(saveTranslation != null){
         		saveTranslation.execute(mTranslation);
         	}

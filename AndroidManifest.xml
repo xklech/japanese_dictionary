@@ -20,7 +20,7 @@
         android:allowBackup="false"
         >
         <activity
-            android:name="cz.muni.fi.japanesedictionary.main.MainActivity"
+            android:name="cz.muni.fi.japanesedictionary.engine.MainActivity"
             android:label="@string/title_activity_main" 
             android:launchMode="standard" 
             android:windowSoftInputMode="stateHidden"    
@@ -31,6 +31,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             
+        </activity>
+        <activity
+            android:name=".main.DisplayTranslationActivity"         
+            >
+        </activity>
+        <activity
+            android:name=".main.DisplayCharacterInfoActivity"         
+            >
         </activity>
         <activity
             android:name=".main.MyPreferencesActivity"

@@ -40,7 +40,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import cz.muni.fi.japanesedictionary.R;
-import cz.muni.fi.japanesedictionary.main.MainActivity;
+import cz.muni.fi.japanesedictionary.engine.MainActivity;
 
 /**
  * Service for downloading and aprsing dictionaries.
@@ -56,6 +56,16 @@ public class ParserService extends IntentService {
 
 
 	private boolean connected = true;
+	
+	private URL mDownloadJMDictFrom = null;
+	private File mDownloadJMDictTo = null;
+	private boolean mDownloadingJMDict = false;
+	private URL mDownloadKanjidicFrom = null;
+	private File mDownloadKanjidicTo = null;
+	private boolean mDownloadingKanjidic = false;
+	
+	private boolean mDownloadInProgress = false;
+	private boolean mCurrentlyDownloading = false;
 
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
@@ -73,6 +83,14 @@ public class ParserService extends IntentService {
 				Log.i("ParserService","Connection lost");
 			}else{
 				connected = true;
+				if(mDownloadInProgress){
+					try {
+						downloadDictionaries();
+					} catch (IOException e) {
+						Log.w("ParserService","IOException caught while downloading: "+e.toString());
+
+					}
+				}
 				Log.i("ParserService","Connection established");
 			}
 		}
@@ -113,7 +131,8 @@ public class ParserService extends IntentService {
 		mNotification = mBuilder.build();
 		mNotification.icon = R.drawable.ic_launcher;
 		mNotification.contentView = mNotificationView;
-		mNotifyManager.notify(0, mNotification);
+		
+		startForeground(0,mNotification);
 		
 		this.registerReceiver(internetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
@@ -146,9 +165,9 @@ public class ParserService extends IntentService {
 	 * @throws IOException
 	 */
 	private boolean downloadFile(URL url, File outputFile) 
-			throws InterruptedException, IOException
+			throws IOException
 			{
-		
+		mCurrentlyDownloading = true;
 		BufferedInputStream input = null;
 		OutputStream output = null;
 		
@@ -182,6 +201,7 @@ public class ParserService extends IntentService {
 			Log.e("ParserService",
 					"Error while downloading file, one of streams is null");
 			closeIOStreams(input, output);
+			mCurrentlyDownloading = false;
 			return false;
 		}
 		
@@ -207,6 +227,7 @@ public class ParserService extends IntentService {
 		while (true) {
 			if (!connected) {
 				closeIOStreams(input, output);
+				mCurrentlyDownloading = false;
 				return false;
 			}
 			try{
@@ -214,6 +235,7 @@ public class ParserService extends IntentService {
 				if(count == -1){
 					output.flush();
 					closeIOStreams(input, output);
+					mCurrentlyDownloading = false;
 					return true;
 				}
 				total += count;
@@ -240,7 +262,9 @@ public class ParserService extends IntentService {
 				}
 			}catch(IOException ex){
 				Log.w("ParserService", "ConnectionLost"+ex);
-
+				closeIOStreams(input, output);
+				mCurrentlyDownloading = false;
+				return false;
 			}
 			
 
@@ -249,13 +273,74 @@ public class ParserService extends IntentService {
 
 	}
 
+	
+	private void downloadDictionaries() throws IOException{
+		if(!mDownloadInProgress || mCurrentlyDownloading){
+			return;
+		}
+		if(mDownloadingJMDict){
+			if(downloadFile(mDownloadJMDictFrom,mDownloadJMDictTo)){
+				mDownloadingJMDict = false;
+				mDownloadingKanjidic = true;
+			}else{
+				return;
+			}
+		} 
+		if(mDownloadingKanjidic){
+			mNotificationView.setTextViewText(R.id.notification_title,
+					getString(R.string.dictionary_kanji_download_title));
+			mNotificationView.setViewVisibility(R.id.ntification_progressBar,
+					View.VISIBLE);
+			if(downloadFile(mDownloadKanjidicFrom,mDownloadKanjidicTo)){
+				mDownloadingKanjidic = false;
+				mDownloadInProgress = false;
+				
+				mNotificationView.setProgressBar(
+						R.id.ntification_progressBar, 0, 0, false);
+				mNotificationView.setViewVisibility(R.id.ntification_progressBar,
+						View.GONE);
+				mNotificationView.setTextViewText(R.id.notification_text,
+						getString(R.string.dictionary_download_complete));
+				mNotification.contentView = mNotificationView;
+
+				mNotifyManager.notify(0, mNotification);
+				Log.i("ParserService", "Downloading dictionary finished");
+				
+			}else{
+				return;
+			}
+		}
+		if(!mDownloadInProgress){
+			try {
+				parseDictionaries();
+			} catch (ParserConfigurationException e) {
+				Log.e("ParserService","ParserConfigurationException exception occured: "+e.toString());
+				stopSelf();
+			} catch (SAXException e) {
+				Log.e("ParserService","SAXException exception occured: "+e.toString());
+				stopSelf();
+			}
+		}
+	}
+	
+	private void parseDictionaries() throws IOException, ParserConfigurationException, SAXException{
+		String japDictAbsolutePath = parseDictionary(mDownloadJMDictTo.getPath());
+		String japKanjiDictAbsolutePath = parseKanjiDict(mDownloadKanjidicTo.getPath());
+		
+
+		if (japDictAbsolutePath != null) {
+			serviceSuccessfullyDone(japDictAbsolutePath,japKanjiDictAbsolutePath);
+		} else {
+			Log.e("ParserService", "Parsing dictionary failed");
+		}
+	}
+	
 	/**
 	 * Downloads dictionaries.
 	 */
 	@Override
 	protected void onHandleIntent(Intent arg0) {
-		boolean downloadedJapDict = false;
-		boolean downloadedKanjiDict = false;
+
 		String dictionaryPath = null;
 		String kanjiDictPath = null;
 
@@ -285,30 +370,12 @@ public class ParserService extends IntentService {
 			if(outputFile.exists()){
 				outputFile.delete();
 			}
-			while(true){
-				if(!connected){
-					Thread.sleep(500);
-				}else{
-					if(downloadFile(url,outputFile)){
-						//file downloaded succesfully 
-						break;
-					}
-				}
-			}
 
-				downloadedJapDict = true;
-				mNotificationView.setProgressBar(
-						R.id.ntification_progressBar, 0, 0, false);
-				mNotificationView.setViewVisibility(R.id.ntification_progressBar,
-						View.GONE);
-				mNotificationView.setTextViewText(R.id.notification_text,
-						getString(R.string.dictionary_download_complete));
-				mNotification.contentView = mNotificationView;
-
-				mNotifyManager.notify(0, mNotification);
-				Log.i("ParserService", "Downloading dictionary finished");
-
-
+			mDownloadJMDictFrom = url;
+			mDownloadJMDictTo = outputFile;
+			mDownloadingJMDict = true;
+			mDownloadInProgress = true;
+			
 			// downloading kanjidict
 			url = null;
 			try {
@@ -318,66 +385,27 @@ public class ParserService extends IntentService {
 						"Error: creating url for downloading kanjidict2");
 			}
 			if (url != null) {
-			
-
-				mNotificationView.setTextViewText(R.id.notification_title,
-						getString(R.string.dictionary_kanji_download_title));
-				mNotificationView.setViewVisibility(R.id.ntification_progressBar,
-						View.VISIBLE);
 				kanjiDictPath = karta.getPath() + File.separator
 						+ "kanjidict.gz";
 				File fileKanjidict = new File(kanjiDictPath);
 				if(fileKanjidict.exists()){
 					fileKanjidict.delete();
 				}
-				while(true){
-					if(!connected){
-						Thread.sleep(500);
-					}else{
-						if(downloadFile(url,fileKanjidict)){
-							//file downloaded succesfully 
-							break;
-						}
-					}
-				}
-				
-				downloadedKanjiDict = true;
-
-				mNotificationView.setProgressBar(
-						R.id.ntification_progressBar, 0, 0, false);
-				mNotificationView.setViewVisibility(R.id.ntification_progressBar,
-						View.GONE);
-				mNotificationView
-						.setTextViewText(
-								R.id.notification_text,
-								getString(R.string.dictionary_download_complete));
-				mNotification.contentView = mNotificationView;
-
-				mNotifyManager.notify(0, mNotification);
-				Log.i("ParserService",
-						"Downloading dictionaries finished");
+				mDownloadingKanjidic = false;
+				mDownloadKanjidicFrom = url;
+				mDownloadKanjidicTo = fileKanjidict;
 			}
-
-			String japDictAbsolutePath = null;
-			String japKanjiDictAbsolutePath = null;
-			if (downloadedJapDict) {
-				japDictAbsolutePath = parseDictionary(dictionaryPath);
-			}
-			if (downloadedKanjiDict) {
-				japKanjiDictAbsolutePath = parseKanjiDict(kanjiDictPath);
-			}
-			if (japDictAbsolutePath != null) {
-				serviceSuccessfullyDone(japDictAbsolutePath,
-						japKanjiDictAbsolutePath);
-			} else {
-				Log.e("ParserService", "Parsing dictionary failed");
-			}
+			
+			
+			downloadDictionaries();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e("ParserService", "Exception: " + e.toString());
+			stopSelf();
 		}
 
-		stopSelf();
+		
 	}
 
 	/**
@@ -391,11 +419,13 @@ public class ParserService extends IntentService {
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 */
-	private String parseDictionary(String path) throws InterruptedException,
+	private String parseDictionary(String path) throws 
 			IOException, ParserConfigurationException, SAXException {
 
 		mNotificationView.setTextViewText(R.id.notification_text,
 				getString(R.string.dictionary_parsing_in_progress));
+		mNotificationView.setViewVisibility(R.id.ntification_progressBar,
+				View.VISIBLE);
 		mNotificationView.setTextViewText(R.id.notification_title,
 				getString(R.string.parsing_downloaded_dictionary));
 		mNotification.contentView = mNotificationView;
@@ -495,7 +525,7 @@ public class ParserService extends IntentService {
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 */
-	private String parseKanjiDict(String path) throws InterruptedException,
+	private String parseKanjiDict(String path) throws
 			IOException, ParserConfigurationException, SAXException {
 		Log.i("ParserService", "Parsing kanji dict");
 
@@ -633,6 +663,7 @@ public class ParserService extends IntentService {
 		Log.i("ParserService", "Parsing dictionary - preferences saved");
 		Intent intent = new Intent("downloadingDictinaryServiceDone");
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+		stopSelf();
 	}
 
 	/**
