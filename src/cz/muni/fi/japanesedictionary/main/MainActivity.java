@@ -1,9 +1,15 @@
 package cz.muni.fi.japanesedictionary.main;
 
+import java.io.File;
+
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -11,6 +17,8 @@ import android.os.Environment;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +35,7 @@ import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
+import cz.muni.fi.japanesedictionary.engine.MainPagerAdapter;
 import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
@@ -57,62 +66,105 @@ public class MainActivity extends SherlockFragmentActivity
 	public static final String DISPLAY_TRANSLATION_ACTIVITY_BUNDLE = "cz.muni.fi.japanesedictionary.display_translation_activity_bundle";
 
 	
-	private TranslationsAdapter mAdapter = null;
+
 	private GlossaryReaderContract mDatabase = null;
-	
-	private ResultFragmentList mFragmentList = null;
 	
 	private SearchView mSearchView;
 	
 	private String mLastTabId;
 	private String mCurFilter;
 	
-	private static String[] mTabKeys = {"exact","begining","middle","end"};
+	public static String[] mTabKeys = {"exact","begining","middle","end"};
 	
-	/**
-	 * Sets TranslationAdapter from ListFragment 
-	 * 
-	 * @param adapter adapter to be set
-	 */
-	public void setAdapter(TranslationsAdapter adapter){
-		mAdapter = adapter;
-	}
+	
+	private ViewPager mPager;
+	
+	private boolean mWaitingForConnection = false;
+	
+	private BroadcastReceiver mInternetReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context arg0, Intent intent) {
+	        boolean noConnectivity = intent.getBooleanExtra(
+	                ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+			if (!noConnectivity) {
+		        SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
+				String dictionaryPath = settings.getString("pathToDictionary", null);
+				boolean waitingForConnection = settings.getBoolean("waitingForConnection", false);
+				if(waitingForConnection && (dictionaryPath == null || !(new File(dictionaryPath)).exists()) ) {
+					displayDownloadPrompt();
+				}
+			}
+		}
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		setContentView(R.layout.main_activity);
 		mDatabase = new GlossaryReaderContract(getApplicationContext());
 
 		// Start out with a progress indicator.
-
-		
-		
-		
-		Log.i("MainActivity","Checking saved instance");
+		Log.i("MainActivity","Controling saved instance ... ");
 		if(savedInstanceState != null){
+			Log.i("MainActivity","Saved instance ... ");
 			mCurFilter = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
 			mLastTabId = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
-			mFragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag("resultFragmentList");
 			if(mLastTabId == null || mLastTabId.length()==0){
 				mLastTabId = "exact";
 			}
-			setUpTabs(mLastTabId);
-			return;
 		}
+		Log.i("MainActivity","Find ViewPager");
+		mPager = (ViewPager) findViewById(R.id.pager);	
+		
+        /** Defining a listener for pageChange */
+		Log.i("MainActivity","ViewPager listener setup");
+        ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                getSupportActionBar().setSelectedNavigationItem(position);
+                ResultFragmentList fragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mPager.getCurrentItem()));
+                if(fragmentList != null){
+                	Log.i("activita","neni null");
+                	fragmentList.search(mCurFilter);
+                }else{
+                	Log.i("activita","je null");
+                }
+                super.onPageSelected(position);
+
+                
+            }
+        };
+        Log.i("MainActivity","ViewPager listener set");
+		mPager.setOnPageChangeListener(pageChangeListener);  
+		Log.i("MainActivity","ViewPager create adapter");
+		PagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager());
+		Log.i("MainActivity","ViewPager adapter set");
+		mPager.setAdapter(adapter);
+		
 		
 		if(mLastTabId == null || mLastTabId.length()==0){
 			mLastTabId = "exact";
 		}
-		setUpTabs(mLastTabId);
+		setUpTabs(mLastTabId);	
+		
+        SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
+		String dictionaryPath = settings.getString("pathToDictionary", null);
+		boolean waitingForConnection = settings.getBoolean("waitingForConnection", false);
+		if(waitingForConnection && (dictionaryPath == null || !(new File(dictionaryPath)).exists()) ) {
+			displayDownloadPrompt();
+		}
+		
+		Log.i("MainActivity","Checking saved instance");
+		if(savedInstanceState != null){
+			return;
+		}
+		
+
 		
 		Log.i("MainActivity","Setting layout");
-		mFragmentList = new ResultFragmentList();
-		mFragmentList.setRetainInstance(true);
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		Log.i("MainActivity","Setting main fragment");
-		ft.add(R.id.main_fragment_container, mFragmentList,"resultFragmentList");
 		if(findViewById(R.id.detail_fragment) != null){
 			// two frames layout
 			Log.i("MainActivity","Setting info fragment");
@@ -120,16 +172,20 @@ public class MainActivity extends SherlockFragmentActivity
 			ft.add(R.id.detail_fragment, displayTranslation,"displayFragment");
 		}
 		ft.commit();
+		if (dictionaryPath == null || !(new File(dictionaryPath)).exists() ) {
+			displayDownloadPrompt();
+		}
+		
+		
 	}
 	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		Log.i("MainFragment", "Inflating menu");
-
+		Log.i("MainActivity", "Inflating menu");
 	    MenuInflater inflater = getSupportMenuInflater();
 	    inflater.inflate(R.menu.menu, menu);
-		Log.i("MainFragment", "Setting menu ");
+		Log.i("MainActivity", "Setting menu ");
 		getSupportActionBar().setHomeButtonEnabled(false);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -137,9 +193,13 @@ public class MainActivity extends SherlockFragmentActivity
         MenuItem searchItem = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) searchItem.getActionView();
         mSearchView.setOnQueryTextListener(this);
-        mSearchView.setIconifiedByDefault(false);
+        //mSearchView.setIconifiedByDefault(false);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-        mSearchView.setQuery(mCurFilter, true);
+        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+		Log.i("MainActivity", "Setting query");
+        mSearchView.setQuery(mCurFilter, false);
+		Log.i("MainActivity", "Setting query done");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -218,28 +278,22 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	@Override
 	public boolean onQueryTextChange(String newText) {
+		Log.i("MainActivity", "onquerychanged fird");
+		
         String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
         // Don't do anything if the filter hasn't actually changed.
         // Prevents restarting the loader when restoring state.
-        if (mCurFilter == null && newFilter == null) {
+        if (newFilter == null) {
             return true;
         }
         if (mCurFilter != null && mCurFilter.equals(newFilter)) {
             return true;
         }
         mCurFilter = newText;
-        if(!mFragmentList.isVisible()){
-        	getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        	mFragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
-        	ft.replace(R.id.main_fragment_container, mFragmentList, "resultFragmentList");
-        	Log.i("MainActivity","Text changed - launching new fragmentList");	
-
-        	ft.commit();
-        }else{
-        	Log.i("MainActivity","Text changed - updating visible fragmentList");
-        	mFragmentList.search(mCurFilter, mLastTabId);
-        }
+        
+        ResultFragmentList fragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mPager.getCurrentItem()));
+        
+        fragmentList.search(mCurFilter);
         
         
         return true;
@@ -300,6 +354,12 @@ public class MainActivity extends SherlockFragmentActivity
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo == null || !networkInfo.isConnected()) {
+			mWaitingForConnection = true;
+			this.registerReceiver(mInternetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+	        SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
+	        SharedPreferences.Editor editor = settings.edit();
+	        editor.putBoolean("waitingForConnection", true);
+	        editor.commit();
 			DialogFragment newFragment = MyFragmentAlertDialog.newInstance(
 					R.string.internet_connection_failed_title,
 					R.string.internet_connection_failed_message, true);
@@ -310,6 +370,10 @@ public class MainActivity extends SherlockFragmentActivity
 					R.string.external_storrage_failed_message, true);
 			newFragment.show(getSupportFragmentManager(), "dialog");
 		} else if (!isMyServiceRunning(getApplicationContext())) {
+			if(mWaitingForConnection){
+				this.unregisterReceiver(mInternetReceiver);
+				mWaitingForConnection = false;
+			}
 			Intent intent = new Intent(this, ParserService.class);
 			startService(intent);
 		}
@@ -366,24 +430,31 @@ public class MainActivity extends SherlockFragmentActivity
 
 		
 	}
+
+	
 	
 	/**
-	 * CallBack method for DisplayTranslation fragment. Returns translation which should be displayed
+	 * Method working with displayed fragment adn its adapter. Returns translation which should be displayed
 	 * 
 	 * @param index index of item in ResultFragmentList
 	 * @return Translation translation selected from fragment lsit adapter
 	 */
 	private Translation getTranslationCallBack(int index){
-		if(mAdapter == null && mFragmentList != null){
-			mAdapter = mFragmentList.getAdapter();
+		if(index < 0){
+			return null;
 		}
 		
-		if(mAdapter != null){
-			if(mAdapter.getCount() > index){
-				return mAdapter.getItem(index);
-				
+        ResultFragmentList fragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mPager.getCurrentItem()));
+    	
+        if(fragmentList != null){
+        	TranslationsAdapter mAdapter = fragmentList.getAdapter();
+
+			if(mAdapter != null){
+				if(mAdapter.getCount() > index){
+					return mAdapter.getItem(index);
+				}
 			}
-		}
+        }
 		return null;
 	}
 	
@@ -406,7 +477,7 @@ public class MainActivity extends SherlockFragmentActivity
 		Log.i("MainActivity","Setting DisplayCharacterInfo fragment");
 		
 		// decides whether using two pane layout or replace fragment list
-		final int container = (findViewById(R.id.detail_fragment) != null) ?R.id.detail_fragment:R.id.main_fragment_container;		
+		final int container = R.id.detail_fragment;		
 		
 		Bundle bundle = character.createBundleFromJapaneseCharacter(null);
 		
@@ -432,20 +503,7 @@ public class MainActivity extends SherlockFragmentActivity
 		String key = mTabKeys[tab.getPosition()];
 		if(key != mLastTabId){
 			mLastTabId = key;
-	        if(mFragmentList == null || !mFragmentList.isVisible()){
-	        	//clear backstack
-	        	getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-	        	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-	        	mFragmentList = ResultFragmentList.newInstance(mCurFilter,mLastTabId);
-	        	fragmentTransaction.replace(R.id.main_fragment_container, mFragmentList, "resultFragmentList");
-	        	Log.i("MainActivity","tab changed - launching new fragmentList");	       
-	        	
-	        	fragmentTransaction.commit();
-	        }else{
-	        	Log.i("MainActivity","tab changed - updating visible fragmentList");
-	        	mFragmentList.search(mCurFilter, mLastTabId);
-	        }
-	        
+			mPager.setCurrentItem(tab.getPosition());
 		}
 
 	}
@@ -500,5 +558,30 @@ public class MainActivity extends SherlockFragmentActivity
 		tabEnd.setTabListener(this);
 		getSupportActionBar().addTab(tabEnd,selectedTab[3]);
 	}
+	
+	
+	public String getCurrentFilter(){
+		return mCurFilter;
+	}
+	
+	private String getFragmentTag(int pos){
+	    return "android:switcher:"+R.id.pager+":"+pos;
+	}
+	
+	private void displayDownloadPrompt(){
+		if(!MainActivity.isMyServiceRunning(getApplicationContext())){
+	        SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
+	        SharedPreferences.Editor editor = settings.edit();
+	        editor.putBoolean("waitingForConnection", false);
+	        editor.commit();
+			DialogFragment newFragment = MyFragmentAlertDialog.newInstance(
+			R.string.no_dictionary_found,
+			R.string.download_dictionary_question, false);
+			newFragment.setCancelable(false);
+			newFragment.show(getSupportFragmentManager(),
+			"dialog");	
+		}
+	}
+	
 	
 }

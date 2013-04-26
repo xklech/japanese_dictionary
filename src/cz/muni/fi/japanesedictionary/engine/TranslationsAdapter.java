@@ -21,6 +21,8 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
  */
 public class TranslationsAdapter extends ArrayAdapter<Translation>{
     
+	
+	
 	/**
 	 * Static Translation holder for item View.
 	 * @author Jaroslav Klech

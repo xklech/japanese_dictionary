@@ -59,7 +59,6 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
 		String part = params[1];
 		
         SharedPreferences settings = mContext.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
-        boolean validDictionary = settings.getBoolean("hasValidDictionary", false);
         String pathToDictionary = settings.getString("pathToDictionary", null);
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         final boolean englishBool = sharedPrefs.getBoolean("language_english", false);
@@ -68,16 +67,12 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
         final boolean germanBool = sharedPrefs.getBoolean("language_german", false);
         final List<Translation> translations = new ArrayList<Translation>();
         
-        if(!validDictionary){
-        	Log.e("FragmentListAsyncTask", "No jmdict dictionary found");
-        	return null;
-        }
         if(pathToDictionary == null){
         	Log.e("FragmentListAsyncTask", "No path to jmdict dictionary");
         	return null;
         }
         File file = new File(pathToDictionary);
-        if(file == null || !file.canRead()){
+        if(file == null || !file.exists() || !file.canRead()){
         	Log.e("FragmentListAsyncTask", "Cant read jmdict dictionary directory");
         	return null;
         }
@@ -102,7 +97,7 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
     		query.setPhraseSlop(0);
     		String search;    		
     		
-    		if(Pattern.matches("\\w*", expression)){
+    		if(Pattern.matches("\\p{Latin}*", expression)){
     			//only romaji
     			Log.i("FragmentListAsyncTask","Only letters, converting to hiragana. ");
     			expression = RomanizationEnum.Hepburn.toHiragana(expression);
@@ -209,7 +204,9 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
     	}catch(IOException ex){
     		Log.e("FragmentListAsyncTask","IO Exception:  " + ex.toString());
     		try {
-				searcher.close();
+    			if(searcher != null){
+    				searcher.close();
+    			}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

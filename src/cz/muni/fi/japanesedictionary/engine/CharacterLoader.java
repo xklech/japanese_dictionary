@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
@@ -63,18 +64,13 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 			return null;
 		}
 		SharedPreferences settings = mContext.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
-        boolean validDictionary = settings.getBoolean("hasValidKanjiDictionary", false);
         String pathToDictionary = settings.getString("pathToKanjiDictionary", null);
-        if(!validDictionary){
-        	Log.e("CharacterLoader", "No kanjidict2 dictionary");
-        	return null;
-        }
         if(pathToDictionary == null){
         	Log.e("CharacterLoader", "No path to kanjidict2 dictionary");
         	return null;
         }
         File file = new File(pathToDictionary);
-        if(file == null || !file.canRead()){
+        if(file == null || !file.exists() || !file.canRead()){
         	Log.e("CharacterLoader", "Can't read dictionary directory");
         	return null;
         }
@@ -82,20 +78,24 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
         final int characterListSize = characterList.length();
         // search string
         for(int i =0;i< characterListSize ; i++){
-        	searchBuilder.append('"' +  String.valueOf(characterList.charAt(i)) + '"');
-        	if( i+1 < characterListSize){
-        		searchBuilder.append(' '); // in lucene space serve as OR
+        	String character = String.valueOf(characterList.charAt(i));
+        	if(Pattern.matches("\\p{Han}", character)){
+        		if(searchBuilder.length() > 0){
+	        		searchBuilder.append(' '); // in lucene space serve as OR
+	        	}
+	        	searchBuilder.append('"' +  character + '"');
         	}
         }
         String search = searchBuilder.toString();
-        
+        if(search == null || search.length() == 0){
+        	return null;
+        }
         
         Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
         try{
         	QueryParser query = new QueryParser(Version.LUCENE_36, "literal", analyzer);
     		query.setPhraseSlop(0);
 
-    		Log.i("CharacterLoader", "Input string: "+characterList);
     		Query q = query.parse(search); 
 	    	if( mSearcher == null){
 	    		Directory dir = FSDirectory.open(file);

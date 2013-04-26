@@ -1,5 +1,6 @@
 package cz.muni.fi.japanesedictionary.main;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +36,12 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
  */
 public class ResultFragmentList extends SherlockListFragment implements
 		SearchListener{
+	
+	public static final String TAG = "ResultFragmentList";
+	
 	private TranslationsAdapter mAdapter;
+	
+	private String mNewSearch;
 	
 	private String mLastSearched;
 	private String mLastTab;
@@ -44,11 +49,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	private IncomingHandler mHandler;
 	
 	private FragmentListAsyncTask mLoader;
-	
-	List<Translation> mTranslationsExact;
-	List<Translation> mTranslationsBegin;
-	List<Translation> mTranslationsMiddle;
-	List<Translation> mTranslationsEnd;
+
 	
 	
 	/**
@@ -74,7 +75,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	    	
 	    	ResultFragmentList fragment = mFragment.get();
 	         if (fragment != null) {
-	        	 Log.i("ResultFragmentList","First run, select first translation");
+	        	 Log.i(TAG,"First run, select first translation");
 	        	 if(fragment.isVisible()){
 	        		 //is visible to user and attached to activity
 	        		 fragment.getListView().setItemChecked(0, true);
@@ -91,12 +92,11 @@ public class ResultFragmentList extends SherlockListFragment implements
 	 * @param part part of word to be searched in
 	 * @return new instance of ResultFragmentList
 	 */
-    public static ResultFragmentList newInstance(String search,String part) {
+    public static ResultFragmentList newInstance(String part) {
     	ResultFragmentList f = new ResultFragmentList();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putString(MainActivity.SEARCH_TEXT, search);
         args.putString(MainActivity.PART_OF_TEXT, part);
         f.setArguments(args);
 
@@ -117,17 +117,18 @@ public class ResultFragmentList extends SherlockListFragment implements
 		  
 	public interface OnTranslationSelectedListener{
 		public void onTranslationSelected(int index);
+		
+		public String getCurrentFilter();
 	}
 	
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		Log.i("ResultFragmentList", "Saving instance");
+		Log.i(TAG+": "+mLastTab, "Saving instance");
 
 		if (mLastSearched != null) {
 			outState.putString(MainActivity.SEARCH_TEXT, mLastSearched);
 		}
-		outState.putBoolean(MainActivity.DUAL_PANE, mDualPane);
 		outState.putString(MainActivity.PART_OF_TEXT, mLastTab);
 		super.onSaveInstanceState(outState);
 	}
@@ -137,7 +138,7 @@ public class ResultFragmentList extends SherlockListFragment implements
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.w("ResultFragmentList", "onAttach called");
+        Log.w(TAG+": "+mLastTab, "onAttach called");
         try {
         	mCallbackTranslation = (OnTranslationSelectedListener) activity;
         } catch (ClassCastException e) {
@@ -158,8 +159,8 @@ public class ResultFragmentList extends SherlockListFragment implements
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		setListShown(false);
-		Log.i("ResultFragmentList", "onViewCreated called - setting fragment");
+		setRetainInstance(true);
+		Log.i(TAG+": "+mLastTab, "onViewCreated called - setting fragment: Last: "+mLastSearched+" new: "+mNewSearch);
 		if(getActivity().findViewById(R.id.detail_fragment) != null){
 			//dualPane
 			mDualPane = true;
@@ -167,39 +168,45 @@ public class ResultFragmentList extends SherlockListFragment implements
 		}
 		SharedPreferences settings = getActivity().getSharedPreferences(
 				ParserService.DICTIONARY_PREFERENCES, 0);
-		boolean validDictionary = settings.getBoolean("hasValidDictionary",
-				false);
-		if (!validDictionary) {
+		String dictionaryPath = settings.getString("pathToDictionary",
+				null);
+		if (dictionaryPath == null || !(new File(dictionaryPath)).exists() ) {
 			setEmptyText(getString(R.string.no_dictionary_found));
-			if(!MainActivity.isMyServiceRunning(getActivity().getApplicationContext())){
-				DialogFragment newFragment = MyFragmentAlertDialog.newInstance(
-				R.string.no_dictionary_found,
-				R.string.download_dictionary_question, false);
-				newFragment.show(getActivity().getSupportFragmentManager(),
-				"dialog");	
-			}
 		} else {
 			setEmptyText(getString(R.string.nothing_found));
 		}
 		
-		
-		mAdapter = new TranslationsAdapter(getActivity());
-		((MainActivity)getActivity()).setAdapter(mAdapter);
+		if(mAdapter == null){
+			mAdapter = new TranslationsAdapter(getActivity());
+		}else{
+			Log.e(TAG+": "+mLastTab,"old adapter: "+mAdapter.getCount());
+		}
 		setListAdapter(mAdapter);
 		Bundle bundle = getArguments();
 		if(savedInstanceState != null){
-			mLastSearched = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
 			mLastTab = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
 			mDualPane = savedInstanceState.getBoolean(MainActivity.DUAL_PANE, false);
 		}else if (bundle != null) {
-			mLastSearched = bundle.getString(MainActivity.SEARCH_TEXT);
 			mLastTab = bundle.getString(MainActivity.PART_OF_TEXT);
+		}else{
+			mLastTab = "exact";
 		}
 		
-		mLoader = new FragmentListAsyncTask(this, getActivity());
-		mLoader.execute(mLastSearched,mLastTab);
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE );
-
+		mNewSearch = mCallbackTranslation.getCurrentFilter();
+		Log.e(TAG+": "+mLastTab,"new search: "+mNewSearch+" old search: "+mLastSearched);
+		
+		if(mNewSearch != null && mNewSearch.equals(mLastSearched) && mAdapter.getCount()>0){
+			Log.i(TAG+": "+mLastTab,"restore, no search");
+			mAdapter.notifyDataSetChanged();
+			listShown(true);
+		}else{
+			Log.i(TAG+": "+mLastTab,"new search: "+mNewSearch+" adapter: "+mAdapter.getCount());
+			mLastSearched = mNewSearch;
+			mAdapter.clear();
+			mLoader = new FragmentListAsyncTask(this, getActivity());
+			mLoader.execute(mLastSearched,mLastTab);
+		}
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
@@ -210,31 +217,18 @@ public class ResultFragmentList extends SherlockListFragment implements
 	 * If in dual pane layout and first run sets first item as displayed.
 	 */
 	public void onLoadFinished(	List<Translation> data) {
-		Log.i("ResultFragmentList", "Loader has finished loading data");
+		Log.i(TAG+": "+mLastTab, "Loader has finished loading data");
 		// Set the new data in the adapter.
+		mNewSearch = null;
 		if(data!= null && data.size() > 0 && mAdapter.isEmpty()){
 			System.out.println("zobrazit vse");
 			mAdapter.setData(data);
-			if (isResumed()) {
-				setListShown(true);
-			} else {
-				setListShownNoAnimation(true);
-			}
 		}
-		if("exact".equals(mLastTab)){
-			mTranslationsExact = data;
-		}else if("begining".equals(mLastTab)){
-				mTranslationsBegin = data;
-		}else if("middle".equals(mLastTab)){
-				mTranslationsMiddle = data;
-		}else if("end".equals(mLastTab)){
-				mTranslationsEnd = data;
-		} 
 		if(mDualPane && mAdapter.getCount() > 0 && mLastSearched == null){
-			Log.i("ResultFragmentList","dual pane, display last - send massage");
+			Log.i(TAG+": "+mLastTab,"dual pane, display last - send massage");
 			mHandler.sendEmptyMessage(0);
 		}
-
+		listShown(true);
 	}
 
 
@@ -266,58 +260,28 @@ public class ResultFragmentList extends SherlockListFragment implements
 	 * @param expression to be searched for
 	 * @param part to be searched in
 	 */
-	public void search(String expression,String part){
+	public void search(String expression){
 		if(expression == null && this.mLastSearched == null){
 			return ;
 		}
-		
-		if(expression != mLastSearched){
-			System.out.println("nuluju");
-			mTranslationsExact = null;
-			mTranslationsBegin = null;
-			mTranslationsMiddle = null;
-			mTranslationsEnd = null;
-		}
-		
-		if(expression == mLastSearched){
-			if("exact".equals(part)){
-				if(mTranslationsExact != null){
-					mAdapter.setData(mTranslationsExact);
-					this.mLastTab = part;
-					return;
-				}
-			}else if("begining".equals(part)){
-				if(mTranslationsBegin != null){
-					mAdapter.setData(mTranslationsBegin);
-					this.mLastTab = part;
-					return;
-				}	
-			}else if("middle".equals(part)){
-				if(mTranslationsMiddle != null){
-					mAdapter.setData(mTranslationsMiddle);
-					this.mLastTab = part;
-					return;
-				}	
-			}else if("end".equals(part)){
-				if(mTranslationsEnd != null){
-					mAdapter.setData(mTranslationsEnd);
-					this.mLastTab = part;
-					return;
-				}	
-			} 
-			
-		}
-		this.mLastSearched = expression;
-		this.mLastTab = part;
+
 		if(mDualPane){
 			getListView().setItemChecked(getListView().getCheckedItemPosition(), false);
 		}
-		if(mLoader != null){
-			mLoader.cancel(true);
+		if(expression!= null && !expression.equals(this.mLastSearched)){
+			if(mLoader != null){
+				mLoader.cancel(true);
+			}
+			mAdapter.clear();
+			Log.i(TAG+": "+mLastTab,"Starting nw loader: "+expression);
+			mLoader = new FragmentListAsyncTask(this, getActivity());
+			mLoader.execute(expression,mLastTab);
+		}else{
+			if(this.isVisible()){
+				listShown(true);
+			}
 		}
-		mAdapter.clear();
-		mLoader = new FragmentListAsyncTask(this, getActivity());
-		mLoader.execute(expression,part);
+		this.mLastSearched = expression;
 	}
 
 
@@ -331,13 +295,18 @@ public class ResultFragmentList extends SherlockListFragment implements
 	public void onResultFound(Translation translation) {
 		mAdapter.addListItem(translation);
 		if(this.isVisible()){
-			if (isResumed()) {
-				setListShown(true);
-			} else {
-				setListShownNoAnimation(true);
-			}
+			listShown(true);
 		}
 	}
 	
+	private void listShown(boolean shown){
+		if(getView() != null){
+			if (isResumed()) {
+				setListShown(shown);
+			} else {
+				setListShownNoAnimation(shown);
+			}
+		}
+	}
 
 }

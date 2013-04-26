@@ -67,6 +67,7 @@ public class ParserService extends IntentService {
 	private boolean mDownloadInProgress = false;
 	private boolean mCurrentlyDownloading = false;
 
+	private NotificationCompat.Builder mBuilder;
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
 	private RemoteViews mNotificationView = null;
@@ -100,6 +101,8 @@ public class ParserService extends IntentService {
 		super("ParserService");
 	}
 
+	
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -115,9 +118,10 @@ public class ParserService extends IntentService {
 		mNotificationView.setTextViewText(R.id.notification_text,
 				getString(R.string.dictionary_download_in_progress) + " 0 %");
 
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+		mBuilder = new NotificationCompat.Builder(
 				this);
-		mBuilder.setAutoCancel(true);
+		mBuilder.setAutoCancel(false);
+		mBuilder.setOngoing(true);
 		mBuilder.setSmallIcon(R.drawable.ic_launcher);
 
 		Intent resultIntent = new Intent(getApplicationContext(),
@@ -261,7 +265,7 @@ public class ParserService extends IntentService {
 					}
 				}
 			}catch(IOException ex){
-				Log.w("ParserService", "ConnectionLost"+ex);
+				Log.w("ParserService", "ConnectionLost: "+ex);
 				closeIOStreams(input, output);
 				mCurrentlyDownloading = false;
 				return false;
@@ -409,10 +413,15 @@ public class ParserService extends IntentService {
 			
 			downloadDictionaries();
 			
+		} catch(MalformedURLException e){
+			Log.e("ParserService", "MalformedURLException wrong format of URL: " + e.toString());
+			stopSelf();
+		} catch(IOException e){
+			Log.e("ParserService", "IOException downloading interrupted: " + e.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e("ParserService", "Exception: " + e.toString());
-			stopSelf();
+			//stopSelf();
 		}
 
 		
@@ -642,11 +651,9 @@ public class ParserService extends IntentService {
 		SharedPreferences settings = getSharedPreferences(
 				DICTIONARY_PREFERENCES, 0);
 		SharedPreferences.Editor editor = settings.edit();
-		editor.putBoolean("hasValidDictionary", true);
 		Log.i("ParserService", "Dictionary path: " + dictionaryPath);
 		Log.i("ParserService", "KanjiDict path: " + kanjiDictPath);
 		editor.putString("pathToDictionary", dictionaryPath);
-		editor.putBoolean("hasValidKanjiDictionary", true);
 		editor.putString("pathToKanjiDictionary", kanjiDictPath);
 		Date date = new Date();
 		editor.putLong("dictionaryLastUpdate", date.getTime());
@@ -680,6 +687,9 @@ public class ParserService extends IntentService {
 	public void onDestroy() {
 		super.onDestroy();
 		this.unregisterReceiver(mInternetReceiver);
+		mBuilder.setAutoCancel(true);
+		mBuilder.setOngoing(false);
+		mNotification = mBuilder.build();
 		if (!mComplete) {
 			mNotificationView.setTextViewText(R.id.notification_text,
 					getString(R.string.dictionary_download_interrupted));

@@ -154,6 +154,7 @@ public class DisplayTranslation extends SherlockFragment {
 		
 		
 		TextView alternative = (TextView)getView().findViewById(R.id.translation_alternative);
+		StringBuilder alternativeStrBuilder = new StringBuilder();
         if(mTranslation.getJapaneseReb() != null){
         	String reading = mTranslation.getJapaneseReb().get(0);
         	read.setText(reading);
@@ -164,20 +165,30 @@ public class DisplayTranslation extends SherlockFragment {
         	}
         	TextView romaji = (TextView)getView().findViewById(R.id.translation_romaji);
         	romaji.setText(RomanizationEnum.Hepburn.toRomaji(reading));
-
         	
+        	int sizeReb = mTranslation.getJapaneseReb().size();
+        	if(sizeReb > 1){
+        		for(int i = 1;i < sizeReb;i++){
+        			alternativeStrBuilder.append(mTranslation.getJapaneseReb().get(i));
+        			if(i+1 < sizeReb){
+        				alternativeStrBuilder.append(", ");
+        			}
+        		}
+        	}
         }
         if(mTranslation.getJapaneseKeb() != null){
         	int size_keb = mTranslation.getJapaneseKeb().size();
         	if(size_keb > 1){
-        		StringBuilder strBuilder = new StringBuilder();
+        		if(alternativeStrBuilder.length() > 0){
+        			alternativeStrBuilder.append(", ");
+        		}
         		for(int i = 1;i < size_keb;i++){
-        			strBuilder.append(mTranslation.getJapaneseKeb().get(i));
+        			alternativeStrBuilder.append(mTranslation.getJapaneseKeb().get(i));
         			if(i+1 < size_keb){
-        				strBuilder.append(", ");
+        				alternativeStrBuilder.append(", ");
         			}
         		}
-            	alternative.setText(strBuilder);  
+            	alternative.setText(alternativeStrBuilder);  
                	((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.VISIBLE);
         	}else{
         		((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.GONE);
@@ -314,12 +325,15 @@ public class DisplayTranslation extends SherlockFragment {
 	 */
 	public void displayCharacters(){
 		if(mCharacters == null || mCharacters.size() < 1 || getView() == null){
+			Log.w("DisplayTranslation", "displayCharacters called - null");
 			return ;
 		}
         LinearLayout outerContainer = ((LinearLayout)getView().findViewById(R.id.translation_kanji_container));
         if(outerContainer == null){
+        	Log.w("DisplayTranslation", "displayCharacters called - outerContainer null");
         	return ;
         }
+        Log.i("DisplayTranslation", "displayCharacters called - display");
         outerContainer.setVisibility(View.VISIBLE);
         String writeCharacters = mTranslation.getJapaneseKeb().get(0);
         LinearLayout container = (LinearLayout)getView().findViewById(R.id.translation_kanji_meanings_container);
@@ -416,9 +430,7 @@ public class DisplayTranslation extends SherlockFragment {
 	 */
 	public void setCharacters(Map<String, JapaneseCharacter> characters) {
 		this.mCharacters = characters;
-		if(this.isVisible()){
 			this.displayCharacters();
-		}
 	}
 		
 	/**

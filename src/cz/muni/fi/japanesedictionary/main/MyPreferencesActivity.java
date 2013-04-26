@@ -20,6 +20,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.fi.japanesedictionary.parser.ParserService2;
 
 /**
  * Preference activity for JapaneseDictionary. Containst language settings and update dictionaries info.
