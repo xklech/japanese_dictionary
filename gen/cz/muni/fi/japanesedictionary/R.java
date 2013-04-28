@@ -1181,7 +1181,7 @@ About
          */
         public static final int preferences_language_setting=0x7f0a002b;
         public static final int preferences_update_dictionary=0x7f0a0034;
-        public static final int search_begining=0x7f0a0038;
+        public static final int search_beginning=0x7f0a0038;
         public static final int search_end=0x7f0a003a;
         /**  Tabs 
  Tabs 

@@ -53,7 +53,7 @@
  	
    <!-- Tabs -->
    <string name="search_exact">Přesně</string>
-   <string name="search_begining">Začátek</string>
+   <string name="search_beginning">Začátek</string>
    <string name="search_middle">Střed</string>
    <string name="search_end">Konec</string>
  	

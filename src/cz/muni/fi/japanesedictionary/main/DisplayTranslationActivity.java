@@ -14,9 +14,11 @@ import com.actionbarsherlock.view.MenuItem;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
+import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
 
 public class DisplayTranslationActivity extends SherlockFragmentActivity
-		implements DisplayTranslation.OnCreateTranslationListener{
+		implements OnCreateTranslationListener{
 
 	private GlossaryReaderContract mDatabase = null;
 	
@@ -71,17 +73,19 @@ public class DisplayTranslationActivity extends SherlockFragmentActivity
 	            // app icon in action bar clicked; go home
 	        	Log.i("DisplayTranslationActivity", "Home button pressed");
 	            Intent intent = new Intent(this, MainActivity.class);
-	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	            startActivity(intent);
 	            return true;
 	        case R.id.settings:
     			Log.i("DisplayTranslationActivity", "Lauching preference Activity");
     			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+    			intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentSetting);
     			return true;
 	        case R.id.about:
     			Log.i("DisplayTranslationActivity", "Lauching About Activity");
     			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
+    			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentAbout);
     			return true;
 	        default:

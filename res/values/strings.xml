@@ -53,7 +53,7 @@
  	
    <!-- Tabs -->
    <string name="search_exact">Exact</string>
-   <string name="search_begining">Begins</string>
+   <string name="search_beginning">Begins</string>
    <string name="search_middle">Contains</string>
    <string name="search_end">Ends</string>
    

@@ -35,6 +35,7 @@ public class AboutActivity extends SherlockActivity{
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.menu_details, menu);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		return super.onCreateOptionsMenu(menu);
@@ -51,6 +52,18 @@ public class AboutActivity extends SherlockActivity{
 	            startActivity(intent);
 	            finish();
 	            return true;
+	        case R.id.settings:
+    			Log.i("MainActivity", "Lauching preference Activity");
+    			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+    			intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    			startActivity(intentSetting);
+    			return true;
+	        case R.id.about:
+    			Log.i("MainActivity", "Lauching About Activity");
+    			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
+    			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    			startActivity(intentAbout);
+    			return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

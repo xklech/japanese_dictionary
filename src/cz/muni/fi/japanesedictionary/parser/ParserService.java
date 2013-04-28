@@ -33,6 +33,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -53,9 +59,6 @@ public class ParserService extends IntentService {
 	public static final String DICTIONARY_PATH = "http://ftp.monash.edu.au/pub/nihongo/JMdict.gz";
 	public static final String KANJIDICT_PATH = "http://www.csse.monash.edu.au/~jwb/kanjidic2/kanjidic2.xml.gz";
 	public static final String DICTIONARY_PREFERENCES = "cz.muni.fi.japanesedictionary";
-
-
-	private boolean mConnected = true;
 	
 	private URL mDownloadJMDictFrom = null;
 	private File mDownloadJMDictTo = null;
@@ -66,6 +69,7 @@ public class ParserService extends IntentService {
 	
 	private boolean mDownloadInProgress = false;
 	private boolean mCurrentlyDownloading = false;
+	private boolean mParsing = false;
 
 	private NotificationCompat.Builder mBuilder;
 	private NotificationManager mNotifyManager = null;
@@ -73,92 +77,121 @@ public class ParserService extends IntentService {
 	private RemoteViews mNotificationView = null;
 	private boolean mComplete = false;
 
+
+    private volatile Looper mServiceLooper;
+    private volatile ServiceHandler mServiceHandler;
+    private String mName;
+    private boolean mRedelivery;
+    private int mStartId;
+
+    private class ServiceHandler extends Handler {
+        public ServiceHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+        	mStartId = msg.arg1;
+            onHandleIntent((Intent)msg.obj);
+        }
+    }
+
+
+    private class ServiceDownloadHandler extends ServiceHandler {
+        public ServiceDownloadHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+			try {
+				downloadDictionaries();
+			} catch (IOException e) {
+				Log.w("ParserService","IOException caught while downloading: "+e.toString());
+				stopSelf(mStartId);
+			}
+        }
+    }
+    /**
+     * Sets intent redelivery preferences.  Usually called from the constructor
+     * with your preferred semantics.
+     *
+     * <p>If enabled is true,
+     * {@link #onStartCommand(Intent, int, int)} will return
+     * {@link Service#START_REDELIVER_INTENT}, so if this process dies before
+     * {@link #onHandleIntent(Intent)} returns, the process will be restarted
+     * and the intent redelivered.  If multiple Intents have been sent, only
+     * the most recent one is guaranteed to be redelivered.
+     *
+     * <p>If enabled is false (the default),
+     * {@link #onStartCommand(Intent, int, int)} will return
+     * {@link Service#START_NOT_STICKY}, and if the process dies, the Intent
+     * dies along with it.
+     */
+    public void setIntentRedelivery(boolean enabled) {
+        mRedelivery = enabled;
+    }
+    
 	private BroadcastReceiver mInternetReceiver = new BroadcastReceiver() {
 
 		@Override
-		public void onReceive(Context arg0, Intent intent) {
-	        boolean noConnectivity = intent.getBooleanExtra(
-	                ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);;
-			if (noConnectivity) {
-				mConnected = false;
+		public void onReceive(Context context, Intent intent) {
+	        ConnectivityManager conn =  (ConnectivityManager)
+	                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	            NetworkInfo networkInfo = conn.getActiveNetworkInfo();
+			if (networkInfo == null) {
 				Log.i("ParserService","Connection lost");
 			}else{
-				mConnected = true;
-				if(mDownloadInProgress){
-					try {
-						downloadDictionaries();
-					} catch (IOException e) {
-						Log.w("ParserService","IOException caught while downloading: "+e.toString());
-
-					}
+				Log.i("ParserService","Connection Established");
+				if(mDownloadInProgress && !mCurrentlyDownloading){
+			        Message msg = mServiceHandler.obtainMessage();
+			        mServiceHandler = new ServiceDownloadHandler(mServiceLooper);
+			        mServiceHandler.sendMessage(msg);
 				}
-				Log.i("ParserService","Connection established");
 			}
 		}
 	};
 
 	public ParserService() {
 		super("ParserService");
-	}
-
+	}	
+	
 	
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Log.i("ParserService", "Creating parser service");
-		mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-		mNotificationView = new RemoteViews(this.getPackageName(),
-				R.layout.notification);
-		mNotificationView.setImageViewResource(R.id.notification_image,
-				R.drawable.ic_launcher);
-		mNotificationView.setTextViewText(R.id.notification_title,
-				getString(R.string.dictionary_download_title));
-		mNotificationView.setTextViewText(R.id.notification_text,
-				getString(R.string.dictionary_download_in_progress) + " 0 %");
-
-		mBuilder = new NotificationCompat.Builder(
-				this);
-		mBuilder.setAutoCancel(false);
-		mBuilder.setOngoing(true);
-		mBuilder.setSmallIcon(R.drawable.ic_launcher);
-
-		Intent resultIntent = new Intent(getApplicationContext(),
-				MainActivity.class);
-		resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		PendingIntent resultPendingIntent = PendingIntent.getActivity(
-				getApplicationContext(), 0, resultIntent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
-
-		mNotification = mBuilder.build();
-		mNotification.icon = R.drawable.ic_launcher;
-		mNotification.contentView = mNotificationView;
 		
-		startForeground(0,mNotification);
-		
-		this.registerReceiver(mInternetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
-		
-		SharedPreferences sharedPrefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		boolean english = sharedPrefs.getBoolean("language_english", false);
-		boolean french = sharedPrefs.getBoolean("language_french", false);
-		boolean dutch = sharedPrefs.getBoolean("language_dutch", false);
-		boolean german = sharedPrefs.getBoolean("language_german", false);
-		if (!english && !french && !dutch && !german) {
-			Log.i("ParserService",
-					"Setting english as only translation language");
-			SharedPreferences.Editor editor_lang = sharedPrefs.edit();
-			editor_lang.putBoolean("language_english", true);
-			editor_lang.commit();
-		}
+        HandlerThread thread = new HandlerThread("IntentService[" + mName + "]");
+        thread.start();
+        
+        mServiceLooper = thread.getLooper();
+        mServiceHandler = new ServiceHandler(mServiceLooper);
+		setIntentRedelivery(true);
 
 		
 	}
 
-	
+    @Override
+    public void onStart(Intent intent, int startId) {
+        Message msg = mServiceHandler.obtainMessage();
+        msg.arg1 = startId;
+        msg.obj = intent;
+        mServiceHandler.sendMessage(msg);
+    }
+    
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        onStart(intent, startId);
+        return mRedelivery ? START_REDELIVER_INTENT : START_NOT_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+    
+    
 	/**
 	 * Doenloads file from given URL. Creates new file or append old one.
 	 * 
@@ -227,53 +260,43 @@ public class ParserService extends IntentService {
 
 		int count = 0;
 		int perc = 0;
-		long lastUpdate = (new Date()).getTime();
-		while (true) {
-			if (!mConnected) {
-				closeIOStreams(input, output);
-				mCurrentlyDownloading = false;
-				return false;
-			}
-			try{
-				count = input.read(data);
-				if(count == -1){
-					output.flush();
-					closeIOStreams(input, output);
-					mCurrentlyDownloading = false;
-					return true;
-				}
-				total += count;
-
-				output.write(data, 0, count);
-				// publishing the progress....
-				if (fileLength != -1) {
-					
-					long current = (new Date()).getTime();
-					int persPub = Math.round((((float) total / fileLength) * 100));
-					if (lastUpdate + 500 < current && perc < persPub) {
-						lastUpdate = current;
-						System.out.println(lastUpdate);
+		long lastUpdate = System.currentTimeMillis();
+		try{
+			while ((count = input.read(data)) != -1) {
+					total += count;
+	
+					output.write(data, 0, count);
+					// publishing the progress....
+					if (fileLength != -1) {
 						
-						mNotificationView.setProgressBar(
-								R.id.ntification_progressBar, 100, persPub, false);
-						mNotificationView.setTextViewText(R.id.notification_text,
-								getString(R.string.dictionary_download_in_progress)
-										+ " " + persPub + " %");
-						mNotification.contentView = mNotificationView;
-						mNotifyManager.notify(0, mNotification);
-						perc = persPub;
+						long current = System.currentTimeMillis();
+						if (lastUpdate + 500 < current) {
+							int persPub = Math.round((((float) total / fileLength) * 100));
+							if(perc < persPub){
+								lastUpdate = current;
+								System.out.println(lastUpdate);
+								
+								mNotificationView.setProgressBar(
+										R.id.ntification_progressBar, 100, persPub, false);
+								mNotificationView.setTextViewText(R.id.notification_text,
+										getString(R.string.dictionary_download_in_progress));
+								mNotification.contentView = mNotificationView;
+								mNotifyManager.notify(0, mNotification);
+								perc = persPub;
+							}
+						}
 					}
-				}
-			}catch(IOException ex){
-				Log.w("ParserService", "ConnectionLost: "+ex);
-				closeIOStreams(input, output);
-				mCurrentlyDownloading = false;
-				return false;
 			}
-			
-
+		}catch(IOException ex){
+			Log.w("ParserService", "ConnectionLost: "+ex);
+			closeIOStreams(input, output);
+			mCurrentlyDownloading = false;
+			return false;
 		}
-
+		mCurrentlyDownloading = false;
+		closeIOStreams(input, output);
+		return true;
+		
 	}
 
 	/**
@@ -282,10 +305,9 @@ public class ParserService extends IntentService {
 	 * @throws IOException
 	 */
 	private void downloadDictionaries() throws IOException{
-		if(!mDownloadInProgress || mCurrentlyDownloading){
-			return;
-		}
 		if(mDownloadingJMDict){
+			mNotificationView.setViewVisibility(R.id.ntification_progressBar,
+					View.VISIBLE);
 			if(downloadFile(mDownloadJMDictFrom,mDownloadJMDictTo)){
 				mDownloadingJMDict = false;
 				mDownloadingKanjidic = true;
@@ -317,15 +339,16 @@ public class ParserService extends IntentService {
 				return;
 			}
 		}
-		if(!mDownloadInProgress){
+		if(!mDownloadInProgress && !mParsing){
 			try {
+				mParsing = true;
 				parseDictionaries();
 			} catch (ParserConfigurationException e) {
 				Log.e("ParserService","ParserConfigurationException exception occured: "+e.toString());
-				stopSelf();
+				stopSelf(mStartId);
 			} catch (SAXException e) {
 				Log.e("ParserService","SAXException exception occured: "+e.toString());
-				stopSelf();
+				stopSelf(mStartId);
 			}
 		}
 	}
@@ -338,6 +361,9 @@ public class ParserService extends IntentService {
 	 * @throws SAXException
 	 */
 	private void parseDictionaries() throws IOException, ParserConfigurationException, SAXException{
+		this.unregisterReceiver(mInternetReceiver);
+		mInternetReceiver = null;
+		
 		String japDictAbsolutePath = parseDictionary(mDownloadJMDictTo.getPath());
 		String japKanjiDictAbsolutePath = parseKanjiDict(mDownloadKanjidicTo.getPath());
 		
@@ -353,8 +379,61 @@ public class ParserService extends IntentService {
 	 * Downloads dictionaries.
 	 */
 	@Override
-	protected void onHandleIntent(Intent arg0) {
+	protected void onHandleIntent(Intent arg0) {		
+		
+		Log.i("ParserService", "Creating parser service");
+		mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+		mNotificationView = new RemoteViews(this.getPackageName(),
+				R.layout.notification);
+		mNotificationView.setImageViewResource(R.id.notification_image,
+				R.drawable.ic_launcher);
+		mNotificationView.setTextViewText(R.id.notification_title,
+				getString(R.string.dictionary_download_title));
+		mNotificationView.setTextViewText(R.id.notification_text,
+				getString(R.string.dictionary_download_in_progress));
+
+		mBuilder = new NotificationCompat.Builder(
+				this);
+		mBuilder.setAutoCancel(false);
+		mBuilder.setOngoing(true);
+		mBuilder.setSmallIcon(R.drawable.ic_launcher);
+
+		Intent resultIntent = new Intent(getApplicationContext(),
+				MainActivity.class);
+		resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		PendingIntent resultPendingIntent = PendingIntent.getActivity(
+				getApplicationContext(), 0, resultIntent,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		mBuilder.setContentIntent(resultPendingIntent);
+
+		mNotification = mBuilder.build();
+		mNotification.icon = R.drawable.ic_launcher;
+		mNotification.contentView = mNotificationView;
+		
+		startForeground(0,mNotification);
+		mNotifyManager.notify(0, mNotification);
+		
+		this.registerReceiver(mInternetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+		
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		boolean english = sharedPrefs.getBoolean("language_english", false);
+		boolean french = sharedPrefs.getBoolean("language_french", false);
+		boolean dutch = sharedPrefs.getBoolean("language_dutch", false);
+		boolean german = sharedPrefs.getBoolean("language_german", false);
+		if (!english && !french && !dutch && !german) {
+			Log.i("ParserService",
+					"Setting english as only translation language");
+			SharedPreferences.Editor editor_lang = sharedPrefs.edit();
+			editor_lang.putBoolean("language_english", true);
+			editor_lang.commit();
+		}
+		
+		
+		
+		
 		String dictionaryPath = null;
 		String kanjiDictPath = null;
 
@@ -415,13 +494,14 @@ public class ParserService extends IntentService {
 			
 		} catch(MalformedURLException e){
 			Log.e("ParserService", "MalformedURLException wrong format of URL: " + e.toString());
-			stopSelf();
+			stopSelf(mStartId);
 		} catch(IOException e){
 			Log.e("ParserService", "IOException downloading interrupted: " + e.toString());
+			stopSelf(mStartId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e("ParserService", "Exception: " + e.toString());
-			//stopSelf();
+			stopSelf(mStartId);
 		}
 
 		
@@ -494,15 +574,6 @@ public class ParserService extends IntentService {
 			mNotificationView.setProgressBar(R.id.ntification_progressBar, 0,
 					0, true);
 			mNotification.contentView = mNotificationView;
-
-			Intent intent = new Intent(getApplicationContext(),
-					MainActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra(DICTIONARY_PREFERENCES, true);
-			PendingIntent resultPendingIntent = PendingIntent.getActivity(
-					getApplicationContext(), 0, intent,
-					PendingIntent.FLAG_CANCEL_CURRENT);
-			mNotification.contentIntent = resultPendingIntent;
 			mNotifyManager.notify(0, mNotification);
 
 			mComplete = true;
@@ -522,11 +593,11 @@ public class ParserService extends IntentService {
 
 		} catch (SAXException ex) {
 			Log.e("ParserService", "SaxDataHolder: " + ex.getMessage());
-			stopSelf();
+			stopSelf(mStartId);
 		} catch (Exception ex) {
 			Log.e("ParserService",
 					"SaxDataHolder - Unknown exception: " + ex.toString());
-			stopSelf();
+			stopSelf(mStartId);
 		}
 		return null;
 
@@ -598,15 +669,6 @@ public class ParserService extends IntentService {
 			mNotificationView.setViewVisibility(R.id.ntification_progressBar,
 					View.GONE);
 			mNotification.contentView = mNotificationView;
-
-			Intent intent = new Intent(getApplicationContext(),
-					MainActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra(DICTIONARY_PREFERENCES, true);
-			PendingIntent resultPendingIntent = PendingIntent.getActivity(
-					getApplicationContext(), 0, intent,
-					PendingIntent.FLAG_CANCEL_CURRENT);
-			mNotification.contentIntent = resultPendingIntent;
 			mNotifyManager.notify(0, mNotification);
 
 			mComplete = true;
@@ -626,12 +688,12 @@ public class ParserService extends IntentService {
 
 		} catch (SAXException ex) {
 			Log.e("ParserService", "SaxDataHolderKanjiDict: " + ex.getMessage());
-			stopSelf();
+			stopSelf(mStartId);
 		} catch (Exception ex) {
 			Log.e("ParserService",
 					"SaxDataHolderKanjiDict - Unknown exception: "
 							+ ex.toString());
-			stopSelf();
+			stopSelf(mStartId);
 		}
 		return null;
 
@@ -676,7 +738,7 @@ public class ParserService extends IntentService {
 		Log.i("ParserService", "Parsing dictionary - preferences saved");
 		Intent intent = new Intent("downloadingDictinaryServiceDone");
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-		stopSelf();
+		stopSelf(mStartId);
 	}
 
 	/**
@@ -686,10 +748,17 @@ public class ParserService extends IntentService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		this.unregisterReceiver(mInternetReceiver);
+		
+		stopForeground(true);
+		if(mInternetReceiver!= null){
+			this.unregisterReceiver(mInternetReceiver);
+		}
+		Log.w("ParserService", "restarting notificatiomn, setting ongoing false");
 		mBuilder.setAutoCancel(true);
 		mBuilder.setOngoing(false);
-		mNotification = mBuilder.build();
+		mBuilder.setContent(mNotificationView);
+		mNotification = mBuilder.build();	
+		mNotifyManager.notify(0, mNotification);
 		if (!mComplete) {
 			mNotificationView.setTextViewText(R.id.notification_text,
 					getString(R.string.dictionary_download_interrupted));
@@ -699,6 +768,8 @@ public class ParserService extends IntentService {
 			LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 			Log.w("ParserService", "Service ending none complete");
 		}
+		mServiceLooper.quit();
+		
 	}
 
 	/**

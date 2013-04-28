@@ -1,5 +1,6 @@
 package cz.muni.fi.japanesedictionary.main;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 
 import android.content.Context;
@@ -20,7 +21,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
-import cz.muni.fi.japanesedictionary.parser.ParserService2;
 
 /**
  * Preference activity for JapaneseDictionary. Containst language settings and update dictionaries info.
@@ -68,12 +68,12 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 				
 			});
 			
-			SharedPreferences pref = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES,0);
-			boolean has_dictionary = pref.getBoolean("hasValidDictionary", false);
-			if(!has_dictionary){
+	        SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
+			String dictionaryPath = settings.getString("pathToDictionary", null);
+			if(dictionaryPath == null || !(new File(dictionaryPath)).exists()){
 				preferenceScreen.setSummary(R.string.preferences_dictionary_info);
 			}else{
-				Long timestamp = pref.getLong("dictionaryLastUpdate", 0);
+				Long timestamp = settings.getLong("dictionaryLastUpdate", 0);
 				if(timestamp<=0){
 					preferenceScreen.setSummary(R.string.unknown_last_update);
 				}else{
@@ -89,6 +89,7 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.menu_details, menu);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		return super.onCreateOptionsMenu(menu);
@@ -105,6 +106,18 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 	            startActivity(intent);
 	            finish();
 	            return true;
+	        case R.id.settings:
+    			Log.i("MainActivity", "Lauching preference Activity");
+    			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+    			intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    			startActivity(intentSetting);
+    			return true;
+	        case R.id.about:
+    			Log.i("MainActivity", "Lauching About Activity");
+    			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
+    			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+    			startActivity(intentAbout);
+    			return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

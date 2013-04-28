@@ -464,7 +464,7 @@ int string preferences_german_do 0x7f0a0032
 int string preferences_german_dont 0x7f0a0033
 int string preferences_language_setting 0x7f0a002b
 int string preferences_update_dictionary 0x7f0a0034
-int string search_begining 0x7f0a0038
+int string search_beginning 0x7f0a0038
 int string search_end 0x7f0a003a
 int string search_exact 0x7f0a0037
 int string search_middle 0x7f0a0039

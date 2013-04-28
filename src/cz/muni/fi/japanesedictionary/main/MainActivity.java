@@ -39,6 +39,12 @@ import cz.muni.fi.japanesedictionary.engine.MainPagerAdapter;
 import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
+import cz.muni.fi.japanesedictionary.fragments.DisplayCharacterInfo;
+import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
+import cz.muni.fi.japanesedictionary.fragments.MyFragmentAlertDialog;
+import cz.muni.fi.japanesedictionary.fragments.ResultFragmentList;
+import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
+import cz.muni.fi.japanesedictionary.interfaces.OnTranslationSelectedListener;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
 
@@ -48,8 +54,8 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
  *
  */
 public class MainActivity extends SherlockFragmentActivity
-	implements ResultFragmentList.OnTranslationSelectedListener,
-				DisplayTranslation.OnCreateTranslationListener,
+	implements OnTranslationSelectedListener,
+				OnCreateTranslationListener,
 				OnQueryTextListener, 
 				TabListener
 				{
@@ -74,7 +80,7 @@ public class MainActivity extends SherlockFragmentActivity
 	private String mLastTabId;
 	private String mCurFilter;
 	
-	public static String[] mTabKeys = {"exact","begining","middle","end"};
+	public static String[] mTabKeys = {"exact","beginning","middle","end"};
 	
 	
 	private ViewPager mPager;
@@ -191,6 +197,7 @@ public class MainActivity extends SherlockFragmentActivity
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Place an action bar item for searching.
         MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.expandActionView();
         mSearchView = (SearchView) searchItem.getActionView();
         mSearchView.setOnQueryTextListener(this);
         //mSearchView.setIconifiedByDefault(false);
@@ -242,17 +249,19 @@ public class MainActivity extends SherlockFragmentActivity
 	            // app icon in action bar clicked; go home
 	        	Log.i("MainActivity", "Home button pressed");
 	            Intent intent = new Intent(this, MainActivity.class);
-	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	            startActivity(intent);
 	            return true;
 	        case R.id.settings:
     			Log.i("MainActivity", "Lauching preference Activity");
     			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+    			intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentSetting);
     			return true;
 	        case R.id.about:
     			Log.i("MainActivity", "Lauching About Activity");
     			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
+    			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentAbout);
     			return true;
 	        default:
@@ -528,7 +537,7 @@ public class MainActivity extends SherlockFragmentActivity
 		boolean[] selectedTab = {false, false, false, false};
 		if("exact".equals(selectedPart)){
 			selectedTab[0] = true;
-		}else if("begining".equals(selectedPart)){
+		}else if("beginning".equals(selectedPart)){
 			selectedTab[1] = true;
 		}else if("middle".equals(selectedPart)){
 			selectedTab[2] = true;
@@ -544,7 +553,7 @@ public class MainActivity extends SherlockFragmentActivity
 		getSupportActionBar().addTab(tabExact,selectedTab[0]);
 		
 		Tab tabBegin = getSupportActionBar().newTab();
-		tabBegin.setText(R.string.search_begining);
+		tabBegin.setText(R.string.search_beginning);
 		tabBegin.setTabListener(this);
 		getSupportActionBar().addTab(tabBegin,selectedTab[1]);
 		

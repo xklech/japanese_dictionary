@@ -345,6 +345,7 @@ public class ActionBarImpl extends ActionBar {
         mSavedTabPosition = INVALID_POSITION;
     }
 
+    
     public void setTitle(CharSequence title) {
         mActionView.setTitle(title);
     }

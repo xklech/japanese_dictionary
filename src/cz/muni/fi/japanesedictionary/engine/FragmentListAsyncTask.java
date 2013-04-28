@@ -10,6 +10,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.IndexSearcher;
@@ -26,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.Translation;
+import cz.muni.fi.japanesedictionary.interfaces.SearchListener;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 
@@ -93,18 +95,25 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
         Analyzer  analyzer = new CJKAnalyzer(Version.LUCENE_36);
         IndexSearcher searcher = null;
     	try{
-    		QueryParser query = new QueryParser(Version.LUCENE_36, "japanese", analyzer);
-    		query.setPhraseSlop(0);
     		String search;    		
-    		
+    		boolean onlyReb = false;
     		if(Pattern.matches("\\p{Latin}*", expression)){
     			//only romaji
+    			onlyReb = true;
     			Log.i("FragmentListAsyncTask","Only letters, converting to hiragana. ");
     			expression = RomanizationEnum.Hepburn.toHiragana(expression);
     		}
+    		QueryParser query;
+    		if(onlyReb){
+    			query = new QueryParser(Version.LUCENE_36, "index_japanese_reb", analyzer);
+    		}else{
+        		query = new MultiFieldQueryParser(Version.LUCENE_36, new String[]{"index_japanese_keb","index_japanese_reb"}, analyzer);
+    		}
+    		query.setPhraseSlop(0);
+    		
     		if("end".equals(part)){
     			search = "\""+expression + " lucenematch\"";
-    		}else if("begining".equals(part)){
+    		}else if("beginning".equals(part)){
     			search = "\"lucenematch " + expression+"\"";	
     		}else if("middle".equals(part)){
     			search = expression;
@@ -178,7 +187,7 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
 			    	    		translations.add(translation);
 		    	    		}else{
 		    	    			translations.clear();
-			    	    		throw new IOException("Max exceeded");
+			    	    		throw new IOException("Loader canceled");
 		    	    		}
 		    	    	}else{
 		    	    		throw new IOException("Max exceeded");

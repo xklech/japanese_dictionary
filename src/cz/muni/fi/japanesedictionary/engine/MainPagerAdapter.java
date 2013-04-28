@@ -3,8 +3,8 @@ package cz.muni.fi.japanesedictionary.engine;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import cz.muni.fi.japanesedictionary.fragments.ResultFragmentList;
 import cz.muni.fi.japanesedictionary.main.MainActivity;
-import cz.muni.fi.japanesedictionary.main.ResultFragmentList;
 
 public class MainPagerAdapter extends FragmentPagerAdapter{
 	

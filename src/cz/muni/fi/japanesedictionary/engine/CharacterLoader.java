@@ -25,7 +25,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
-import cz.muni.fi.japanesedictionary.main.DisplayTranslation;
+import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
 /**

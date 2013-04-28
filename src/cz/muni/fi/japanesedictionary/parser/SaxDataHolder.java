@@ -168,13 +168,16 @@ public class SaxDataHolder extends DefaultHandler{
 	@Override
 	public void characters(char ch[], int start, int length) throws SAXException {
 		if(mJapaneseKeb || mJapaneseReb){
-			mDocument.add(new Field("japanese","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
+
 			//System.out.println(new String(ch,start,length));
 			if(mJapaneseKeb){
+				mDocument.add(new Field("index_japanese_keb","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
 				mJapaneseKebJSON.put(new String(ch,start,length));	
 				mJapaneseKeb = false;
+				
 			}
 			if(mJapaneseReb){
+				mDocument.add(new Field("index_japanese_reb","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
 				mJapaneseRebJSON.put(new String(ch,start,length));		
 				mJapaneseReb = false;
 			}
