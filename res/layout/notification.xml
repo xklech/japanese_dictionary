@@ -22,7 +22,7 @@
         android:layout_alignTop="@+id/notification_image"
         style="@style/NotificationTitle"
         android:singleLine="true"
-        android:textIsSelectable="true"
+        android:textIsSelectable="false"
     />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_below="@+id/notification_title"
         style="@style/NotificationText"
         android:singleLine="true"
-        android:textIsSelectable="true"
+        android:textIsSelectable="false"
     />
     <ProgressBar  
             style="?android:attr/progressBarStyleHorizontal" 

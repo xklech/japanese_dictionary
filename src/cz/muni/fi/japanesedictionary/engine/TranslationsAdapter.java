@@ -96,7 +96,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     @Override 
     public View getView(int position, View convertView, ViewGroup parent) {
     	TranslationsViewHolder holder;
-        if (convertView == null) {
+        if (convertView == null || convertView.getTag() == null) {
         	convertView = mInflater.inflate(R.layout.list_item, parent,false);    
             holder = new TranslationsViewHolder();
             holder.japanese = (TextView)convertView.findViewById(R.id.japanese);
@@ -125,30 +125,23 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
 	        TextAppearanceSpan apearence = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium); 
 	        sb.setSpan(apearence, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 	        sb.setSpan(color, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-	        holder.japanese.setText(sb);
+	        	holder.japanese.setText(sb);
         }else{
-        	holder.japanese.setText(strBuilder);
+        		holder.japanese.setText(strBuilder);
         }
         
-        if(mEnglish){
-            if(item.getEnglishSense() != null){
-            	holder.translation.setText(item.getEnglishSense().get(0).get(0));
-            } 
-        }else if(mGerman){
-            if(item.getGermanSense() != null){
-            	holder.translation.setText(item.getGermanSense().get(0).get(0));
-            }       	
-        }else if(mFrench){
-            if(item.getFrenchSense() != null){
-            	holder.translation.setText(item.getFrenchSense().get(0).get(0));
-            }       	
-        }else if(mDutch){
-            if(item.getDutchSense() != null){
-            	holder.translation.setText(item.getDutchSense().get(0).get(0));
-            }       	
+        if(mEnglish && item.getEnglishSense() != null && item.getEnglishSense().size() > 0 ){
+            holder.translation.setText(item.getEnglishSense().get(0).get(0));
+        }else if(mGerman && item.getGermanSense() != null && item.getGermanSense().size() > 0 ){
+            holder.translation.setText(item.getGermanSense().get(0).get(0));   	
+        }else if(mFrench && item.getFrenchSense() != null && item.getFrenchSense().size() > 0){
+            holder.translation.setText(item.getFrenchSense().get(0).get(0));      	
+        }else if(mDutch && item.getDutchSense() != null && item.getDutchSense().size() > 0){
+            holder.translation.setText(item.getDutchSense().get(0).get(0));    	
         }else{
-            if(item.getEnglishSense() != null){
+            if(item.getEnglishSense() != null && item.getEnglishSense().size() > 0){
             	holder.translation.setText(item.getEnglishSense().get(0).get(0));
+            	
             }        	
         }
 
