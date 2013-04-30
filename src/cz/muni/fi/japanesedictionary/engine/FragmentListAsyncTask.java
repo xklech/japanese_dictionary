@@ -103,25 +103,28 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
     			Log.i("FragmentListAsyncTask","Only letters, converting to hiragana. ");
     			expression = RomanizationEnum.Hepburn.toHiragana(expression);
     		}
-    		QueryParser query;
-    		if(onlyReb){
-    			query = new QueryParser(Version.LUCENE_36, "index_japanese_reb", analyzer);
-    		}else{
-        		query = new MultiFieldQueryParser(Version.LUCENE_36, new String[]{"index_japanese_keb","index_japanese_reb"}, analyzer);
-    		}
-    		query.setPhraseSlop(0);
+
     		
     		if("end".equals(part)){
     			search = "\""+expression + " lucenematch\"";
     		}else if("beginning".equals(part)){
     			search = "\"lucenematch " + expression+"\"";	
     		}else if("middle".equals(part)){
-    			search = expression;
+    			search = "\""+expression+"\"";
     		}else {
     			search = "\"lucenematch "+expression + " lucenematch\"";
     		}
     		Log.i("FragmentListAsyncTask"," Searching for: "+search);
-    		Query q = query.parse(search); 
+    		
+    		
+    		Query q;
+    		if(onlyReb){
+    			Log.e("FragmentListAsyncTask","jednoduchej dotaz");
+    			q = (new QueryParser(Version.LUCENE_36, "index_japanese_reb", analyzer)).parse(search);
+    		}else{
+        		q= MultiFieldQueryParser.parse(Version.LUCENE_36, new String[] {search,search},   new String[] {"index_japanese_keb","index_japanese_reb"},analyzer);
+    		}
+
     		
  	    	Directory dir = FSDirectory.open(file);
 	    	IndexReader reader = IndexReader.open(dir);

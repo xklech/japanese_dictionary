@@ -10,5 +10,6 @@
 	    android:title="@string/about_title"
 	    android:showAsAction="never"
 	    android:id="@+id/about"
+	    android:icon="@android:drawable/ic_menu_info_details"
 	    />
 </menu>

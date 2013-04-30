@@ -401,7 +401,7 @@ public class ParserService extends IntentService {
 
 		Intent resultIntent = new Intent(getApplicationContext(),
 				MainActivity.class);
-		resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		resultIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(
 				getApplicationContext(), 0, resultIntent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
@@ -593,10 +593,15 @@ public class ParserService extends IntentService {
 
 		} catch (SAXException ex) {
 			Log.e("ParserService", "SaxDataHolder: " + ex.getMessage());
+			if(file != null){
+				file.delete();
+			}
 			stopSelf(mStartId);
 		} catch (Exception ex) {
-			Log.e("ParserService",
-					"SaxDataHolder - Unknown exception: " + ex.toString());
+			Log.e("ParserService", "SaxDataHolder - Unknown exception: " + ex.toString());
+			if(file != null){
+				file.delete();
+			}
 			stopSelf(mStartId);
 		}
 		return null;
@@ -688,11 +693,15 @@ public class ParserService extends IntentService {
 
 		} catch (SAXException ex) {
 			Log.e("ParserService", "SaxDataHolderKanjiDict: " + ex.getMessage());
+			if(file != null){
+				file.delete();
+			}
 			stopSelf(mStartId);
 		} catch (Exception ex) {
-			Log.e("ParserService",
-					"SaxDataHolderKanjiDict - Unknown exception: "
-							+ ex.toString());
+			Log.e("ParserService", "SaxDataHolderKanjiDict - Unknown exception: " + ex.toString());
+			if(file != null){
+				file.delete();
+			}
 			stopSelf(mStartId);
 		}
 		return null;
@@ -756,8 +765,8 @@ public class ParserService extends IntentService {
 		Log.w("ParserService", "restarting notificatiomn, setting ongoing false");
 		mBuilder.setAutoCancel(true);
 		mBuilder.setOngoing(false);
-		mBuilder.setContent(mNotificationView);
 		mNotification = mBuilder.build();	
+		mNotification.contentView = mNotificationView;
 		mNotifyManager.notify(0, mNotification);
 		if (!mComplete) {
 			mNotificationView.setTextViewText(R.id.notification_text,

@@ -79,9 +79,8 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	
 	@Override
 	public void onStart() {
-		if(updateLanguages()){
-			updateCharacter();
-		}
+		updateLanguages();
+		updateCharacter();
 		super.onStart();
 	}
 	

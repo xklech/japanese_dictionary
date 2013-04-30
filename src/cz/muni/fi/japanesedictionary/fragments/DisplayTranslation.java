@@ -181,12 +181,16 @@ public class DisplayTranslation extends SherlockFragment {
         				alternativeStrBuilder.append(", ");
         			}
         		}
-            	alternative.setText(alternativeStrBuilder);  
-               	((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.VISIBLE);
-        	}else{
-        		((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.GONE);
         	}
         }
+        if(alternativeStrBuilder.length() > 0){
+        	alternative.setText(alternativeStrBuilder);  
+	       	((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.VISIBLE);
+		}else{
+			((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.GONE);
+		}
+        
+        
         String writeCharacters = null;
         if(mTranslation.getJapaneseKeb() != null && mTranslation.getJapaneseKeb().size() > 0){
         	writeCharacters = mTranslation.getJapaneseKeb().get(0);

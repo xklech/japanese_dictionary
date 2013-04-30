@@ -4,7 +4,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +34,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
 	 *
 	 */
 	static class TranslationsViewHolder {
-	    TextView read;
-	    TextView write;
+	    TextView japanese;
 	    TextView translation;
 	}
 	
@@ -41,6 +45,8 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     boolean mDutch;
     boolean mGerman;
     LayoutInflater mInflater;
+
+
     
     /**
      * Constructor for TranslationsAdapter. Sets languages.
@@ -93,8 +99,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         if (convertView == null) {
         	convertView = mInflater.inflate(R.layout.list_item, parent,false);    
             holder = new TranslationsViewHolder();
-            holder.read = (TextView)convertView.findViewById(R.id.jap_read);
-            holder.write = (TextView)convertView.findViewById(R.id.jap_write);
+            holder.japanese = (TextView)convertView.findViewById(R.id.japanese);
             holder.translation = (TextView)convertView.findViewById(R.id.translation);
             
             convertView.setTag(holder);
@@ -102,15 +107,29 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         	holder = (TranslationsViewHolder) convertView.getTag();
         }
         Translation item = getItem(position);
-        if(item.getJapaneseReb() != null && item.getJapaneseReb().size() > 0){
-        	holder.read.setText(item.getJapaneseReb().get(0));
-        }
+        StringBuilder strBuilder = new StringBuilder();
+        boolean write = false;
+        int writeLength = 0;
         if(item.getJapaneseKeb() != null && item.getJapaneseKeb().size() > 0){
-        	holder.write.setText(item.getJapaneseKeb().get(0));
-        	holder.write.setVisibility(View.VISIBLE);
-        }else{
-        	holder.write.setVisibility(View.GONE);
+        	strBuilder.append(item.getJapaneseKeb().get(0)+"  ");
+        	writeLength = item.getJapaneseKeb().get(0).length();
+        	write = true;
         }
+        if(item.getJapaneseReb() != null && item.getJapaneseReb().size() > 0){
+        	strBuilder.append(item.getJapaneseReb().get(0));   	
+        }
+        
+        if(write){
+	        SpannableStringBuilder sb = new SpannableStringBuilder(strBuilder);
+	        ForegroundColorSpan color = new ForegroundColorSpan(Color.WHITE); 
+	        TextAppearanceSpan apearence = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium); 
+	        sb.setSpan(apearence, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+	        sb.setSpan(color, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+	        holder.japanese.setText(sb);
+        }else{
+        	holder.japanese.setText(strBuilder);
+        }
+        
         if(mEnglish){
             if(item.getEnglishSense() != null){
             	holder.translation.setText(item.getEnglishSense().get(0).get(0));
