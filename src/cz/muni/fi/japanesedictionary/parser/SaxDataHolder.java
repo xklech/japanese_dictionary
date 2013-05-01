@@ -83,6 +83,7 @@ public class SaxDataHolder extends DefaultHandler{
 	private int mPerc = 0;
 	private int mPercSave = 0;
 	
+	
 	public static final int ENTRIES_COUNT = 170000;
 	
 	/**
@@ -111,6 +112,7 @@ public class SaxDataHolder extends DefaultHandler{
 		mWriter = new IndexWriter(dir, config);
 		
 		mStartTime = System.currentTimeMillis();
+		
 		
 		mNotificationTimeLeft = mContext.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
 		if(mNotificationTimeLeft.length != 2 ){
@@ -169,41 +171,29 @@ public class SaxDataHolder extends DefaultHandler{
 	public void characters(char ch[], int start, int length) throws SAXException {
 		if(mJapaneseKeb || mJapaneseReb){
 			String japString = new String(ch,start,length);
-			StringBuilder searchBuilder = new StringBuilder();
-	        for(int i = 0;i< japString.length() ; i++){
-	        	String character = String.valueOf(japString.charAt(i));
-        		if(i > 0){ //searchBuilder.length() > 0
-	        		searchBuilder.append(' '); // in lucene space serve as OR
-        		}
-	        	searchBuilder.append(character);
-	        }
-	        
-			mDocument.add(new Field("japanese","lucenematch "+searchBuilder+" lucenematch",Field.Store.NO, Index.ANALYZED));
-			//System.out.println(new String(ch,start,length));
+			//gives space after letters: pepa => p e p a
+			japString = japString.replaceAll(".(?!$)", "$0 ");
+			mDocument.add(new Field("japanese","lucenematch "+japString+"lucenematch",Field.Store.NO, Index.ANALYZED));
 			if(mJapaneseKeb){
-				mJapaneseKebJSON.put(new String(ch,start,length));	
+				mJapaneseKebJSON.put(japString);	
 				mJapaneseKeb = false;
 			}
 			if(mJapaneseReb){
-				mDocument.add(new Field("index_japanese_reb","lucenematch "+new String(ch,start,length)+" lucenematch",Field.Store.NO, Index.ANALYZED));
-				mJapaneseRebJSON.put(new String(ch,start,length));		
+				mDocument.add(new Field("index_japanese_reb","lucenematch "+japString+"lucenematch",Field.Store.NO, Index.ANALYZED));
+				mJapaneseRebJSON.put(japString);		
 				mJapaneseReb = false;
 			}
 		}else if(mEnglish){
 			mEnglishJSON.put(new String(ch,start,length));
-			//doc.add(new Field("english",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
 			mEnglish = false;			
 		}else if(mFrench){
 			mFrenchJSON.put(new String(ch,start,length));
-			//doc.add(new Field("french",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
 			mFrench = false;			
 		}else if(mDutch){
 			mDutchJSON.put(new String(ch,start,length));
-			//doc.add(new Field("dutch",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
 			mDutch = false;			
 		}else if(mGerman){
 			mGermanJSON.put(new String(ch,start,length));
-			//doc.add(new Field("german",new String(ch,start,length),Field.Store.YES,Field.Index.NO));
 			mGerman = false;			
 		}
 		

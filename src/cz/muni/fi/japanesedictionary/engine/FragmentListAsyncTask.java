@@ -103,26 +103,23 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
     			onlyReb = true;	
     			Log.i("FragmentListAsyncTask","Only letters, converting to hiragana. ");
     			expression = RomanizationEnum.Hepburn.toHiragana(expression);
-    		}else{
-    			StringBuilder searchBuilder = new StringBuilder();
-    	        for(int i =0;i< expression.length() ; i++){
-    	        	String character = String.valueOf(expression.charAt(i));
-	        		if(i > 0){ //searchBuilder.length() > 0
-		        		searchBuilder.append(' '); 
-	        		}
-	        		searchBuilder.append(character);
-    	        }
-    	        expression = searchBuilder.toString();
     		}
+    		
+			StringBuilder searchBuilder = new StringBuilder();
+	        for(int i =0;i< expression.length() ; i++){
+	        	String character = String.valueOf(expression.charAt(i));
+        		searchBuilder.append(character+' ');
+	        }
+	        expression = searchBuilder.toString();
 
     		if("end".equals(part)){
-    			search = "\""+expression + " lucenematch\"";
+    			search = "\""+expression + "lucenematch\"";
     		}else if("beginning".equals(part)){
     			search = "\"lucenematch " + expression+"\"";	
     		}else if("middle".equals(part)){
     			search = "\""+expression+"\"";
     		}else {
-    			search = "\"lucenematch "+expression + " lucenematch\"";
+    			search = "\"lucenematch "+expression + "lucenematch\"";
     		}
     		Log.i("FragmentListAsyncTask"," Searching for: "+search);
     		

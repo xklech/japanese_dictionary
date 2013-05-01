@@ -81,10 +81,6 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 		ContentValues values = translation.createContentValuesFromTranslation();
 
 		Log.i("GlossaryReaderContract","Save translation values: "+values.toString());
-		long returnedId = db.insert(GlossaryEntry.TABLE_NAME,null, values);
-		if(returnedId == -1){
-			Log.e("GlossaryReaderContract", "Error inserting Transaltion: "+translation.toString()+" Values: "+values.toString());
-		}
 		db.close();
 	}
 	

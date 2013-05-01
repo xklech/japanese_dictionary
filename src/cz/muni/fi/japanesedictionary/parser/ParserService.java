@@ -367,11 +367,18 @@ public class ParserService extends IntentService {
 		String japDictAbsolutePath = parseDictionary(mDownloadJMDictTo.getPath());
 		String japKanjiDictAbsolutePath = parseKanjiDict(mDownloadKanjidicTo.getPath());
 		
-
+		Log.w("ParserService", "restarting notificatiomn, setting ongoing false");
+		mBuilder.setAutoCancel(true);
+		mBuilder.setOngoing(false);
+		mNotification = mBuilder.build();	
+		mNotification.contentView = mNotificationView;
+		mNotifyManager.notify(0, mNotification);
 		if (japDictAbsolutePath != null) {
+
 			serviceSuccessfullyDone(japDictAbsolutePath,japKanjiDictAbsolutePath);
 		} else {
 			Log.e("ParserService", "Parsing dictionary failed");
+			stopSelf(mStartId);
 		}
 	}
 	
@@ -762,13 +769,14 @@ public class ParserService extends IntentService {
 		if(mInternetReceiver!= null){
 			this.unregisterReceiver(mInternetReceiver);
 		}
-		Log.w("ParserService", "restarting notificatiomn, setting ongoing false");
-		mBuilder.setAutoCancel(true);
-		mBuilder.setOngoing(false);
-		mNotification = mBuilder.build();	
-		mNotification.contentView = mNotificationView;
-		mNotifyManager.notify(0, mNotification);
+
 		if (!mComplete) {
+			Log.w("ParserService", "restarting notificatiomn, setting ongoing false");
+			mBuilder.setAutoCancel(true);
+			mBuilder.setOngoing(false);
+			mNotification = mBuilder.build();	
+			mNotification.contentView = mNotificationView;
+			mNotifyManager.notify(0, mNotification);
 			mNotificationView.setTextViewText(R.id.notification_text,
 					getString(R.string.dictionary_download_interrupted));
 			mNotification.contentView = mNotificationView;
