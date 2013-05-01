@@ -10,8 +10,8 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryParser.standard.StandardQueryParser;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -97,14 +97,24 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
     	try{
     		String search;    		
     		boolean onlyReb = false;
+			
     		if(Pattern.matches("\\p{Latin}*", expression)){
     			//only romaji
-    			onlyReb = true;
+    			onlyReb = true;	
     			Log.i("FragmentListAsyncTask","Only letters, converting to hiragana. ");
     			expression = RomanizationEnum.Hepburn.toHiragana(expression);
+    		}else{
+    			StringBuilder searchBuilder = new StringBuilder();
+    	        for(int i =0;i< expression.length() ; i++){
+    	        	String character = String.valueOf(expression.charAt(i));
+	        		if(i > 0){ //searchBuilder.length() > 0
+		        		searchBuilder.append(' '); 
+	        		}
+	        		searchBuilder.append(character);
+    	        }
+    	        expression = searchBuilder.toString();
     		}
 
-    		
     		if("end".equals(part)){
     			search = "\""+expression + " lucenematch\"";
     		}else if("beginning".equals(part)){
@@ -122,10 +132,12 @@ public class FragmentListAsyncTask extends AsyncTask<String, Translation, List<T
     			Log.e("FragmentListAsyncTask","jednoduchej dotaz");
     			q = (new QueryParser(Version.LUCENE_36, "index_japanese_reb", analyzer)).parse(search);
     		}else{
-        		q= MultiFieldQueryParser.parse(Version.LUCENE_36, new String[] {search,search},   new String[] {"index_japanese_keb","index_japanese_reb"},analyzer);
+    			StandardQueryParser parser = new StandardQueryParser(analyzer); 
+        		q= parser.parse(search, "japanese");	
     		}
-
     		
+
+    		System.out.println("dotaz: "+q);
  	    	Directory dir = FSDirectory.open(file);
 	    	IndexReader reader = IndexReader.open(dir);
 	    	searcher= new IndexSearcher(reader);

@@ -96,12 +96,11 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     @Override 
     public View getView(int position, View convertView, ViewGroup parent) {
     	TranslationsViewHolder holder;
-        if (convertView == null || convertView.getTag() == null) {
+        if (convertView == null) {
         	convertView = mInflater.inflate(R.layout.list_item, parent,false);    
             holder = new TranslationsViewHolder();
-            holder.japanese = (TextView)convertView.findViewById(R.id.japanese);
+            holder.japanese = (TextView)convertView.findViewById(R.id.japanese_item);
             holder.translation = (TextView)convertView.findViewById(R.id.translation);
-            
             convertView.setTag(holder);
         } else {
         	holder = (TranslationsViewHolder) convertView.getTag();
@@ -125,9 +124,9 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
 	        TextAppearanceSpan apearence = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium); 
 	        sb.setSpan(apearence, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 	        sb.setSpan(color, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-	        	holder.japanese.setText(sb);
+	        holder.japanese.setText(sb);
         }else{
-        		holder.japanese.setText(strBuilder);
+        	holder.japanese.setText(strBuilder);
         }
         
         if(mEnglish && item.getEnglishSense() != null && item.getEnglishSense().size() > 0 ){

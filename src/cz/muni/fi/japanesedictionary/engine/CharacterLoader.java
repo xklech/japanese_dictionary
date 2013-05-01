@@ -80,7 +80,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
         for(int i =0;i< characterListSize ; i++){
         	String character = String.valueOf(characterList.charAt(i));
         	if(Pattern.matches("\\p{Han}", character)){
-        		if(searchBuilder.length() > 0){
+        		if(i > 0){ //searchBuilder.length() > 0
 	        		searchBuilder.append(' '); // in lucene space serve as OR
 	        	}
 	        	searchBuilder.append('"' +  character + '"');
