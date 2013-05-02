@@ -172,14 +172,14 @@ public class SaxDataHolder extends DefaultHandler{
 		if(mJapaneseKeb || mJapaneseReb){
 			String japString = new String(ch,start,length);
 			//gives space after letters: pepa => p e p a
-			japString = japString.replaceAll(".(?!$)", "$0 ");
-			mDocument.add(new Field("japanese","lucenematch "+japString+"lucenematch",Field.Store.NO, Index.ANALYZED));
+			String indexString = japString.replaceAll(".(?!$)", "$0 ");
+			mDocument.add(new Field("japanese","lucenematch "+indexString+"lucenematch",Field.Store.NO, Index.ANALYZED));
 			if(mJapaneseKeb){
 				mJapaneseKebJSON.put(japString);	
 				mJapaneseKeb = false;
 			}
 			if(mJapaneseReb){
-				mDocument.add(new Field("index_japanese_reb","lucenematch "+japString+"lucenematch",Field.Store.NO, Index.ANALYZED));
+				mDocument.add(new Field("index_japanese_reb","lucenematch "+indexString+"lucenematch",Field.Store.NO, Index.ANALYZED));
 				mJapaneseRebJSON.put(japString);		
 				mJapaneseReb = false;
 			}

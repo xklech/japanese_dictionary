@@ -157,7 +157,7 @@ public class DisplayTranslation extends SherlockFragment {
         		saveTranslation.execute(mTranslation);
         	}
         	TextView romaji = (TextView)getView().findViewById(R.id.translation_romaji);
-        	romaji.setText(RomanizationEnum.Hepburn.toRomaji(reading));
+        	romaji.setText(RomanizationEnum.Hepburn.toRomaji(reading.replaceAll(".(?!$)", "$0 ")));
         	
         	int sizeReb = mTranslation.getJapaneseReb().size();
         	if(sizeReb > 1){
@@ -202,13 +202,13 @@ public class DisplayTranslation extends SherlockFragment {
         
 
     	if(mInflater != null){
-    		LinearLayout translations_container = (LinearLayout)getView().findViewById(R.id.translation_translation_container);
-        	translations_container.removeAllViews();
+    		LinearLayout translationsContainer = (LinearLayout)getView().findViewById(R.id.translation_translation_container);
+    		translationsContainer.removeAllViews();
     		if((mEnglish || (!mEnglish && !mFrench && !mDutch && ! mGerman)) && mTranslation.getEnglishSense()!= null && mTranslation.getEnglishSense().size() > 0){
 		        	View translation_language = mInflater.inflate(R.layout.translation_language, null);
 	    			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
 	    			textView.setText(getString(R.string.language_english));
-	    			translations_container.addView(translation_language);
+	    			translationsContainer.addView(translation_language);
 		        	for(List<String> tran: mTranslation.getEnglishSense()){
 		        		int tran_size = tran.size();
 		        		if(tran_size>0){
@@ -224,7 +224,7 @@ public class DisplayTranslation extends SherlockFragment {
 		        			View translation_ll = mInflater.inflate(R.layout.translation_line, null);
 		        			TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
 		        			tView.setText(strBuilder.toString());
-		        			translations_container.addView(translation_ll);
+		        			translationsContainer.addView(translation_ll);
 		        		}
 		        		
 		        	}
@@ -233,7 +233,7 @@ public class DisplayTranslation extends SherlockFragment {
 	        	View translation_language = mInflater.inflate(R.layout.translation_language, null);
     			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
     			textView.setText(getString(R.string.language_french));
-    			translations_container.addView(translation_language);
+    			translationsContainer.addView(translation_language);
 		        	for(List<String> tran: mTranslation.getFrenchSense()){
 		        		int tran_size = tran.size();
 		        		if(tran_size>0){
@@ -249,7 +249,7 @@ public class DisplayTranslation extends SherlockFragment {
 		        			View translation_ll = mInflater.inflate(R.layout.translation_line, null);
 		        			TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
 		        			tView.setText(strBuilder.toString());
-		        			translations_container.addView(translation_ll);
+		        			translationsContainer.addView(translation_ll);
 		        		}
 		        	}
 	        }
@@ -257,7 +257,7 @@ public class DisplayTranslation extends SherlockFragment {
 	        	View translation_language = mInflater.inflate(R.layout.translation_language, null);
     			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
     			textView.setText(getString(R.string.language_dutch));
-    			translations_container.addView(translation_language);
+    			translationsContainer.addView(translation_language);
 		        	for(List<String> tran: mTranslation.getDutchSense()){
 		        		int tran_size = tran.size();
 		        		if(tran_size>0){
@@ -273,7 +273,7 @@ public class DisplayTranslation extends SherlockFragment {
 		        			View translation_ll = mInflater.inflate(R.layout.translation_line, null);
 		        			TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
 		        			tView.setText(strBuilder.toString());
-		        			translations_container.addView(translation_ll);
+		        			translationsContainer.addView(translation_ll);
 		        		}
 		        	}
 	        }
@@ -281,7 +281,7 @@ public class DisplayTranslation extends SherlockFragment {
 	        	View translation_language = mInflater.inflate(R.layout.translation_language, null);
     			TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
     			textView.setText(getString(R.string.language_german));
-    			translations_container.addView(translation_language);
+    			translationsContainer.addView(translation_language);
 		        	for(List<String> tran: mTranslation.getGermanSense()){
 		        		int tran_size = tran.size();
 		        		if(tran_size>0){
@@ -297,7 +297,7 @@ public class DisplayTranslation extends SherlockFragment {
 		        			View translation_ll = mInflater.inflate(R.layout.translation_line, null);
 		        			TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
 		        			tView.setText(strBuilder.toString());
-		        			translations_container.addView(translation_ll);
+		        			translationsContainer.addView(translation_ll);
 		        		}
 		        	}
 	        }
