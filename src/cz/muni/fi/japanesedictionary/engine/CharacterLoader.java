@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.engine;
 
 import java.io.File;
@@ -37,7 +55,9 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 
 	private Context mContext;
 	private IndexSearcher mSearcher;
-	DisplayTranslation mFragment;
+	private DisplayTranslation mFragment;
+	
+    private static final String LOG_TAG = "CharacterLoader";
 	
 	/**
 	 * Consturctor for CharacterLoader
@@ -66,12 +86,12 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 		SharedPreferences settings = mContext.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
         String pathToDictionary = settings.getString("pathToKanjiDictionary", null);
         if(pathToDictionary == null){
-        	Log.e("CharacterLoader", "No path to kanjidict2 dictionary");
+        	Log.e(LOG_TAG, "No path to kanjidict2 dictionary");
         	return null;
         }
         File file = new File(pathToDictionary);
         if(file == null || !file.exists() || !file.canRead()){
-        	Log.e("CharacterLoader", "Can't read dictionary directory");
+        	Log.e(LOG_TAG, "Can't read dictionary directory");
         	return null;
         }
         StringBuffer searchBuilder = new StringBuffer();
@@ -124,7 +144,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	    	    			japanCharacter.setRadicalClassic(radicalClassicInt);
 	    	    		}
 	    	    	}catch(NumberFormatException ex){
-	    	    		Log.w("CharacterLoader","Couldn't parse radical-classical: " + radicalClassic);
+	    	    		Log.w(LOG_TAG,"Couldn't parse radical-classical: " + radicalClassic);
 	    	    	}
 	    	    }
 	    	    String grade = d.get("grade");
@@ -135,7 +155,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	    	    			japanCharacter.setGrade(gradeInt);
 	    	    		}
 	    	    	}catch(NumberFormatException ex){
-	    	    		Log.w("CharacterLoader","Couldn't parse grade: " + grade);
+	    	    		Log.w(LOG_TAG,"Couldn't parse grade: " + grade);
 	    	    	}
 	    	    }
 	    	    String strokeCount = d.get("strokeCount");
@@ -146,7 +166,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	    	    			japanCharacter.setStrokeCount(strokeCountInt);
 	    	    		}
 	    	    	}catch(NumberFormatException ex){
-	    	    		Log.w("CharacterLoader","Couldn't parse strokeCount: " + strokeCount);
+	    	    		Log.w(LOG_TAG,"Couldn't parse strokeCount: " + strokeCount);
 	    	    	}
 	    	    }
 	    	    
@@ -201,11 +221,11 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	    	return result.size() > 0 ? result : null;
 	    	
         }catch(ParseException ex){
-        	Log.e("CharacterLoader","Searching for charaters ParseException caught: "+ex);
+        	Log.e(LOG_TAG,"Searching for charaters ParseException caught: "+ex);
         }catch(IOException ex){
-        	Log.e("CharacterLoader","Searching for charaters IOException caught: "+ex);
+        	Log.e(LOG_TAG,"Searching for charaters IOException caught: "+ex);
         }catch(Exception ex){
-        	Log.e("CharacterLoader","Searching for charaters Exception caught: "+ex);
+        	Log.e(LOG_TAG,"Searching for charaters Exception caught: "+ex);
         }
         
 

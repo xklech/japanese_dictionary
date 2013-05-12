@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.main;
 
 import java.io.File;
@@ -60,6 +78,8 @@ public class MainActivity extends SherlockFragmentActivity
 				TabListener
 				{
 	
+	private static final String LOG_TAG = "MainActivity";
+	
 	public static final String DUAL_PANE = "cz.muni.fi.japanesedictionary.mainactivity.dualpane";
 	public static final String PARSER_SERVICE = "cz.muni.fi.japanesedictionary.parser.ParserService";
 	public static final String SEARCH_PREFERENCES = "cz.muni.fi.japanesedictionary.main.search_preferences";
@@ -112,41 +132,38 @@ public class MainActivity extends SherlockFragmentActivity
 		mDatabase = new GlossaryReaderContract(getApplicationContext());
 
 		// Start out with a progress indicator.
-		Log.i("MainActivity","Controling saved instance ... ");
+		Log.i(LOG_TAG,"Controling saved instance ... ");
 		if(savedInstanceState != null){
-			Log.i("MainActivity","Saved instance ... ");
+			Log.i(LOG_TAG,"Saved instance ... ");
 			mCurFilter = savedInstanceState.getString(MainActivity.SEARCH_TEXT);
 			mLastTabId = savedInstanceState.getString(MainActivity.PART_OF_TEXT);
 			if(mLastTabId == null || mLastTabId.length()==0){
 				mLastTabId = "exact";
 			}
 		}
-		Log.i("MainActivity","Find ViewPager");
+		Log.i(LOG_TAG,"Find ViewPager");
 		mPager = (ViewPager) findViewById(R.id.pager);	
 		
         /** Defining a listener for pageChange */
-		Log.i("MainActivity","ViewPager listener setup");
+		Log.i(LOG_TAG,"ViewPager listener setup");
         ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
                 getSupportActionBar().setSelectedNavigationItem(position);
                 ResultFragmentList fragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mPager.getCurrentItem()));
                 if(fragmentList != null){
-                	Log.i("activita","neni null");
                 	fragmentList.search(mCurFilter);
-                }else{
-                	Log.i("activita","je null");
                 }
                 super.onPageSelected(position);
 
                 
             }
         };
-        Log.i("MainActivity","ViewPager listener set");
+        Log.i(LOG_TAG,"ViewPager listener set");
 		mPager.setOnPageChangeListener(pageChangeListener);  
-		Log.i("MainActivity","ViewPager create adapter");
+		Log.i(LOG_TAG,"ViewPager create adapter");
 		PagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager());
-		Log.i("MainActivity","ViewPager adapter set");
+		Log.i(LOG_TAG,"ViewPager adapter set");
 		mPager.setAdapter(adapter);
 		
 		
@@ -162,18 +179,18 @@ public class MainActivity extends SherlockFragmentActivity
 			displayDownloadPrompt();
 		}
 		
-		Log.i("MainActivity","Checking saved instance");
+		Log.i(LOG_TAG,"Checking saved instance");
 		if(savedInstanceState != null){
 			return;
 		}
 		
 
 		
-		Log.i("MainActivity","Setting layout");
+		Log.i(LOG_TAG,"Setting layout");
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		if(findViewById(R.id.detail_fragment) != null){
 			// two frames layout
-			Log.i("MainActivity","Setting info fragment");
+			Log.i(LOG_TAG,"Setting info fragment");
 			DisplayTranslation displayTranslation = new DisplayTranslation();
 			ft.add(R.id.detail_fragment, displayTranslation,"displayFragment");
 		}
@@ -188,10 +205,10 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		Log.i("MainActivity", "Inflating menu");
+		Log.i(LOG_TAG, "Inflating menu");
 	    MenuInflater inflater = getSupportMenuInflater();
 	    inflater.inflate(R.menu.menu, menu);
-		Log.i("MainActivity", "Setting menu ");
+		Log.i(LOG_TAG, "Setting menu ");
 		getSupportActionBar().setHomeButtonEnabled(false);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -204,9 +221,9 @@ public class MainActivity extends SherlockFragmentActivity
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-		Log.i("MainActivity", "Setting query");
+		Log.i(LOG_TAG, "Setting query");
         mSearchView.setQuery(mCurFilter, false);
-		Log.i("MainActivity", "Setting query done");
+		Log.i(LOG_TAG, "Setting query done");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -216,13 +233,13 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		Log.i("MainActivity", "Saving instance");
+		Log.i(LOG_TAG, "Saving instance");
 
 		if (mCurFilter != null && mCurFilter.length() > 0) {
 			outState.putString(MainActivity.SEARCH_TEXT, mCurFilter);
 		}
 		outState.putString(MainActivity.PART_OF_TEXT, mLastTabId);
-		Log.i("MainActivity", "Instance saved");
+		Log.i(LOG_TAG, "Instance saved");
 		super.onSaveInstanceState(outState);
 	}
 	
@@ -247,19 +264,19 @@ public class MainActivity extends SherlockFragmentActivity
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
 	            // app icon in action bar clicked; go home
-	        	Log.i("MainActivity", "Home button pressed");
+	        	Log.i(LOG_TAG, "Home button pressed");
 	            Intent intent = new Intent(this, MainActivity.class);
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 	            startActivity(intent);
 	            return true;
 	        case R.id.settings:
-    			Log.i("MainActivity", "Lauching preference Activity");
+    			Log.i(LOG_TAG, "Lauching preference Activity");
     			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
     			intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentSetting);
     			return true;
 	        case R.id.about:
-    			Log.i("MainActivity", "Lauching About Activity");
+    			Log.i(LOG_TAG, "Lauching About Activity");
     			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
     			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentAbout);
@@ -287,7 +304,7 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	@Override
 	public boolean onQueryTextChange(String newText) {
-		Log.i("MainActivity", "onquerychanged fird");
+		Log.i(LOG_TAG, "onquerychanged fird");
 		
         String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
         // Don't do anything if the filter hasn't actually changed.
@@ -343,7 +360,7 @@ public class MainActivity extends SherlockFragmentActivity
 	 * Positive choice in alert box, starts parsing dictionary
 	 */
 	public void doPositiveClick() {
-		Log.i("MainActivity", "AlertBox: Download dictionary - confirm");
+		Log.i(LOG_TAG, "AlertBox: Download dictionary - confirm");
 		downloadDictionary();
 	}
 
@@ -351,7 +368,7 @@ public class MainActivity extends SherlockFragmentActivity
 	 * Negativ click of alert box, storno
 	 */
 	public void doNegativeClick() {
-		Log.i("MainActivity", "AlertBox: Download dictonary - storno");
+		Log.i(LOG_TAG, "AlertBox: Download dictonary - storno");
 	}
 
 	
@@ -395,7 +412,7 @@ public class MainActivity extends SherlockFragmentActivity
 	 * @param w passed view
 	 */
 	public void showPreferences(View w){
-			Log.i("MainActivity", "Lauching preference Activity");
+			Log.i(LOG_TAG, "Lauching preference Activity");
 			Intent intent = new Intent(getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
@@ -410,12 +427,12 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	@Override
 	public void onTranslationSelected(int index) {
-		Log.i("MainActivity","List Item clicked");
+		Log.i(LOG_TAG,"List Item clicked");
 		
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		if(findViewById(R.id.detail_fragment) != null){
 			// two frames layout
-			Log.i("MainActivity","Translation selected - Setting info fragment");
+			Log.i(LOG_TAG,"Translation selected - Setting info fragment");
 			DisplayTranslation fragment = (DisplayTranslation)fragmentManager.findFragmentByTag("displayFragment");
 			if(fragment == null || !fragment.isVisible()){
 	        	getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -483,7 +500,7 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	@Override
 	public void showKanjiDetail(JapaneseCharacter character) {
-		Log.i("MainActivity","Setting DisplayCharacterInfo fragment");
+		Log.i(LOG_TAG,"Setting DisplayCharacterInfo fragment");
 		
 		// decides whether using two pane layout or replace fragment list
 		final int container = R.id.detail_fragment;		
@@ -508,7 +525,7 @@ public class MainActivity extends SherlockFragmentActivity
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 
-		Log.i("MainActivity", "Tab changed: " + mTabKeys[tab.getPosition()]);
+		Log.i(LOG_TAG, "Tab changed: " + mTabKeys[tab.getPosition()]);
 		String key = mTabKeys[tab.getPosition()];
 		if(key != mLastTabId){
 			mLastTabId = key;
@@ -533,7 +550,7 @@ public class MainActivity extends SherlockFragmentActivity
 	 * @param selectedPart selected part
 	 */
 	private void setUpTabs(String selectedPart){
-		Log.i("MainFragment", "Setting Tabs");
+		Log.i(LOG_TAG, "Setting Tabs");
 		boolean[] selectedTab = {false, false, false, false};
 		if("exact".equals(selectedPart)){
 			selectedTab[0] = true;

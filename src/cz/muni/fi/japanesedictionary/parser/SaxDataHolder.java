@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.parser;
 
 import java.io.File;
@@ -37,6 +55,8 @@ import cz.muni.fi.japanesedictionary.R;
  *
  */
 public class SaxDataHolder extends DefaultHandler{
+	
+	private static final String LOG_TAG = "SaxDataHolder";
 	
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
@@ -101,7 +121,7 @@ public class SaxDataHolder extends DefaultHandler{
 			Notification notif,RemoteViews rV) throws IOException,IllegalArgumentException{
         
 		if(file == null){
-			Log.e("SaxDataHolder", "SaxDataHolder - dictionary directory is null");
+			Log.e(LOG_TAG, "SaxDataHolder - dictionary directory is null");
 			throw new IllegalArgumentException("SaxParser: dictionary directory is null");
 		}
 		mContext = appContext;
@@ -122,7 +142,7 @@ public class SaxDataHolder extends DefaultHandler{
 		mNotifyManager = nM;
 		mNotification = notif;
 		mNotificationView = rV;
-		Log.i("SaxDataHolder", "SaxDataHolder created");
+		Log.i(LOG_TAG, "SaxDataHolder created");
 	}
 	
 	
@@ -134,7 +154,6 @@ public class SaxDataHolder extends DefaultHandler{
 			throw new SAXException("SAX terminated due to ParserService end.");
 		}
 		if("entry".equals(qName)){
-			//System.out.println("Entry "+ (++i));
 			mDocument = new Document();
 			mEnglishJSONSense = new JSONArray();
 			mFrenchJSONSense = new JSONArray();
@@ -242,15 +261,13 @@ public class SaxDataHolder extends DefaultHandler{
 				
 				try {
 					mCountDone++;
-					//System.out.println(i);
 					mWriter.addDocument(mDocument);
-					//System.out.println(doc.toString());
 					int persPub = Math.round((((float)mCountDone/ENTRIES_COUNT)*100)) ;
 					
 	                if(mPerc < persPub){
 	                	if(mPercSave + 4 < persPub){
 	                		mWriter.commit();
-	                		System.out.println(persPub);
+	                		Log.i(LOG_TAG, "Save: "+ mPercSave+" %");
 	                		mPercSave = persPub;
 	                	}
 	                	
@@ -268,14 +285,14 @@ public class SaxDataHolder extends DefaultHandler{
 		                mNotifyManager.notify(0, mNotification);
 	                	
 		                mPerc = persPub;
-		                Log.i("SaxDataHolder", "SaxDataHolder progress saved - " + mPerc + " %");
+		                Log.i(LOG_TAG, "SaxDataHolder progress saved - " + mPerc + " %");
 	                }
 				} catch (CorruptIndexException e) {
-					Log.e("SaxDataHolder", "Saving doc - Adding document to lucene indexer failed: "+e.toString());
+					Log.e(LOG_TAG, "Saving doc - Adding document to lucene indexer failed: "+e.toString());
 				} catch (IOException e) {
-					Log.e("SaxDataHolder", "Saving doc - Adding document to lucene indexer or commit failed: "+e.toString());
+					Log.e(LOG_TAG, "Saving doc - Adding document to lucene indexer or commit failed: "+e.toString());
 				} catch (Exception e){
-					Log.e("SaxDataHolder", "Saving doc: Unknown exception: "+e.toString());
+					Log.e(LOG_TAG, "Saving doc: Unknown exception: "+e.toString());
 				}
 				mDocument = null;
 	        }
@@ -283,20 +300,20 @@ public class SaxDataHolder extends DefaultHandler{
 	
 	@Override
 	public void startDocument(){
-		Log.i("SaxDataHolder", "Start of document");
+		Log.i(LOG_TAG, "Start of document");
 		LocalBroadcastManager.getInstance(mContext).registerReceiver(
 				mReceiverDone, new IntentFilter("serviceCanceled"));
 	}
 	
 	@Override
 	public void endDocument(){ 
-		Log.i("SaxDataHolder", "End of document");
+		Log.i(LOG_TAG, "End of document");
 		LocalBroadcastManager.getInstance(mContext).unregisterReceiver(
 				mReceiverDone);
 			try {
 				mWriter.close();
 			} catch (IOException e) {
-				Log.e("SaxDataHolder", "End of document - closinf lucene writer failed");
+				Log.e(LOG_TAG, "End of document - closinf lucene writer failed");
 			}
     } 
 	

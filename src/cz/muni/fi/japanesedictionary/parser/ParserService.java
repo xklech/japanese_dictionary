@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.parser;
 
 import java.io.BufferedInputStream;
@@ -56,6 +74,8 @@ import cz.muni.fi.japanesedictionary.main.MainActivity;
  */
 public class ParserService extends IntentService {
 
+	private static final String LOG_TAG = "ParserService";
+	
 	public static final String DICTIONARY_PATH = "http://ftp.monash.edu.au/pub/nihongo/JMdict.gz";
 	public static final String KANJIDICT_PATH = "http://www.csse.monash.edu.au/~jwb/kanjidic2/kanjidic2.xml.gz";
 	public static final String DICTIONARY_PREFERENCES = "cz.muni.fi.japanesedictionary";
@@ -107,7 +127,7 @@ public class ParserService extends IntentService {
 			try {
 				downloadDictionaries();
 			} catch (IOException e) {
-				Log.w("ParserService","IOException caught while downloading: "+e.toString());
+				Log.w(LOG_TAG,"IOException caught while downloading: "+e.toString());
 				stopSelf(mStartId);
 			}
         }
@@ -140,9 +160,9 @@ public class ParserService extends IntentService {
 	                context.getSystemService(Context.CONNECTIVITY_SERVICE);
 	            NetworkInfo networkInfo = conn.getActiveNetworkInfo();
 			if (networkInfo == null) {
-				Log.i("ParserService","Connection lost");
+				Log.i(LOG_TAG,"Connection lost");
 			}else{
-				Log.i("ParserService","Connection Established");
+				Log.i(LOG_TAG,"Connection Established");
 				if(mDownloadInProgress && !mCurrentlyDownloading){
 			        Message msg = mServiceHandler.obtainMessage();
 			        mServiceHandler = new ServiceDownloadHandler(mServiceLooper);
@@ -230,12 +250,10 @@ public class ParserService extends IntentService {
 		
 
 		// velikost souboru
-
-		System.out.println("size: "+fileLength);
 		input = new BufferedInputStream(connection.getInputStream(), 1024);
 		
 		if (input == null || output == null) {
-			Log.e("ParserService",
+			Log.e(LOG_TAG,
 					"Error while downloading file, one of streams is null");
 			closeIOStreams(input, output);
 			mCurrentlyDownloading = false;
@@ -274,7 +292,6 @@ public class ParserService extends IntentService {
 							int persPub = Math.round((((float) total / fileLength) * 100));
 							if(perc < persPub){
 								lastUpdate = current;
-								System.out.println(lastUpdate);
 								
 								mNotificationView.setProgressBar(
 										R.id.ntification_progressBar, 100, persPub, false);
@@ -288,7 +305,7 @@ public class ParserService extends IntentService {
 					}
 			}
 		}catch(IOException ex){
-			Log.w("ParserService", "ConnectionLost: "+ex);
+			Log.w(LOG_TAG, "ConnectionLost: "+ex);
 			closeIOStreams(input, output);
 			mCurrentlyDownloading = false;
 			return false;
@@ -333,7 +350,7 @@ public class ParserService extends IntentService {
 				mNotification.contentView = mNotificationView;
 
 				mNotifyManager.notify(0, mNotification);
-				Log.i("ParserService", "Downloading dictionary finished");
+				Log.i(LOG_TAG, "Downloading dictionary finished");
 				
 			}else{
 				return;
@@ -344,10 +361,10 @@ public class ParserService extends IntentService {
 				mParsing = true;
 				parseDictionaries();
 			} catch (ParserConfigurationException e) {
-				Log.e("ParserService","ParserConfigurationException exception occured: "+e.toString());
+				Log.e(LOG_TAG,"ParserConfigurationException exception occured: "+e.toString());
 				stopSelf(mStartId);
 			} catch (SAXException e) {
-				Log.e("ParserService","SAXException exception occured: "+e.toString());
+				Log.e(LOG_TAG,"SAXException exception occured: "+e.toString());
 				stopSelf(mStartId);
 			}
 		}
@@ -367,7 +384,7 @@ public class ParserService extends IntentService {
 		String japDictAbsolutePath = parseDictionary(mDownloadJMDictTo.getPath());
 		String japKanjiDictAbsolutePath = parseKanjiDict(mDownloadKanjidicTo.getPath());
 		
-		Log.w("ParserService", "restarting notificatiomn, setting ongoing false");
+		Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
 		mBuilder.setAutoCancel(true);
 		mBuilder.setOngoing(false);
 		mNotification = mBuilder.build();	
@@ -377,7 +394,7 @@ public class ParserService extends IntentService {
 
 			serviceSuccessfullyDone(japDictAbsolutePath,japKanjiDictAbsolutePath);
 		} else {
-			Log.e("ParserService", "Parsing dictionary failed");
+			Log.e(LOG_TAG, "Parsing dictionary failed");
 			stopSelf(mStartId);
 		}
 	}
@@ -388,7 +405,7 @@ public class ParserService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent arg0) {		
 		
-		Log.i("ParserService", "Creating parser service");
+		Log.i(LOG_TAG, "Creating parser service");
 		mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 		mNotificationView = new RemoteViews(this.getPackageName(),
@@ -431,7 +448,7 @@ public class ParserService extends IntentService {
 		boolean dutch = sharedPrefs.getBoolean("language_dutch", false);
 		boolean german = sharedPrefs.getBoolean("language_german", false);
 		if (!english && !french && !dutch && !german) {
-			Log.i("ParserService",
+			Log.i(LOG_TAG,
 					"Setting english as only translation language");
 			SharedPreferences.Editor editor_lang = sharedPrefs.edit();
 			editor_lang.putBoolean("language_english", true);
@@ -448,7 +465,7 @@ public class ParserService extends IntentService {
 		try {
 			url = new URL(ParserService.DICTIONARY_PATH);
 		} catch (MalformedURLException ex) {
-			Log.e("ParserService",
+			Log.e(LOG_TAG,
 					"Error: creating url for downloading dictionary");
 			return;
 		}
@@ -481,7 +498,7 @@ public class ParserService extends IntentService {
 			try {
 				url = new URL(ParserService.KANJIDICT_PATH);
 			} catch (MalformedURLException ex) {
-				Log.e("ParserService",
+				Log.e(LOG_TAG,
 						"Error: creating url for downloading kanjidict2");
 			}
 			if (url != null) {
@@ -500,14 +517,14 @@ public class ParserService extends IntentService {
 			downloadDictionaries();
 			
 		} catch(MalformedURLException e){
-			Log.e("ParserService", "MalformedURLException wrong format of URL: " + e.toString());
+			Log.e(LOG_TAG, "MalformedURLException wrong format of URL: " + e.toString());
 			stopSelf(mStartId);
 		} catch(IOException e){
-			Log.e("ParserService", "IOException downloading interrupted: " + e.toString());
+			Log.e(LOG_TAG, "IOException downloading interrupted: " + e.toString());
 			stopSelf(mStartId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e("ParserService", "Exception: " + e.toString());
+			Log.e(LOG_TAG, "Exception: " + e.toString());
 			stopSelf(mStartId);
 		}
 
@@ -536,7 +553,7 @@ public class ParserService extends IntentService {
 		mNotification.contentView = mNotificationView;
 		mNotifyManager.notify(0, mNotification);
 
-		Log.i("ParserService", "Parsing dictionary - start");
+		Log.i(LOG_TAG, "Parsing dictionary - start");
 
 		File downloadedFile = new File(path);
 
@@ -546,7 +563,7 @@ public class ParserService extends IntentService {
 		Reader reader = new InputStreamReader(parsFile, "UTF-8");
 		InputSource is = new InputSource(reader);
 
-		Log.i("ParserService", "Parsing dictionary - input streams created");
+		Log.i(LOG_TAG, "Parsing dictionary - input streams created");
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser saxParser = factory.newSAXParser();
 
@@ -564,17 +581,17 @@ public class ParserService extends IntentService {
 			}
 		}
 
-		Log.i("ParserService", "Parsing dictionary - index folder created");
-		Log.i("ParserService", "Parsing dictionary - SAX ready");
+		Log.i(LOG_TAG, "Parsing dictionary - index folder created");
+		Log.i(LOG_TAG, "Parsing dictionary - SAX ready");
 		DefaultHandler handler = new SaxDataHolder(file,
 				getApplicationContext(), mNotifyManager, mNotification,
 				mNotificationView);
 
 		try {
 			saxParser.parse(is, handler);
-			Log.i("ParserService", "Parsing dictionary - SAX ended");
+			Log.i(LOG_TAG, "Parsing dictionary - SAX ended");
 			downloadedFile.delete();
-			Log.i("ParserService",
+			Log.i(LOG_TAG,
 					"Parsing dictionary - downloaded file deleted");
 			mNotificationView.setTextViewText(R.id.notification_text,
 					getString(R.string.dictionary_download_complete));
@@ -586,11 +603,11 @@ public class ParserService extends IntentService {
 			mComplete = true;
 
 			if (renameFolder) {
-				Log.i("ParserService", "Parsing dictionary - rename folders");
+				Log.i(LOG_TAG, "Parsing dictionary - rename folders");
 				File directory = new File(indexFile);
 				deleteDirectory(directory);
 				if (file.renameTo(directory)) {
-					Log.i("ParserService",
+					Log.i(LOG_TAG,
 							"Parsing dictionary - folder renamed");
 					file = directory;
 				}
@@ -599,13 +616,13 @@ public class ParserService extends IntentService {
 			return file.getAbsolutePath();
 
 		} catch (SAXException ex) {
-			Log.e("ParserService", "SaxDataHolder: " + ex.getMessage());
+			Log.e(LOG_TAG, "SaxDataHolder: " + ex.getMessage());
 			if(file != null){
 				file.delete();
 			}
 			stopSelf(mStartId);
 		} catch (Exception ex) {
-			Log.e("ParserService", "SaxDataHolder - Unknown exception: " + ex.toString());
+			Log.e(LOG_TAG, "SaxDataHolder - Unknown exception: " + ex.toString());
 			if(file != null){
 				file.delete();
 			}
@@ -627,14 +644,14 @@ public class ParserService extends IntentService {
 	 */
 	private String parseKanjiDict(String path) throws
 			IOException, ParserConfigurationException, SAXException {
-		Log.i("ParserService", "Parsing kanji dict");
+		Log.i(LOG_TAG, "Parsing kanji dict");
 
 		mNotificationView.setTextViewText(R.id.notification_text,
 				getString(R.string.dictionary_parsing_in_progress));
 		mNotification.contentView = mNotificationView;
 		mNotifyManager.notify(0, mNotification);
 
-		Log.i("ParserService", "Parsing KanjiDict - start");
+		Log.i(LOG_TAG, "Parsing KanjiDict - start");
 
 		File downloadedFile = new File(path);
 
@@ -644,7 +661,7 @@ public class ParserService extends IntentService {
 		Reader reader = new InputStreamReader(parsFile, "UTF-8");
 		InputSource is = new InputSource(reader);
 
-		Log.i("ParserService", "Parsing KanjiDict - input streams created");
+		Log.i(LOG_TAG, "Parsing KanjiDict - input streams created");
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser saxParser = factory.newSAXParser();
 
@@ -662,17 +679,17 @@ public class ParserService extends IntentService {
 			}
 		}
 
-		Log.i("ParserService", "Parsing KanjiDict - index folder created");
-		Log.i("ParserService", "Parsing KanjiDict - SAX ready");
+		Log.i(LOG_TAG, "Parsing KanjiDict - index folder created");
+		Log.i(LOG_TAG, "Parsing KanjiDict - SAX ready");
 		DefaultHandler handler = new SaxDataHolderKanjiDict(file,
 				getApplicationContext(), mNotifyManager, mNotification,
 				mNotificationView);
 
 		try {
 			saxParser.parse(is, handler);
-			Log.i("ParserService", "Parsing KanjiDict - SAX ended");
+			Log.i(LOG_TAG, "Parsing KanjiDict - SAX ended");
 			downloadedFile.delete();
-			Log.i("ParserService",
+			Log.i(LOG_TAG,
 					"Parsing KanjiDict - downloaded file deleted");
 			mNotificationView.setTextViewText(R.id.notification_text,
 					getString(R.string.dictionary_download_complete));
@@ -686,11 +703,11 @@ public class ParserService extends IntentService {
 			mComplete = true;
 
 			if (renameFolder) {
-				Log.i("ParserService", "Parsing KanjiDict - rename folders");
+				Log.i(LOG_TAG, "Parsing KanjiDict - rename folders");
 				File directory = new File(indexFile);
 				deleteDirectory(directory);
 				if (file.renameTo(directory)) {
-					Log.i("ParserService", "Parsing KanjiDict - folder renamed");
+					Log.i(LOG_TAG, "Parsing KanjiDict - folder renamed");
 					file = directory;
 				}
 
@@ -699,13 +716,13 @@ public class ParserService extends IntentService {
 			return file.getAbsolutePath();
 
 		} catch (SAXException ex) {
-			Log.e("ParserService", "SaxDataHolderKanjiDict: " + ex.getMessage());
+			Log.e(LOG_TAG, "SaxDataHolderKanjiDict: " + ex.getMessage());
 			if(file != null){
 				file.delete();
 			}
 			stopSelf(mStartId);
 		} catch (Exception ex) {
-			Log.e("ParserService", "SaxDataHolderKanjiDict - Unknown exception: " + ex.toString());
+			Log.e(LOG_TAG, "SaxDataHolderKanjiDict - Unknown exception: " + ex.toString());
 			if(file != null){
 				file.delete();
 			}
@@ -724,13 +741,13 @@ public class ParserService extends IntentService {
 	 */
 	private void serviceSuccessfullyDone(String dictionaryPath,
 			String kanjiDictPath) {
-		Log.i("ParserService",
+		Log.i(LOG_TAG,
 				"Parsing dictionary - parsing succesfully done, saving preferences");
 		SharedPreferences settings = getSharedPreferences(
 				DICTIONARY_PREFERENCES, 0);
 		SharedPreferences.Editor editor = settings.edit();
-		Log.i("ParserService", "Dictionary path: " + dictionaryPath);
-		Log.i("ParserService", "KanjiDict path: " + kanjiDictPath);
+		Log.i(LOG_TAG, "Dictionary path: " + dictionaryPath);
+		Log.i(LOG_TAG, "KanjiDict path: " + kanjiDictPath);
 		editor.putString("pathToDictionary", dictionaryPath);
 		editor.putString("pathToKanjiDictionary", kanjiDictPath);
 		Date date = new Date();
@@ -744,14 +761,14 @@ public class ParserService extends IntentService {
 		boolean dutch = sharedPrefs.getBoolean("language_dutch", false);
 		boolean german = sharedPrefs.getBoolean("language_german", false);
 		if (!english && !french && !dutch && !german) {
-			Log.i("ParserService",
+			Log.i(LOG_TAG,
 					"Setting english as only translation language");
 			SharedPreferences.Editor editor_lang = sharedPrefs.edit();
 			editor_lang.putBoolean("language_english", true);
 			editor_lang.commit();
 		}
 
-		Log.i("ParserService", "Parsing dictionary - preferences saved");
+		Log.i(LOG_TAG, "Parsing dictionary - preferences saved");
 		Intent intent = new Intent("downloadingDictinaryServiceDone");
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 		stopSelf(mStartId);
@@ -771,7 +788,7 @@ public class ParserService extends IntentService {
 		}
 
 		if (!mComplete) {
-			Log.w("ParserService", "restarting notificatiomn, setting ongoing false");
+			Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
 			mBuilder.setAutoCancel(true);
 			mBuilder.setOngoing(false);
 			mNotification = mBuilder.build();	
@@ -783,7 +800,7 @@ public class ParserService extends IntentService {
 			mNotifyManager.notify(0, mNotification);
 			Intent intent = new Intent("serviceCanceled");
 			LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-			Log.w("ParserService", "Service ending none complete");
+			Log.w(LOG_TAG, "Service ending none complete");
 		}
 		mServiceLooper.quit();
 		

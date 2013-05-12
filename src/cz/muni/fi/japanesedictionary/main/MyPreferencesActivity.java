@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.main;
 
 import java.io.File;
@@ -30,14 +48,14 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
  */
 public class MyPreferencesActivity extends SherlockPreferenceActivity {
 
-
+	private static final String LOG_TAG = "MyPreferencesActivity";
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 			
-			Log.e("Preferences", "Creating activity");
+			Log.e(LOG_TAG, "Creating activity");
 			addPreferencesFromResource(R.xml.preferences);
 			
 			
@@ -49,16 +67,16 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 					ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 					NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 					if (networkInfo == null || !networkInfo.isConnected()) {
-						Log.w("MyPreferencesActivity","Update dictionary - no network connection");
+						Log.w(LOG_TAG,"Update dictionary - no network connection");
 						Toast.makeText(getApplicationContext(), R.string.internet_connection_failed_title, Toast.LENGTH_SHORT).show();
 					} else if (!MainActivity.canWriteExternalStorage()) {
-						Log.w("MyPreferencesActivity","Update dictionary - can't write external storage");
+						Log.w(LOG_TAG,"Update dictionary - can't write external storage");
 						Toast.makeText(getApplicationContext(), R.string.external_storrage_failed_title, Toast.LENGTH_SHORT).show();
 					} else if (MainActivity.isMyServiceRunning(getApplicationContext())) {
-						Log.w("MyPreferencesActivity","Update dictionary - update in progress");
+						Log.w(LOG_TAG,"Update dictionary - update in progress");
 						Toast.makeText(getApplicationContext(), R.string.updating_in_progress, Toast.LENGTH_SHORT).show();
 					} else {					
-						Log.i("MyPreferencesActivity","Update dictionary - launching service");
+						Log.i(LOG_TAG,"Update dictionary - launching service");
 						Intent intent = new Intent(getApplicationContext(), ParserService.class);
 						startService(intent);
 						Toast.makeText(getApplicationContext(), R.string.updating_in_progress, Toast.LENGTH_SHORT).show();
@@ -100,20 +118,20 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
 	            // app icon in action bar clicked; go home
-	        	Log.i("MyPreferencesActivity", "Home button clicked");
+	        	Log.i(LOG_TAG, "Home button clicked");
 	            Intent intent = new Intent(this, MainActivity.class);
 	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(intent);
 	            finish();
 	            return true;
 	        case R.id.settings:
-    			Log.i("MainActivity", "Lauching preference Activity");
+    			Log.i(LOG_TAG, "Lauching preference Activity");
     			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
     			intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentSetting);
     			return true;
 	        case R.id.about:
-    			Log.i("MainActivity", "Lauching About Activity");
+    			Log.i(LOG_TAG, "Lauching About Activity");
     			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
     			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentAbout);

@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.entity;
 
 import java.util.ArrayList;
@@ -34,6 +52,7 @@ public class JapaneseCharacter {
 	public static final String SAVE_CHARACTER_GERMAN = "cz.muni.fi.japanesedictionary.japanesecharacter.german";
 	public static final String SAVE_CHARACTER_NANORI = "cz.muni.fi.japanesedictionary.japanesecharacter.nanori";
 
+    private static final String LOG_TAG = "JapaneseCharacter";
 	
 	private String mLiteral;
 	private int mRadicalClassic;
@@ -223,7 +242,7 @@ public class JapaneseCharacter {
 		try {
 			dicRefJson = new JSONObject(jsonString);
 		} catch (JSONException e) {
-			Log.w("Translation","getting parseJapaneseKeb()  initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"getting parseJapaneseKeb()  initial expression failed: "+ e.toString());
 			return ;
 		}
 		if(dicRefJson != null){
@@ -237,7 +256,7 @@ public class JapaneseCharacter {
 						dicRefTemp.put(key, value);
 					}
 				} catch (JSONException e) {
-					Log.w("JapaneseCharacter","parsing dicRef failed");
+					Log.w(LOG_TAG,"parsing dicRef failed");
 				}
 			}
 			if(dicRefTemp != null && dicRefTemp.size() > 0 ){
@@ -263,7 +282,7 @@ public class JapaneseCharacter {
 		try {
 			parseJSON = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("JapaneseCharacter","parsing parseRmGroupJaOn() - initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"parsing parseRmGroupJaOn() - initial expression failed: "+ e.toString());
 			return ;
 		}
 		temp = this.parseOneJSONArray(parseJSON);
@@ -286,7 +305,7 @@ public class JapaneseCharacter {
 		try {
 			parseJSON = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("JapaneseCharacter","parsing parseRmGroupJaKun() - initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"parsing parseRmGroupJaKun() - initial expression failed: "+ e.toString());
 			return ;
 		}
 		temp = this.parseOneJSONArray(parseJSON);
@@ -309,7 +328,7 @@ public class JapaneseCharacter {
 		try {
 			parseJSON = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("JapaneseCharacter","parsing parseMeaningEnglish() - initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"parsing parseMeaningEnglish() - initial expression failed: "+ e.toString());
 			return ;
 		}
 		temp = this.parseOneJSONArray(parseJSON);
@@ -333,7 +352,7 @@ public class JapaneseCharacter {
 		try {
 			parseJSON = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("JapaneseCharacter","parsing parseMeaningFrench() - initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"parsing parseMeaningFrench() - initial expression failed: "+ e.toString());
 			return ;
 		}
 		temp = this.parseOneJSONArray(parseJSON);
@@ -356,7 +375,7 @@ public class JapaneseCharacter {
 		try {
 			parseJSON = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("JapaneseCharacter","parsing parseMeaningDutch() - initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"parsing parseMeaningDutch() - initial expression failed: "+ e.toString());
 			return ;
 		}
 		temp = this.parseOneJSONArray(parseJSON);
@@ -379,7 +398,7 @@ public class JapaneseCharacter {
 		try {
 			parseJSON = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("JapaneseCharacter","parsing parseMeaningGerman() - initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"parsing parseMeaningGerman() - initial expression failed: "+ e.toString());
 			return ;
 		}
 		temp = this.parseOneJSONArray(parseJSON);
@@ -402,7 +421,7 @@ public class JapaneseCharacter {
 		try {
 			parseJSON = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("JapaneseCharacter","parsing parseNanori() - initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"parsing parseNanori() - initial expression failed: "+ e.toString());
 			return ;
 		}
 		temp = this.parseOneJSONArray(parseJSON);
@@ -427,7 +446,7 @@ public class JapaneseCharacter {
 				value = sense.getString(k);
 				temp.add(value);
 			} catch (JSONException e) {
-				Log.w("Translation","getting parseOneSense() expression failed: "+ e.toString());
+				Log.w(LOG_TAG,"getting parseOneSense() expression failed: "+ e.toString());
 				e.printStackTrace();
 			}
 		}

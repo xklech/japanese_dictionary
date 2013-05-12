@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.fragments;
 
 import java.io.File;
@@ -39,7 +57,7 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
 public class ResultFragmentList extends SherlockListFragment implements
 		SearchListener{
 	
-	public static final String TAG = "ResultFragmentList";
+	private static final String LOG_TAG = "ResultFragmentList";
 	
 	private TranslationsAdapter mAdapter;
 	
@@ -77,7 +95,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	    	
 	    	ResultFragmentList fragment = mFragment.get();
 	         if (fragment != null) {
-	        	 Log.i(TAG,"First run, select first translation");
+	        	 Log.i(LOG_TAG,"First run, select first translation");
 	        	 if(fragment.isVisible()){
 	        		 //is visible to user and attached to activity
 	        		 fragment.getListView().setItemChecked(0, true);
@@ -119,7 +137,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		Log.i(TAG+": "+mLastTab, "Saving instance");
+		Log.i(LOG_TAG+": "+mLastTab, "Saving instance");
 
 		if (mLastSearched != null) {
 			outState.putString(MainActivity.SEARCH_TEXT, mLastSearched);
@@ -133,7 +151,7 @@ public class ResultFragmentList extends SherlockListFragment implements
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.w(TAG+": "+mLastTab, "onAttach called");
+        Log.i(LOG_TAG+": "+mLastTab, "onAttach called");
         try {
         	mCallbackTranslation = (OnTranslationSelectedListener) activity;
         } catch (ClassCastException e) {
@@ -155,7 +173,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		setRetainInstance(true);
-		Log.i(TAG+": "+mLastTab, "onViewCreated called - setting fragment: Last: "+mLastSearched+" new: "+mNewSearch);
+		Log.i(LOG_TAG+": "+mLastTab, "onViewCreated called - setting fragment: Last: "+mLastSearched+" new: "+mNewSearch);
 		if(getActivity().findViewById(R.id.detail_fragment) != null){
 			//dualPane
 			mDualPane = true;
@@ -174,7 +192,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 		if(mAdapter == null){
 			mAdapter = new TranslationsAdapter(getActivity());
 		}else{
-			Log.e(TAG+": "+mLastTab,"old adapter: "+mAdapter.getCount());
+			Log.i(LOG_TAG+": "+mLastTab,"old adapter: "+mAdapter.getCount());
 		}
 		setListAdapter(mAdapter);
 		Bundle bundle = getArguments();
@@ -189,14 +207,14 @@ public class ResultFragmentList extends SherlockListFragment implements
 		
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE );
 		mNewSearch = mCallbackTranslation.getCurrentFilter();
-		Log.e(TAG+": "+mLastTab,"new search: "+mNewSearch+" old search: "+mLastSearched);
+		Log.i(LOG_TAG+": "+mLastTab,"new search: "+mNewSearch+" old search: "+mLastSearched);
 		
 		if(mNewSearch != null && mNewSearch.equals(mLastSearched) && mAdapter.getCount()>0){
-			Log.i(TAG+": "+mLastTab,"restore, no search");
+			Log.i(LOG_TAG+": "+mLastTab,"restore, no search");
 			mAdapter.notifyDataSetChanged();
 			listShown(true);
 		}else{
-			Log.i(TAG+": "+mLastTab,"new search: "+mNewSearch+" adapter: "+mAdapter.getCount());
+			Log.i(LOG_TAG+": "+mLastTab,"new search: "+mNewSearch+" adapter: "+mAdapter.getCount());
 			mLastSearched = mNewSearch;
 			mAdapter.clear();
 			mLoader = new FragmentListAsyncTask(this, getActivity());
@@ -212,15 +230,14 @@ public class ResultFragmentList extends SherlockListFragment implements
 	 * If in dual pane layout and first run sets first item as displayed.
 	 */
 	public void onLoadFinished(	List<Translation> data) {
-		Log.i(TAG+": "+mLastTab, "Loader has finished loading data");
+		Log.i(LOG_TAG+": "+mLastTab, "Loader has finished loading data");
 		// Set the new data in the adapter.
 		mNewSearch = null;
 		if(data!= null && data.size() > 0 && mAdapter.isEmpty()){
-			System.out.println("zobrazit vse");
 			mAdapter.setData(data);
 		}
 		if(mDualPane && mAdapter.getCount() > 0 && mLastSearched == null){
-			Log.i(TAG+": "+mLastTab,"dual pane, display last - send massage");
+			Log.i(LOG_TAG+": "+mLastTab,"dual pane, display last - send massage");
 			mHandler.sendEmptyMessage(0);
 		}
 		listShown(true);
@@ -268,7 +285,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 				mLoader.cancel(true);
 			}
 			mAdapter.clear();
-			Log.i(TAG+": "+mLastTab,"Starting nw loader: "+expression);
+			Log.i(LOG_TAG+": "+mLastTab,"Starting nw loader: "+expression);
 			mLoader = new FragmentListAsyncTask(this, getActivity());
 			mLoader.execute(expression,mLastTab);
 		}else{

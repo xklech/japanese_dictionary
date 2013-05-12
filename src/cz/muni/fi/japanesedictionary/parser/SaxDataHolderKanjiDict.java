@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.parser;
 
 import java.io.File;
@@ -41,6 +59,9 @@ import android.widget.RemoteViews;
  *
  */
 public class SaxDataHolderKanjiDict extends DefaultHandler{
+	
+	private static final String LOG_TAG = "SaxDataHolderKanjiDict";
+	
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
 	private RemoteViews mNotificationView = null;
@@ -114,7 +135,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			Notification notif,RemoteViews rV) throws IOException,SAXException{
         
 		if(file == null){
-			Log.e("SaxDataHolderKanjiDict", "SaxDataHolderKanjiDict - dictionary directory is null");
+			Log.e(LOG_TAG, "SaxDataHolderKanjiDict - dictionary directory is null");
 			throw new IllegalArgumentException("SaxParser: dictionary directory is null");
 		}
 		mContext = appContext;
@@ -132,13 +153,13 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 		mNotifyManager = nM;
 		mNotification = notif;
 		mNotificationView = rV;
-		Log.i("SaxDataHolderKanjiDict", "SaxDataHolderKanjiDict created");
+		Log.i(LOG_TAG, "SaxDataHolderKanjiDict created");
 	}
 	
 	
 	@Override
 	public void startDocument() throws SAXException {
-		Log.i("SaxDataHolderKanjiDict", "Start of document");
+		Log.i(LOG_TAG, "Start of document");
 		LocalBroadcastManager.getInstance(mContext).registerReceiver(
 				mReceiverInterrupted, new IntentFilter("serviceCanceled"));
 		super.startDocument();
@@ -230,7 +251,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 				try {
 					mValueDicRef.put(mDicRefKey, new String(ch,start,length));
 				} catch (JSONException e) {
-					Log.w("SaxDataHolderKanjiDict", "valueDicRef.put failed");
+					Log.w(LOG_TAG, "valueDicRef.put failed");
 				}
 				mDicRefKey = null;
 				mDicRef = false;
@@ -298,15 +319,13 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 
 			try {
 				mCountDone++;
-				//System.out.println(i);
 				mWriter.addDocument(mDoc);
-				//System.out.println(doc.toString());
 				int persPub = Math.round((((float)mCountDone/ENTRIES_COUNT)*100)) ;
 				
                 if(mPerc < persPub){
                 	if(mPercSave + 4 < persPub){
                 		mWriter.commit();
-                		Log.i("SaxDataHolderKanjiDict", "SaxDataHolder progress saved - " + persPub + " %");
+                		Log.i(LOG_TAG, "SaxDataHolder progress saved - " + persPub + " %");
                 		mPercSave = persPub;
                 	}
                 	
@@ -327,11 +346,11 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	                
                 }
 			} catch (CorruptIndexException e) {
-				Log.e("SaxDataHolderKanjiDict", "Saving doc - Adding document to lucene indexer failed: "+e.toString());
+				Log.e(LOG_TAG, "Saving doc - Adding document to lucene indexer failed: "+e.toString());
 			} catch (IOException e) {
-				Log.e("SaxDataHolderKanjiDict", "Saving doc - Adding document to lucene indexer or commit failed: "+e.toString());
+				Log.e(LOG_TAG, "Saving doc - Adding document to lucene indexer or commit failed: "+e.toString());
 			} catch (Exception e){
-				Log.e("SaxDataHolderKanjiDict", "Saving doc: Unknown exception: "+e.toString());
+				Log.e(LOG_TAG, "Saving doc: Unknown exception: "+e.toString());
 			}
 			mDoc = null;
 		}
@@ -342,13 +361,13 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	
 	@Override
 	public void endDocument(){ 
-		Log.i("SaxDataHolderKanjiDict", "End of document");
+		Log.i(LOG_TAG, "End of document");
 		LocalBroadcastManager.getInstance(mContext).unregisterReceiver(
 				mReceiverInterrupted);
 			try {
 				mWriter.close();
 			} catch (IOException e) {
-				Log.e("SaxDataHolderKanjiDict", "End of document - closinf lucene writer failed");
+				Log.e(LOG_TAG, "End of document - closinf lucene writer failed");
 			}
     } 
 	
@@ -371,9 +390,9 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 				return String.valueOf(number);
 			}
 		}catch(NumberFormatException ex){
-			Log.w("SaxDataHolderKanjiDict","Parsing number - NumberFormatException: "+ parse);
+			Log.w(LOG_TAG,"Parsing number - NumberFormatException: "+ parse);
 		}catch(Exception ex){
-			Log.w("SaxDataHolderKanjiDict","Parsinnumber failed: " +parse);
+			Log.w(LOG_TAG,"Parsinnumber failed: " +parse);
 		}
 		return null;
 	}

@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.entity;
 
 import java.util.ArrayList;
@@ -25,6 +43,7 @@ public class Translation {
 	public static final String SAVE_FRENCH = "cz.muni.fi.japanesedictionary.french";
 	public static final String SAVE_GERMAN = "cz.muni.fi.japanesedictionary.german";
 	
+    private static final String LOG_TAG = "Translation";
 	
 	private List<String> mJapKeb;
 	private List<String> mJapReb;
@@ -124,7 +143,7 @@ public class Translation {
     		try {
     			language_senses = new JSONArray(jsonString);
     		} catch (JSONException e) {
-    			Log.w("Translation","getting parseJapaneseKeb()  initial expression failed: "+ e.toString());
+    			Log.w(LOG_TAG,"getting parseJapaneseKeb()  initial expression failed: "+ e.toString());
     			return ;
     		}
     		japKeb = this.parseOneSense(language_senses);
@@ -146,7 +165,7 @@ public class Translation {
     		try {
     			language_senses = new JSONArray(jsonString);
     		} catch (JSONException e) {
-    			Log.w("Translation","getting parseJapaneseReb()  initial expression failed: "+ e.toString());
+    			Log.w(LOG_TAG,"getting parseJapaneseReb()  initial expression failed: "+ e.toString());
     			return ;
     		}
     		japReb = this.parseOneSense(language_senses);
@@ -173,7 +192,7 @@ public class Translation {
 				oneSense = sense.getString(k);
 				senseTranslation.add(oneSense);
 			} catch (JSONException e) {
-				Log.w("Translation","getting parseOneSense() expression failed: "+ e.toString());
+				Log.w(LOG_TAG,"getting parseOneSense() expression failed: "+ e.toString());
 				e.printStackTrace();
 			}
 		}
@@ -193,7 +212,7 @@ public class Translation {
 		try {
 			language_senses = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("Translation","getting parseEnglish()  initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"getting parseEnglish()  initial expression failed: "+ e.toString());
 			return ;
 		}
 	
@@ -204,7 +223,7 @@ public class Translation {
 					sense = parseOneSense(language_senses.getJSONArray(j));
 					this.addEnglishSense(sense);
 				} catch (JSONException e) {
-					Log.w("Translation","getting parseEnglish() expression failed: "+ e.toString());
+					Log.w(LOG_TAG,"getting parseEnglish() expression failed: "+ e.toString());
 				}
 			}
     	}
@@ -224,7 +243,7 @@ public class Translation {
 		try {
 			language_senses = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("Translation","getting parseDutch()  initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"getting parseDutch()  initial expression failed: "+ e.toString());
 			return ;
 		}
 	
@@ -235,7 +254,7 @@ public class Translation {
 					sense = parseOneSense(language_senses.getJSONArray(j));
 					this.addDutchSense(sense);
 				} catch (JSONException e) {
-					Log.w("Translation","getting parseDutch() expression failed: "+ e.toString());
+					Log.w(LOG_TAG,"getting parseDutch() expression failed: "+ e.toString());
 				}
 			}
     	}
@@ -254,7 +273,7 @@ public class Translation {
 		try {
 			language_senses = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("Translation","getting parseFrench()  initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"getting parseFrench()  initial expression failed: "+ e.toString());
 			return ;
 		}
 	
@@ -265,7 +284,7 @@ public class Translation {
 					sense = parseOneSense(language_senses.getJSONArray(j));
 					this.addFrenchSense(sense);
 				} catch (JSONException e) {
-					Log.w("Translation","getting parseFrench() expression failed: "+ e.toString());
+					Log.w(LOG_TAG,"getting parseFrench() expression failed: "+ e.toString());
 				}
 			}
     	}
@@ -284,7 +303,7 @@ public class Translation {
 		try {
 			language_senses = new JSONArray(jsonString);
 		} catch (JSONException e) {
-			Log.w("Translation","getting parseGerman()  initial expression failed: "+ e.toString());
+			Log.w(LOG_TAG,"getting parseGerman()  initial expression failed: "+ e.toString());
 			return ;
 		}
 	
@@ -295,7 +314,7 @@ public class Translation {
 					sense = parseOneSense(language_senses.getJSONArray(j));
 					this.addGermanSense(sense);
 				} catch (JSONException e) {
-					Log.w("Translation","getting parseGerman() expression failed: "+ e.toString());
+					Log.w(LOG_TAG,"getting parseGerman() expression failed: "+ e.toString());
 				}
 			}
     	}

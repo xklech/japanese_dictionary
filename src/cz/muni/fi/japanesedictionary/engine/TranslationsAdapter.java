@@ -1,3 +1,39 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.engine;
 
 import java.util.List;
@@ -25,8 +61,6 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
  *
  */
 public class TranslationsAdapter extends ArrayAdapter<Translation>{
-    
-	
 	
 	/**
 	 * Static Translation holder for item View.
@@ -40,12 +74,12 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
 	
 	
     private Context mContext;
-    boolean mEnglish;
-    boolean mFrench;
-    boolean mDutch;
-    boolean mGerman;
-    LayoutInflater mInflater;
-
+    private boolean mEnglish;
+    private boolean mFrench;
+    private boolean mDutch;
+    private boolean mGerman;
+    private LayoutInflater mInflater;
+    private ListItemComparator mListComaparator;
 
     
     /**
@@ -61,6 +95,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         mDutch = sharedPrefs.getBoolean("language_dutch", false);
         mGerman = sharedPrefs.getBoolean("language_german", false);
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mListComaparator = new ListItemComparator();
     }
 
     /**
@@ -85,7 +120,9 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
      */
     public void addListItem(Translation translation){
     	if(translation != null){
+    		setNotifyOnChange(false);
     		add(translation);
+    		sort(mListComaparator);
     		notifyDataSetChanged();
     	}
     }

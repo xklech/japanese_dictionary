@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.fragments;
 
 import java.util.HashMap;
@@ -27,6 +45,8 @@ import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
  */
 public class DisplayCharacterInfo extends SherlockFragment{
 	
+    private static final String LOG_TAG = "DisplayCharacterInfo";
+	
 	private JapaneseCharacter mJapaneseCharacter;
 	private LayoutInflater mInflater;
 
@@ -39,7 +59,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	public void onSaveInstanceState(Bundle outState) {
 		if(mJapaneseCharacter != null){
 			outState = mJapaneseCharacter.createBundleFromJapaneseCharacter(outState);
-			Log.i("DisplayCharacterInfo","saving state: "+outState);
+			Log.i(LOG_TAG,"saving state: "+outState);
 		}
 		super.onSaveInstanceState(outState);
 	}
@@ -58,7 +78,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		mInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if(savedInstanceState != null){
 			mJapaneseCharacter = JapaneseCharacter.newInstanceFromBundle(savedInstanceState);
-			Log.i("DisplayCharacterInfo","saved state: "+savedInstanceState);	
+			Log.i(LOG_TAG,"saved state: "+savedInstanceState);	
 		}
 		super.onCreate(savedInstanceState);
 	}
@@ -69,7 +89,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		if(mJapaneseCharacter ==null){
-			Log.i("DisplayCharacterInfo","Get japanese character from bundle");
+			Log.i(LOG_TAG,"Get japanese character from bundle");
 			Bundle bundle = getArguments();
 			mJapaneseCharacter = JapaneseCharacter.newInstanceFromBundle(bundle);
 		}
@@ -79,7 +99,6 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	
 	@Override
 	public void onStart() {
-		updateLanguages();
 		updateCharacter();
 		super.onStart();
 	}
@@ -90,18 +109,18 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	 * 
 	 */
 	private void updateCharacter(){
-		Log.i("DisplayCharacterInfo","Setting literal");
+		Log.i(LOG_TAG,"Setting literal");
 		if(mJapaneseCharacter == null){
 			Toast.makeText(getActivity(), R.string.character_unknown_character, Toast.LENGTH_LONG).show();
 			return;
 		}
-		
+		updateLanguages();
 		TextView literal = (TextView)getView().findViewById(R.id.kanjidict_literal);
 		literal.setText(mJapaneseCharacter.getLiteral());
 		getSherlockActivity().getSupportActionBar().setTitle(mJapaneseCharacter.getLiteral());
 		
 		if(mJapaneseCharacter.getRadicalClassic() != 0){
-			Log.i("DisplayCharacterInfo","Setting radical: " + mJapaneseCharacter.getRadicalClassic());
+			Log.i(LOG_TAG,"Setting radical: " + mJapaneseCharacter.getRadicalClassic());
 			TextView radicalClassical = (TextView)getView().findViewById(R.id.kanjidict_radical);
 			radicalClassical.setText(String.valueOf(mJapaneseCharacter.getRadicalClassic()));
 		}else{
@@ -109,7 +128,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}
 		
 		if(mJapaneseCharacter.getGrade() != 0){
-			Log.i("DisplayCharacterInfo","Setting grade: " + mJapaneseCharacter.getGrade());
+			Log.i(LOG_TAG,"Setting grade: " + mJapaneseCharacter.getGrade());
 			TextView grade = (TextView)getView().findViewById(R.id.kanjidict_grade);
 			grade.setText(String.valueOf(mJapaneseCharacter.getGrade()));
 		}else{
@@ -117,7 +136,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}
 		
 		if(mJapaneseCharacter.getStrokeCount() != 0){
-			Log.i("DisplayCharacterInfo","Setting stroke count: " + mJapaneseCharacter.getStrokeCount());
+			Log.i(LOG_TAG,"Setting stroke count: " + mJapaneseCharacter.getStrokeCount());
 			TextView strokeCount = (TextView)getView().findViewById(R.id.kanjidict_stroke_count);
 			strokeCount.setText(String.valueOf(mJapaneseCharacter.getStrokeCount()));
 		}else{
@@ -125,7 +144,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}
 		
 		if(mJapaneseCharacter.getSkip() != null && mJapaneseCharacter.getSkip().length() > 0){
-			Log.i("DisplayCharacterInfo","Setting skip: " + mJapaneseCharacter.getSkip());
+			Log.i(LOG_TAG,"Setting skip: " + mJapaneseCharacter.getSkip());
 			TextView skip = (TextView)getView().findViewById(R.id.kanjidict_skip);
 			skip.setText(mJapaneseCharacter.getSkip());
 		}else{
@@ -134,7 +153,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	
 		
 		if(mJapaneseCharacter.getNanori() != null && mJapaneseCharacter.getNanori().size() > 0){
-			Log.i("DisplayCharacterInfo","Setting nanori: " + mJapaneseCharacter.getNanori());
+			Log.i(LOG_TAG,"Setting nanori: " + mJapaneseCharacter.getNanori());
 			int count = mJapaneseCharacter.getNanori().size();
 			int i =1;
 			StringBuilder strBuilder = new StringBuilder();
@@ -152,7 +171,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}
 
 		if(mJapaneseCharacter.getRmGroupJaKun() != null && mJapaneseCharacter.getRmGroupJaKun().size() > 0){
-			Log.i("DisplayCharacterInfo","Setting kunyomi: " + mJapaneseCharacter.getRmGroupJaKun());
+			Log.i(LOG_TAG,"Setting kunyomi: " + mJapaneseCharacter.getRmGroupJaKun());
 			int count = mJapaneseCharacter.getRmGroupJaKun().size();
 			int i =1;
 			StringBuilder strBuilder = new StringBuilder();
@@ -170,7 +189,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}
 		
 		if(mJapaneseCharacter.getRmGroupJaOn() != null && mJapaneseCharacter.getRmGroupJaOn().size() > 0){
-			Log.i("DisplayCharacterInfo","Setting onnyomi: " + mJapaneseCharacter.getRmGroupJaOn());
+			Log.i(LOG_TAG,"Setting onnyomi: " + mJapaneseCharacter.getRmGroupJaOn());
 			int count = mJapaneseCharacter.getRmGroupJaOn().size();
 			int i =1;
 			StringBuilder strBuilder = new StringBuilder();
@@ -191,7 +210,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		LinearLayout container = (LinearLayout) getView().findViewById(R.id.kanjidict_meanings_lines_container);
 		container.removeAllViews();
 		if(mEnglish && mJapaneseCharacter.getMeaningEnglish() != null && mJapaneseCharacter.getMeaningEnglish().size() > 0){
-			Log.i("DisplayCharacter","Setting english meaning");
+			Log.i(LOG_TAG,"Setting english meaning");
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
@@ -208,12 +227,12 @@ public class DisplayCharacterInfo extends SherlockFragment{
 			}
 			TextView meaningTextView = (TextView)languageView.findViewById(R.id.kanjidict_translation);
 			meaningTextView.setText(strBuilder);
-			Log.i("DisplayCharacter","Setting english meaning: "+strBuilder);
+			Log.i(LOG_TAG,"Setting english meaning: "+strBuilder);
 			container.addView(languageView);
 		}
 		
 		if(mFrench && mJapaneseCharacter.getMeaningFrench() != null && mJapaneseCharacter.getMeaningFrench().size() > 0){
-			Log.i("DisplayCharacter","Setting french meaning");
+			Log.i(LOG_TAG,"Setting french meaning");
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
@@ -255,7 +274,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}
 
 		if(mGerman && mJapaneseCharacter.getMeaningGerman() != null && mJapaneseCharacter.getMeaningGerman().size() > 0){
-			Log.i("DisplayCharacter","Setting german meaning");
+			Log.i(LOG_TAG,"Setting german meaning");
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
@@ -276,13 +295,13 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		}
 		
 		if(!hasMeaning){
-			Log.i("DisplayCharacter","Doesn't have meanings");
+			Log.i(LOG_TAG,"Doesn't have meanings");
 			getView().findViewById(R.id.kanjidict_meanings_container).setVisibility(View.GONE);
 		}
 
 		
 		if(mJapaneseCharacter.getDicRef() != null && mJapaneseCharacter.getDicRef().size() > 0){
-			Log.i("DisplayCharacterInfo","Setting dictionary references");
+			Log.i(LOG_TAG,"Setting dictionary references");
 			Map<String, String> dictionaries = getDictionaryCodes();
 			LinearLayout dictionariesContainer = (LinearLayout) getView().findViewById(R.id.kanjidict_dictionaries_records);
 			for(String key:mJapaneseCharacter.getDicRef().keySet()){

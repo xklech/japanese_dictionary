@@ -1,3 +1,21 @@
+/**
+ *     JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package cz.muni.fi.japanesedictionary.database;
 
 import java.util.ArrayList;
@@ -24,6 +42,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "JapaneseDictionary.db";
 	
+    private static final String LOG_TAG = "GlossaryReaderContract";
 
     
 	public static abstract class GlossaryEntry implements BaseColumns{
@@ -79,9 +98,16 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	public void saveTranslation(Translation translation){
 		SQLiteDatabase db = this.getWritableDatabase();	
 		ContentValues values = translation.createContentValuesFromTranslation();
-
-		Log.i("GlossaryReaderContract","Save translation values: "+values.toString());
-		db.close();
+		if(db.isOpen()){
+			long returnedId = db.insert(GlossaryEntry.TABLE_NAME,null, values);
+			if(returnedId == -1){
+				Log.e(LOG_TAG, "Error inserting Transaltion: "+translation.toString()+" Values: "+values.toString());
+			}
+			db.close();
+		}else{
+			Log.w(LOG_TAG, "Error inserting Transaltion, database is closed");
+		}
+		
 	}
 	
 	/**
@@ -93,10 +119,14 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 		if(count < 1){
 			return null;
 		}
-		List<Translation> translationsReturn = new ArrayList<Translation>();
+		
 		
 	    SQLiteDatabase db = this.getReadableDatabase();
-	    
+		if(!db.isOpen()){
+			Log.w(LOG_TAG, "Error retreiving Transaltions, database is closed");
+			return null;
+		}
+		List<Translation> translationsReturn = new ArrayList<Translation>();
 	    String[] projection = new String[]{	    		
 	    		GlossaryEntry.COLUMN_NAME_JAPANESE_KEB,
 	    		GlossaryEntry.COLUMN_NAME_JAPANESE_REB,
