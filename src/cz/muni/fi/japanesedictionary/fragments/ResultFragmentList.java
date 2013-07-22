@@ -87,7 +87,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	    /**
 	     *  Sets first list item checked and if fragment is attached displays item using activity
 	     * 
-	     *  @param any message
+	     *  @param msg any message
 	     */
 	    @Override
 	    public void handleMessage(Message msg)
@@ -107,8 +107,7 @@ public class ResultFragmentList extends SherlockListFragment implements
 	
 	/**
 	 * Creates new instance of ResultFragment with params put in bundle
-	 * 
-	 * @param search string to be searched for
+	 *
 	 * @param part part of word to be searched in
 	 * @return new instance of ResultFragmentList
 	 */
@@ -267,10 +266,9 @@ public class ResultFragmentList extends SherlockListFragment implements
 	}
 
 	/**
-	 * Runs new search for translations according to new expression and word part.
+	 * Runs new search for translations according to new expression.
 	 * 
 	 * @param expression to be searched for
-	 * @param part to be searched in
 	 */
 	public void search(String expression){
 		if(expression == null && this.mLastSearched == null){

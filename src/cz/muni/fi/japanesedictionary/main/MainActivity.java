@@ -19,6 +19,7 @@
 package cz.muni.fi.japanesedictionary.main;
 
 import java.io.File;
+import java.util.List;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -82,14 +83,14 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	public static final String DUAL_PANE = "cz.muni.fi.japanesedictionary.mainactivity.dualpane";
 	public static final String PARSER_SERVICE = "cz.muni.fi.japanesedictionary.parser.ParserService";
-	public static final String SEARCH_PREFERENCES = "cz.muni.fi.japanesedictionary.main.search_preferences";
+	//public static final String SEARCH_PREFERENCES = "cz.muni.fi.japanesedictionary.main.search_preferences";
 	public static final String SEARCH_TEXT = "cz.muni.fi.japanesedictionary.edit_text_searched";
 	public static final String PART_OF_TEXT = "cz.muni.fi.japanesedictionary.edit_text_part";
-	public static final String HANDLER_BUNDLE_TRANSLATION = "cz.muni.fi.japanesedictionary.handler_bundle_translation";
-	public static final String HANDLER_BUNDLE_TAB = "cz.muni.fi.japanesedictionary.handler_bundle_tab";
-	public static final String FRAGMENT_CREATE_TRANSLATION = "cz.muni.fi.japanesedictionary.fragment_create_translation";
-	public static final String FRAGMENT_CREATE_PART = "cz.muni.fi.japanesedictionary.fragment_create_part";
-	public static final String DISPLAY_TRANSLATION_ACTIVITY_BUNDLE = "cz.muni.fi.japanesedictionary.display_translation_activity_bundle";
+	//public static final String HANDLER_BUNDLE_TRANSLATION = "cz.muni.fi.japanesedictionary.handler_bundle_translation";
+	//public static final String HANDLER_BUNDLE_TAB = "cz.muni.fi.japanesedictionary.handler_bundle_tab";
+	//public static final String FRAGMENT_CREATE_TRANSLATION = "cz.muni.fi.japanesedictionary.fragment_create_translation";
+	//public static final String FRAGMENT_CREATE_PART = "cz.muni.fi.japanesedictionary.fragment_create_part";
+	//public static final String DISPLAY_TRANSLATION_ACTIVITY_BUNDLE = "cz.muni.fi.japanesedictionary.display_translation_activity_bundle";
 
 	
 
@@ -255,7 +256,7 @@ public class MainActivity extends SherlockFragmentActivity
 	/**
 	 * Listener for menu item selected.
 	 * 
-	 * @item - home item selected, restarts main activity
+	 * @param item - home item selected, restarts main activity
 	 * 		 - settings item selceted, launches new MypreferenceActivity
 	 * 		 - other item, default behavior
 	 */
@@ -271,16 +272,22 @@ public class MainActivity extends SherlockFragmentActivity
 	            return true;
 	        case R.id.settings:
     			Log.i(LOG_TAG, "Lauching preference Activity");
-    			Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+    			Intent intentSetting = new Intent(this.getApplicationContext(),MyPreferencesActivity.class);
     			intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentSetting);
     			return true;
 	        case R.id.about:
     			Log.i(LOG_TAG, "Lauching About Activity");
-    			Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
+    			Intent intentAbout = new Intent(this.getApplicationContext(),AboutActivity.class);
     			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentAbout);
     			return true;
+            case R.id.favorites_activity:
+                Log.i(LOG_TAG, "Lauching Favorite activity");
+                Intent intentFavorites = new Intent(this.getApplicationContext(),FavoriteActivity.class);
+                intentFavorites.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intentFavorites);
+                return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -347,8 +354,11 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	public static boolean isMyServiceRunning(Context context) {
 		ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-		for (RunningServiceInfo service : manager
-				.getRunningServices(Integer.MAX_VALUE)) {
+        List<RunningServiceInfo> runningServices = manager.getRunningServices(Integer.MAX_VALUE);
+        if(runningServices == null){
+            return false;
+        }
+        for (RunningServiceInfo service : runningServices) {
 			if (PARSER_SERVICE.equals(service.service.getClassName())) {
 				return true;
 			}
@@ -527,7 +537,7 @@ public class MainActivity extends SherlockFragmentActivity
 
 		Log.i(LOG_TAG, "Tab changed: " + mTabKeys[tab.getPosition()]);
 		String key = mTabKeys[tab.getPosition()];
-		if(key != mLastTabId){
+		if(!key.equals(mLastTabId)){
 			mLastTabId = key;
 			mPager.setCurrentItem(tab.getPosition());
 		}
@@ -541,7 +551,7 @@ public class MainActivity extends SherlockFragmentActivity
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		
+
 	}
 	
 	

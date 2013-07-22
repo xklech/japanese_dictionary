@@ -34,8 +34,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter{
 
 	@Override
 	public Fragment getItem(int index) {
-		ResultFragmentList list = ResultFragmentList.newInstance(MainActivity.mTabKeys[index]);
-		return list;
+		return ResultFragmentList.newInstance(MainActivity.mTabKeys[index]);
 	}
 
 	@Override

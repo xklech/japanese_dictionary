@@ -24,6 +24,12 @@
     	android:showAsAction="ifRoom|collapseActionView"
     	android:actionViewClass="com.actionbarsherlock.widget.SearchView"
     	/>
+    <item
+            android:title="@string/menu_favorite_activity"
+            android:showAsAction="ifRoom"
+            android:id="@+id/favorites_activity"
+            android:icon="@drawable/rating_favorite"
+            />
 	<item 
 	    android:title="@string/menu_setting"
 	    android:showAsAction="never"

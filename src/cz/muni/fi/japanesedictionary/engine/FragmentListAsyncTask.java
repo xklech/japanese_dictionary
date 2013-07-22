@@ -68,7 +68,7 @@ public class FragmentListAsyncTask extends
 	 * 
 	 * @param list
 	 *            List implementing SearchListener
-	 * @param cont
+	 * @param context
 	 *            environment context
 	 */
 	public FragmentListAsyncTask(SearchListener list, Context context) {
@@ -115,7 +115,7 @@ public class FragmentListAsyncTask extends
 			return null;
 		}
 		File file = new File(pathToDictionary);
-		if (file == null || !file.exists() || !file.canRead()) {
+		if (!file.exists() || !file.canRead()) {
 			Log.e(LOG_TAG,
 					"Cant read jmdict dictionary directory");
 			return null;
@@ -143,7 +143,7 @@ public class FragmentListAsyncTask extends
 			StringBuilder searchBuilder = new StringBuilder();
 			for (int i = 0; i < expression.length(); i++) {
 				String character = String.valueOf(expression.charAt(i));
-				searchBuilder.append(character + ' ');
+				searchBuilder.append(character).append(' ');
 			}
 			expression = searchBuilder.toString();
 

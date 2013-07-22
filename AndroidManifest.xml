@@ -39,7 +39,7 @@
         <activity
             android:name="cz.muni.fi.japanesedictionary.main.MainActivity"
             android:label="@string/title_activity_main" 
-            android:launchMode="standard" 
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden"    
             >
             <intent-filter>
@@ -69,9 +69,12 @@
             android:label="@string/about_title"             
             >
         </activity>
+        <activity
+                android:name=".main.FavoriteActivity"
+                android:label="@string/favorite_title"
+                >
+        </activity>
         <service android:name="cz.muni.fi.japanesedictionary.parser.ParserService" 
-            	 android:exported="false" />
-        <service android:name="cz.muni.fi.japanesedictionary.parser.ParserService2" 
             	 android:exported="false" />
     </application>
 

@@ -76,7 +76,7 @@ public class DisplayCharacterInfoActivity extends SherlockFragmentActivity
 	/**
 	 * Listener for menu item selected.
 	 * 
-	 * @item - home item selected, restarts main activity
+	 * @param item - home item selected, restarts main activity
 	 * 		 - settings item selceted, launches new MypreferenceActivity
 	 * 		 - other item, default behavior
 	 */
@@ -102,6 +102,12 @@ public class DisplayCharacterInfoActivity extends SherlockFragmentActivity
     			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentAbout);
     			return true;
+            case R.id.favorites_activity:
+                Log.i(LOG_TAG, "Lauching Favorite activity");
+                Intent intentFavorites = new Intent(this.getApplicationContext(),FavoriteActivity.class);
+                intentFavorites.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intentFavorites);
+                return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

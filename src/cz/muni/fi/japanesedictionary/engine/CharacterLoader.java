@@ -76,13 +76,15 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	 * @param params string which contains characters
 	 * @return Map<String, JapaneseCharacter> if some characters were found returns map else null
 	 */
-	@Override
+	@SuppressWarnings("MalformedRegex")
+    @Override
 	protected Map<String, JapaneseCharacter> doInBackground(
 			String... params) {
 		String characterList = params[0];
 		if(characterList == null || characterList.length() <1){
 			return null;
 		}
+
 		SharedPreferences settings = mContext.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
         String pathToDictionary = settings.getString("pathToKanjiDictionary", null);
         if(pathToDictionary == null){
@@ -94,7 +96,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
         	Log.e(LOG_TAG, "Can't read dictionary directory");
         	return null;
         }
-        StringBuffer searchBuilder = new StringBuffer();
+        StringBuilder searchBuilder = new StringBuilder();
         final int characterListSize = characterList.length();
         // search string
         for(int i =0;i< characterListSize ; i++){
@@ -103,7 +105,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
         		if(i > 0){ //searchBuilder.length() > 0
 	        		searchBuilder.append(' '); // in lucene space serve as OR
 	        	}
-	        	searchBuilder.append('"' +  character + '"');
+	        	searchBuilder.append('"').append(character).append('"');
         	}
         }
         String search = searchBuilder.toString();

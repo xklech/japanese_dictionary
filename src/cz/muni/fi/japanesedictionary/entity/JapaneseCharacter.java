@@ -238,33 +238,33 @@ public class JapaneseCharacter {
 			return ;
 		}
 		Map<String,String> dicRefTemp = new HashMap<String,String>();
-    	JSONObject dicRefJson = null;
+    	JSONObject dicRefJson;
 		try {
 			dicRefJson = new JSONObject(jsonString);
 		} catch (JSONException e) {
 			Log.w(LOG_TAG,"getting parseJapaneseKeb()  initial expression failed: "+ e.toString());
 			return ;
 		}
-		if(dicRefJson != null){
-			Iterator<?> keys = dicRefJson.keys();
-			while(keys.hasNext()){
-				String key = (String)keys.next();
-				String value;
-				try {
-					value = dicRefJson.getString(key);
-					if(key != null && value != null){
-						dicRefTemp.put(key, value);
-					}
-				} catch (JSONException e) {
-					Log.w(LOG_TAG,"parsing dicRef failed");
-				}
-			}
-			if(dicRefTemp != null && dicRefTemp.size() > 0 ){
-				for(String key : dicRefTemp.keySet()){
-					addDicRef(key, dicRefTemp.get(key));
-				}
-			}
-		}
+
+        Iterator<?> keys = dicRefJson.keys();
+        while(keys.hasNext()){
+            String key = (String)keys.next();
+            String value;
+            try {
+                value = dicRefJson.getString(key);
+                if(key != null && value != null){
+                    dicRefTemp.put(key, value);
+                }
+            } catch (JSONException e) {
+                Log.w(LOG_TAG,"parsing dicRef failed");
+            }
+        }
+        if(dicRefTemp.size() > 0 ){
+            for(String key : dicRefTemp.keySet()){
+                addDicRef(key, dicRefTemp.get(key));
+            }
+        }
+
 		
 	}
 	
@@ -277,7 +277,7 @@ public class JapaneseCharacter {
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
     	}
-		List<String> temp = null;
+		List<String> temp;
     	JSONArray parseJSON;
 		try {
 			parseJSON = new JSONArray(jsonString);
@@ -300,7 +300,7 @@ public class JapaneseCharacter {
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
     	}
-		List<String> temp = null;
+		List<String> temp;
     	JSONArray parseJSON;
 		try {
 			parseJSON = new JSONArray(jsonString);
@@ -323,7 +323,7 @@ public class JapaneseCharacter {
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
     	}
-		List<String> temp = null;
+		List<String> temp;
     	JSONArray parseJSON;
 		try {
 			parseJSON = new JSONArray(jsonString);
@@ -347,7 +347,7 @@ public class JapaneseCharacter {
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
     	}
-		List<String> temp = null;
+		List<String> temp;
     	JSONArray parseJSON;
 		try {
 			parseJSON = new JSONArray(jsonString);
@@ -370,7 +370,7 @@ public class JapaneseCharacter {
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
     	}
-		List<String> temp = null;
+		List<String> temp;
     	JSONArray parseJSON;
 		try {
 			parseJSON = new JSONArray(jsonString);
@@ -393,7 +393,7 @@ public class JapaneseCharacter {
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
     	}
-		List<String> temp = null;
+		List<String> temp;
     	JSONArray parseJSON;
 		try {
 			parseJSON = new JSONArray(jsonString);
@@ -416,7 +416,7 @@ public class JapaneseCharacter {
     	if(jsonString == null  || jsonString.length() < 1){
     		return ;
     	}
-		List<String> temp = null;
+		List<String> temp;
     	JSONArray parseJSON;
 		try {
 			parseJSON = new JSONArray(jsonString);
@@ -441,7 +441,7 @@ public class JapaneseCharacter {
 		}
 		List<String> temp = new ArrayList<String>();
 		for(int k = 0; k < sense.length();k++  ){
-			String value = null;
+			String value;
 			try {
 				value = sense.getString(k);
 				temp.add(value);

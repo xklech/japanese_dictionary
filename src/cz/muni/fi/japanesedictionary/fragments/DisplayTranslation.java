@@ -23,6 +23,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,13 +36,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.DBAsyncTask;
 import cz.muni.fi.japanesedictionary.engine.CharacterLoader;
+import cz.muni.fi.japanesedictionary.engine.FavoriteChanger;
+import cz.muni.fi.japanesedictionary.engine.FavoriteLoader;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
+import cz.muni.fi.japanesedictionary.interfaces.OnCreateFavoriteListener;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
+import cz.muni.fi.japanesedictionary.main.MainActivity;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 
 /**
@@ -54,7 +60,7 @@ public class DisplayTranslation extends SherlockFragment {
 	
     private static final String LOG_TAG = "DisplayTranslation";
 	
-	private OnCreateTranslationListener mCallbackTranslation;
+	private OnCreateFavoriteListener mCallbackTranslation;
 	private Translation mTranslation = null;
 	private Map<String, JapaneseCharacter> mCharacters = null;
 	private LayoutInflater mInflater = null;
@@ -70,7 +76,7 @@ public class DisplayTranslation extends SherlockFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-        	mCallbackTranslation = (OnCreateTranslationListener) activity;
+        	mCallbackTranslation = (OnCreateFavoriteListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
@@ -102,9 +108,23 @@ public class DisplayTranslation extends SherlockFragment {
         
         super.onCreate(savedInstanceState);
 	}
-	
-	
-	@Override
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.favorite:
+                Log.i(LOG_TAG, "favorite changed");
+                mCallbackTranslation.getFavoriteMenuItem().setEnabled(false);
+                FavoriteChanger changeFavorite = new FavoriteChanger(mCallbackTranslation.getDatabse(), mCallbackTranslation.getFavoriteMenuItem(), this);
+                changeFavorite.execute(mTranslation);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
 	public void onSaveInstanceState(Bundle outState) {
 		
 		if(mTranslation!= null){
@@ -205,9 +225,9 @@ public class DisplayTranslation extends SherlockFragment {
         }
         if(alternativeStrBuilder.length() > 0){
         	alternative.setText(alternativeStrBuilder);  
-	       	((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.VISIBLE);
+	       	getView().findViewById(R.id.translation_alternative_container).setVisibility(View.VISIBLE);
 		}else{
-			((LinearLayout)getView().findViewById(R.id.translation_alternative_container)).setVisibility(View.GONE);
+			getView().findViewById(R.id.translation_alternative_container).setVisibility(View.GONE);
 		}
         
         
@@ -321,7 +341,7 @@ public class DisplayTranslation extends SherlockFragment {
 		        		}
 		        	}
 	        }
-	        ((LinearLayout)getView().findViewById(R.id.translation_kanji_container)).setVisibility(View.GONE);
+	        getView().findViewById(R.id.translation_kanji_container).setVisibility(View.GONE);
 	        mCharacters = null;
 	        if(writeCharacters != null){
 	        	// write single characters
@@ -330,9 +350,9 @@ public class DisplayTranslation extends SherlockFragment {
 	        		charLoader.execute(writeCharacters);
 	        	}
 	        }
-	        
-	        
-    	}else{
+            FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mCallbackTranslation.getFavoriteMenuItem(), this);
+            favoriteLoader.execute(mTranslation);
+        }else{
     		Log.e(LOG_TAG, "inflater null");
     	}        
 	}
@@ -421,7 +441,7 @@ public class DisplayTranslation extends SherlockFragment {
 	        			meaningView.setText(strBuilder);
 	        		}
 	        	}else{
-	        		meaningView.setText(getString(R.string.tramslation_kanji_no_meaning));
+	        		meaningView.setText(getString(R.string.translation_kanji_no_meaning));
 	        	}
 	        	
 	        	translationKanji.findViewById(R.id.kanji_line_id).setOnClickListener(new OnClickListener() {

@@ -18,17 +18,22 @@
 
 package cz.muni.fi.japanesedictionary.entity;
 
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.security.MessageDigest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract.GlossaryEntry;
 
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.util.Log;
+
+import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 
 /**
  * Entity class for translation
@@ -138,7 +143,7 @@ public class Translation {
 	 */
 	public void parseJapaneseKeb(String jsonString){
     	if(jsonString != null){
-    		List<String> japKeb = null;
+    		List<String> japKeb;
         	JSONArray language_senses;
     		try {
     			language_senses = new JSONArray(jsonString);
@@ -160,7 +165,7 @@ public class Translation {
 	 */
 	public void parseJapaneseReb(String jsonString){
     	if(jsonString != null){
-    		List<String> japReb = null;
+    		List<String> japReb;
         	JSONArray language_senses;
     		try {
     			language_senses = new JSONArray(jsonString);
@@ -187,7 +192,7 @@ public class Translation {
 		}
 		List<String> senseTranslation = new ArrayList<String>();
 		for(int k = 0; k < sense.length();k++  ){
-			String oneSense = null;
+			String oneSense;
 			try {
 				oneSense = sense.getString(k);
 				senseTranslation.add(oneSense);
@@ -365,28 +370,29 @@ public class Translation {
 	public ContentValues createContentValuesFromTranslation(){
 		ContentValues values = new ContentValues();
 		if(this.getJapaneseKeb() != null && this.getJapaneseKeb().size() > 0){
-			values.put(GlossaryEntry.COLUMN_NAME_JAPANESE_KEB, (new JSONArray(this.getJapaneseKeb())).toString());
+			values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_JAPANESE_KEB, (new JSONArray(this.getJapaneseKeb())).toString());
 		}
 		if(this.getJapaneseReb() != null && this.getJapaneseReb().size() > 0){
-			values.put(GlossaryEntry.COLUMN_NAME_JAPANESE_REB, (new JSONArray(this.getJapaneseReb())).toString());
+			values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_JAPANESE_REB, (new JSONArray(this.getJapaneseReb())).toString());
 		}
 		if(this.getDutchSense() != null && this.getDutchSense().size() > 0){	
 			JSONArray sense = convertToJSON(this.getDutchSense());
-			values.put(GlossaryEntry.COLUMN_NAME_DUTCH,sense.toString());
+			values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_DUTCH,sense.toString());
 		}
 		
 		if(this.getEnglishSense() != null && this.getEnglishSense().size() > 0){	
 			JSONArray sense = convertToJSON(this.getEnglishSense());
-			values.put(GlossaryEntry.COLUMN_NAME_ENGLISH, sense.toString());
+			values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_ENGLISH, sense.toString());
 		}
 		if(this.getFrenchSense() != null && this.getFrenchSense().size() > 0){	
 			JSONArray sense = convertToJSON(this.getFrenchSense());
-			values.put(GlossaryEntry.COLUMN_NAME_FRENCH, sense.toString());
+			values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_FRENCH, sense.toString());
 		}
 		if(this.getGermanSense() != null && this.getGermanSense().size() > 0){
 			JSONArray sense = convertToJSON(this.getGermanSense());
-			values.put(GlossaryEntry.COLUMN_NAME_GERMAN, sense.toString());
+			values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_GERMAN, sense.toString());
 		}
+        values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED, (new Date()).getTime());
 		return values;
 	}
 	
@@ -436,5 +442,17 @@ public class Translation {
 		return senseJSON;
 		
 	}
-	
+
+    public String getIndexHash(){
+        StringBuilder hashString = new StringBuilder();
+        hashString.append(getJapaneseKeb()).append(getJapaneseReb());
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            byte[] hashBytes = messageDigest.digest(hashString.toString().getBytes());
+            return new BigInteger(1,hashBytes).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(LOG_TAG,"getting getIndexHash() hash failed: "+ e.toString());
+        }
+        return null;
+    }
 }

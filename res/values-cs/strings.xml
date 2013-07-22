@@ -32,7 +32,7 @@
     <!-- MainActivity -->
     <string name="parsing_downloaded_dictionary">Zpracování staženého slovníku</string>
     <string name="no_dictionary_found">Slovník nenalezen</string>
-    <string name="nothing_found">Výraz nenalezen</string>
+    <string name="nothing_found">Žádný výsledek</string>
     <string name="download_dictionary_question">Chcete nyní stáhnout slovník? Vyžadováno připojení k internetu. Velikost: 12 MB.</string>
     <string name="download">Stáhnout</string>
     <string name="storno">Zrušit</string>
@@ -47,7 +47,12 @@
     <string name="unknown_last_update">Poslední aktualizace neznámá</string>
     <string name="last_update">Poslední aktualizace:</string>
     <string name="actionbar_search">Hledat</string>
-    
+    <string name="menu_favorite">Oblíbené</string>
+    <string name="menu_favorite_activity">Zobraz oblíbené</string>
+
+    <!-- Favorite -->
+    <string name="favorite_title">Oblíbené</string>
+
     <!-- Languages -->
     <string name="language_english">Anglicky</string>
     <string name="language_french">Francouzsky</string>
@@ -76,13 +81,13 @@
  	
    
    <!-- Display Translation -->
-   <string name="tramslation_select_translation">Vyberte překlad</string>
-   <string name="tramslation_title">Detail záznamu</string>
-   <string name="tramslation_romaji">Romaji</string>  
-   <string name="tramslation_alternative">Alternativy</string> 
-   <string name="tramslation_translation">Překlad</string> 
-   <string name="tramslation_kanji">Kanji</string> 
-   <string name="tramslation_kanji_no_meaning">Žádné známe významy ve zvoleném jazyce</string> 
+   <string name="translation_select_translation">Vyberte překlad</string>
+   <string name="translation_title">Detail záznamu</string>
+   <string name="translation_romaji">Romaji</string>
+   <string name="translation_alternative">Alternativy</string>
+   <string name="translation_translation">Překlad</string>
+   <string name="translation_kanji">Kanji</string>
+   <string name="translation_kanji_no_meaning">Žádné známe významy ve zvoleném jazyce</string>
    
    <!-- Display character info -->
    <string name="character_unknown_character">Neznámý znak</string>

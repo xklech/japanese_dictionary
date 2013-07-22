@@ -347,8 +347,6 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
                 }
 			} catch (CorruptIndexException e) {
 				Log.e(LOG_TAG, "Saving doc - Adding document to lucene indexer failed: "+e.toString());
-			} catch (IOException e) {
-				Log.e(LOG_TAG, "Saving doc - Adding document to lucene indexer or commit failed: "+e.toString());
 			} catch (Exception e){
 				Log.e(LOG_TAG, "Saving doc: Unknown exception: "+e.toString());
 			}
@@ -384,7 +382,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 			return null;
 		}
 		try{
-			int number = 0;
+			int number;
 			number = Integer.parseInt(parse);
 			if(number != 0){
 				return String.valueOf(number);
@@ -392,7 +390,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 		}catch(NumberFormatException ex){
 			Log.w(LOG_TAG,"Parsing number - NumberFormatException: "+ parse);
 		}catch(Exception ex){
-			Log.w(LOG_TAG,"Parsinnumber failed: " +parse);
+			Log.w(LOG_TAG,"Parsing number failed: " +parse);
 		}
 		return null;
 	}

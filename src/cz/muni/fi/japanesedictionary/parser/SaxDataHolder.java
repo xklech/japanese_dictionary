@@ -289,8 +289,6 @@ public class SaxDataHolder extends DefaultHandler{
 	                }
 				} catch (CorruptIndexException e) {
 					Log.e(LOG_TAG, "Saving doc - Adding document to lucene indexer failed: "+e.toString());
-				} catch (IOException e) {
-					Log.e(LOG_TAG, "Saving doc - Adding document to lucene indexer or commit failed: "+e.toString());
 				} catch (Exception e){
 					Log.e(LOG_TAG, "Saving doc: Unknown exception: "+e.toString());
 				}

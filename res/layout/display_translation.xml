@@ -36,7 +36,7 @@
 			    android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="10dp"	
-				android:text="@string/tramslation_select_translation"	    
+				android:text="@string/translation_select_translation"
 			    />
 		</LinearLayout>
 		<LinearLayout 
@@ -86,7 +86,7 @@
 			        android:gravity="right"
 			        android:textAppearance="?android:attr/textAppearanceSmall"
 			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/tramslation_romaji"
+			        android:text="@string/translation_romaji"
 			        android:layout_gravity="right"
 			        android:layout_marginLeft="50dp" />
 			    <TextView 
@@ -115,7 +115,7 @@
 			        android:gravity="right"
 			        android:textAppearance="?android:attr/textAppearanceSmall"
 			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/tramslation_alternative"
+			        android:text="@string/translation_alternative"
 			        android:layout_marginLeft="50dp"
 			        />
 			    <TextView 
@@ -143,7 +143,7 @@
 		        android:layout_height="wrap_content"
 		        android:textAppearance="?android:attr/textAppearanceMedium"
 		        android:textColor="@android:color/primary_text_dark"
-		        android:text="@string/tramslation_translation"
+		        android:text="@string/translation_translation"
 		        android:layout_marginLeft="20dp"
 		        />
 			</LinearLayout>
@@ -174,7 +174,7 @@
 			        android:layout_height="wrap_content"
 			        android:textAppearance="?android:attr/textAppearanceMedium"
 			        android:textColor="@android:color/primary_text_dark"
-			        android:text="@string/tramslation_kanji"
+			        android:text="@string/translation_kanji"
 			        android:layout_marginLeft="20dp"
 			        />
 				</LinearLayout>

@@ -132,22 +132,7 @@ public class ParserService extends IntentService {
 			}
         }
     }
-    /**
-     * Sets intent redelivery preferences.  Usually called from the constructor
-     * with your preferred semantics.
-     *
-     * <p>If enabled is true,
-     * {@link #onStartCommand(Intent, int, int)} will return
-     * {@link Service#START_REDELIVER_INTENT}, so if this process dies before
-     * {@link #onHandleIntent(Intent)} returns, the process will be restarted
-     * and the intent redelivered.  If multiple Intents have been sent, only
-     * the most recent one is guaranteed to be redelivered.
-     *
-     * <p>If enabled is false (the default),
-     * {@link #onStartCommand(Intent, int, int)} will return
-     * {@link Service#START_NOT_STICKY}, and if the process dies, the Intent
-     * dies along with it.
-     */
+
     public void setIntentRedelivery(boolean enabled) {
         mRedelivery = enabled;
     }
@@ -217,8 +202,7 @@ public class ParserService extends IntentService {
 	 * 
 	 * @param url - to download from
 	 * @param outputFile File to save from URL
-	 * @return true if file was downloaded succesfully else false
-	 * @throws InterruptedException
+	 * @return true if file was downloaded successfully else false
 	 * @throws IOException
 	 */
 	private boolean downloadFile(URL url, File outputFile) 
@@ -228,9 +212,9 @@ public class ParserService extends IntentService {
 		BufferedInputStream input = null;
 		OutputStream output = null;
 		
-		HttpURLConnection connection = null;
-		
-		connection = (HttpURLConnection)url.openConnection();
+		HttpURLConnection connection;
+                connection = null;
+                connection = (HttpURLConnection)url.openConnection();
 		connection.setRequestProperty("Accept-Encoding", "identity");
 		connection.connect();
 		long fileLength = connection.getContentLength();
@@ -836,13 +820,13 @@ public class ParserService extends IntentService {
 	static private boolean deleteDirectory(File directory) {
 		if (directory.exists()) {
 			File[] files = directory.listFiles();
-			for (int i = 0; i < files.length; i++) {
-				if (files[i].isDirectory()) {
-					deleteDirectory(files[i]);
-				} else {
-					files[i].delete();
-				}
-			}
+            for(File file: files){
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    file.delete();
+                }
+            }
 		}
 		return (directory.delete());
 	}

@@ -328,9 +328,9 @@ public class DisplayCharacterInfo extends SherlockFragment{
 	/**
 	 * Constructs map of dictionary references
 	 * 
-	 * @return Map<String, String> dictionary references
+	 * @return  Map<String, String> dictionary references
 	 */
-	public static final Map<String, String> getDictionaryCodes(){
+	public static Map<String, String> getDictionaryCodes(){
 		Map<String, String> dictionaryCodes = new HashMap<String,String>();
 		dictionaryCodes.put("nelson_c", "Modern Reader's Japanese-English Character Dictionary");
 		dictionaryCodes.put("nelson_n", "The New Nelson Japanese-English Character Dictionary");

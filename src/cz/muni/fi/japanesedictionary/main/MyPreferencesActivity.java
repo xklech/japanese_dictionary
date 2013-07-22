@@ -61,6 +61,9 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 			
 			PreferenceScreen preferenceScreen = (PreferenceScreen)findPreference("update_dictionary");
 			//ads OnPreferenceClickListener on preference view for updating dictionary
+            if(preferenceScreen == null){
+                return ;
+            }
 			preferenceScreen.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
@@ -136,6 +139,12 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
     			intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     			startActivity(intentAbout);
     			return true;
+            case R.id.favorites_activity:
+                Log.i(LOG_TAG, "Lauching Favorite activity");
+                Intent intentFavorites = new Intent(this.getApplicationContext(),FavoriteActivity.class);
+                intentFavorites.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intentFavorites);
+                return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

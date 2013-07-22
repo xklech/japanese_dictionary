@@ -108,7 +108,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         if (data != null) {
             for (Translation translation : data) {
                 add(translation);
-            } 
+            }
         }
         notifyDataSetChanged();
     }
@@ -147,7 +147,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         boolean write = false;
         int writeLength = 0;
         if(item.getJapaneseKeb() != null && item.getJapaneseKeb().size() > 0){
-        	strBuilder.append(item.getJapaneseKeb().get(0)+"  ");
+        	strBuilder.append(item.getJapaneseKeb().get(0)).append("  ");
         	writeLength = item.getJapaneseKeb().get(0).length();
         	write = true;
         }

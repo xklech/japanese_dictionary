@@ -35,7 +35,7 @@ public class ListItemComparator implements Comparator<Translation> {
 	/**
 	 * Compares two translations for lentgh of displayed japanese words for writing
 	 * 
-	 * @returns -1 if the first translation has shorter writing, 0 if both writings have the same length and
+	 * @return -1 if the first translation has shorter writing, 0 if both writings have the same length and
 	 * 1 when first translation has longer writing
 	 */
 	@Override
