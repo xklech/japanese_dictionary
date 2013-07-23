@@ -130,6 +130,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 Log.e(LOG_TAG, "Error inserting Translation: "+translation.toString()+" Values: "+values.toString());
             }
         }
+
 		
 	}
 	
@@ -173,21 +174,20 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 	            null, 	//having
                 GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED + " DESC", 	//order by - ordered by id descendant
 	            String.valueOf(count));	//limit - 10 last records 
-
         return createFromCursor(cursor);
 	}
 
-    public boolean isFavorised(Translation translation){
+    public boolean isFavorite(Translation translation){
         if(translation == null){
             return false;
         }
         SQLiteDatabase db = this.getReadableDatabase();
         if(db == null){
-            Log.w(LOG_TAG, "Error retreiving Transaltions, database is null");
+            Log.w(LOG_TAG, "Error is Favorite, database is null");
             return false;
         }
         if(!db.isOpen()){
-            Log.w(LOG_TAG, "Error retreiving Transaltions, database is closed");
+            Log.w(LOG_TAG, "Error is Favorite, database is closed");
             return false;
         }
 
@@ -201,18 +201,23 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 null, 	//having
                 null, 	//order by - ordered by id descendant
                 null);	//limit - 10 last records
+
         if (cursor == null){
             return false;
         }
         if(cursor.getCount()<1){
+            cursor.close();
             return false;
         }
+
         cursor.moveToFirst();
-        return cursor.getInt(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_FAVORITE))>0;
+        int favorite = cursor.getInt(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_FAVORITE));
+        cursor.close();
+        return favorite>0;
 
     }
 	
-    public boolean changeFavorised(Translation translation){
+    public boolean changeFavorite(Translation translation){
         if(translation == null){
             return false;
         }
@@ -227,7 +232,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         }
 
 
-        if(isFavorised(translation)){
+        if(isFavorite(translation)){
             Log.i(LOG_TAG, "Is favorized, update to 0");
             ContentValues values = new ContentValues();
             values.put(GlossaryEntryFavorite.COLUMN_NAME_FAVORITE,0);
@@ -251,7 +256,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
 
     }
 
-    public List<Translation> selectFavorisedTranslations(){
+    public List<Translation> selectFavoriteTranslations(){
         SQLiteDatabase db = this.getReadableDatabase();
         if(db == null){
             Log.w(LOG_TAG, "Error selecting favorised translations, database is null");
@@ -280,7 +285,6 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED + " DESC", 	//order by - ordered by id desc endant
                 null);	//limit - 10 last records
 
-
         return createFromCursor(cursor);
     }
 
@@ -290,6 +294,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             return null;
         }
         if(cursor.getCount()<1){
+            cursor.close();
             return null;
         }
         cursor.moveToFirst();
@@ -314,6 +319,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         }while(cursor.moveToNext());
 
         cursor.close();
+
         return (translationsReturn.size()<1)? null : translationsReturn;
 
     }

@@ -73,8 +73,8 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
  *
  */
 public class MainActivity extends SherlockFragmentActivity
-	implements OnTranslationSelectedListener,
-				OnCreateTranslationListener,
+	implements OnCreateTranslationListener,
+				OnTranslationSelectedListener,
 				OnQueryTextListener, 
 				TabListener
 				{
@@ -100,7 +100,7 @@ public class MainActivity extends SherlockFragmentActivity
 	
 	private String mLastTabId;
 	private String mCurFilter;
-	
+
 	public static String[] mTabKeys = {"exact","beginning","middle","end"};
 	
 	
@@ -225,6 +225,7 @@ public class MainActivity extends SherlockFragmentActivity
 		Log.i(LOG_TAG, "Setting query");
         mSearchView.setQuery(mCurFilter, false);
 		Log.i(LOG_TAG, "Setting query done");
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -285,7 +286,7 @@ public class MainActivity extends SherlockFragmentActivity
             case R.id.favorites_activity:
                 Log.i(LOG_TAG, "Lauching Favorite activity");
                 Intent intentFavorites = new Intent(this.getApplicationContext(),FavoriteActivity.class);
-                intentFavorites.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intentFavorites.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentFavorites);
                 return true;
 	        default:
@@ -618,6 +619,6 @@ public class MainActivity extends SherlockFragmentActivity
 			"dialog");	
 		}
 	}
-	
-	
+
+
 }

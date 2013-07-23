@@ -23,7 +23,6 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -36,6 +35,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
@@ -45,9 +46,7 @@ import cz.muni.fi.japanesedictionary.engine.FavoriteChanger;
 import cz.muni.fi.japanesedictionary.engine.FavoriteLoader;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
-import cz.muni.fi.japanesedictionary.interfaces.OnCreateFavoriteListener;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
-import cz.muni.fi.japanesedictionary.main.MainActivity;
 import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
 
 /**
@@ -60,7 +59,7 @@ public class DisplayTranslation extends SherlockFragment {
 	
     private static final String LOG_TAG = "DisplayTranslation";
 	
-	private OnCreateFavoriteListener mCallbackTranslation;
+	private OnCreateTranslationListener mCallbackTranslation;
 	private Translation mTranslation = null;
 	private Map<String, JapaneseCharacter> mCharacters = null;
 	private LayoutInflater mInflater = null;
@@ -71,15 +70,17 @@ public class DisplayTranslation extends SherlockFragment {
     private boolean mFrench;        
     private boolean mDutch;
     private boolean mGerman;
-	
+
+    private MenuItem mFavorite;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-        	mCallbackTranslation = (OnCreateFavoriteListener) activity;
+        	mCallbackTranslation = (OnCreateTranslationListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnCreateTranslationListener");
         }
     }
 	
@@ -105,7 +106,7 @@ public class DisplayTranslation extends SherlockFragment {
 
 		setHasOptionsMenu(true);
 		mInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        
+
         super.onCreate(savedInstanceState);
 	}
 
@@ -115,8 +116,8 @@ public class DisplayTranslation extends SherlockFragment {
         switch (item.getItemId()) {
             case R.id.favorite:
                 Log.i(LOG_TAG, "favorite changed");
-                mCallbackTranslation.getFavoriteMenuItem().setEnabled(false);
-                FavoriteChanger changeFavorite = new FavoriteChanger(mCallbackTranslation.getDatabse(), mCallbackTranslation.getFavoriteMenuItem(), this);
+                mFavorite.setEnabled(false);
+                FavoriteChanger changeFavorite = new FavoriteChanger(mCallbackTranslation.getDatabse(), mFavorite, this);
                 changeFavorite.execute(mTranslation);
                 return true;
             default:
@@ -133,18 +134,18 @@ public class DisplayTranslation extends SherlockFragment {
 		Log.i(LOG_TAG,"Saving instance ");
 		super.onSaveInstanceState(outState);
 	}	
-	
-	
+
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		
+
 		if(savedInstanceState == null){
 			Bundle bundle = getArguments();
 			if(bundle != null){
 				mTranslation =  Translation.newInstanceFromBundle(bundle);
 			}
 		}
-		
+
 		super.onViewCreated(view, savedInstanceState);
 	}
 	
@@ -156,11 +157,31 @@ public class DisplayTranslation extends SherlockFragment {
 	public void setTranslation(Translation tran){
 		this.mTranslation = tran;
 		if(this.isVisible()){
+            mFavorite.setEnabled(false);
+            FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
+            favoriteLoader.execute(mTranslation);
 			updateTranslation();
 		}
 	}
-	
-	/**
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        mFavorite = menu.findItem(R.id.favorite);
+        if(mTranslation == null){
+            Bundle bundle = getArguments();
+            if(bundle != null){
+                mTranslation =  Translation.newInstanceFromBundle(bundle);
+            }
+        }
+        Log.e(LOG_TAG, "oncreatemenu fragment "+mFavorite+" database: "+mCallbackTranslation.getDatabse());
+
+        FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
+        favoriteLoader.execute(mTranslation);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /**
 	 * Updates Fragment view acording to saved translation.
 	 * 
 	 */
@@ -350,8 +371,7 @@ public class DisplayTranslation extends SherlockFragment {
 	        		charLoader.execute(writeCharacters);
 	        	}
 	        }
-            FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mCallbackTranslation.getFavoriteMenuItem(), this);
-            favoriteLoader.execute(mTranslation);
+
         }else{
     		Log.e(LOG_TAG, "inflater null");
     	}        

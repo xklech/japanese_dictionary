@@ -25,6 +25,14 @@
     	android:actionViewClass="com.actionbarsherlock.widget.SearchView"
     	/>
     <item
+            android:title="@string/menu_favorite"
+            android:showAsAction="ifRoom"
+            android:id="@+id/favorite"
+            android:icon="@drawable/rating_not_important"
+            android:enabled="false"
+            android:visible="false"
+            />
+    <item
             android:title="@string/menu_favorite_activity"
             android:showAsAction="ifRoom"
             android:id="@+id/favorites_activity"

@@ -1,11 +1,7 @@
 package cz.muni.fi.japanesedictionary.engine;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-
-import com.actionbarsherlock.view.MenuItem;
 
 import java.util.List;
 
@@ -38,7 +34,7 @@ public class FavoriteListLoader extends AsyncTask<Void, Void, List<Translation>>
             Log.w(LOG_TAG, "Error loading list of favorite, database is null");
             return null;
         }
-        return mDatabase.selectFavorisedTranslations();
+        return mDatabase.selectFavoriteTranslations();
     }
 
     @Override

@@ -33,14 +33,12 @@ import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
-import cz.muni.fi.japanesedictionary.interfaces.OnCreateFavoriteListener;
+
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
 
 public class DisplayTranslationActivity extends SherlockFragmentActivity
-		implements OnCreateFavoriteListener {
+		implements OnCreateTranslationListener {
 	private static final String LOG_TAG = "DisplayTranslationActivity";
-
-    private MenuItem mFavoriteMenuItem;
 
 	private GlossaryReaderContract mDatabase = null;
 	
@@ -77,7 +75,6 @@ public class DisplayTranslationActivity extends SherlockFragmentActivity
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(true);
-        mFavoriteMenuItem = menu.findItem(R.id.favorite);
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -113,7 +110,7 @@ public class DisplayTranslationActivity extends SherlockFragmentActivity
             case R.id.favorites_activity:
                 Log.i(LOG_TAG, "Lauching Favorite activity");
                 Intent intentFavorites = new Intent(this.getApplicationContext(),FavoriteActivity.class);
-                intentFavorites.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intentFavorites.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentFavorites);
                 return true;
 	        default:
@@ -157,10 +154,5 @@ public class DisplayTranslationActivity extends SherlockFragmentActivity
 	public GlossaryReaderContract getDatabse(){
 		return mDatabase;
 	}
-
-    @Override
-    public MenuItem getFavoriteMenuItem(){
-        return mFavoriteMenuItem;
-    }
 
 }

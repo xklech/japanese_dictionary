@@ -41,13 +41,13 @@ public class FavoriteChanger extends AsyncTask<Translation,Void,Boolean> {
             Log.w(LOG_TAG, "Error changing whether is favorite, translation is null");
             return false;
         }
-        return mDatabase.changeFavorised(translation);
+        return mDatabase.changeFavorite(translation);
 
     }
 
     @Override
     protected void onPostExecute(Boolean result) {
-        if(mDisplayFragment != null && mDisplayFragment.isVisible()){
+        if(mDisplayFragment != null && !mDisplayFragment.isDetached()){
             if(mFavoriteItem != null){
                 mFavoriteItem.setEnabled(true);
                 mFavoriteItem.setVisible(true);
