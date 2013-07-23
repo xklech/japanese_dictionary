@@ -48,7 +48,7 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
 
 /**
  * AsyncTask loader for characters. Search for character info in background.
- * @author PC
+ * @author Jaroslav Klech
  *
  */
 public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCharacter>>{

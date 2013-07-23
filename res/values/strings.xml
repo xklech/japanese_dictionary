@@ -36,6 +36,7 @@
     <string name="download_dictionary_question">Do you want to download dictionary? \nInternet connection required.\nSize: 12 MB</string>
     <string name="download">Download</string>
     <string name="storno">Storno</string>
+    <string name="save">Save</string>
     <string name="currently_downloading_dictionary">Currently downloading dictionary please wait</string>
     <string name="internet_connection_failed_title">Internet connection failed</string>
     <string name="internet_connection_failed_message">Internet connecton is not available</string>
@@ -49,7 +50,7 @@
     <string name="actionbar_search">Search</string>
     <string name="menu_favorite">Favorite</string>
     <string name="menu_favorite_activity">Show favorites</string>
-
+    <string name="menu_note">Add note</string>
 
 
     <!-- Favorite -->
@@ -91,8 +92,8 @@
    <string name="translation_translation">Translation</string>
    <string name="translation_kanji">Kanji</string>
    <string name="translation_kanji_no_meaning">No known meaning in selected language</string>
-   
-   
+   <string name="translation_note">Note</string>
+
    <!-- Display character info -->
    <string name="character_unknown_character">Unknown character</string>
    <string name="character_title">Character detail</string>

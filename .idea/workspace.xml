@@ -33,31 +33,33 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="japanese" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18305b45-91ba-4bdb-b6a2-232bb75dc417" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\src\cz\muni\fi\japanesedictionary\interfaces\OnCreateFavoriteListener.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/DisplayTranslationActivity.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/DisplayTranslationActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/about.xml" afterPath="$PROJECT_DIR$/res/layout/about.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/dictionary_line.xml" afterPath="$PROJECT_DIR$/res/layout/dictionary_line.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/display_activity.xml" afterPath="$PROJECT_DIR$/res/layout/display_activity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/display_character.xml" afterPath="$PROJECT_DIR$/res/layout/display_character.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/display_translation.xml" afterPath="$PROJECT_DIR$/res/layout/display_translation.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/favorite_activity.xml" afterPath="$PROJECT_DIR$/res/layout/favorite_activity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/kanji_line.xml" afterPath="$PROJECT_DIR$/res/layout/kanji_line.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/kanji_meaning.xml" afterPath="$PROJECT_DIR$/res/layout/kanji_meaning.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lint.xml" afterPath="$PROJECT_DIR$/lint.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/list_item.xml" afterPath="$PROJECT_DIR$/res/layout/list_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main_activity.xml" afterPath="$PROJECT_DIR$/res/layout/main_activity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/menu/menu.xml" afterPath="$PROJECT_DIR$/res/menu/menu.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/menu/menu_details.xml" afterPath="$PROJECT_DIR$/res/menu/menu_details.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/notification.xml" afterPath="$PROJECT_DIR$/res/layout/notification.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values-cs/strings.xml" afterPath="$PROJECT_DIR$/res/values-cs/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/translation_language.xml" afterPath="$PROJECT_DIR$/res/layout/translation_language.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/translation_line.xml" afterPath="$PROJECT_DIR$/res/layout/translation_line.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -151,22 +153,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java" />
-        <option value="$PROJECT_DIR$/res/values-cs/strings.xml" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Translation.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/DisplayCharacterInfoActivity.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MyPreferencesActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/favorite_activity.xml" />
-        <option value="$PROJECT_DIR$/res/menu/menu.xml" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" />
-        <option value="$PROJECT_DIR$/res/layout/display_translation.xml" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/DisplayTranslationActivity.java" />
+        <option value="$PROJECT_DIR$/res/menu/menu_details.xml" />
+        <option value="$PROJECT_DIR$/res/layout/display_translation.xml" />
+        <option value="$PROJECT_DIR$/res/menu/menu.xml" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/values-cs/strings.xml" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/NoteSaver.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/NoteLoader.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java" />
       </list>
     </option>
   </component>
@@ -244,68 +246,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Japanese Dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanesedictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Japanese Dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanesedictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Japanese Dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanesedictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fragments" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -321,7 +261,7 @@
     <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/android-support-v4.jar!/" />
     <property name="project.structure.side.proportion" value="0.5816918" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.102:5555" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="S58306e2c5443" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="and4.2" />
@@ -524,7 +464,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924226" sideWeight="0.67074525" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924226" sideWeight="0.6718576" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39933258" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -533,14 +473,14 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.2858732" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.49944383" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49944383" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6718576" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6718576" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.5005562" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814237" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.6718576" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32814237" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -610,148 +550,149 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/ResultFragmentList.java">
+    <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="271" column="7" selection-start="8560" selection-end="8560" vertical-scroll-proportion="6.647059" vertical-offset="17" max-vertical-offset="4828">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="873">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/menu.xml">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="14" selection-start="1398" selection-end="1398" vertical-scroll-proportion="0.7941176" vertical-offset="102" max-vertical-offset="986">
+        <state line="35" column="0" selection-start="1171" selection-end="1247" vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="6800">
           <folding>
-            <element signature="e#900#926#0" expanded="false" />
-            <element signature="e#900#926#0" expanded="false" />
-            <element signature="e#1435#1467#0" expanded="false" />
-            <element signature="e#1654#1676#0" expanded="false" />
-            <element signature="e#1836#1857#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/favorite_activity.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="15" selection-start="695" selection-end="695" vertical-scroll-proportion="0.49186257" vertical-offset="0" max-vertical-offset="553">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="25" selection-start="2134" selection-end="2134" vertical-scroll-proportion="0.0" vertical-offset="392" max-vertical-offset="1836">
-          <folding>
+            <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
+            <element signature="e#14208#14221#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/menu_details.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="828" selection-end="1113" vertical-scroll-proportion="0.55979204" vertical-offset="0" max-vertical-offset="867">
+        <state line="27" column="0" selection-start="1114" selection-end="1378" vertical-scroll-proportion="0.0" vertical-offset="341" max-vertical-offset="1003">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="27" selection-start="1790" selection-end="1790" vertical-scroll-proportion="1.120283" vertical-offset="443" max-vertical-offset="1224">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/DBAsyncTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="968" selection-end="968" vertical-scroll-proportion="0.0" vertical-offset="205" max-vertical-offset="629">
+        <state line="27" column="13" selection-start="968" selection-end="968" vertical-scroll-proportion="0.29411766" vertical-offset="0" max-vertical-offset="629">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/android/util/Log.class">
+    <entry file="file://$PROJECT_DIR$/res/menu/menu.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="19" selection-start="161" selection-end="161" vertical-scroll-proportion="0.2004717" vertical-offset="0" max-vertical-offset="918">
+        <state line="36" column="0" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.0" vertical-offset="595" max-vertical-offset="1122">
+          <folding>
+            <element signature="e#900#926#0" expanded="true" />
+            <element signature="e#1206#1214#0" expanded="true" />
+            <element signature="e#1663#1682#0" expanded="true" />
+            <element signature="e#1748#1762#0" expanded="true" />
+            <element signature="e#1919#1941#0" expanded="true" />
+            <element signature="e#2101#2122#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="47" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.5" vertical-offset="204" max-vertical-offset="1224">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/ListItemComparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="13" selection-start="1041" selection-end="1041" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FragmentListAsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="13" selection-start="2188" selection-end="2188" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4403">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="35" selection-start="1727" selection-end="1727" vertical-scroll-proportion="0.4787736" vertical-offset="698" max-vertical-offset="1224">
+        <state line="30" column="34" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1547">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/MainPagerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="725" vertical-scroll-proportion="-0.09342561" vertical-offset="54" max-vertical-offset="952">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/NoteLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="30" selection-start="1100" selection-end="1100" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1530">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/NoteSaver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="30" selection-start="612" selection-end="612" vertical-scroll-proportion="0.23529412" vertical-offset="102" max-vertical-offset="1530">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FragmentListAsyncTask.java">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="13" selection-start="2188" selection-end="2188" vertical-scroll-proportion="0.33254716" vertical-offset="63" max-vertical-offset="4403">
+        <state line="30" column="35" selection-start="1118" selection-end="1118" vertical-scroll-proportion="0.3529412" vertical-offset="306" max-vertical-offset="1547">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="13" selection-start="2192" selection-end="2192" vertical-scroll-proportion="0.33217993" vertical-offset="12" max-vertical-offset="2431">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="367" selection-end="367" vertical-scroll-proportion="-0.44339624" vertical-offset="426" max-vertical-offset="901">
+        <state line="36" column="48" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.4134948" vertical-offset="373" max-vertical-offset="2108">
           <folding>
+            <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
+            <element signature="e#2038#2060#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/display_translation.xml">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="618" selection-end="618" vertical-scroll-proportion="0.4311594" vertical-offset="0" max-vertical-offset="3332">
+        <state line="48" column="0" selection-start="1816" selection-end="1929" vertical-scroll-proportion="0.29411766" vertical-offset="204" max-vertical-offset="3893">
           <folding>
-            <element signature="e#1449#1489#0" expanded="true" />
-            <element signature="e#3276#3304#0" expanded="true" />
-            <element signature="e#4473#4506#0" expanded="true" />
-            <element signature="e#5548#5581#0" expanded="true" />
-            <element signature="e#6681#6708#0" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="249" column="25" selection-start="9682" selection-end="9688" vertical-scroll-proportion="0.3321234" vertical-offset="3659" max-vertical-offset="10319">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="17" selection-start="742" selection-end="744" vertical-scroll-proportion="0.061705988" vertical-offset="0" max-vertical-offset="5389">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#12008#12021#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="47" selection-start="5212" selection-end="5221" vertical-scroll-proportion="0.3321234" vertical-offset="2418" max-vertical-offset="8721">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/DisplayTranslationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="68" selection-start="1185" selection-end="1207" vertical-scroll-proportion="0.3321234" vertical-offset="89" max-vertical-offset="2516">
-          <folding />
         </state>
       </provider>
     </entry>

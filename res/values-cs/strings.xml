@@ -36,6 +36,7 @@
     <string name="download_dictionary_question">Chcete nyní stáhnout slovník? Vyžadováno připojení k internetu. Velikost: 12 MB.</string>
     <string name="download">Stáhnout</string>
     <string name="storno">Zrušit</string>
+    <string name="save">Uložit</string>
     <string name="currently_downloading_dictionary">Stahuji slovník, prosím vyčkejte</string>
     <string name="internet_connection_failed_title">Připojení k internetu selhalo</string>
     <string name="internet_connection_failed_message">Připojení k internetu není k dispozici</string>
@@ -49,6 +50,7 @@
     <string name="actionbar_search">Hledat</string>
     <string name="menu_favorite">Oblíbené</string>
     <string name="menu_favorite_activity">Zobraz oblíbené</string>
+    <string name="menu_note">Přidat poznámku</string>
 
     <!-- Favorite -->
     <string name="favorite_title">Oblíbené</string>
@@ -88,7 +90,8 @@
    <string name="translation_translation">Překlad</string>
    <string name="translation_kanji">Kanji</string>
    <string name="translation_kanji_no_meaning">Žádné známe významy ve zvoleném jazyce</string>
-   
+    <string name="translation_note">Poznámka</string>
+
    <!-- Display character info -->
    <string name="character_unknown_character">Neznámý znak</string>
    <string name="character_title">Detail znaku</string>

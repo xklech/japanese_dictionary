@@ -22,7 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +47,8 @@ import cz.muni.fi.japanesedictionary.database.DBAsyncTask;
 import cz.muni.fi.japanesedictionary.engine.CharacterLoader;
 import cz.muni.fi.japanesedictionary.engine.FavoriteChanger;
 import cz.muni.fi.japanesedictionary.engine.FavoriteLoader;
+import cz.muni.fi.japanesedictionary.engine.NoteLoader;
+import cz.muni.fi.japanesedictionary.engine.NoteSaver;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
@@ -72,6 +77,8 @@ public class DisplayTranslation extends SherlockFragment {
     private boolean mGerman;
 
     private MenuItem mFavorite;
+
+    private MenuItem mNote;
 
     @Override
     public void onAttach(Activity activity) {
@@ -120,6 +127,13 @@ public class DisplayTranslation extends SherlockFragment {
                 FavoriteChanger changeFavorite = new FavoriteChanger(mCallbackTranslation.getDatabse(), mFavorite, this);
                 changeFavorite.execute(mTranslation);
                 return true;
+            case R.id.ab_note:
+                Log.i(LOG_TAG, "notes opened");
+                TextView note = (TextView) getActivity().findViewById(R.id.translation_note_text);
+                if(note != null){
+                    showNoteAlertBox(note.getText().toString());
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -157,9 +171,14 @@ public class DisplayTranslation extends SherlockFragment {
 	public void setTranslation(Translation tran){
 		this.mTranslation = tran;
 		if(this.isVisible()){
-            mFavorite.setEnabled(false);
-            FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
-            favoriteLoader.execute(mTranslation);
+            if(mFavorite != null && mNote != null){
+                mFavorite.setEnabled(false);
+                mNote.setEnabled(false);
+                FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
+                favoriteLoader.execute(mTranslation);
+                NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabse(), mNote, this);
+                noteLoader.execute(mTranslation);
+            }
 			updateTranslation();
 		}
 	}
@@ -168,16 +187,19 @@ public class DisplayTranslation extends SherlockFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         mFavorite = menu.findItem(R.id.favorite);
+        mNote = menu.findItem(R.id.ab_note);
         if(mTranslation == null){
             Bundle bundle = getArguments();
             if(bundle != null){
                 mTranslation =  Translation.newInstanceFromBundle(bundle);
             }
         }
-        Log.e(LOG_TAG, "oncreatemenu fragment "+mFavorite+" database: "+mCallbackTranslation.getDatabse());
-
         FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
         favoriteLoader.execute(mTranslation);
+
+        NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabse(), mNote, this);
+        noteLoader.execute(mTranslation);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -476,8 +498,7 @@ public class DisplayTranslation extends SherlockFragment {
 	        	container.addView(translationKanji);
         	}
         }
-        
-		
+
 		
 	}
 	
@@ -487,7 +508,7 @@ public class DisplayTranslation extends SherlockFragment {
 	 */
 	public void setCharacters(Map<String, JapaneseCharacter> characters) {
 		this.mCharacters = characters;
-			this.displayCharacters();
+	    this.displayCharacters();
 	}
 		
 	/**
@@ -521,6 +542,49 @@ public class DisplayTranslation extends SherlockFragment {
         }
         return changed;
     }
-    
-    
+
+
+    public void displayNote(String note){
+        LinearLayout container = (LinearLayout)getActivity().findViewById(R.id.translation_note_container);
+        if(container != null){
+            if(note == null || note.length() == 0){
+                container.setVisibility(View.GONE);
+            }else{
+                container.setVisibility(View.VISIBLE);
+            }
+            TextView textView = (TextView) getActivity().findViewById(R.id.translation_note_text);
+            if(textView != null){
+                textView.setText(note);
+            }
+        }
+    }
+
+    public void showNoteAlertBox(String note){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.translation_note);
+        builder.setCancelable(true);
+
+        final EditText input = new EditText(getActivity());
+
+        input.setText(note);
+        input.setMinHeight(200);
+        builder.setView(input);
+
+        builder.setPositiveButton(getString(R.string.save), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                String note = input.getText().toString().trim();
+                mNote.setEnabled(false);
+                NoteSaver noteSaver = new NoteSaver(mCallbackTranslation.getDatabse(), mNote, DisplayTranslation.this, mTranslation);
+                noteSaver.execute(note);
+            }
+        })
+        .setNegativeButton(getString(R.string.storno), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 }

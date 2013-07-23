@@ -288,6 +288,71 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         return createFromCursor(cursor);
     }
 
+    public String getNote(Translation translation){
+        if(translation == null){
+            return null;
+        }
+        SQLiteDatabase db = this.getReadableDatabase();
+        if(db == null){
+            Log.e(LOG_TAG, "Error getNote, database is null");
+            return null;
+        }
+        if(!db.isOpen()){
+            Log.e(LOG_TAG, "Error getNote, database is closed");
+            return null;
+        }
+
+        Cursor cursor = db.query(
+                true, //distinct - not same translations
+                GlossaryEntryFavorite.TABLE_NAME, // table name
+                new String[]{GlossaryEntryFavorite.COLUMN_NAME_NOTE},  // projection - rows
+                "_ID = ?",	//selection
+                new String[]{translation.getIndexHash()}, 	//selection args
+                null, 	//group
+                null, 	//having
+                null, 	//order by - ordered by id descendant
+                null);	//limit - 10 last records
+
+        if (cursor == null){
+            return null;
+        }
+        if(cursor.getCount()<1){
+            cursor.close();
+            return null;
+        }
+
+        cursor.moveToFirst();
+        String note = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_NOTE));
+        cursor.close();
+        return note;
+    }
+
+    public String saveNote(Translation translation, String note){
+        if(translation == null){
+            return null;
+        }
+        if(note == null){
+            return null;
+        }
+        SQLiteDatabase db = this.getReadableDatabase();
+        if(db == null){
+            Log.e(LOG_TAG, "Error getNote, database is null");
+            return null;
+        }
+        if(!db.isOpen()){
+            Log.e(LOG_TAG, "Error getNote, database is closed");
+            return null;
+        }
+        Log.i(LOG_TAG, "save note: "+note);
+        ContentValues values = new ContentValues();
+        values.put(GlossaryEntryFavorite.COLUMN_NAME_NOTE,note);
+        int count = db.update(GlossaryEntryFavorite.TABLE_NAME,values,"_ID = ?",new String[]{translation.getIndexHash()});
+        if(count == 0){
+            return getNote(translation);
+        }
+        return note;
+
+    }
 
     private List<Translation> createFromCursor(Cursor cursor){
         if (cursor == null){
@@ -323,5 +388,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         return (translationsReturn.size()<1)? null : translationsReturn;
 
     }
+
+
 	
 }

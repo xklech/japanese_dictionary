@@ -38,6 +38,14 @@
             android:id="@+id/favorites_activity"
             android:icon="@drawable/rating_favorite"
             />
+    <item
+            android:title="@string/menu_note"
+            android:showAsAction="ifRoom"
+            android:id="@+id/ab_note"
+            android:icon="@drawable/note"
+            android:enabled="false"
+            android:visible="false"
+            />
 	<item 
 	    android:title="@string/menu_setting"
 	    android:showAsAction="never"
