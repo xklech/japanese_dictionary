@@ -18,9 +18,6 @@
 
 package cz.muni.fi.japanesedictionary.main;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
@@ -32,6 +29,9 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cz.muni.fi.japanesedictionary.R;
 

@@ -18,8 +18,6 @@
 
 package cz.muni.fi.japanesedictionary.interfaces;
 
-import com.actionbarsherlock.view.MenuItem;
-
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 

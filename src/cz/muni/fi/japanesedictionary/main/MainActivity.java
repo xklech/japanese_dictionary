@@ -18,9 +18,6 @@
 
 package cz.muni.fi.japanesedictionary.main;
 
-import java.io.File;
-import java.util.List;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.SearchManager;
@@ -51,6 +48,9 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
+
+import java.io.File;
+import java.util.List;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;

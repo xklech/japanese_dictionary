@@ -18,9 +18,6 @@
 
 package cz.muni.fi.japanesedictionary.fragments;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,6 +31,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;

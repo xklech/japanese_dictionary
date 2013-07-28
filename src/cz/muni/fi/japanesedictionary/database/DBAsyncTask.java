@@ -18,8 +18,9 @@
 
 package cz.muni.fi.japanesedictionary.database;
 
-import cz.muni.fi.japanesedictionary.entity.Translation;
 import android.os.AsyncTask;
+
+import cz.muni.fi.japanesedictionary.entity.Translation;
 
 /**
  * Class for saving Translation to database in bakcground
