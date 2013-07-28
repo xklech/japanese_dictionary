@@ -17,11 +17,10 @@
 package com.actionbarsherlock.internal.nineoldandroids.animation;
 
 import android.util.Log;
-
-import java.util.ArrayList;
-
 //import android.util.Property;
+
 //import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 /**
  * This subclass of {@link ValueAnimator} provides support for animating properties on target objects.

@@ -18,19 +18,20 @@
 
 package cz.muni.fi.japanesedictionary.entity;
 
-import android.content.ContentValues;
-import android.os.Bundle;
-import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.security.MessageDigest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+
+import android.content.ContentValues;
+import android.os.Bundle;
+import android.util.Log;
 
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 

@@ -18,18 +18,18 @@
 
 package cz.muni.fi.japanesedictionary.entity;
 
-import android.os.Bundle;
-import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Entity class for japanese character

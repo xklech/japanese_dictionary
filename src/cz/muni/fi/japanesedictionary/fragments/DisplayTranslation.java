@@ -18,6 +18,9 @@
 
 package cz.muni.fi.japanesedictionary.fragments;
 
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -38,9 +41,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-
-import java.util.List;
-import java.util.Map;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.DBAsyncTask;
@@ -70,7 +70,7 @@ public class DisplayTranslation extends SherlockFragment {
 	private LayoutInflater mInflater = null;
 	
 
-    private boolean mActualMenuItems;
+
 	private boolean mEnglish;
     private boolean mFrench;        
     private boolean mDutch;
@@ -99,21 +99,12 @@ public class DisplayTranslation extends SherlockFragment {
 
 	@Override
 	public void onStart() {
-        if(!mActualMenuItems && mTranslation != null){
-            updateMenu();
-        }
 		updateTranslation();
 		super.onStart();
 	}
-
-    @Override
-    public void onPause() {
-        mActualMenuItems = false;
-        super.onPause();
-        
-    }
-
-    @Override
+	
+	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		if(savedInstanceState != null){
 			mTranslation = Translation.newInstanceFromBundle(savedInstanceState);
@@ -179,11 +170,14 @@ public class DisplayTranslation extends SherlockFragment {
 	 */
 	public void setTranslation(Translation tran){
 		this.mTranslation = tran;
-		if(this.isVisible() && mTranslation != null){
+		if(this.isVisible()){
             if(mFavorite != null && mNote != null){
                 mFavorite.setEnabled(false);
                 mNote.setEnabled(false);
-                updateMenu();
+                FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
+                favoriteLoader.execute(mTranslation);
+                NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabse(), mNote, this);
+                noteLoader.execute(mTranslation);
             }
 			updateTranslation();
 		}
@@ -200,9 +194,11 @@ public class DisplayTranslation extends SherlockFragment {
                 mTranslation =  Translation.newInstanceFromBundle(bundle);
             }
         }
-        if(mTranslation != null && !mActualMenuItems){
-            updateMenu();
-        }
+        FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
+        favoriteLoader.execute(mTranslation);
+
+        NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabse(), mNote, this);
+        noteLoader.execute(mTranslation);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -215,7 +211,7 @@ public class DisplayTranslation extends SherlockFragment {
 		Log.i(LOG_TAG,"Update translation");
 		
 		LinearLayout layoutSelect = (LinearLayout) getView().findViewById(R.id.translation_select);
-		View layoutTranslation = getView().findViewById(R.id.translation_container);
+		LinearLayout layoutTranslation = (LinearLayout) getView().findViewById(R.id.translation_container);
 		if(mTranslation == null){
 			layoutSelect.setVisibility(View.VISIBLE);
 			layoutTranslation.setVisibility(View.GONE);
@@ -223,6 +219,7 @@ public class DisplayTranslation extends SherlockFragment {
 		}
 		layoutSelect.setVisibility(View.GONE);
 		layoutTranslation.setVisibility(View.VISIBLE);
+		
 		
 		updateLanguages();
 		
@@ -589,16 +586,5 @@ public class DisplayTranslation extends SherlockFragment {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-    private void updateMenu(){
-        FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
-        favoriteLoader.execute(mTranslation);
-
-        NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabse(), mNote, this);
-        noteLoader.execute(mTranslation);
-        mActualMenuItems = true;
-
-    }
-
 
 }

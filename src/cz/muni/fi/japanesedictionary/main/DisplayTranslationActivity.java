@@ -33,6 +33,7 @@ import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
+
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
 
 public class DisplayTranslationActivity extends SherlockFragmentActivity

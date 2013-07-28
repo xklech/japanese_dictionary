@@ -18,6 +18,10 @@
 
 package cz.muni.fi.japanesedictionary.fragments;
 
+import java.io.File;
+import java.lang.ref.WeakReference;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -33,10 +37,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
-
-import java.io.File;
-import java.lang.ref.WeakReference;
-import java.util.List;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.engine.FragmentListAsyncTask;

@@ -65,7 +65,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-
 import com.actionbarsherlock.R;
 import com.actionbarsherlock.view.CollapsibleActionView;
 

@@ -18,6 +18,9 @@
 
 package cz.muni.fi.japanesedictionary.main;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,9 +36,6 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;

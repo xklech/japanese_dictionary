@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
-
 import com.actionbarsherlock.internal.view.ActionProviderWrapper;
 import com.actionbarsherlock.internal.widget.CollapsibleActionViewWrapper;
 import com.actionbarsherlock.view.ActionProvider;
