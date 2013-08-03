@@ -33,30 +33,26 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="INFO" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="japanese" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18305b45-91ba-4bdb-b6a2-232bb75dc417" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/android-support-v4.jar" afterPath="$PROJECT_DIR$/libs/android-support-v4.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/ActionBarSherlock/libs/android-support-v4.jar" afterPath="$PROJECT_DIR$/libs/ActionBarSherlock/libs/android-support-v4.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/about.xml" afterPath="$PROJECT_DIR$/res/layout/about.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/dictionary_line.xml" afterPath="$PROJECT_DIR$/res/layout/dictionary_line.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/display_activity.xml" afterPath="$PROJECT_DIR$/res/layout/display_activity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/display_character.xml" afterPath="$PROJECT_DIR$/res/layout/display_character.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/display_translation.xml" afterPath="$PROJECT_DIR$/res/layout/display_translation.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/kanji_line.xml" afterPath="$PROJECT_DIR$/res/layout/kanji_line.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/kanji_meaning.xml" afterPath="$PROJECT_DIR$/res/layout/kanji_meaning.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lint.xml" afterPath="$PROJECT_DIR$/lint.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/list_item.xml" afterPath="$PROJECT_DIR$/res/layout/list_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main_activity.xml" afterPath="$PROJECT_DIR$/res/layout/main_activity.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout-sw600dp-land/main_activity.xml" afterPath="$PROJECT_DIR$/res/layout-sw600dp-land/main_activity.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout-xlarge/main_activity.xml" afterPath="$PROJECT_DIR$/res/layout-xlarge/main_activity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/menu/menu.xml" afterPath="$PROJECT_DIR$/res/menu/menu.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/menu/menu_details.xml" afterPath="$PROJECT_DIR$/res/menu/menu_details.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/notification.xml" afterPath="$PROJECT_DIR$/res/layout/notification.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values-cs/strings.xml" afterPath="$PROJECT_DIR$/res/values-cs/strings.xml" />
@@ -134,7 +130,82 @@
     <favorites_list name="Japanese Dictionary" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="291" column="18" selection-start="12144" selection-end="12144" vertical-scroll-proportion="-14.384615" vertical-offset="4182" max-vertical-offset="12172">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#8457#8469#0" expanded="true" />
+                <element signature="e#8522#8558#0" expanded="true" />
+                <element signature="e#8662#8704#0" expanded="true" />
+                <element signature="e#8801#8830#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.17586207" vertical-offset="102" max-vertical-offset="1462">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DrawerUtil.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/util/DrawerUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="17" selection-start="373" selection-end="373" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4590">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="54" column="2" selection-start="3132" selection-end="3237" vertical-scroll-proportion="0.0" vertical-offset="901" max-vertical-offset="2108">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values-cs/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="45" selection-start="3239" selection-end="3239" vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="2091">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DrawerAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/DrawerAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="31" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0" vertical-offset="681" max-vertical-offset="1105">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="drawer_list_item.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/drawer_list_item.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="14" selection-start="1575" selection-end="1575" vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1037">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -153,22 +224,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/DisplayTranslationActivity.java" />
-        <option value="$PROJECT_DIR$/res/menu/menu_details.xml" />
-        <option value="$PROJECT_DIR$/res/layout/display_translation.xml" />
+        <option value="$PROJECT_DIR$/res/layout/main_activity.xml" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/DrawerItem.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/DrawerAdapter.java" />
+        <option value="$PROJECT_DIR$/res/layout-xlarge/main_activity.xml" />
+        <option value="$PROJECT_DIR$/res/layout-sw600dp-land/main_activity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/drawer_list_item.xml" />
         <option value="$PROJECT_DIR$/res/menu/menu.xml" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/res/values-cs/strings.xml" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/NoteSaver.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/NoteLoader.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/ActionBarDrawerToggle.java" />
+        <option value="$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/app/ActionBarDrawerToggle.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/util/DrawerUtil.java" />
+        <option value="$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/drawer/SherlockActionBarDrawerToggleHoneycomb.java" />
+        <option value="$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/drawer/SherlockActionBarDrawerToggleCompat.java" />
+        <option value="$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/drawer/SherlockActionBarDrawerToggle.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -226,14 +297,20 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Japanese Dictionary" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="&lt; Android 4.2.2 Platform &gt;" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -246,12 +323,226 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanesedictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanesedictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActionBarSherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActionBarSherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="actionbarsherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActionBarSherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="actionbarsherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActionBarSherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="actionbarsherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Japanese Dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="japanese_dictionary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ActionBarSherlock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15332031" />
@@ -267,12 +558,12 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="and4.2" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
-    <property name="last.edited.regexp" value="" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="last.edited.regexp" value="" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="Android Application.japanese_dictionary">
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
@@ -411,6 +702,11 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SliceManager">
+    <option name="analysisUIOptions">
+      <AnalysisUIOptions />
+    </option>
+  </component>
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
@@ -458,33 +754,33 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924226" sideWeight="0.6718576" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924226" sideWeight="0.5005562" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39933258" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49944383" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.2858732" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49944383" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6718576" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4983315" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.67408234" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6718576" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.6718576" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32814237" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.67408234" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3259177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6718576" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32925472" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -550,149 +846,137 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
+    <entry file="file://$PROJECT_DIR$/res/layout-sw600dp-land/main_activity.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="873">
+        <state line="22" column="45" selection-start="997" selection-end="997" vertical-scroll-proportion="0.914787" vertical-offset="9" max-vertical-offset="1071">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout-xlarge/main_activity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="0" selection-start="761" selection-end="997" vertical-scroll-proportion="0.65914786" vertical-offset="43" max-vertical-offset="1071">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/main_activity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="39" selection-start="800" selection-end="800" vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/DrawerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="31" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0" vertical-offset="681" max-vertical-offset="1105">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java">
+    <entry file="file://$PROJECT_DIR$/res/layout/drawer_list_item.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1171" selection-end="1247" vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="6800">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#14208#14221#0" expanded="true" />
-          </folding>
+        <state line="37" column="14" selection-start="1575" selection-end="1575" vertical-scroll-proportion="0.0" vertical-offset="383" max-vertical-offset="1037">
+          <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/menu_details.xml">
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="0" selection-start="1114" selection-end="1378" vertical-scroll-proportion="0.0" vertical-offset="341" max-vertical-offset="1003">
+        <state line="54" column="2" selection-start="3132" selection-end="3237" vertical-scroll-proportion="0.0" vertical-offset="521" max-vertical-offset="2108">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/DBAsyncTask.java">
+    <entry file="file://$PROJECT_DIR$/res/values-cs/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="968" selection-end="968" vertical-scroll-proportion="0.29411766" vertical-offset="0" max-vertical-offset="629">
+        <state line="55" column="45" selection-start="3239" selection-end="3239" vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="2091">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/ActionBarSherlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="22" selection-start="1491" selection-end="1491" vertical-scroll-proportion="0.41034484" vertical-offset="0" max-vertical-offset="13226" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/menu.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="0" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.0" vertical-offset="595" max-vertical-offset="1122">
-          <folding>
-            <element signature="e#900#926#0" expanded="true" />
-            <element signature="e#1206#1214#0" expanded="true" />
-            <element signature="e#1663#1682#0" expanded="true" />
-            <element signature="e#1748#1762#0" expanded="true" />
-            <element signature="e#1919#1941#0" expanded="true" />
-            <element signature="e#2101#2122#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="47" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.5" vertical-offset="204" max-vertical-offset="1224">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/ListItemComparator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="13" selection-start="1041" selection-end="1041" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+        <state line="20" column="38" selection-start="863" selection-end="876" vertical-scroll-proportion="0.16034482" vertical-offset="247" max-vertical-offset="1020">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FragmentListAsyncTask.java">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/util/DrawerUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="13" selection-start="2188" selection-end="2188" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4403">
+        <state line="17" column="17" selection-start="373" selection-end="373" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4590">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/drawer/SherlockActionBarDrawerToggleHoneycomb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="37" selection-start="659" selection-end="659" vertical-scroll-proportion="0.058419243" vertical-offset="0" max-vertical-offset="1955">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteLoader.java">
+    <entry file="file://$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/app/ActionBar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="34" selection-start="1117" selection-end="1117" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1547">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/MainPagerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="725" vertical-scroll-proportion="-0.09342561" vertical-offset="54" max-vertical-offset="952">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/NoteLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="30" selection-start="1100" selection-end="1100" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1530">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/NoteSaver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="30" selection-start="612" selection-end="612" vertical-scroll-proportion="0.23529412" vertical-offset="102" max-vertical-offset="1530">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="35" selection-start="1118" selection-end="1118" vertical-scroll-proportion="0.3529412" vertical-offset="306" max-vertical-offset="1547">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="13" selection-start="2192" selection-end="2192" vertical-scroll-proportion="0.33217993" vertical-offset="12" max-vertical-offset="2431">
+        <state line="16" column="8" selection-start="629" selection-end="655" vertical-scroll-proportion="0.038946163" vertical-offset="0" max-vertical-offset="15946">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/FavoriteActivity.java">
+    <entry file="file://$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/drawer/SherlockActionBarDrawerToggle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="48" selection-start="1374" selection-end="1374" vertical-scroll-proportion="0.4134948" vertical-offset="373" max-vertical-offset="2108">
+        <state line="49" column="20" selection-start="1959" selection-end="1959" vertical-scroll-proportion="0.21649484" vertical-offset="406" max-vertical-offset="8160">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#2038#2060#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java">
+    <entry file="file://$PROJECT_DIR$/libs/ActionBarSherlock/src/com/actionbarsherlock/drawer/SherlockActionBarDrawerToggleCompat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="0" selection-start="1816" selection-end="1929" vertical-scroll-proportion="0.29411766" vertical-offset="204" max-vertical-offset="3893">
+        <state line="47" column="0" selection-start="1597" selection-end="1597" vertical-scroll-proportion="-0.8888889" vertical-offset="1337" max-vertical-offset="2210">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="291" column="18" selection-start="12144" selection-end="12144" vertical-scroll-proportion="-14.384615" vertical-offset="4182" max-vertical-offset="12172">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8457#8469#0" expanded="true" />
+            <element signature="e#8522#8558#0" expanded="true" />
+            <element signature="e#8662#8704#0" expanded="true" />
+            <element signature="e#8801#8830#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.17586207" vertical-offset="102" max-vertical-offset="1462">
+          <folding />
         </state>
       </provider>
     </entry>

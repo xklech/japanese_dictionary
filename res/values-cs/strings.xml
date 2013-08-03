@@ -51,6 +51,9 @@
     <string name="menu_favorite">Oblíbené</string>
     <string name="menu_favorite_activity">Zobraz oblíbené</string>
     <string name="menu_note">Přidat poznámku</string>
+    <string name="last_seen">Poslední zobrazené</string>
+    <string name="drawer_open">Otevřít šuplík</string>
+    <string name="drawer_close">Zavřít šuplík</string>
 
     <!-- Favorite -->
     <string name="favorite_title">Oblíbené</string>

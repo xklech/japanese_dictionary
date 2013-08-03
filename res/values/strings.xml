@@ -51,7 +51,9 @@
     <string name="menu_favorite">Favorite</string>
     <string name="menu_favorite_activity">Show favorites</string>
     <string name="menu_note">Add note</string>
-
+    <string name="last_seen">Last seen</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
 
     <!-- Favorite -->
     <string name="favorite_title">Favorite</string>

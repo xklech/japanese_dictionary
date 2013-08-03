@@ -19,6 +19,7 @@
 package cz.muni.fi.japanesedictionary.main;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActivityManager;
@@ -29,22 +30,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
+
+
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -52,10 +61,14 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
+import com.actionbarsherlock.drawer.SherlockActionBarDrawerToggle;
+
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
+import cz.muni.fi.japanesedictionary.engine.DrawerAdapter;
 import cz.muni.fi.japanesedictionary.engine.MainPagerAdapter;
 import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
+import cz.muni.fi.japanesedictionary.entity.DrawerItem;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.fragments.DisplayCharacterInfo;
@@ -65,6 +78,7 @@ import cz.muni.fi.japanesedictionary.fragments.ResultFragmentList;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
 import cz.muni.fi.japanesedictionary.interfaces.OnTranslationSelectedListener;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.fi.japanesedictionary.util.DrawerUtil;
 
 
 /**
@@ -102,9 +116,14 @@ public class MainActivity extends SherlockFragmentActivity
 	private String mCurFilter;
 
 	public static String[] mTabKeys = {"exact","beginning","middle","end"};
-	
-	
-	private ViewPager mPager;
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private SherlockActionBarDrawerToggle mDrawerToggle;
+    private boolean mNoteVisible;
+    private boolean mFavoriteVisible;
+
+    private ViewPager mPager;
 	
 	private boolean mWaitingForConnection = false;
 	
@@ -179,8 +198,46 @@ public class MainActivity extends SherlockFragmentActivity
 		if(waitingForConnection && (dictionaryPath == null || !(new File(dictionaryPath)).exists()) ) {
 			displayDownloadPrompt();
 		}
-		
-		Log.i(LOG_TAG,"Checking saved instance");
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+
+
+        // Set the adapter for the list view
+        List<DrawerItem> drawerItems = new ArrayList<DrawerItem>();
+        drawerItems.add(new DrawerItem().setName(getString(R.string.actionbar_search)).setIconResource(android.R.drawable.ic_menu_search));
+        drawerItems.add(new DrawerItem().setName(getString(R.string.menu_favorite_activity)).setIconResource(R.drawable.rating_favorite));
+        drawerItems.add(new DrawerItem().setName(getString(R.string.last_seen)).setIconResource(R.drawable.collections_view_as_list));
+        DrawerAdapter drawerAdapter = new DrawerAdapter(getApplicationContext());
+        drawerAdapter.setData(drawerItems);
+
+        mDrawerList.setAdapter(drawerAdapter);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerToggle = new SherlockActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        // Set the list's click listener
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+
+        Log.i(LOG_TAG,"Checking saved instance");
 		if(savedInstanceState != null){
 			return;
 		}
@@ -202,16 +259,49 @@ public class MainActivity extends SherlockFragmentActivity
 		
 		
 	}
-	
-	
+
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+        MenuItem noteItem = menu.findItem(R.id.ab_note);
+        MenuItem favoriteItem = menu.findItem(R.id.favorite);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        if(drawerOpen){
+            //is open
+            mNoteVisible = noteItem.isVisible();
+            mFavoriteVisible = favoriteItem.isVisible();
+            noteItem.setVisible(false);
+            favoriteItem.setVisible(false);
+            if(searchItem != null){
+                Log.i(LOG_TAG, "Drawer open, hide search");
+                searchItem.setVisible(false);
+                searchItem.setEnabled(false);
+                mSearchView.setVisibility(View.GONE);
+            }
+        }else{
+            noteItem.setVisible(mNoteVisible);
+            favoriteItem.setVisible(mFavoriteVisible);
+            if(searchItem != null){
+                Log.i(LOG_TAG, "Drawer close, show search");
+                searchItem.setVisible(true);
+                searchItem.setEnabled(true);
+                searchItem.collapseActionView();
+                //mSearchView.setVisibility(View.VISIBLE);
+            }
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.i(LOG_TAG, "Inflating menu");
 	    MenuInflater inflater = getSupportMenuInflater();
 	    inflater.inflate(R.menu.menu, menu);
 		Log.i(LOG_TAG, "Setting menu ");
-		getSupportActionBar().setHomeButtonEnabled(false);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Place an action bar item for searching.
         MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -229,7 +319,20 @@ public class MainActivity extends SherlockFragmentActivity
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        mDrawerToggle.syncState();
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
 	/**
 	 *  Saves current searched text and current selected tab index.
 	 */
@@ -263,7 +366,13 @@ public class MainActivity extends SherlockFragmentActivity
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        switch (item.getItemId()) {
 	        case android.R.id.home:
 	            // app icon in action bar clicked; go home
 	        	Log.i(LOG_TAG, "Home button pressed");

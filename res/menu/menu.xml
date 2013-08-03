@@ -33,12 +33,6 @@
             android:visible="false"
             />
     <item
-            android:title="@string/menu_favorite_activity"
-            android:showAsAction="ifRoom"
-            android:id="@+id/favorites_activity"
-            android:icon="@drawable/rating_favorite"
-            />
-    <item
             android:title="@string/menu_note"
             android:showAsAction="ifRoom"
             android:id="@+id/ab_note"
