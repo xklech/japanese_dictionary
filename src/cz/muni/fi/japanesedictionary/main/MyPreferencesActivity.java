@@ -29,13 +29,10 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
@@ -46,7 +43,7 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
  * @author Jaroslav Klech
  *
  */
-public class MyPreferencesActivity extends SherlockPreferenceActivity {
+public class MyPreferencesActivity extends PreferenceActivity {
 
 	private static final String LOG_TAG = "MyPreferencesActivity";
 
@@ -108,7 +105,7 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 	}
 	
 	
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.menu_details, menu);
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -148,6 +145,6 @@ public class MyPreferencesActivity extends SherlockPreferenceActivity {
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
-	}
+	}*/
 
 }

@@ -31,12 +31,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-
-import com.actionbarsherlock.app.SherlockListFragment;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.engine.FragmentListAsyncTask;
@@ -54,7 +53,7 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
  * @author Jaroslav Klech
  *
  */
-public class ResultFragmentList extends SherlockListFragment implements
+public class ResultFragmentList extends ListFragment implements
 		SearchListener{
 	
 	private static final String LOG_TAG = "ResultFragmentList";
@@ -162,8 +161,9 @@ public class ResultFragmentList extends SherlockListFragment implements
     
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        l.setItemChecked(position, true);
     	if(mDualPane){
-    		l.setItemChecked(position, true);
+
     	}
     	mCallbackTranslation.onTranslationSelected(position);
     }
@@ -271,26 +271,21 @@ public class ResultFragmentList extends SherlockListFragment implements
 	 * @param expression to be searched for
 	 */
 	public void search(String expression){
-		if(expression == null && this.mLastSearched == null){
-			return ;
-		}
-
+        if(expression != null && expression.equals(mLastSearched)){
+            listShown(true);
+            return;
+        }
 		if(mDualPane){
 			getListView().setItemChecked(getListView().getCheckedItemPosition(), false);
 		}
-		if(expression!= null && !expression.equals(this.mLastSearched)){
-			if(mLoader != null){
-				mLoader.cancel(true);
-			}
-			mAdapter.clear();
-			Log.i(LOG_TAG+": "+mLastTab,"Starting nw loader: "+expression);
-			mLoader = new FragmentListAsyncTask(this, getActivity());
-			mLoader.execute(expression,mLastTab);
-		}else{
-			if(this.isVisible()){
-				listShown(true);
-			}
-		}
+        if(mLoader != null){
+            mLoader.cancel(true);
+        }
+        mAdapter.clear();
+        Log.i(LOG_TAG+": "+mLastTab,"Starting nw loader: "+expression);
+        listShown(false);
+        mLoader = new FragmentListAsyncTask(this, getActivity());
+        mLoader.execute(expression,mLastTab);
 		this.mLastSearched = expression;
 	}
 

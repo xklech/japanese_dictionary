@@ -17,102 +17,139 @@
  */
 package cz.muni.fi.japanesedictionary.main;
 
+
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.muni.fi.japanesedictionary.R;
-import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
-import cz.muni.fi.japanesedictionary.engine.FavoriteListLoader;
-import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
+import cz.muni.fi.japanesedictionary.engine.DrawerAdapter;
+import cz.muni.fi.japanesedictionary.engine.DrawerItemClickListener;
+import cz.muni.fi.japanesedictionary.entity.DrawerItem;
+import cz.muni.fi.japanesedictionary.fragments.FavoriteListFragment;
+
 
 /**
  * ListActivity displaying favorite translations
  * @author Jaroslav Klech
  *
  */
-public class FavoriteActivity extends SherlockListActivity {
-    TranslationsAdapter mAdapter;
+public class FavoriteActivity extends ActionBarActivity {
+
     private static final String LOG_TAG = "FavoriteActivity";
 
-    private GlossaryReaderContract mDatabase;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorite_activity);
-        mAdapter = new TranslationsAdapter(getApplicationContext());
-        setListAdapter(mAdapter);
-        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE );
-        TextView empty = (TextView) getListView().getEmptyView();
-        empty.setText(R.string.nothing_found);
-    }
+        FavoriteListFragment fragment = new FavoriteListFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.favorite_fragment,fragment).commit();
 
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+
+
+        // Set the adapter for the list view
+        List<DrawerItem> drawerItems = new ArrayList<DrawerItem>();
+        DrawerItem search = new DrawerItem().setName(getString(R.string.actionbar_search)).setIconResource(android.R.drawable.ic_menu_search);
+        drawerItems.add(search);
+        drawerItems.add(new DrawerItem().setName(getString(R.string.menu_favorite_activity)).setIconResource(R.drawable.rating_favorite));
+        drawerItems.add(new DrawerItem().setName(getString(R.string.last_seen)).setIconResource(R.drawable.collections_view_as_list));
+        DrawerAdapter drawerAdapter = new DrawerAdapter(getApplicationContext());
+        drawerAdapter.setData(drawerItems);
+
+        mDrawerList.setAdapter(drawerAdapter);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                Log.i(LOG_TAG, "Drawer change - close");
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                Log.i(LOG_TAG, "Drawer change - open");
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this));
+
+    }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.menu_details, menu);
-        Log.i(LOG_TAG, "Setting menu ");
+        getMenuInflater().inflate(R.menu.menu_details, menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        menu.findItem(R.id.favorites_activity).setVisible(false);
         return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    protected void onResume() {
-        Log.i(LOG_TAG, "OnStart called - launching loader");
-        if(mDatabase == null){
-            mDatabase = new GlossaryReaderContract(this);
-        }
-        mAdapter.clear();
-        FavoriteListLoader loader = new FavoriteListLoader(mDatabase, mAdapter, this);
-        loader.execute();
-        super.onResume();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mDrawerLayout.closeDrawer(mDrawerList);
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         switch (item.getItemId()) {
-            case android.R.id.home:
-                // app icon in action bar clicked; go home
-                Log.i(LOG_TAG, "Home button pressed");
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;
             case R.id.settings:
-                Log.i(LOG_TAG, "Launching preference Activity");
-                Intent intentSetting = new Intent(this.getApplicationContext(),MyPreferencesActivity.class);
+                Log.i(LOG_TAG, "Lauching preference Activity");
+                Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
                 intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intentSetting);
                 return true;
             case R.id.about:
                 Log.i(LOG_TAG, "Lauching About Activity");
-                Intent intentAbout = new Intent(this.getApplicationContext(),AboutActivity.class);
+                Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
                 intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intentAbout);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Bundle bundle = mAdapter.getItem(position).createBundleFromTranslation(null);
-        Intent intent = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.DisplayTranslationActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        mDrawerToggle.syncState();
     }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/libs/ActionBarSherlock/ActionBarSherlock.iml" filepath="$PROJECT_DIR$/libs/ActionBarSherlock/ActionBarSherlock.iml" />
+      <module fileurl="file://$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/support/v7/appcompat/appcompat.iml" filepath="$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/support/v7/appcompat/appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/japanese_dictionary.iml" filepath="$PROJECT_DIR$/japanese_dictionary.iml" />
     </modules>
   </component>

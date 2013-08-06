@@ -25,6 +25,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
@@ -43,7 +44,7 @@ import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
  * @author Jaroslav Klech
  *
  */
-public class DisplayCharacterInfo extends SherlockFragment{
+public class DisplayCharacterInfo extends Fragment {
 	
     private static final String LOG_TAG = "DisplayCharacterInfo";
 	
@@ -117,7 +118,7 @@ public class DisplayCharacterInfo extends SherlockFragment{
 		updateLanguages();
 		TextView literal = (TextView)getView().findViewById(R.id.kanjidict_literal);
 		literal.setText(mJapaneseCharacter.getLiteral());
-		getSherlockActivity().getSupportActionBar().setTitle(mJapaneseCharacter.getLiteral());
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle(mJapaneseCharacter.getLiteral());
 		
 		if(mJapaneseCharacter.getRadicalClassic() != 0){
 			Log.i(LOG_TAG,"Setting radical: " + mJapaneseCharacter.getRadicalClassic());

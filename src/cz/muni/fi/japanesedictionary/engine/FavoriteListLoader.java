@@ -38,12 +38,9 @@ public class FavoriteListLoader extends AsyncTask<Void, Void, List<Translation>>
 
     private TranslationsAdapter mAdapter;
 
-    private FavoriteActivity mActivity;
-
-    public FavoriteListLoader(GlossaryReaderContract _database,TranslationsAdapter _adapter, FavoriteActivity _activity){
+    public FavoriteListLoader(GlossaryReaderContract _database,TranslationsAdapter _adapter){
         mDatabase = _database;
         mAdapter = _adapter;
-        mActivity = _activity;
     }
 
     @Override

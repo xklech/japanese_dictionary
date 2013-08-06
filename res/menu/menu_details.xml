@@ -16,10 +16,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:japanesedictionary ="http://schemas.android.com/apk/res-auto">
     <item
             android:title="@string/menu_favorite"
-            android:showAsAction="ifRoom"
+            japanesedictionary:showAsAction="ifRoom"
             android:id="@+id/favorite"
             android:icon="@drawable/rating_not_important"
             android:enabled="false"
@@ -27,7 +28,7 @@
             />
     <item
             android:title="@string/menu_note"
-            android:showAsAction="ifRoom"
+            japanesedictionary:showAsAction="ifRoom"
             android:id="@+id/ab_note"
             android:icon="@drawable/note"
             android:enabled="false"
@@ -35,19 +36,13 @@
             />
 	<item 
 	    android:title="@string/menu_setting"
-	    android:showAsAction="never"
+        japanesedictionary:showAsAction="never"
 	    android:id="@+id/settings"
 	    android:icon="@android:drawable/ic_menu_preferences"
 	    />
-    <item
-            android:title="@string/menu_favorite_activity"
-            android:showAsAction="ifRoom"
-            android:id="@+id/favorites_activity"
-            android:icon="@drawable/rating_favorite"
-            />
 	<item 
 	    android:title="@string/about_title"
-	    android:showAsAction="never"
+        japanesedictionary:showAsAction="never"
 	    android:id="@+id/about"
 	    android:icon="@android:drawable/ic_menu_info_details"
 	    />

@@ -33,23 +33,26 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Sherlock"
+        android:theme="@style/Theme.AppCompat"
         android:allowBackup="true"
         >
         <activity
             android:name="cz.muni.fi.japanesedictionary.main.MainActivity"
             android:label="@string/title_activity_main" 
             android:launchMode="singleTask"
-            android:windowSoftInputMode="stateHidden"    
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
             <meta-data android:name="android.app.searchable"
-                   android:resource="@xml/searchable"/>
-            
+                       android:resource="@xml/searchable"/>
+
         </activity>
         <activity
             android:name=".main.DisplayTranslationActivity"         

@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/notification_image"
         android:layout_alignTop="@+id/notification_image"
-        style="@style/NotificationTitle"
+        style="@android:style/TextAppearance.Medium"
         android:singleLine="true"
         android:textIsSelectable="false"
     />
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/notification_image"
         android:layout_below="@+id/notification_title"
-        style="@style/NotificationText"
+        style="@android:style/TextAppearance.Small"
         android:singleLine="true"
         android:textIsSelectable="false"
     />

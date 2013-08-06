@@ -23,8 +23,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import com.actionbarsherlock.app.SherlockDialogFragment;
+import android.support.v4.app.DialogFragment;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.main.MainActivity;
@@ -34,7 +33,7 @@ import cz.muni.fi.japanesedictionary.main.MainActivity;
  * @author Jaroslav Klech
  *
  */
-public class MyFragmentAlertDialog extends SherlockDialogFragment {
+public class MyFragmentAlertDialog extends DialogFragment {
 
 	
 	/**

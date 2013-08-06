@@ -18,7 +18,6 @@
 
 package cz.muni.fi.japanesedictionary.interfaces;
 
-import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
@@ -26,7 +25,7 @@ import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 
 public interface OnCreateTranslationListener{
 	
-	public GlossaryReaderContract getDatabse();
+	public GlossaryReaderContract getDatabase();
 	
 	public void showKanjiDetail(JapaneseCharacter character);
 	

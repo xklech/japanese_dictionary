@@ -28,19 +28,19 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.DBAsyncTask;
@@ -60,7 +60,7 @@ import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
  *
  */
 
-public class DisplayTranslation extends SherlockFragment {
+public class DisplayTranslation extends Fragment {
 	
     private static final String LOG_TAG = "DisplayTranslation";
 	
@@ -124,7 +124,7 @@ public class DisplayTranslation extends SherlockFragment {
             case R.id.favorite:
                 Log.i(LOG_TAG, "favorite changed");
                 mFavorite.setEnabled(false);
-                FavoriteChanger changeFavorite = new FavoriteChanger(mCallbackTranslation.getDatabse(), mFavorite, this);
+                FavoriteChanger changeFavorite = new FavoriteChanger(mCallbackTranslation.getDatabase(), mFavorite, this);
                 changeFavorite.execute(mTranslation);
                 return true;
             case R.id.ab_note:
@@ -171,12 +171,12 @@ public class DisplayTranslation extends SherlockFragment {
 	public void setTranslation(Translation tran){
 		this.mTranslation = tran;
 		if(this.isVisible()){
-            if(mFavorite != null && mNote != null){
+            if(mFavorite != null && mNote != null && mTranslation != null){
                 mFavorite.setEnabled(false);
                 mNote.setEnabled(false);
-                FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
+                FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabase(), mFavorite, this);
                 favoriteLoader.execute(mTranslation);
-                NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabse(), mNote, this);
+                NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabase(), mNote, this);
                 noteLoader.execute(mTranslation);
             }
 			updateTranslation();
@@ -194,12 +194,13 @@ public class DisplayTranslation extends SherlockFragment {
                 mTranslation =  Translation.newInstanceFromBundle(bundle);
             }
         }
-        FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabse(), mFavorite, this);
-        favoriteLoader.execute(mTranslation);
+        if(mTranslation != null){
+            FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabase(), mFavorite, this);
+            favoriteLoader.execute(mTranslation);
 
-        NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabse(), mNote, this);
-        noteLoader.execute(mTranslation);
-
+            NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabase(), mNote, this);
+            noteLoader.execute(mTranslation);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -234,8 +235,8 @@ public class DisplayTranslation extends SherlockFragment {
         if(mTranslation.getJapaneseReb() != null){
         	String reading = mTranslation.getJapaneseReb().get(0);
         	read.setText(reading);
-        	getSherlockActivity().getSupportActionBar().setTitle(reading);
-        	DBAsyncTask saveTranslation   = new DBAsyncTask(mCallbackTranslation.getDatabse());
+            ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle(reading);
+        	DBAsyncTask saveTranslation   = new DBAsyncTask(mCallbackTranslation.getDatabase());
         	if(saveTranslation != null){
         		saveTranslation.execute(mTranslation);
         	}
@@ -574,7 +575,7 @@ public class DisplayTranslation extends SherlockFragment {
             public void onClick(DialogInterface dialog, int id) {
                 String note = input.getText().toString().trim();
                 mNote.setEnabled(false);
-                NoteSaver noteSaver = new NoteSaver(mCallbackTranslation.getDatabse(), mNote, DisplayTranslation.this, mTranslation);
+                NoteSaver noteSaver = new NoteSaver(mCallbackTranslation.getDatabase(), mNote, DisplayTranslation.this, mTranslation);
                 noteSaver.execute(note);
             }
         })

@@ -19,8 +19,7 @@ package cz.muni.fi.japanesedictionary.engine;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.actionbarsherlock.view.MenuItem;
+import android.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.Translation;

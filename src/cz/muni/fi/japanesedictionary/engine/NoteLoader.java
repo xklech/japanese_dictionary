@@ -19,8 +19,7 @@ package cz.muni.fi.japanesedictionary.engine;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.actionbarsherlock.view.MenuItem;
+import android.view.MenuItem;
 
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.Translation;
@@ -66,7 +65,7 @@ public class NoteLoader extends AsyncTask<Translation,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if(mDisplayFragment != null && !mDisplayFragment.isDetached()){
+        if(mDisplayFragment != null && mDisplayFragment.isVisible() ){
             if(mNoteItem != null){
                 mNoteItem.setEnabled(true);
                 mNoteItem.setVisible(true);
