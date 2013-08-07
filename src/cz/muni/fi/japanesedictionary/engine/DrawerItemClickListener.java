@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.main.FavoriteActivity;
+import cz.muni.fi.japanesedictionary.main.HistoryActivity;
 import cz.muni.fi.japanesedictionary.main.MainActivity;
 
 /**
@@ -46,13 +47,10 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                 mContext.startActivity(intentFavorites);
                 break;
             case 2:
-                Log.i(LOG_TAG, "Launching Main activity");
-                Intent intentMainLast = new Intent(mContext,MainActivity.class);
-                intentMainLast.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intentMainLast.putExtra("search",false);
-                mContext.startActivity(intentMainLast);
-                break;
+                Log.i(LOG_TAG, "Launching HistoryActivity - last 1000");
+                Intent intentSetting = new Intent(mContext,HistoryActivity.class);
+                intentSetting.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mContext.startActivity(intentSetting);
 
         }
     }

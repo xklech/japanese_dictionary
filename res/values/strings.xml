@@ -58,6 +58,8 @@
     <!-- Favorite -->
     <string name="favorite_title">Favorite</string>
 
+    <!-- History -->
+    <string name="history_title">History</string>
 
     <!-- Languages -->
     <string name="language_english">English</string>

@@ -58,6 +58,9 @@
     <!-- Favorite -->
     <string name="favorite_title">Oblíbené</string>
 
+    <!-- History -->
+    <string name="history_title">Historie</string>
+
     <!-- Languages -->
     <string name="language_english">Anglicky</string>
     <string name="language_french">Francouzsky</string>

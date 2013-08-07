@@ -77,6 +77,11 @@
                 android:label="@string/favorite_title"
                 >
         </activity>
+        <activity
+                android:name=".main.HistoryActivity"
+                android:label="@string/history_title"
+                >
+        </activity>
         <service android:name="cz.muni.fi.japanesedictionary.parser.ParserService" 
             	 android:exported="false" />
     </application>

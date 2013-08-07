@@ -15,6 +15,7 @@ import android.widget.TextView;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.engine.FavoriteListLoader;
+import cz.muni.fi.japanesedictionary.engine.HistoryListLoader;
 import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
 import cz.muni.fi.japanesedictionary.main.AboutActivity;
 import cz.muni.fi.japanesedictionary.main.FavoriteActivity;
@@ -24,11 +25,11 @@ import cz.muni.fi.japanesedictionary.main.MyPreferencesActivity;
 /**
  * Created by Jarek on 3.8.13.
  */
-public class FavoriteListFragment extends ListFragment {
+public class HistoryListFragment extends ListFragment {
 
     TranslationsAdapter mAdapter;
 
-    private static final String LOG_TAG = "FavoriteListFragment";
+    private static final String LOG_TAG = "HistoryListFragment";
 
     private GlossaryReaderContract mDatabase;
 
@@ -54,7 +55,7 @@ public class FavoriteListFragment extends ListFragment {
             mDatabase = new GlossaryReaderContract(getActivity());
         }
         mAdapter.clear();
-        FavoriteListLoader loader = new FavoriteListLoader(mDatabase, mAdapter);
+        HistoryListLoader loader = new HistoryListLoader(mDatabase, mAdapter);
         loader.execute();
         super.onResume();
     }
@@ -67,10 +68,10 @@ public class FavoriteListFragment extends ListFragment {
         startActivity(intent);
     }
 
+
     @Override
     public void onDestroy() {
         mDatabase.close();
         super.onDestroy();
     }
-
 }

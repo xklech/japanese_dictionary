@@ -825,15 +825,12 @@ public class MainActivity extends ActionBarActivity
                     startActivity(intentFavorites);
                     break;
                 case 2:
-                    Log.i(LOG_TAG, "Launching Main activity - last 10");
-                    mCurFilter = null;
-                    MenuItem searchItemLast = mMenu.findItem(R.id.action_search);
-                    MenuItemCompat.collapseActionView(searchItemLast);
+                    Log.i(LOG_TAG, "Launching HistoryActivity - last 1000");
                     mDrawerLayout.closeDrawer(mDrawerList);
-                    ResultFragmentList fragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mPager.getCurrentItem()));
-                    fragmentList.search(null);
+                    Intent intentSetting = new Intent(MainActivity.this,HistoryActivity.class);
+                    intentSetting.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intentSetting);
                     break;
-
             }
         }
     }
