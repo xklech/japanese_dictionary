@@ -56,7 +56,9 @@ public class Translation {
 	private List<List<String>> mFrench;
 	private List<List<String>> mDutch;
 	private List<List<String>> mGerman;
-	
+
+    private boolean mPrioritized;
+
 	@Override
 	public String toString() {
 		return "Translation [jap_keb=" + mJapKeb + ", jap_reb=" + mJapReb
@@ -111,6 +113,10 @@ public class Translation {
 		}
 		mGerman.add(sense);
 	}
+
+    public void setPrioritized(boolean isPrioritized){
+        mPrioritized = isPrioritized;
+    }
 	
 	public List<String> getJapaneseKeb(){
 		return mJapKeb.isEmpty()?null:mJapKeb;
@@ -135,7 +141,10 @@ public class Translation {
 	public List<List<String>> getGermanSense(){
 		return mGerman.isEmpty()?null:mGerman;
 	}
-	
+
+    public boolean isPrioritized(){
+        return mPrioritized;
+    }
 	/**
 	 * Takes json string and parses it list of Japanese Keb.
 	 * 

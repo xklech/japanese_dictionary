@@ -59,6 +59,7 @@ import android.view.MenuInflater;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -71,9 +72,9 @@ import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
 import cz.muni.fi.japanesedictionary.entity.DrawerItem;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
+import cz.muni.fi.japanesedictionary.fragments.DictionaryFragmentAlertDialog;
 import cz.muni.fi.japanesedictionary.fragments.DisplayCharacterInfo;
 import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
-import cz.muni.fi.japanesedictionary.fragments.MyFragmentAlertDialog;
 import cz.muni.fi.japanesedictionary.fragments.ResultFragmentList;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
 import cz.muni.fi.japanesedictionary.interfaces.OnTranslationSelectedListener;
@@ -90,22 +91,15 @@ public class MainActivity extends ActionBarActivity
         OnTranslationSelectedListener,
         SearchView.OnQueryTextListener,
         ActionBar.TabListener
+
 {
 
     private static final String LOG_TAG = "MainActivity";
 
     public static final String DUAL_PANE = "cz.muni.fi.japanesedictionary.mainactivity.dualpane";
     public static final String PARSER_SERVICE = "cz.muni.fi.japanesedictionary.parser.ParserService";
-    //public static final String SEARCH_PREFERENCES = "cz.muni.fi.japanesedictionary.main.search_preferences";
     public static final String SEARCH_TEXT = "cz.muni.fi.japanesedictionary.edit_text_searched";
     public static final String PART_OF_TEXT = "cz.muni.fi.japanesedictionary.edit_text_part";
-    //public static final String HANDLER_BUNDLE_TRANSLATION = "cz.muni.fi.japanesedictionary.handler_bundle_translation";
-    //public static final String HANDLER_BUNDLE_TAB = "cz.muni.fi.japanesedictionary.handler_bundle_tab";
-    //public static final String FRAGMENT_CREATE_TRANSLATION = "cz.muni.fi.japanesedictionary.fragment_create_translation";
-    //public static final String FRAGMENT_CREATE_PART = "cz.muni.fi.japanesedictionary.fragment_create_part";
-    //public static final String DISPLAY_TRANSLATION_ACTIVITY_BUNDLE = "cz.muni.fi.japanesedictionary.display_translation_activity_bundle";
-
-
 
     private GlossaryReaderContract mDatabase = null;
 
@@ -149,6 +143,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         setContentView(R.layout.main_activity);
         mDatabase = new GlossaryReaderContract(getApplicationContext());
@@ -240,7 +235,6 @@ public class MainActivity extends ActionBarActivity
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mDrawerList.setItemChecked(1, true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -545,12 +539,12 @@ public class MainActivity extends ActionBarActivity
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("waitingForConnection", true);
             editor.commit();
-            DialogFragment newFragment = MyFragmentAlertDialog.newInstance(
+            DialogFragment newFragment = DictionaryFragmentAlertDialog.newInstance(
                     R.string.internet_connection_failed_title,
                     R.string.internet_connection_failed_message, true);
             newFragment.show(getSupportFragmentManager(), "dialog");
         } else if (!canWriteExternalStorage()) {
-            DialogFragment newFragment = MyFragmentAlertDialog.newInstance(
+            DialogFragment newFragment = DictionaryFragmentAlertDialog.newInstance(
                     R.string.external_storrage_failed_title,
                     R.string.external_storrage_failed_message, true);
             newFragment.show(getSupportFragmentManager(), "dialog");
@@ -759,7 +753,7 @@ public class MainActivity extends ActionBarActivity
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("waitingForConnection", false);
             editor.commit();
-            DialogFragment newFragment = MyFragmentAlertDialog.newInstance(
+            DialogFragment newFragment = DictionaryFragmentAlertDialog.newInstance(
                     R.string.no_dictionary_found,
                     R.string.download_dictionary_question, false);
             newFragment.setCancelable(false);

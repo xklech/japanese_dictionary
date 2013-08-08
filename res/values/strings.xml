@@ -35,25 +35,30 @@
     <string name="nothing_found">Nothing found</string>
     <string name="download_dictionary_question">Do you want to download dictionary? \nInternet connection required.\nSize: 12 MB</string>
     <string name="download">Download</string>
-    <string name="storno">Storno</string>
+    <string name="storno">Cancel</string>
     <string name="save">Save</string>
     <string name="currently_downloading_dictionary">Currently downloading dictionary please wait</string>
     <string name="internet_connection_failed_title">Internet connection failed</string>
     <string name="internet_connection_failed_message">Internet connecton is not available</string>
     <string name="external_storrage_failed_title">External storrage unavailable</string>
     <string name="external_storrage_failed_message">External storrage is not available</string>  
-    <string name="search_translation">Search translation</string> 
-    <string name="menu_setting">Settings</string> 
+    <string name="search_translation">Search translation</string>
     <string name="updating_in_progress">Updating dictionary in progress, please wait</string>
     <string name="unknown_last_update">Last update unknown</string>
     <string name="last_update">Last update: </string>
     <string name="actionbar_search">Search</string>
-    <string name="menu_favorite">Favorite</string>
-    <string name="menu_favorite_activity">Show favorites</string>
-    <string name="menu_note">Add note</string>
     <string name="last_seen">Last seen</string>
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
+
+
+    <!-- Menu -->
+    <string name="anki_card">Add translation to AnkiDroid</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="menu_favorite_activity">Show favorites</string>
+    <string name="menu_note">Add note</string>
+    <string name="menu_setting">Settings</string>
+
 
     <!-- Favorite -->
     <string name="favorite_title">Favorite</string>
@@ -97,6 +102,9 @@
    <string name="translation_kanji">Kanji</string>
    <string name="translation_kanji_no_meaning">No known meaning in selected language</string>
    <string name="translation_note">Note</string>
+   <string name="anki_not_found">AnkiDroid application is not installed. Install AnkiDroid now?</string>
+    <string name="anki_required">AnkiDroid is required</string>
+
 
    <!-- Display character info -->
    <string name="character_unknown_character">Unknown character</string>

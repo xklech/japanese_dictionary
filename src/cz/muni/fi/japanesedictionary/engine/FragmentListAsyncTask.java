@@ -216,6 +216,12 @@ public class FragmentListAsyncTask extends
 						translation.parseGerman(german);
 					}
 
+                    String prioritized = d.get("prioritized");
+                    if(prioritized != null){
+                       //is prioritized
+                        translation.setPrioritized(true);
+                    }
+
 					if ((englishBool && translation.getEnglishSense() != null)
 							|| (dutchBool && translation.getDutchSense() != null)
 							|| (germanBool && translation.getGermanSense() != null)

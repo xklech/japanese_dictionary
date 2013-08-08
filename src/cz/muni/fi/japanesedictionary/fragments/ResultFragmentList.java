@@ -98,7 +98,7 @@ public class ResultFragmentList extends ListFragment implements
 	        	 if(fragment.isVisible()){
 	        		 //is visible to user and attached to activity
 	        		 fragment.getListView().setItemChecked(0, true);
-	        		((MainActivity)fragment.getActivity()).onTranslationSelected(0);
+	        		((OnTranslationSelectedListener)fragment.getActivity()).onTranslationSelected(0);
 	        	 } 
 	         }
 	    }
@@ -161,9 +161,8 @@ public class ResultFragmentList extends ListFragment implements
     
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        l.setItemChecked(position, true);
     	if(mDualPane){
-
+            l.setItemChecked(position, true);
     	}
     	mCallbackTranslation.onTranslationSelected(position);
     }
@@ -299,18 +298,19 @@ public class ResultFragmentList extends ListFragment implements
 	@Override
 	public void onResultFound(Translation translation) {
 		mAdapter.addListItem(translation);
-		if(this.isVisible()){
+		/*if(this.isVisible()){
 			listShown(true);
-		}
+		}*/
 	}
 	
 	private void listShown(boolean shown){
 		if(getView() != null){
-			if (isResumed()) {
+			/*if (isResumed()) {
 				setListShown(shown);
 			} else {
 				setListShownNoAnimation(shown);
-			}
+			}*/
+            ((MainActivity)getActivity()).setSupportProgressBarIndeterminateVisibility(!shown);
 		}
 	}
 

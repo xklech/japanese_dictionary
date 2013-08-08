@@ -18,6 +18,7 @@
 
 package cz.muni.fi.japanesedictionary.fragments;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +26,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -61,7 +66,7 @@ import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
  */
 
 public class DisplayTranslation extends Fragment {
-	
+
     private static final String LOG_TAG = "DisplayTranslation";
 	
 	private OnCreateTranslationListener mCallbackTranslation;
@@ -77,8 +82,8 @@ public class DisplayTranslation extends Fragment {
     private boolean mGerman;
 
     private MenuItem mFavorite;
-
     private MenuItem mNote;
+    private MenuItem mAnki;
 
     @Override
     public void onAttach(Activity activity) {
@@ -130,8 +135,83 @@ public class DisplayTranslation extends Fragment {
             case R.id.ab_note:
                 Log.i(LOG_TAG, "notes opened");
                 TextView note = (TextView) getActivity().findViewById(R.id.translation_note_text);
-                if(note != null){
+                if(note != null && note.getText()!= null){
                     showNoteAlertBox(note.getText().toString());
+                }
+                return true;
+            case R.id.ab_anki:
+                Log.i(LOG_TAG, "anki card clicked");
+                if(mTranslation == null){
+                    Log.w(LOG_TAG,"add anki card - translation is null");
+                    return true;
+                }
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setAction("org.openintents.action.CREATE_FLASHCARD");
+                StringBuilder jap = new StringBuilder();
+                if(mTranslation.getJapaneseKeb() != null){
+                    for (int i =0; i < mTranslation.getJapaneseKeb().size(); i++){
+                        jap.append(mTranslation.getJapaneseKeb().get(i));
+                        if(i+1 < mTranslation.getJapaneseKeb().size()){
+                            jap.append(", ");
+                        }
+                    }
+                }
+                if(jap.length() > 0){
+                    jap.append("<br>");
+                }
+                if(mTranslation.getJapaneseReb() != null){
+                    for (int i =0; i < mTranslation.getJapaneseReb().size(); i++){
+                        jap.append(mTranslation.getJapaneseReb().get(i));
+                        if(i+1 < mTranslation.getJapaneseReb().size()){
+                            jap.append(", ");
+                        }
+                    }
+                }
+                StringBuilder sense = new StringBuilder();
+                if(mEnglish || (!mDutch && !mGerman && !mFrench)){
+                    //only english
+                    sense.append(sensesToString(mTranslation.getEnglishSense()));
+                }
+                if(mFrench){
+                    if(sense.length() > 0 && (sense.length() <3 || !"<br>".equals(sense.substring(sense.length()-4)) )){
+                        sense.append("<br>");
+                    }
+                    sense.append(sensesToString(mTranslation.getFrenchSense()));
+                }
+                if(mGerman){
+                    if(sense.length() > 0 && (sense.length() <3 || !"<br>".equals(sense.substring(sense.length()-4)) )){
+                        sense.append("<br>");
+                    }
+                    sense.append(sensesToString(mTranslation.getGermanSense()));
+                }
+                if(mFrench){
+                    if(sense.length() > 0 && (sense.length() <3 || !"<br>".equals(sense.substring(sense.length()-4)) )){
+                        sense.append("<br>");
+                    }
+                    sense.append(sensesToString(mTranslation.getFrenchSense()));
+                }
+                Log.e(LOG_TAG, "senses: "+sense.toString());
+                intent.putExtra("SOURCE_LANGUAGE", "ja");
+                intent.putExtra("SOURCE_TEXT", jap.toString());
+                intent.putExtra("TARGET_TEXT", sense.toString());
+                PackageManager packageManager = getActivity().getPackageManager();
+                List<ResolveInfo> activities = null;
+                if (packageManager != null) {
+                    activities = packageManager.queryIntentActivities(intent, 0);
+                }
+                if(activities != null && activities.size() > 0){
+                    startActivity(intent);
+                }else{
+                    Log.w(LOG_TAG, "Anki application is not installed");
+                    DialogFragment newFragment = DictionaryFragmentAlertDialog.newInstance(
+                            R.string.anki_required,
+                            R.string.anki_not_found, false);
+                    newFragment.setCancelable(false);
+                    newFragment.show(getActivity().getSupportFragmentManager(),
+                            "dialog");
+
+
+                    //Toast.makeText(getActivity(), getString(R.string.anki_not_found),Toast.LENGTH_LONG).show();
                 }
                 return true;
             default:
@@ -178,6 +258,9 @@ public class DisplayTranslation extends Fragment {
                 favoriteLoader.execute(mTranslation);
                 NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabase(), mNote, this);
                 noteLoader.execute(mTranslation);
+                mAnki.setEnabled(true);
+                mAnki.setVisible(true);
+                
             }
 			updateTranslation();
 		}
@@ -188,18 +271,25 @@ public class DisplayTranslation extends Fragment {
 
         mFavorite = menu.findItem(R.id.favorite);
         mNote = menu.findItem(R.id.ab_note);
+        mAnki = menu.findItem(R.id.ab_anki);
         if(mTranslation == null){
             Bundle bundle = getArguments();
             if(bundle != null){
                 mTranslation =  Translation.newInstanceFromBundle(bundle);
             }
         }
+        Log.i(LOG_TAG, "setting menu items visibility");
+
         if(mTranslation != null){
             FavoriteLoader favoriteLoader = new FavoriteLoader(mCallbackTranslation.getDatabase(), mFavorite, this);
             favoriteLoader.execute(mTranslation);
 
             NoteLoader noteLoader = new NoteLoader(mCallbackTranslation.getDatabase(), mNote, this);
             noteLoader.execute(mTranslation);
+            if(mAnki != null){
+                mAnki.setEnabled(true);
+                mAnki.setVisible(true);
+            }
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -586,6 +676,21 @@ public class DisplayTranslation extends Fragment {
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private String sensesToString(List<List<String>> senses){
+        List<String> collection = new ArrayList();
+        for(List<String> list : mTranslation.getEnglishSense()){
+            collection.addAll(list);
+        }
+        StringBuilder strBuilder = new StringBuilder();
+        for (int i =0; i < collection.size(); i++){
+            strBuilder.append(collection.get(i));
+            if(i+1 < collection.size()){
+                strBuilder.append(", ");
+            }
+        }
+        return strBuilder.toString();
     }
 
 }

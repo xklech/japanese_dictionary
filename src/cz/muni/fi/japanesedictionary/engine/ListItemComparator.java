@@ -42,7 +42,15 @@ public class ListItemComparator implements Comparator<Translation> {
 	public int compare(Translation lhs, Translation rhs) {
 		int lengthKeb1 = (lhs != null && lhs.getJapaneseKeb() != null && lhs.getJapaneseKeb().get(0) != null)?lhs.getJapaneseKeb().get(0) .length():0;
 		int lengthKeb2 = (rhs != null && rhs.getJapaneseKeb() != null && rhs.getJapaneseKeb().get(0) != null)?rhs.getJapaneseKeb().get(0) .length():0;
-		return Integer.signum(lengthKeb1-lengthKeb2);
+        int dif = lengthKeb1-lengthKeb2;
+        if(dif == 0){
+            if(lhs.isPrioritized() && !rhs.isPrioritized()){
+                dif = -1;
+            }else if (!lhs.isPrioritized() && rhs.isPrioritized()){
+                dif = 1;
+            }
+        }
+		return Integer.signum(dif);
 	}
 
 

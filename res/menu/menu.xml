@@ -41,6 +41,14 @@
             android:enabled="false"
             android:visible="false"
             />
+    <item
+            android:title="@string/anki_card"
+            japanesedictionary:showAsAction="ifRoom"
+            android:id="@+id/ab_anki"
+            android:icon="@drawable/content_new"
+            android:enabled="false"
+            android:visible="false"
+            />
 	<item 
 	    android:title="@string/menu_setting"
         japanesedictionary:showAsAction="never"

@@ -42,18 +42,21 @@
     <string name="internet_connection_failed_message">Připojení k internetu není k dispozici</string>
     <string name="external_storrage_failed_title">Nedostupné externí uložiště </string>
     <string name="external_storrage_failed_message">Externí uložiště je nedostupné.</string>   
-    <string name="search_translation">Vyhledat překlad</string> 
-    <string name="menu_setting">Nastavení</string> 
+    <string name="search_translation">Vyhledat překlad</string>
     <string name="updating_in_progress">Probíhá aktualizace slovníku, prosím čekejte.</string>
     <string name="unknown_last_update">Poslední aktualizace neznámá</string>
     <string name="last_update">Poslední aktualizace:</string>
     <string name="actionbar_search">Hledat</string>
-    <string name="menu_favorite">Oblíbené</string>
-    <string name="menu_favorite_activity">Zobraz oblíbené</string>
-    <string name="menu_note">Přidat poznámku</string>
     <string name="last_seen">Poslední zobrazené</string>
     <string name="drawer_open">Otevřít šuplík</string>
     <string name="drawer_close">Zavřít šuplík</string>
+
+    <!-- Menu -->
+    <string name="anki_card">Přidat překlad do aplikace AnkiDroid</string>
+    <string name="menu_favorite">Oblíbené</string>
+    <string name="menu_favorite_activity">Zobraz oblíbené</string>
+    <string name="menu_note">Přidat poznámku</string>
+    <string name="menu_setting">Nastavení</string>
 
     <!-- Favorite -->
     <string name="favorite_title">Oblíbené</string>
@@ -96,9 +99,10 @@
    <string name="translation_translation">Překlad</string>
    <string name="translation_kanji">Kanji</string>
    <string name="translation_kanji_no_meaning">Žádné známe významy ve zvoleném jazyce</string>
-    <string name="translation_note">Poznámka</string>
-
-   <!-- Display character info -->
+   <string name="translation_note">Poznámka</string>
+   <string name="anki_not_found">Aplikace AnkiDroid není nainstalovaná.</string>
+   <string name="anki_required">Je vyžadována aplikace AnkiDroid. Nainstalovat AnkiDroid nyní?</string>
+    <!-- Display character info -->
    <string name="character_unknown_character">Neznámý znak</string>
    <string name="character_title">Detail znaku</string>
    <string name="kanjidict_radical_text">Radical</string>

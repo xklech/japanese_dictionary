@@ -79,6 +79,7 @@ public class SaxDataHolder extends DefaultHandler{
 	private boolean mFrench;
 	private boolean mDutch;
 	private boolean mGerman;
+    private boolean mPriorityTag;
 	private long mStartTime;
 	
 	private JSONArray mJapaneseRebJSON;
@@ -95,7 +96,9 @@ public class SaxDataHolder extends DefaultHandler{
 	
 	private JSONArray mGermanJSON;
 	private JSONArray mGermanJSONSense;
-	
+
+    private boolean mPrioritized;
+
 	private String[] mNotificationTimeLeft;
 	
 	private Context mContext;
@@ -182,7 +185,9 @@ public class SaxDataHolder extends DefaultHandler{
 			}else if("ger".equals(attributes.getValue("xml:lang"))){
 				mGerman = true;
 			}
-		}
+		}else if("ke_pri".equals(qName) || "re_pri".equals(qName)){
+            mPriorityTag = true;
+        }
 			
     }
 	
@@ -214,7 +219,13 @@ public class SaxDataHolder extends DefaultHandler{
 		}else if(mGerman){
 			mGermanJSON.put(new String(ch,start,length));
 			mGerman = false;			
-		}
+		}else if(mPriorityTag){
+            String string = new String(ch,start,length);
+            if("news1".equals(string) || "ichi1".equals(string) || "spec1".equals(string) || "gai1".equals(string)){
+                mPrioritized = true;
+            }
+            mPriorityTag = false;
+        }
 		
 	}
 	
@@ -258,7 +269,10 @@ public class SaxDataHolder extends DefaultHandler{
 					mDocument.add(new Field("german",mGermanJSONSense.toString(),Field.Store.YES,Index.NO));	
 					mGermanJSONSense = null;
 				}				
-				
+				if(mPrioritized){
+                    mPrioritized = false;
+                    mDocument.add(new Field("prioritized", "true", Field.Store.YES,Index.NO));
+                }
 				try {
 					mCountDone++;
 					mWriter.addDocument(mDocument);
