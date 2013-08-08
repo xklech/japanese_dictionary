@@ -74,4 +74,12 @@ public class HistoryListFragment extends ListFragment {
         mDatabase.close();
         super.onDestroy();
     }
+
+    /**
+     * Returns TranslationAdapter from ListFragment
+     * @return TranslationsAdapter adapter from list fragment
+     */
+    public TranslationsAdapter getAdapter(){
+        return mAdapter;
+    }
 }

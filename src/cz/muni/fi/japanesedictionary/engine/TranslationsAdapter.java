@@ -46,6 +46,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         mContext = cont;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         mEnglish = sharedPrefs.getBoolean("language_english", false);
+        Log.e("adapter", "english: "+mEnglish);
         mFrench = sharedPrefs.getBoolean("language_french", false);        
         mDutch = sharedPrefs.getBoolean("language_dutch", false);
         mGerman = sharedPrefs.getBoolean("language_german", false);
@@ -158,8 +160,8 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         if(write){
 	        SpannableStringBuilder sb = new SpannableStringBuilder(strBuilder);
 	        ForegroundColorSpan color = new ForegroundColorSpan(Color.WHITE); 
-	        TextAppearanceSpan apearence = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium); 
-	        sb.setSpan(apearence, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+	        TextAppearanceSpan appearance = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium);
+	        sb.setSpan(appearance, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 	        sb.setSpan(color, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 	        holder.japanese.setText(sb);
         }else{
@@ -168,20 +170,60 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         
         if(mEnglish && item.getEnglishSense() != null && item.getEnglishSense().size() > 0 ){
             holder.translation.setText(item.getEnglishSense().get(0).get(0));
-        }else if(mGerman && item.getGermanSense() != null && item.getGermanSense().size() > 0 ){
-            holder.translation.setText(item.getGermanSense().get(0).get(0));   	
         }else if(mFrench && item.getFrenchSense() != null && item.getFrenchSense().size() > 0){
-            holder.translation.setText(item.getFrenchSense().get(0).get(0));      	
+            holder.translation.setText(item.getFrenchSense().get(0).get(0));
         }else if(mDutch && item.getDutchSense() != null && item.getDutchSense().size() > 0){
-            holder.translation.setText(item.getDutchSense().get(0).get(0));    	
+            holder.translation.setText(item.getDutchSense().get(0).get(0));
+        }else if(mGerman && item.getGermanSense() != null && item.getGermanSense().size() > 0 ){
+            holder.translation.setText(item.getGermanSense().get(0).get(0));
         }else{
             if(item.getEnglishSense() != null && item.getEnglishSense().size() > 0){
             	holder.translation.setText(item.getEnglishSense().get(0).get(0));
-            	
-            }        	
+            }else{
+                holder.translation.setText("");
+            }
         }
 
         return convertView;
-    }  
-    
+    }
+
+    /**
+     * Updates language preferences
+     *
+     * @return true if some language was changed
+     * 	       false if there wasn't change
+     */
+    private boolean updateLanguages(){
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        boolean changed = false;
+        boolean englTemp = sharedPrefs.getBoolean("language_english", false);
+        if(englTemp != mEnglish){
+            mEnglish = englTemp;
+            changed = true;
+        }
+        boolean frenchTemp = sharedPrefs.getBoolean("language_french", false);
+        if(frenchTemp != mFrench){
+            mFrench = frenchTemp;
+            changed = true;
+        }
+        boolean dutchTemp = sharedPrefs.getBoolean("language_dutch", false);
+        if(dutchTemp != mDutch){
+            mDutch = dutchTemp;
+            changed = true;
+        }
+        boolean germanTemp = sharedPrefs.getBoolean("language_german", false);
+        if(germanTemp != mGerman){
+            mGerman = germanTemp;
+            changed = true;
+        }
+        return changed;
+    }
+
+    public void updateAdapter(){
+        if(updateLanguages()){
+            notifyDataSetChanged();
+        }
+    }
+
+
 }

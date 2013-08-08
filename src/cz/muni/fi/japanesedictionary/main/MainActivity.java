@@ -436,6 +436,14 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    @Override
+    protected void onResume() {
+        ResultFragmentList fragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mPager.getCurrentItem()));
+        if(fragmentList != null){
+            fragmentList.updateList();
+        }
+        super.onResume();
+    }
 
     /**
      * On SearchView submit button hide keyboard. Search is done on text change.

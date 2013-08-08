@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -41,6 +40,7 @@ import cz.muni.fi.japanesedictionary.engine.DrawerAdapter;
 import cz.muni.fi.japanesedictionary.engine.DrawerItemClickListener;
 import cz.muni.fi.japanesedictionary.entity.DrawerItem;
 import cz.muni.fi.japanesedictionary.fragments.FavoriteListFragment;
+import cz.muni.fi.japanesedictionary.fragments.ResultFragmentList;
 
 
 /**
@@ -55,14 +55,16 @@ public class FavoriteActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private FavoriteListFragment mFragment;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorite_activity);
-        FavoriteListFragment fragment = new FavoriteListFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.favorite_fragment,fragment).commit();
+        mFragment = new FavoriteListFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.favorite_fragment, mFragment).commit();
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -150,6 +152,15 @@ public class FavoriteActivity extends ActionBarActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onResume() {
+
+        if(mFragment != null && mFragment.getAdapter() != null){
+            mFragment.getAdapter().updateAdapter();
+        }
+        super.onResume();
     }
 
 }

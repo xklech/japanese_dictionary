@@ -97,6 +97,9 @@ public class FragmentListAsyncTask extends
 				false);
 		final boolean germanBool = sharedPrefs.getBoolean("language_german",
 				false);
+        final boolean searchOnlyFavorised = sharedPrefs.getBoolean("search_only_favorite",
+                false);
+
 		final List<Translation> translations = new ArrayList<Translation>();
 
 		if (expression == null) {
@@ -186,6 +189,15 @@ public class FragmentListAsyncTask extends
 
 					Document d = reader.document(docID);
 					Translation translation = new Translation();
+                    String prioritized = d.get("prioritized");
+                    if(searchOnlyFavorised && prioritized == null){
+                        return ;
+                    }
+                    if(prioritized != null){
+                        //is prioritized
+                        translation.setPrioritized(true);
+                    }
+
 					String japanese_keb = d.get("japanese_keb");
 					if (japanese_keb != null && japanese_keb.length() != 0) {
 						translation.parseJapaneseKeb(japanese_keb);
@@ -216,11 +228,7 @@ public class FragmentListAsyncTask extends
 						translation.parseGerman(german);
 					}
 
-                    String prioritized = d.get("prioritized");
-                    if(prioritized != null){
-                       //is prioritized
-                        translation.setPrioritized(true);
-                    }
+
 
 					if ((englishBool && translation.getEnglishSense() != null)
 							|| (dutchBool && translation.getDutchSense() != null)

@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -69,8 +70,8 @@ public class ResultFragmentList extends ListFragment implements
 	
 	private FragmentListAsyncTask mLoader;
 
-	
-	
+    private boolean mPreferenceCommon;
+
 	/**
 	 * Handler setting first translation as selected in dualpane mode in first run.
 	 * @author Jaroslav Klech
@@ -166,7 +167,6 @@ public class ResultFragmentList extends ListFragment implements
     	}
     	mCallbackTranslation.onTranslationSelected(position);
     }
-    
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -186,11 +186,13 @@ public class ResultFragmentList extends ListFragment implements
 		} else {
 			setEmptyText(getString(R.string.nothing_found));
 		}
-		
+        SharedPreferences commonSetting = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mPreferenceCommon = commonSetting.getBoolean("search_only_favorite", false);
 		if(mAdapter == null){
 			mAdapter = new TranslationsAdapter(getActivity());
 		}else{
 			Log.i(LOG_TAG+": "+mLastTab,"old adapter: "+mAdapter.getCount());
+            mAdapter.updateAdapter();
 		}
 		setListAdapter(mAdapter);
 		Bundle bundle = getArguments();
@@ -314,4 +316,23 @@ public class ResultFragmentList extends ListFragment implements
 		}
 	}
 
+
+    public void updateList(){
+        SharedPreferences commonSetting = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean newPreferenceCommon = commonSetting.getBoolean("search_only_favorite", false);
+        if(newPreferenceCommon != mPreferenceCommon){
+            Log.e(LOG_TAG, "new common setting search again");
+            mPreferenceCommon = newPreferenceCommon;
+            if(mLoader != null){
+                mLoader.cancel(true);
+            }
+
+            mAdapter.clear();
+            mAdapter.updateAdapter();
+            listShown(false);
+            mLoader = new FragmentListAsyncTask(this, getActivity());
+            mLoader.execute(mLastSearched,mLastTab);
+        }
+        mAdapter.updateAdapter();
+    }
 }

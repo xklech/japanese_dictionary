@@ -20,7 +20,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-            android:title="Language setting">
+            android:title="@string/preferences_language_setting">
 
 
         <CheckBoxPreference
@@ -48,8 +48,18 @@
                 android:summaryOn="@string/preferences_german_do"
                 />
     </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/preferences_search_setting">
+        <CheckBoxPreference
+                android:key="search_only_favorite"
+                android:title="@string/preferences_search_only_favorite"
+                android:summaryOff="@string/preferences_favorite_dont"
+                android:summaryOn="@string/preferences_favorite_do"
+                />
+
+    </PreferenceCategory>
 	<PreferenceCategory
-	    android:title="Dictionary info">
+	    android:title="@string/preferences_dictionary_info">
 	 	
        <PreferenceScreen
            android:key="update_dictionary"

@@ -73,4 +73,11 @@ public class FavoriteListFragment extends ListFragment {
         super.onDestroy();
     }
 
+    /**
+     * Returns TranslationAdapter from ListFragment
+     * @return TranslationsAdapter adapter from list fragment
+     */
+    public TranslationsAdapter getAdapter(){
+        return mAdapter;
+    }
 }

@@ -21,6 +21,7 @@
     android:hint="Search japanese" 
     android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
     android:voiceLanguageModel="free_form"
-    android:voiceLanguage="ja"
+    android:voiceLanguage="ja_JP"
+    android:voiceMaxResults="1"
         >
 </searchable>

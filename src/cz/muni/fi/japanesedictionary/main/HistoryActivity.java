@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -40,7 +39,6 @@ import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.engine.DrawerAdapter;
 import cz.muni.fi.japanesedictionary.engine.DrawerItemClickListener;
 import cz.muni.fi.japanesedictionary.entity.DrawerItem;
-import cz.muni.fi.japanesedictionary.fragments.FavoriteListFragment;
 import cz.muni.fi.japanesedictionary.fragments.HistoryListFragment;
 
 
@@ -56,14 +54,15 @@ public class HistoryActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private HistoryListFragment mFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_activity);
-        HistoryListFragment fragment = new HistoryListFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.history_fragment,fragment).commit();
+        mFragment = new HistoryListFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.history_fragment, mFragment).commit();
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -151,6 +150,15 @@ public class HistoryActivity extends ActionBarActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onResume() {
+
+        if(mFragment != null && mFragment.getAdapter() != null){
+            mFragment.getAdapter().updateAdapter();
+        }
+        super.onResume();
     }
 
 }
