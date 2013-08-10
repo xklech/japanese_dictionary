@@ -24,8 +24,8 @@
     android:layout_gravity="left"
     android:layout_marginLeft="32dp" 
     android:layout_marginTop="4dp" 
-    android:background="?attr/actionBarItemBackground"
-    style="?attr/actionButtonStyle" 
+    android:background="?android:attr/actionBarItemBackground"
+    style="?android:attr/actionButtonStyle"
      >
     <EditText
         android:id="@+id/search"

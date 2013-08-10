@@ -82,7 +82,7 @@
     <string name="preferences_german_dont">Nepřekládat do němčiny</string>
     <string name="preferences_dictionary_info">Informace o slovníku</string>
  	<string name="preferences_update_dictionary">Aktualizovat slovník</string>
- 	<string name="preferences_dictionary_info">Slovník nenalezen</string>
+ 	<string name="preferences_no_dictionary_info">Slovník nenalezen</string>
  	<string name="preferences">Nastavení</string>
     <string name="preferences_search_setting">Nastavení vyhledávání</string>
     <string name="preferences_search_only_favorite">Vyhledávat pouze běžně používaná slova</string>
