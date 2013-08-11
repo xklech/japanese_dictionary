@@ -18,7 +18,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cz.muni.fi.japanesedictionary"
-    android:versionCode="4"
+    android:versionCode="1"
     android:versionName="1.0" >
 
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -27,8 +27,8 @@
 	
     
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+        android:minSdkVersion="7"
+        android:targetSdkVersion="18" />
 
     <application
         android:icon="@drawable/ic_launcher"

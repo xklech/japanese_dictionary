@@ -84,7 +84,7 @@
     <string name="preferences_german_dont">Do not translate German</string>
     <string name="preferences_dictionary_info">Dictionary info</string>
  	<string name="preferences_update_dictionary">Update dictionary</string>
- 	<string name="preferences_dictionary_info">No dictionary found</string>
+ 	<string name="preferences_no_dictionary_info">No dictionary found</string>
  	<string name="preferences">Preferences</string>
     <string name="preferences_search_setting">Search setting</string>
     <string name="preferences_search_only_favorite">Search only common words</string>
@@ -131,34 +131,7 @@
    <string name="about_creator">Created by: </string>
    <string name="about_dictionary">This application uses the JMDict and KANJIDIC2 dictionary files. These files are the property of the Electronic Dictionary Research and Development Group, and are used in conformance with the Group\'s licence. </string>
 
+   <!--voice search -->
+   <string name="ja">ja</string>
 
-
-<!-- Label for the "Done" button on the far left of action mode toolbars. -->
-<string name="abc_action_mode_done">Done</string>
-<!-- Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] -->
-<string name="abc_action_bar_home_description">Navigate home</string>
-<!-- Content description for the action bar "up" affordance. [CHAR LIMIT=NONE] -->
-<string name="abc_action_bar_up_description">Navigate up</string>
-<!-- Content description for the action menu overflow button. [CHAR LIMIT=NONE] -->
-<string name="abc_action_menu_overflow_description">More options</string>
-<!-- SearchView accessibility description for search button [CHAR LIMIT=NONE] -->
-<string name="abc_searchview_description_search">Search</string>
-<!-- SearchView accessibility description for search text field [CHAR LIMIT=NONE] -->
-<string name="abc_searchview_description_query">Search query</string>
-<!-- SearchView accessibility description for clear button [CHAR LIMIT=NONE] -->
-<string name="abc_searchview_description_clear">Clear query</string>
-<!-- SearchView accessibility description for submit button [CHAR LIMIT=NONE] -->
-<string name="abc_searchview_description_submit">Submit query</string>
-<!-- SearchView accessibility description for voice button [CHAR LIMIT=NONE] -->
-<string name="abc_searchview_description_voice">Voice search</string>
-<!-- ActivityChooserView - accessibility support -->
-
-<!-- Description of the shwoing of a popup window with activities to choose from. [CHAR LIMIT=NONE] -->
-<string name="abc_activitychooserview_choose_application">Choose an app</string>
-<!-- Title for a button to expand the list of activities in ActivityChooserView [CHAR LIMIT=25] -->
-<string name="abc_activity_chooser_view_see_all">See all</string>
-<!-- Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] -->
-<string name="abc_shareactionprovider_share_with_application">Share with %s</string>
-<!-- Description of the choose target button in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] -->
-<string name="abc_shareactionprovider_share_with">Share with</string>
 </resources>
