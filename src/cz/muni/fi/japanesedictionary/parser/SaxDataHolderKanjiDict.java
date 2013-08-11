@@ -41,15 +41,14 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import cz.muni.fi.japanesedictionary.R;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 
 /**
@@ -63,8 +62,7 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	private static final String LOG_TAG = "SaxDataHolderKanjiDict";
 	
 	private NotificationManager mNotifyManager = null;
-	private Notification mNotification = null;
-	private RemoteViews mNotificationView = null;
+    private NotificationCompat.Builder mBuilder = null;
 	private BroadcastReceiver mReceiverInterrupted= new BroadcastReceiver() {
 		  @Override public void onReceive(Context context, Intent intent) { 
 			  //		  intent can contain anydata 
@@ -126,13 +124,11 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	 * @param file lucene dictionary for saving documents
 	 * @param appContext environment context
 	 * @param nM instance of notification manager
-	 * @param notif prepared notification 
-	 * @param rV RemoteView for notification
 	 * @throws IOException
 	 * @throws IllegalArgumentException if directory doesn't exist
 	 */
-	public SaxDataHolderKanjiDict(File file,Context appContext,NotificationManager nM,
-			Notification notif,RemoteViews rV) throws IOException,SAXException{
+	public SaxDataHolderKanjiDict(File file,Context appContext, NotificationManager nM,
+			NotificationCompat.Builder builder) throws IOException,SAXException{
         
 		if(file == null){
 			Log.e(LOG_TAG, "SaxDataHolderKanjiDict - dictionary directory is null");
@@ -145,14 +141,14 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 		mWriter = new IndexWriter(dir, config);
 		
 		mStartTime = System.currentTimeMillis();
+        mBuilder = builder;
+        mNotifyManager = nM;
 		
 		mNotificationTimeLeft = mContext.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
 		if(mNotificationTimeLeft.length != 2 ){
-			mNotificationView.setTextViewText(R.id.notification_text, mContext.getString(R.string.dictionary_parsing_in_progress_time_left));
+            mBuilder.setContentText(mContext.getString(R.string.dictionary_parsing_in_progress_time_left));
 		}
-		mNotifyManager = nM;
-		mNotification = notif;
-		mNotificationView = rV;
+
 		Log.i(LOG_TAG, "SaxDataHolderKanjiDict created");
 	}
 	
@@ -334,13 +330,12 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
                 	mStartTime = System.currentTimeMillis();
                 	duration = duration * (100-persPub);
                 	
-                	mNotificationView.setProgressBar(R.id.ntification_progressBar, 100, persPub, false);
+                    mBuilder.setProgress(100, persPub, false);
                 	if(mNotificationTimeLeft.length ==2){
                 		int timeLeft = Math.round(duration/60000);
-                		mNotificationView.setTextViewText(R.id.notification_text, mNotificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + mNotificationTimeLeft[1] );
+                        mBuilder.setContentText(mNotificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + mNotificationTimeLeft[1]);
                 	}
-                	mNotification.contentView = mNotificationView;
-	                mNotifyManager.notify(0, mNotification);
+	                mNotifyManager.notify(0, mBuilder.build());
                 	
 	                mPerc = persPub;
 	                
