@@ -65,7 +65,7 @@ import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.main.MainActivity;
 
 /**
- * Service for downloading and aprsing dictionaries.
+ * Service for downloading and parsing dictionaries.
  * 
  * @author Jaroslav Klech
  * 
