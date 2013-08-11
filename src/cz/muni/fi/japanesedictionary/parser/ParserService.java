@@ -211,7 +211,6 @@ public class ParserService extends IntentService {
 		OutputStream output = null;
 		
 		HttpURLConnection connection;
-                connection = null;
                 connection = (HttpURLConnection)url.openConnection();
 		connection.setRequestProperty("Accept-Encoding", "identity");
 		connection.connect();

@@ -2,13 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
-    <excludeFromCompile>
-      <directory url="file://$PROJECT_DIR$/gen" includeSubdirectories="true" />
-      <directory url="file://$PROJECT_DIR$/libs/ActionBarSherlock/gen" includeSubdirectories="true" />
-      <directory url="file://$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/support/v7/gridlayout/gen" includeSubdirectories="true" />
-      <directory url="file://$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/support/v7/mediarouter/gen" includeSubdirectories="true" />
-      <directory url="file://$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/support/v7/appcompat/gen" includeSubdirectories="true" />
-    </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="!?*.java" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
+<module external.linked.project.path="C:\Users\Jarek\Documents\GitHub\japanese_dictionary" external.system.id="GRADLE" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
@@ -8,8 +8,6 @@
         <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleTest" />
         <option name="SOURCE_GEN_TASK_NAME" value="TODO" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
-        <option name="UPDATE_PROPERTY_FILES" value="true" />
-        <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
       </configuration>
     </facet>
     <facet type="android-gradle" name="Android-Gradle">
@@ -66,7 +64,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android 4.3 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android 4.3 Platform (1)" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
     <orderEntry type="library" exported="" name="lucene-analyzers-3.6.2" level="project" />
