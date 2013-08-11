@@ -128,4 +128,9 @@
    <string name="about_creator">Vytvořil: </string>
    <string name="about_dictionary">Tato aplikace využívá JMDict a KANJIDIC2 slovníkové soubory. Tyto soubory jsou majetkem Electronic Dictionary Research and Development Group, a jsou užívány v souladu s licencí skupiny. </string>
 
+
+    <!--voice search -->
+    <string name="searchable_ja">ja</string>
+    <string name="searchable_hint">rómadži/かな/漢字</string>
+
 </resources>

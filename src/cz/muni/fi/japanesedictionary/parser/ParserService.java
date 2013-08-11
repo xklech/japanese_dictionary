@@ -61,8 +61,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.RemoteViews;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.main.MainActivity;
 
@@ -94,7 +92,7 @@ public class ParserService extends IntentService {
 	private NotificationCompat.Builder mBuilder;
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
-	private RemoteViews mNotificationView = null;
+	//private RemoteViews mNotificationView = null;
 	private boolean mComplete = false;
 
 
@@ -245,14 +243,11 @@ public class ParserService extends IntentService {
 		}
 		
 		if (fileLength == -1) {
-			mNotificationView.setProgressBar(
-					R.id.ntification_progressBar, 0, 0, true);
-			mNotificationView
-					.setTextViewText(
-							R.id.notification_text,
-							getString(R.string.dictionary_download_in_progress));
-			mNotification.contentView = mNotificationView;
-			mNotifyManager.notify(0, mNotification);
+            mBuilder.setProgress(100, 0, false)
+                    .setContentTitle(getString(R.string.dictionary_download_title))
+                    .setContentText(getString(R.string.dictionary_download_in_progress));
+
+			mNotifyManager.notify(0, mBuilder.build());
 		}
 		
 		
@@ -277,12 +272,9 @@ public class ParserService extends IntentService {
 							if(perc < persPub){
 								lastUpdate = current;
 								
-								mNotificationView.setProgressBar(
-										R.id.ntification_progressBar, 100, persPub, false);
-								mNotificationView.setTextViewText(R.id.notification_text,
-										getString(R.string.dictionary_download_in_progress));
-								mNotification.contentView = mNotificationView;
-								mNotifyManager.notify(0, mNotification);
+                                mBuilder.setProgress(100, persPub, false);
+
+								mNotifyManager.notify(0, mBuilder.build());
 								perc = persPub;
 							}
 						}
@@ -307,8 +299,6 @@ public class ParserService extends IntentService {
 	 */
 	private void downloadDictionaries() throws IOException{
 		if(mDownloadingJMDict){
-			mNotificationView.setViewVisibility(R.id.ntification_progressBar,
-					View.VISIBLE);
 			if(downloadFile(mDownloadJMDictFrom,mDownloadJMDictTo)){
 				mDownloadingJMDict = false;
 				mDownloadingKanjidic = true;
@@ -317,23 +307,13 @@ public class ParserService extends IntentService {
 			}
 		} 
 		if(mDownloadingKanjidic){
-			mNotificationView.setTextViewText(R.id.notification_title,
-					getString(R.string.dictionary_kanji_download_title));
-			mNotificationView.setViewVisibility(R.id.ntification_progressBar,
-					View.VISIBLE);
+            mBuilder.setContentTitle(getString(R.string.dictionary_kanji_download_title));
+            mNotifyManager.notify(0, mBuilder.build());
+
 			if(downloadFile(mDownloadKanjidicFrom,mDownloadKanjidicTo)){
 				mDownloadingKanjidic = false;
 				mDownloadInProgress = false;
-				
-				mNotificationView.setProgressBar(
-						R.id.ntification_progressBar, 0, 0, false);
-				mNotificationView.setViewVisibility(R.id.ntification_progressBar,
-						View.GONE);
-				mNotificationView.setTextViewText(R.id.notification_text,
-						getString(R.string.dictionary_download_complete));
-				mNotification.contentView = mNotificationView;
 
-				mNotifyManager.notify(0, mNotification);
 				Log.i(LOG_TAG, "Downloading dictionary finished");
 				
 			}else{
@@ -369,11 +349,10 @@ public class ParserService extends IntentService {
 		String japKanjiDictAbsolutePath = parseKanjiDict(mDownloadKanjidicTo.getPath());
 		
 		Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
-		mBuilder.setAutoCancel(true);
-		mBuilder.setOngoing(false);
-		mNotification = mBuilder.build();	
-		mNotification.contentView = mNotificationView;
-		mNotifyManager.notify(0, mNotification);
+		mBuilder.setAutoCancel(true)
+		        .setOngoing(false);
+
+		mNotifyManager.notify(0, mBuilder.build());
 		if (japDictAbsolutePath != null) {
 
 			serviceSuccessfullyDone(japDictAbsolutePath,japKanjiDictAbsolutePath);
@@ -390,22 +369,6 @@ public class ParserService extends IntentService {
 	protected void onHandleIntent(Intent arg0) {		
 		
 		Log.i(LOG_TAG, "Creating parser service");
-		mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-		mNotificationView = new RemoteViews(this.getPackageName(),
-				R.layout.notification);
-		mNotificationView.setImageViewResource(R.id.notification_image,
-				R.drawable.ic_launcher);
-		mNotificationView.setTextViewText(R.id.notification_title,
-				getString(R.string.dictionary_download_title));
-		mNotificationView.setTextViewText(R.id.notification_text,
-				getString(R.string.dictionary_download_in_progress));
-
-		mBuilder = new NotificationCompat.Builder(
-				this);
-		mBuilder.setAutoCancel(false);
-		mBuilder.setOngoing(true);
-		mBuilder.setSmallIcon(R.drawable.ic_launcher);
 
 		Intent resultIntent = new Intent(getApplicationContext(),
 				MainActivity.class);
@@ -413,14 +376,19 @@ public class ParserService extends IntentService {
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(
 				getApplicationContext(), 0, resultIntent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
 
-		mNotification = mBuilder.build();
-		mNotification.icon = R.drawable.ic_launcher;
-		mNotification.contentView = mNotificationView;
+        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(this)
+            .setAutoCancel(false)
+            .setOngoing(true)
+            .setContentTitle(getString(R.string.dictionary_download_title))
+            .setContentText(getString(R.string.dictionary_download_in_progress))
+            .setSmallIcon(R.drawable.ic_notification)
+            .setProgress(100, 0, false)
+		    .setContentIntent(resultPendingIntent);
 		
 		startForeground(0,mNotification);
-		mNotifyManager.notify(0, mNotification);
+		mNotifyManager.notify(0, mBuilder.build());
 		
 		this.registerReceiver(mInternetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
@@ -438,10 +406,7 @@ public class ParserService extends IntentService {
 			editor_lang.putBoolean("language_english", true);
 			editor_lang.commit();
 		}
-		
-		
-		
-		
+
 		String dictionaryPath = null;
 		String kanjiDictPath = null;
 
@@ -528,14 +493,11 @@ public class ParserService extends IntentService {
 	private String parseDictionary(String path) throws 
 			IOException, ParserConfigurationException, SAXException {
 
-		mNotificationView.setTextViewText(R.id.notification_text,
-				getString(R.string.dictionary_parsing_in_progress));
-		mNotificationView.setViewVisibility(R.id.ntification_progressBar,
-				View.VISIBLE);
-		mNotificationView.setTextViewText(R.id.notification_title,
-				getString(R.string.parsing_downloaded_dictionary));
-		mNotification.contentView = mNotificationView;
-		mNotifyManager.notify(0, mNotification);
+		mBuilder.setContentTitle(getString(R.string.parsing_downloaded_dictionary))
+                .setContentText(getString(R.string.dictionary_parsing_in_progress))
+                .setProgress(100, 0, false);
+
+		mNotifyManager.notify(0, mBuilder.build());
 
 		Log.i(LOG_TAG, "Parsing dictionary - start");
 
@@ -568,8 +530,7 @@ public class ParserService extends IntentService {
 		Log.i(LOG_TAG, "Parsing dictionary - index folder created");
 		Log.i(LOG_TAG, "Parsing dictionary - SAX ready");
 		DefaultHandler handler = new SaxDataHolder(file,
-				getApplicationContext(), mNotifyManager, mNotification,
-				mNotificationView);
+				getApplicationContext(), mNotifyManager, mBuilder);
 
 		try {
 			saxParser.parse(is, handler);
@@ -577,12 +538,12 @@ public class ParserService extends IntentService {
 			downloadedFile.delete();
 			Log.i(LOG_TAG,
 					"Parsing dictionary - downloaded file deleted");
-			mNotificationView.setTextViewText(R.id.notification_text,
-					getString(R.string.dictionary_download_complete));
-			mNotificationView.setProgressBar(R.id.ntification_progressBar, 0,
-					0, true);
-			mNotification.contentView = mNotificationView;
-			mNotifyManager.notify(0, mNotification);
+
+            mBuilder.setContentTitle(getString(R.string.dictionary_download_complete))
+                    .setContentText("")
+                    .setProgress(100, 0, false);
+
+            mNotifyManager.notify(0, mBuilder.build());
 
 			mComplete = true;
 
@@ -630,10 +591,11 @@ public class ParserService extends IntentService {
 			IOException, ParserConfigurationException, SAXException {
 		Log.i(LOG_TAG, "Parsing kanji dict");
 
-		mNotificationView.setTextViewText(R.id.notification_text,
-				getString(R.string.dictionary_parsing_in_progress));
-		mNotification.contentView = mNotificationView;
-		mNotifyManager.notify(0, mNotification);
+        mBuilder.setContentTitle(getString(R.string.parsing_downloaded_dictionary))
+                .setContentText(getString(R.string.dictionary_parsing_in_progress))
+                .setProgress(100, 0, false);
+
+        mNotifyManager.notify(0, mBuilder.build());
 
 		Log.i(LOG_TAG, "Parsing KanjiDict - start");
 
@@ -666,8 +628,7 @@ public class ParserService extends IntentService {
 		Log.i(LOG_TAG, "Parsing KanjiDict - index folder created");
 		Log.i(LOG_TAG, "Parsing KanjiDict - SAX ready");
 		DefaultHandler handler = new SaxDataHolderKanjiDict(file,
-				getApplicationContext(), mNotifyManager, mNotification,
-				mNotificationView);
+				getApplicationContext(), mNotifyManager, mBuilder);
 
 		try {
 			saxParser.parse(is, handler);
@@ -675,14 +636,11 @@ public class ParserService extends IntentService {
 			downloadedFile.delete();
 			Log.i(LOG_TAG,
 					"Parsing KanjiDict - downloaded file deleted");
-			mNotificationView.setTextViewText(R.id.notification_text,
-					getString(R.string.dictionary_download_complete));
-			mNotificationView.setProgressBar(R.id.ntification_progressBar, 0,
-					0, true);
-			mNotificationView.setViewVisibility(R.id.ntification_progressBar,
-					View.GONE);
-			mNotification.contentView = mNotificationView;
-			mNotifyManager.notify(0, mNotification);
+
+            mBuilder.setContentText(getString(R.string.dictionary_download_complete))
+                    .setProgress(0, 0, false); //hide progress
+
+            mNotifyManager.notify(0, mBuilder.build());
 
 			mComplete = true;
 
@@ -773,15 +731,11 @@ public class ParserService extends IntentService {
 
 		if (!mComplete) {
 			Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
-			mBuilder.setAutoCancel(true);
-			mBuilder.setOngoing(false);
-			mNotification = mBuilder.build();	
-			mNotification.contentView = mNotificationView;
-			mNotifyManager.notify(0, mNotification);
-			mNotificationView.setTextViewText(R.id.notification_text,
-					getString(R.string.dictionary_download_interrupted));
-			mNotification.contentView = mNotificationView;
-			mNotifyManager.notify(0, mNotification);
+            mBuilder.setAutoCancel(true)
+                    .setOngoing(false)
+                    .setContentTitle(getString(R.string.dictionary_download_interrupted));
+
+            mNotifyManager.notify(0, mBuilder.build());
 			Intent intent = new Intent("serviceCanceled");
 			LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 			Log.w(LOG_TAG, "Service ending none complete");
