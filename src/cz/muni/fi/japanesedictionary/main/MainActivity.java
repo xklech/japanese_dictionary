@@ -143,9 +143,9 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
+        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.main_activity);
+        setSupportProgressBarIndeterminate(true);
         mDatabase = new GlossaryReaderContract(getApplicationContext());
 
         // Start out with a progress indicator.

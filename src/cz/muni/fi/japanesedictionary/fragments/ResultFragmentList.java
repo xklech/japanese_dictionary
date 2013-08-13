@@ -312,7 +312,7 @@ public class ResultFragmentList extends ListFragment implements
 			} else {
 				setListShownNoAnimation(shown);
 			}*/
-            ((MainActivity)getActivity()).setSupportProgressBarIndeterminateVisibility(!shown);
+            ((MainActivity)getActivity()).setSupportProgressBarVisibility(!shown);
 		}
 	}
 
