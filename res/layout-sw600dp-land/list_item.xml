@@ -31,6 +31,8 @@
         android:gravity="left"
         android:clickable="false"
         android:focusable="false"
+        android:ellipsize="end"
+        android:maxLines="1"
         >
         
         <TextView
@@ -43,6 +45,8 @@
             android:focusable="false"
             android:clickable="false" 
             android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             />  
         
 
