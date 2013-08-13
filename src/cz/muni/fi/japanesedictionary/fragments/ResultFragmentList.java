@@ -211,12 +211,14 @@ public class ResultFragmentList extends ListFragment implements
 		
 		if(mNewSearch != null && mNewSearch.equals(mLastSearched) && mAdapter.getCount()>0){
 			Log.i(LOG_TAG+": "+mLastTab,"restore, no search");
+            mAdapter.setLastSearchedKeb(mNewSearch);
 			mAdapter.notifyDataSetChanged();
 			listShown(true);
 		}else{
 			Log.i(LOG_TAG+": "+mLastTab,"new search: "+mNewSearch+" adapter: "+mAdapter.getCount());
 			mLastSearched = mNewSearch;
 			mAdapter.clear();
+            mAdapter.setLastSearchedKeb(mNewSearch);
 			mLoader = new FragmentListAsyncTask(this, getActivity());
 			mLoader.execute(mLastSearched,mLastTab);
 		}
@@ -283,6 +285,7 @@ public class ResultFragmentList extends ListFragment implements
             mLoader.cancel(true);
         }
         mAdapter.clear();
+        mAdapter.setLastSearchedKeb(expression);
         Log.i(LOG_TAG+": "+mLastTab,"Starting nw loader: "+expression);
         listShown(false);
         mLoader = new FragmentListAsyncTask(this, getActivity());

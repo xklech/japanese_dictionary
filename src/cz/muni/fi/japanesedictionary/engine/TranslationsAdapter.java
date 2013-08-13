@@ -37,6 +37,7 @@
 package cz.muni.fi.japanesedictionary.engine;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -81,6 +82,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     private boolean mGerman;
     private LayoutInflater mInflater;
     private ListItemComparator mListComaparator;
+    private String mLastSearchedKeb;
 
     
     /**
@@ -159,7 +161,23 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         
         if(write){
 	        SpannableStringBuilder sb = new SpannableStringBuilder(strBuilder);
-	        ForegroundColorSpan color = new ForegroundColorSpan(Color.WHITE); 
+            boolean alternative = false;
+            if(mLastSearchedKeb != null && !item.getJapaneseKeb().get(0).contains(mLastSearchedKeb)){
+                //search alternatives
+                for(String keb:item.getJapaneseKeb()){
+                    if(keb.contains(mLastSearchedKeb)){
+                        alternative = true;
+                        break;
+                    }
+                }
+            }
+            ForegroundColorSpan color;
+            if(alternative){
+                color= new ForegroundColorSpan(Color.GREEN);
+            }else{
+                color= new ForegroundColorSpan(Color.WHITE);
+            }
+
 	        TextAppearanceSpan appearance = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium);
 	        sb.setSpan(appearance, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 	        sb.setSpan(color, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -223,6 +241,17 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         if(updateLanguages()){
             notifyDataSetChanged();
         }
+    }
+
+
+
+    public void setLastSearchedKeb(String lastSearchedKeb) {
+        if(lastSearchedKeb == null || Pattern.matches("\\p{Latin}*", lastSearchedKeb)){
+            this.mLastSearchedKeb = null;
+            return ;
+        }
+        this.mLastSearchedKeb = lastSearchedKeb;
+
     }
 
 

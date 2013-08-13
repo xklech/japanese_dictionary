@@ -203,10 +203,10 @@ public class DisplayTranslation extends Fragment {
                     startActivity(intent);
                 }else{
                     Log.w(LOG_TAG, "Anki application is not installed");
-                    DialogFragment newFragment = DictionaryFragmentAlertDialog.newInstance(
+                    DialogFragment newFragment = AnkiFragmentAlertDialog.newInstance(
                             R.string.anki_required,
                             R.string.anki_not_found, false);
-                    newFragment.setCancelable(false);
+                    newFragment.setCancelable(true);
                     newFragment.show(getActivity().getSupportFragmentManager(),
                             "dialog");
 
