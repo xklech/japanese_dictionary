@@ -101,7 +101,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     }
 
     /**
-     * Sets data tu adapter. And notifies change of list.
+     * Sets data to adapter. And notifies change of list.
      * 
      * @param data list to be set to adapter
      */
@@ -154,7 +154,12 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         	write = true;
         }
         if(item.getJapaneseReb() != null && item.getJapaneseReb().size() > 0){
-        	strBuilder.append(item.getJapaneseReb().get(0));   	
+        	for (int i = 0; i < item.getJapaneseReb().size(); i++) {
+                strBuilder.append(item.getJapaneseReb().get(i));
+                if (i < item.getJapaneseReb().size() - 1) {
+                    strBuilder.append(", ");
+                }
+            }
         }
         
         if(write){
@@ -169,22 +174,38 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         }
         
         if(mEnglish && item.getEnglishSense() != null && item.getEnglishSense().size() > 0 ){
-            holder.translation.setText(item.getEnglishSense().get(0).get(0));
+            holder.translation.setText(formatSenses(item.getEnglishSense()));
         }else if(mFrench && item.getFrenchSense() != null && item.getFrenchSense().size() > 0){
-            holder.translation.setText(item.getFrenchSense().get(0).get(0));
+            holder.translation.setText(formatSenses(item.getFrenchSense()));
         }else if(mDutch && item.getDutchSense() != null && item.getDutchSense().size() > 0){
-            holder.translation.setText(item.getDutchSense().get(0).get(0));
+            holder.translation.setText(formatSenses(item.getDutchSense()));
         }else if(mGerman && item.getGermanSense() != null && item.getGermanSense().size() > 0 ){
-            holder.translation.setText(item.getGermanSense().get(0).get(0));
+            holder.translation.setText(formatSenses(item.getGermanSense()));
         }else{
             if(item.getEnglishSense() != null && item.getEnglishSense().size() > 0){
-            	holder.translation.setText(item.getEnglishSense().get(0).get(0));
+            	holder.translation.setText(formatSenses(item.getEnglishSense()));
             }else{
                 holder.translation.setText("");
             }
         }
 
         return convertView;
+    }
+
+    /**
+     *
+     * @param senses senses to append
+     * @return formatted and appended String of senses
+     */
+    private String formatSenses(List<List<String>> senses) {
+        StringBuilder sb = new StringBuilder();
+        for (int i= 0; i < senses.size(); i++) {
+            sb.append(senses.get(i).get(0));
+            if (i < senses.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
     }
 
     /**
