@@ -1,12 +1,12 @@
 /**
  *     JapaneseDictionary - an JMDict browser for Android
  Copyright (C) 2013 Jaroslav Klech
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,12 +19,12 @@
 /**
  *     JapaneseDictionary - an JMDict browser for Android
  Copyright (C) 2013 Jaroslav Klech
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -58,23 +58,23 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
 
 /**
  * Adapter for ResultFragmentList.
- * 
- * @author Jaroslav Klech 
+ *
+ * @author Jaroslav Klech
  *
  */
 public class TranslationsAdapter extends ArrayAdapter<Translation>{
-	
-	/**
-	 * Static Translation holder for item View.
-	 * @author Jaroslav Klech
-	 *
-	 */
-	static class TranslationsViewHolder {
-	    TextView japanese;
-	    TextView translation;
-	}
-	
-	
+
+    /**
+     * Static Translation holder for item View.
+     * @author Jaroslav Klech
+     *
+     */
+    static class TranslationsViewHolder {
+        TextView japanese;
+        TextView translation;
+    }
+
+
     private Context mContext;
     private boolean mEnglish;
     private boolean mFrench;
@@ -84,7 +84,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     private ListItemComparator mListComaparator;
     private String mLastSearchedKeb;
 
-    
+
     /**
      * Constructor for TranslationsAdapter. Sets languages.
      * @param cont Enviroment context
@@ -95,7 +95,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         mEnglish = sharedPrefs.getBoolean("language_english", false);
         Log.e("adapter", "english: "+mEnglish);
-        mFrench = sharedPrefs.getBoolean("language_french", false);        
+        mFrench = sharedPrefs.getBoolean("language_french", false);
         mDutch = sharedPrefs.getBoolean("language_dutch", false);
         mGerman = sharedPrefs.getBoolean("language_german", false);
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -104,7 +104,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
 
     /**
      * Sets data to adapter. And notifies change of list.
-     * 
+     *
      * @param data list to be set to adapter
      */
     public void setData(List<Translation> data) {
@@ -116,56 +116,56 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         }
         notifyDataSetChanged();
     }
-    
+
     /**
      * Adds individual Translation to adapter
-     * 
+     *
      * @param translation to be added if not null
      */
     public void addListItem(Translation translation){
-    	if(translation != null){
-    		setNotifyOnChange(false);
-    		add(translation);
-    		sort(mListComaparator);
-    		notifyDataSetChanged();
-    	}
+        if(translation != null){
+            setNotifyOnChange(false);
+            add(translation);
+            sort(mListComaparator);
+            notifyDataSetChanged();
+        }
     }
-    
+
     /**
      * Constructs view for item in list.
      */
-    @Override 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-    	TranslationsViewHolder holder;
+        TranslationsViewHolder holder;
         if (convertView == null) {
-        	convertView = mInflater.inflate(R.layout.list_item, parent,false);    
+            convertView = mInflater.inflate(R.layout.list_item, parent,false);
             holder = new TranslationsViewHolder();
             holder.japanese = (TextView)convertView.findViewById(R.id.japanese_item);
             holder.translation = (TextView)convertView.findViewById(R.id.translation);
             convertView.setTag(holder);
         } else {
-        	holder = (TranslationsViewHolder) convertView.getTag();
+            holder = (TranslationsViewHolder) convertView.getTag();
         }
         Translation item = getItem(position);
         StringBuilder strBuilder = new StringBuilder();
         boolean write = false;
         int writeLength = 0;
         if(item.getJapaneseKeb() != null && item.getJapaneseKeb().size() > 0){
-        	strBuilder.append(item.getJapaneseKeb().get(0)).append("  ");
-        	writeLength = item.getJapaneseKeb().get(0).length();
-        	write = true;
+            strBuilder.append(item.getJapaneseKeb().get(0)).append("  ");
+            writeLength = item.getJapaneseKeb().get(0).length();
+            write = true;
         }
         if(item.getJapaneseReb() != null && item.getJapaneseReb().size() > 0){
             for (int i = 0; i < item.getJapaneseReb().size(); i++) {
                 strBuilder.append(item.getJapaneseReb().get(i));
                 if (i < item.getJapaneseReb().size() - 1) {
-                   strBuilder.append(", ");
-              }
+                    strBuilder.append(", ");
+                }
             }
         }
-        
+
         if(write){
-	        SpannableStringBuilder sb = new SpannableStringBuilder(strBuilder);
+            SpannableStringBuilder sb = new SpannableStringBuilder(strBuilder);
             boolean alternative = false;
             if(mLastSearchedKeb != null && !item.getJapaneseKeb().get(0).contains(mLastSearchedKeb)){
                 //search alternatives
@@ -183,14 +183,14 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
                 color= new ForegroundColorSpan(Color.WHITE);
             }
 
-	        TextAppearanceSpan appearance = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium);
-	        sb.setSpan(appearance, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-	        sb.setSpan(color, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-	        holder.japanese.setText(sb);
+            TextAppearanceSpan appearance = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium);
+            sb.setSpan(appearance, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            sb.setSpan(color, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            holder.japanese.setText(sb);
         }else{
-        	holder.japanese.setText(strBuilder);
+            holder.japanese.setText(strBuilder);
         }
-        
+
         if(mEnglish && item.getEnglishSense() != null && item.getEnglishSense().size() > 0 ){
             holder.translation.setText(formatSenses(item.getEnglishSense()));
         }else if(mFrench && item.getFrenchSense() != null && item.getFrenchSense().size() > 0){
@@ -201,7 +201,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
             holder.translation.setText(formatSenses(item.getGermanSense()));
         }else{
             if(item.getEnglishSense() != null && item.getEnglishSense().size() > 0){
-            	holder.translation.setText(item.getEnglishSense().get(0).get(0));
+                holder.translation.setText(item.getEnglishSense().get(0).get(0));
             }else{
                 holder.translation.setText("");
             }
@@ -274,6 +274,4 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         this.mLastSearchedKeb = lastSearchedKeb;
 
     }
-
-
 }
