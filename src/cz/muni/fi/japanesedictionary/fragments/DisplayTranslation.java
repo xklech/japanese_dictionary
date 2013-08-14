@@ -331,7 +331,7 @@ public class DisplayTranslation extends Fragment {
         		saveTranslation.execute(mTranslation);
         	}
         	TextView romaji = (TextView)getView().findViewById(R.id.translation_romaji);
-        	romaji.setText(RomanizationEnum.Hepburn.toRomaji(reading.replaceAll(".(?!$)", "$0 ")));
+        	romaji.setText(RomanizationEnum.Hepburn.toRomaji(reading));
         	
         	int sizeReb = mTranslation.getJapaneseReb().size();
         	if(sizeReb > 1){
