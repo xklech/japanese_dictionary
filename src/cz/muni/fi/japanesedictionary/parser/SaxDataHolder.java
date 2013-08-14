@@ -45,6 +45,7 @@ import android.content.IntentFilter;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
 import cz.muni.fi.japanesedictionary.R;
 
 /**
@@ -96,8 +97,6 @@ public class SaxDataHolder extends DefaultHandler{
 	private JSONArray mGermanJSONSense;
 
     private boolean mPrioritized;
-
-	private String[] mNotificationTimeLeft;
 	
 	private Context mContext;
 	private int mCountDone = 0;
@@ -134,11 +133,6 @@ public class SaxDataHolder extends DefaultHandler{
 
         mBuilder = builder;
         mNotifyManager = nM;
-		
-		mNotificationTimeLeft = mContext.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
-		if(mNotificationTimeLeft.length != 2 ){
-            mBuilder.setContentText(mContext.getString(R.string.dictionary_parsing_in_progress_time_left));
-		}
 
 		Log.i(LOG_TAG, "SaxDataHolder created");
 	}
@@ -284,12 +278,12 @@ public class SaxDataHolder extends DefaultHandler{
 	                	long duration  = System.currentTimeMillis() - mStartTime;
 	                	mStartTime = System.currentTimeMillis();
 	                	duration = duration * (100-persPub);
+                        int timeLeft = Math.round(duration/60000);
 
-                        mBuilder.setProgress(100, persPub, false);
-	                	if(mNotificationTimeLeft.length ==2){
-	                		int timeLeft = Math.round(duration/60000);
-                            mBuilder.setContentText(mNotificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + mNotificationTimeLeft[1]);
-	                	}
+                        mBuilder.setProgress(100, persPub, false)
+                                .setContentText(mContext.getResources().getQuantityString(R.plurals.dictionary_parsing_in_progress_time_left, timeLeft, timeLeft))
+                                .setContentInfo(persPub + "%");
+
 		                mNotifyManager.notify(0, mBuilder.build());
 	                	
 		                mPerc = persPub;

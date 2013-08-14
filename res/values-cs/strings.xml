@@ -25,8 +25,12 @@
     <string name="dictionary_download_in_progress">Probíhá stahování slovníku</string>
     <string name="dictionary_kanji_download_title">Stahuji slovník znaků kanji</string>
     <string name="dictionary_download_complete">Stahování kompletní</string>
-    <string name="dictionary_parsing_in_progress">Probíhá zpracování slovníku.</string>
-    <string name="dictionary_parsing_in_progress_time_left">Probíhá zpracování slovníku. Zbývá: t_l min.</string>
+    <string name="dictionary_parsing_in_progress">Probíhá zpracování slovníku</string>
+    <plurals name="dictionary_parsing_in_progress_time_left">
+        <item quantity="one">Zbývá 1 minuta</item>
+        <item quantity="few">Zbývá %1$d minuty</item>
+        <item quantity="other">Zbývá %1$d minut</item>
+    </plurals>
     <string name="dictionary_download_interrupted">Stahování přerušeno</string>
     
     <!-- MainActivity -->

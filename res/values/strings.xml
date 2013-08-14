@@ -25,8 +25,11 @@
     <string name="dictionary_download_in_progress">Download in progress</string>
     <string name="dictionary_kanji_download_title">Downloading kanji dictionary</string>
     <string name="dictionary_download_complete">Download complete</string>
-    <string name="dictionary_parsing_in_progress">Parsing file in progress.</string>
-    <string name="dictionary_parsing_in_progress_time_left">Parsing file in progress. Time left: t_l min.</string>
+    <string name="dictionary_parsing_in_progress">Parsing file in progress</string>
+    <plurals name="dictionary_parsing_in_progress_time_left">
+        <item quantity="one">1 minute left</item>
+        <item quantity="other">%1$d minutes left</item>
+    </plurals>
     <string name="dictionary_download_interrupted">Downloading interrupted</string>
     
     <!-- MainActivity -->
