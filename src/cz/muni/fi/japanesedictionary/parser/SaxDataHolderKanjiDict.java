@@ -74,8 +74,6 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 	private Document mDoc;
 	private long mStartTime;
 	
-	private String[] mNotificationTimeLeft;
-	
 	private Context mContext;
 	private int mCountDone = 0;
 	private int mPerc = 0;
@@ -143,11 +141,6 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
 		mStartTime = System.currentTimeMillis();
         mBuilder = builder;
         mNotifyManager = nM;
-		
-		mNotificationTimeLeft = mContext.getString(R.string.dictionary_parsing_in_progress_time_left).split("t_l");
-		if(mNotificationTimeLeft.length != 2 ){
-            mBuilder.setContentText(mContext.getString(R.string.dictionary_parsing_in_progress_time_left));
-		}
 
 		Log.i(LOG_TAG, "SaxDataHolderKanjiDict created");
 	}
@@ -329,12 +322,12 @@ public class SaxDataHolderKanjiDict extends DefaultHandler{
                 	long duration  = System.currentTimeMillis() - mStartTime;
                 	mStartTime = System.currentTimeMillis();
                 	duration = duration * (100-persPub);
-                	
-                    mBuilder.setProgress(100, persPub, false);
-                	if(mNotificationTimeLeft.length ==2){
-                		int timeLeft = Math.round(duration/60000);
-                        mBuilder.setContentText(mNotificationTimeLeft[0] + (timeLeft < 1?"<1":timeLeft) + mNotificationTimeLeft[1]);
-                	}
+                    int timeLeft = Math.round(duration/60000);
+
+                    mBuilder.setProgress(100, persPub, false)
+                            .setContentText(mContext.getResources().getQuantityString(R.plurals.dictionary_parsing_in_progress_time_left, timeLeft, timeLeft))
+                            .setContentInfo(persPub + "%");
+
 	                mNotifyManager.notify(0, mBuilder.build());
                 	
 	                mPerc = persPub;

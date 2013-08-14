@@ -92,7 +92,6 @@ public class ParserService extends IntentService {
 	private NotificationCompat.Builder mBuilder;
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
-	//private RemoteViews mNotificationView = null;
 	private boolean mComplete = false;
 
 
@@ -245,7 +244,8 @@ public class ParserService extends IntentService {
 		if (fileLength == -1) {
             mBuilder.setProgress(100, 0, false)
                     .setContentTitle(getString(R.string.dictionary_download_title))
-                    .setContentText(getString(R.string.dictionary_download_in_progress));
+                    .setContentText(getString(R.string.dictionary_download_in_progress))
+                    .setContentInfo("0%");
 
 			mNotifyManager.notify(0, mBuilder.build());
 		}
@@ -272,7 +272,8 @@ public class ParserService extends IntentService {
 							if(perc < persPub){
 								lastUpdate = current;
 								
-                                mBuilder.setProgress(100, persPub, false);
+                                mBuilder.setProgress(100, persPub, false)
+                                        .setContentInfo(persPub + "%");
 
 								mNotifyManager.notify(0, mBuilder.build());
 								perc = persPub;
@@ -307,7 +308,10 @@ public class ParserService extends IntentService {
 			}
 		} 
 		if(mDownloadingKanjidic){
-            mBuilder.setContentTitle(getString(R.string.dictionary_kanji_download_title));
+            mBuilder.setContentTitle(getString(R.string.dictionary_kanji_download_title))
+                    .setProgress(100, 0, false)
+                    .setContentInfo("0%");
+
             mNotifyManager.notify(0, mBuilder.build());
 
 			if(downloadFile(mDownloadKanjidicFrom,mDownloadKanjidicTo)){
@@ -385,6 +389,7 @@ public class ParserService extends IntentService {
             .setContentText(getString(R.string.dictionary_download_in_progress))
             .setSmallIcon(R.drawable.ic_notification)
             .setProgress(100, 0, false)
+            .setContentInfo("0%")
 		    .setContentIntent(resultPendingIntent);
 		
 		startForeground(0,mNotification);
@@ -495,7 +500,8 @@ public class ParserService extends IntentService {
 
 		mBuilder.setContentTitle(getString(R.string.parsing_downloaded_dictionary))
                 .setContentText(getString(R.string.dictionary_parsing_in_progress))
-                .setProgress(100, 0, false);
+                .setProgress(100, 0, false)
+                .setContentInfo("0%");
 
 		mNotifyManager.notify(0, mBuilder.build());
 
@@ -541,7 +547,8 @@ public class ParserService extends IntentService {
 
             mBuilder.setContentTitle(getString(R.string.dictionary_download_complete))
                     .setContentText("")
-                    .setProgress(100, 0, false);
+                    .setContentInfo("")
+                    .setProgress(0, 0, false);
 
             mNotifyManager.notify(0, mBuilder.build());
 
@@ -593,7 +600,8 @@ public class ParserService extends IntentService {
 
         mBuilder.setContentTitle(getString(R.string.parsing_downloaded_dictionary))
                 .setContentText(getString(R.string.dictionary_parsing_in_progress))
-                .setProgress(100, 0, false);
+                .setProgress(100, 0, false)
+                .setContentInfo("0%");
 
         mNotifyManager.notify(0, mBuilder.build());
 
@@ -638,7 +646,8 @@ public class ParserService extends IntentService {
 					"Parsing KanjiDict - downloaded file deleted");
 
             mBuilder.setContentText(getString(R.string.dictionary_download_complete))
-                    .setProgress(0, 0, false); //hide progress
+                    .setProgress(0, 0, false) //hide progress
+                    .setContentInfo("");
 
             mNotifyManager.notify(0, mBuilder.build());
 
