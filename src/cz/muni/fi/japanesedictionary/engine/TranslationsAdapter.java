@@ -37,7 +37,6 @@
 package cz.muni.fi.japanesedictionary.engine;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -82,7 +81,6 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     private boolean mGerman;
     private LayoutInflater mInflater;
     private ListItemComparator mListComaparator;
-    private String mLastSearchedKeb;
 
     
     /**
@@ -103,7 +101,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     }
 
     /**
-     * Sets data to adapter. And notifies change of list.
+     * Sets data tu adapter. And notifies change of list.
      * 
      * @param data list to be set to adapter
      */
@@ -156,33 +154,12 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         	write = true;
         }
         if(item.getJapaneseReb() != null && item.getJapaneseReb().size() > 0){
-            for (int i = 0; i < item.getJapaneseReb().size(); i++) {
-                strBuilder.append(item.getJapaneseReb().get(i));
-                if (i < item.getJapaneseReb().size() - 1) {
-                   strBuilder.append(", ");
-              }
-            }
+        	strBuilder.append(item.getJapaneseReb().get(0));   	
         }
         
         if(write){
 	        SpannableStringBuilder sb = new SpannableStringBuilder(strBuilder);
-            boolean alternative = false;
-            if(mLastSearchedKeb != null && !item.getJapaneseKeb().get(0).contains(mLastSearchedKeb)){
-                //search alternatives
-                for(String keb:item.getJapaneseKeb()){
-                    if(keb.contains(mLastSearchedKeb)){
-                        alternative = true;
-                        break;
-                    }
-                }
-            }
-            ForegroundColorSpan color;
-            if(alternative){
-                color= new ForegroundColorSpan(Color.GREEN);
-            }else{
-                color= new ForegroundColorSpan(Color.WHITE);
-            }
-
+	        ForegroundColorSpan color = new ForegroundColorSpan(Color.WHITE); 
 	        TextAppearanceSpan appearance = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium);
 	        sb.setSpan(appearance, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 	        sb.setSpan(color, 0, writeLength, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -192,13 +169,13 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         }
         
         if(mEnglish && item.getEnglishSense() != null && item.getEnglishSense().size() > 0 ){
-            holder.translation.setText(formatSenses(item.getEnglishSense()));
+            holder.translation.setText(item.getEnglishSense().get(0).get(0));
         }else if(mFrench && item.getFrenchSense() != null && item.getFrenchSense().size() > 0){
-            holder.translation.setText(formatSenses(item.getFrenchSense()));
+            holder.translation.setText(item.getFrenchSense().get(0).get(0));
         }else if(mDutch && item.getDutchSense() != null && item.getDutchSense().size() > 0){
-            holder.translation.setText(formatSenses(item.getDutchSense()));
+            holder.translation.setText(item.getDutchSense().get(0).get(0));
         }else if(mGerman && item.getGermanSense() != null && item.getGermanSense().size() > 0 ){
-            holder.translation.setText(formatSenses(item.getGermanSense()));
+            holder.translation.setText(item.getGermanSense().get(0).get(0));
         }else{
             if(item.getEnglishSense() != null && item.getEnglishSense().size() > 0){
             	holder.translation.setText(item.getEnglishSense().get(0).get(0));
@@ -208,22 +185,6 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         }
 
         return convertView;
-    }
-
-    /**
-     *
-     * @param senses senses to append
-     * @return formatted and appended String of senses
-     */
-    private String formatSenses(List<List<String>> senses) {
-        StringBuilder sb = new StringBuilder();
-        for (int i= 0; i < senses.size(); i++) {
-            sb.append(senses.get(i).get(0));
-            if (i < senses.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        return sb.toString();
     }
 
     /**
@@ -262,17 +223,6 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         if(updateLanguages()){
             notifyDataSetChanged();
         }
-    }
-
-
-
-    public void setLastSearchedKeb(String lastSearchedKeb) {
-        if(lastSearchedKeb == null || Pattern.matches("\\p{Latin}*", lastSearchedKeb)){
-            this.mLastSearchedKeb = null;
-            return ;
-        }
-        this.mLastSearchedKeb = lastSearchedKeb;
-
     }
 
 

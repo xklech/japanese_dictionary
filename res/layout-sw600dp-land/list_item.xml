@@ -60,7 +60,9 @@
         android:textIsSelectable="false" 
         android:layout_marginLeft="10dp"
         android:focusable="false"
-        android:clickable="false" 
+        android:clickable="false"
+        android:ellipsize="end"
+        android:maxLines="1"
         />
 
 </LinearLayout>
