@@ -1589,8 +1589,8 @@ cz.muni.fi.japanesedictionary.main.MyPreferencesActivity
 cz.muni.fi.japanesedictionary.main.MyPreferencesActivity: MyPreferencesActivity()
 cz.muni.fi.japanesedictionary.parser.ParserService
 cz.muni.fi.japanesedictionary.parser.ParserService: ParserService()
-cz.muni.fi.japanesedictionary.parser.RomanizationEnum: cz.muni.fi.japanesedictionary.parser.RomanizationEnum[] values()
-cz.muni.fi.japanesedictionary.parser.RomanizationEnum: cz.muni.fi.japanesedictionary.parser.RomanizationEnum valueOf(java.lang.String)
+cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum: cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum[] values()
+cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum: cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum valueOf(java.lang.String)
 org.apache.lucene.analysis.ngram.EdgeNGramTokenFilter$Side: org.apache.lucene.analysis.ngram.EdgeNGramTokenFilter$Side[] values()
 org.apache.lucene.analysis.ngram.EdgeNGramTokenFilter$Side: org.apache.lucene.analysis.ngram.EdgeNGramTokenFilter$Side valueOf(java.lang.String)
 org.apache.lucene.analysis.ngram.EdgeNGramTokenizer$Side: org.apache.lucene.analysis.ngram.EdgeNGramTokenizer$Side[] values()

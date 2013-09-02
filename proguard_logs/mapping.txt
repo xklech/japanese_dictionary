@@ -5229,16 +5229,16 @@ cz.muni.fi.japanesedictionary.parser.ParserService$ServiceDownloadHandler -> cz.
 cz.muni.fi.japanesedictionary.parser.ParserService$ServiceHandler -> cz.muni.fi.japanesedictionary.parser.c:
     cz.muni.fi.japanesedictionary.parser.ParserService this$0 -> b
     void handleMessage(android.os.Message) -> handleMessage
-cz.muni.fi.japanesedictionary.parser.RomanizationEnum -> cz.muni.fi.japanesedictionary.parser.d:
-    cz.muni.fi.japanesedictionary.parser.RomanizationEnum Hepburn -> a
+cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum -> cz.muni.fi.japanesedictionary.parser.d:
+    cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum Hepburn -> a
     java.util.concurrent.ConcurrentMap katakanaToRomaji -> b
     java.util.concurrent.ConcurrentMap hiraganaToRomaji -> c
     java.util.concurrent.ConcurrentMap romajiToKatakana -> d
     java.util.concurrent.ConcurrentMap romajiToHiragana -> e
     java.util.Set DOUBLED_CONSONANTS -> f
-    cz.muni.fi.japanesedictionary.parser.RomanizationEnum[] $VALUES -> g
-    cz.muni.fi.japanesedictionary.parser.RomanizationEnum[] values() -> values
-    cz.muni.fi.japanesedictionary.parser.RomanizationEnum valueOf(java.lang.String) -> valueOf
+    cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum[] $VALUES -> g
+    cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum[] values() -> values
+    cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum valueOf(java.lang.String) -> valueOf
     java.lang.String getHiraganaTable() -> a
     java.lang.String getKatakanaTable() -> b
     void parse(java.util.StringTokenizer,java.util.concurrent.ConcurrentMap,java.util.concurrent.ConcurrentMap) -> a
@@ -5248,7 +5248,7 @@ cz.muni.fi.japanesedictionary.parser.RomanizationEnum -> cz.muni.fi.japanesedict
     boolean isDoubledConsonant(java.lang.String) -> c
     boolean isAsciiLetter(char) -> a
     java.lang.String toRomaji(java.lang.String) -> b
-cz.muni.fi.japanesedictionary.parser.RomanizationEnum$1 -> cz.muni.fi.japanesedictionary.parser.e:
+cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum$1 -> cz.muni.fi.japanesedictionary.parser.e:
     java.lang.String getHiraganaTable() -> a
     java.lang.String getKatakanaTable() -> b
 cz.muni.fi.japanesedictionary.parser.SaxDataHolder -> cz.muni.fi.japanesedictionary.parser.f:
@@ -5336,7 +5336,7 @@ cz.muni.fi.japanesedictionary.parser.SaxDataHolderKanjiDict -> cz.muni.fi.japane
 cz.muni.fi.japanesedictionary.parser.SaxDataHolderKanjiDict$1 -> cz.muni.fi.japanesedictionary.parser.i:
     cz.muni.fi.japanesedictionary.parser.SaxDataHolderKanjiDict this$0 -> a
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-cz.muni.fi.japanesedictionary.parser.TranscriptionConverter -> cz.muni.fi.japanesedictionary.parser.j:
+cz.muni.fi.japanesedictionary.util.jap.TranscriptionConverter -> cz.muni.fi.japanesedictionary.parser.j:
     java.lang.String kunreiToHepburn(java.lang.String) -> a
 org.apache.lucene.LucenePackage -> a.a.a.a:
     java.lang.Package get() -> a

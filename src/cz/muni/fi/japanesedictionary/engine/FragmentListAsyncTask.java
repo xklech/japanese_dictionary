@@ -47,8 +47,8 @@ import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.interfaces.SearchListener;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
-import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
-import cz.muni.fi.japanesedictionary.parser.TranscriptionConverter;
+import cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum;
+import cz.muni.fi.japanesedictionary.util.jap.TranscriptionConverter;
 
 /**
  * Loader for ResultFragmentList. Searches JMdict for match with expression.

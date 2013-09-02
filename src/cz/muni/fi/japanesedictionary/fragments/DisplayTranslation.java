@@ -57,7 +57,7 @@ import cz.muni.fi.japanesedictionary.engine.NoteSaver;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
-import cz.muni.fi.japanesedictionary.parser.RomanizationEnum;
+import cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum;
 
 /**
  * Fragment which displays translation info
