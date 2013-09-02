@@ -76,22 +76,19 @@
     
     <!--  Preferences -->
     <string name="preferences_language_setting">Nastavení jazyků</string>
-    <string name="preferences_english_do">Překládat do angličtiny</string>
-    <string name="preferences_english_dont">Nepřekládat do angličtiny</string>
-    <string name="preferences_french_do">Překládat do francouzštiny</string>
-    <string name="preferences_french_dont">Nepřekládat do francouzštiny</string>
-    <string name="preferences_dutch_do">Nepřekládat do holandštiny</string>
-    <string name="preferences_dutch_dont">Nepřekládat do holandštiny</string>
-    <string name="preferences_german_do">Nepřekládat do němčiny</string>
-    <string name="preferences_german_dont">Nepřekládat do němčiny</string>
+    <string name="preferences_english">Překládat do angličtiny</string>
+    <string name="preferences_french">Překládat do francouzštiny</string>
+    <string name="preferences_dutch">Nepřekládat do holandštiny</string>
+    <string name="preferences_german">Nepřekládat do němčiny</string>
     <string name="preferences_dictionary_info">Informace o slovníku</string>
  	<string name="preferences_update_dictionary">Aktualizovat slovník</string>
  	<string name="preferences_no_dictionary_info">Slovník nenalezen</string>
  	<string name="preferences">Nastavení</string>
     <string name="preferences_search_setting">Nastavení vyhledávání</string>
-    <string name="preferences_search_only_favorite">Vyhledávat pouze běžně používaná slova</string>
-    <string name="preferences_favorite_do">Vyhledávat pouze používané výrazy</string>
-    <string name="preferences_favorite_dont">Vyhledávat všechny výrazy</string>
+    <string name="preferences_search_common">Vyhledávat pouze běžně používané výrazy</string>
+    <string name="preferences_search_common_title">Běžné výrazy</string>
+    <string name="preferences_search_dictionary_form">Převést výraz do slovníkového tvaru</string>
+    <string name="preferences_search_dictionary_form_title">Slovníkový tvar</string>
 
 
    <!-- Tabs -->

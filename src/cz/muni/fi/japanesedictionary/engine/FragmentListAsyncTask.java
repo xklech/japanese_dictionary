@@ -44,9 +44,11 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
+import cz.muni.fi.japanesedictionary.entity.Predicate;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.interfaces.SearchListener;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.fi.japanesedictionary.util.jap.Deconjugator;
 import cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum;
 import cz.muni.fi.japanesedictionary.util.jap.TranscriptionConverter;
 
@@ -99,6 +101,7 @@ public class FragmentListAsyncTask extends
 				false);
         final boolean searchOnlyFavorised = sharedPrefs.getBoolean("search_only_favorite",
                 false);
+        final boolean searchDeinflected = sharedPrefs.getBoolean("search_deinflected", false);
 
 		final List<Translation> translations = new ArrayList<Translation>();
 
@@ -131,7 +134,8 @@ public class FragmentListAsyncTask extends
 		Analyzer analyzer = new CJKAnalyzer(Version.LUCENE_36);
 		IndexSearcher searcher = null;
 		try {
-			String search;
+			final String search;
+            final String hiragana;
 			boolean onlyReb = false;
 
 			if (Pattern.matches("\\p{Latin}*", expression)) {
@@ -142,13 +146,9 @@ public class FragmentListAsyncTask extends
 				expression = TranscriptionConverter.kunreiToHepburn(expression);
 				expression = RomanizationEnum.Hepburn.toHiragana(expression);
 			}
+            hiragana = expression;
 
-			StringBuilder searchBuilder = new StringBuilder();
-			for (int i = 0; i < expression.length(); i++) {
-				String character = String.valueOf(expression.charAt(i));
-				searchBuilder.append(character).append(' ');
-			}
-			expression = searchBuilder.toString();
+            expression = insertSpaces(expression);
 
 			if ("end".equals(part)) {
 				search = "\"" + expression + "lucenematch\"";
@@ -157,7 +157,23 @@ public class FragmentListAsyncTask extends
 			} else if ("middle".equals(part)) {
 				search = "\"" + expression + "\"";
 			} else {
-				search = "\"lucenematch " + expression + "lucenematch\"";
+                if (searchDeinflected) {
+                    StringBuilder sb = new StringBuilder("\"lucenematch " + expression + "lucenematch\"");
+                    for (Predicate predicate: Deconjugator.deconjugate(hiragana)) {
+                        if (predicate.isSuru()) {
+                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:suru)");
+                        } else if (predicate.isKuru()) {
+                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:Kuru)");
+                        } else if (predicate.isIku()) {
+                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:Iku)");
+                        } else if (predicate.isIAdjective()) {
+                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:keiyoushi)");
+                        } else
+                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:verb)");
+                    }
+                    search = sb.toString();
+                } else
+				    search = "\"lucenematch " + expression + "lucenematch\"";
 			}
 			Log.i(LOG_TAG, " Searching for: " + search);
 
@@ -285,7 +301,16 @@ public class FragmentListAsyncTask extends
 		return translations.isEmpty() ? null : translations;
 	}
 
-	/**
+    private String insertSpaces(String expression) {
+        StringBuilder searchBuilder = new StringBuilder();
+        for (int i = 0; i < expression.length(); i++) {
+            String character = String.valueOf(expression.charAt(i));
+            searchBuilder.append(character).append(' ');
+        }
+        return searchBuilder.toString();
+    }
+
+    /**
 	 * Adding individual translations to list fragment
 	 */
 	@Override

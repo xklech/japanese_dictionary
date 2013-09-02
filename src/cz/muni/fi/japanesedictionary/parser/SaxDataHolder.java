@@ -97,6 +97,8 @@ public class SaxDataHolder extends DefaultHandler{
 	private JSONArray mGermanJSONSense;
 
     private boolean mPrioritized;
+
+    private boolean mPos;
 	
 	private Context mContext;
 	private int mCountDone = 0;
@@ -176,6 +178,8 @@ public class SaxDataHolder extends DefaultHandler{
 			}
 		}else if("ke_pri".equals(qName) || "re_pri".equals(qName)){
             mPriorityTag = true;
+        } else if("pos".equals(qName)){
+            mPos = true;
         }
 			
     }
@@ -214,6 +218,9 @@ public class SaxDataHolder extends DefaultHandler{
                 mPrioritized = true;
             }
             mPriorityTag = false;
+        } else if(mPos){
+            mDocument.add(new Field("pos",new String(ch,start,length),Field.Store.NO,Index.ANALYZED));
+            mPos = false;
         }
 		
 	}

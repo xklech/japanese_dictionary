@@ -77,22 +77,19 @@
     
     <!--  Preferences -->
     <string name="preferences_language_setting">Language settings</string>
-    <string name="preferences_english_do">Translate English</string>
-    <string name="preferences_english_dont">Do not translate English</string>
-    <string name="preferences_french_do">Translate French</string>
-    <string name="preferences_french_dont">Do not translate French</string>
-    <string name="preferences_dutch_do">Translate Dutch</string>
-    <string name="preferences_dutch_dont">Do not translate Dutch</string>
-    <string name="preferences_german_do">Translate German</string>
-    <string name="preferences_german_dont">Do not translate German</string>
+    <string name="preferences_english">Translate English</string>
+    <string name="preferences_french">Translate French</string>
+    <string name="preferences_dutch">Translate Dutch</string>
+    <string name="preferences_german">Translate German</string>
     <string name="preferences_dictionary_info">Dictionary info</string>
  	<string name="preferences_update_dictionary">Update dictionary</string>
  	<string name="preferences_no_dictionary_info">No dictionary found</string>
  	<string name="preferences">Preferences</string>
-    <string name="preferences_search_setting">Search setting</string>
-    <string name="preferences_search_only_favorite">Search only common words</string>
-    <string name="preferences_favorite_do">Search only common</string>
-    <string name="preferences_favorite_dont">Search all words</string>
+    <string name="preferences_search_setting">Search settings</string>
+    <string name="preferences_search_common">Search only commonly-used words</string>
+    <string name="preferences_search_common_title">Common words</string>
+    <string name="preferences_search_dictionary_form">Transform predicates to dictionary form</string>
+    <string name="preferences_search_dictionary_form_title">Dictionary form</string>
 
    <!-- Tabs -->
    <string name="search_exact">Exact</string>
