@@ -212,6 +212,7 @@ public class ResultFragmentList extends ListFragment implements
 		if(mNewSearch != null && mNewSearch.equals(mLastSearched) && mAdapter.getCount()>0){
 			Log.i(LOG_TAG+": "+mLastTab,"restore, no search");
             mAdapter.setLastSearchedKeb(mNewSearch);
+            mAdapter.setIsExact(mLastTab.equals("exact"));
 			mAdapter.notifyDataSetChanged();
 			listShown(true);
 		}else{
@@ -219,6 +220,7 @@ public class ResultFragmentList extends ListFragment implements
 			mLastSearched = mNewSearch;
 			mAdapter.clear();
             mAdapter.setLastSearchedKeb(mNewSearch);
+            mAdapter.setIsExact(mLastTab.equals("exact"));
 			mLoader = new FragmentListAsyncTask(this, getActivity());
 			mLoader.execute(mLastSearched,mLastTab);
 		}

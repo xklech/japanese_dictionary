@@ -169,7 +169,7 @@ public class FragmentListAsyncTask extends
                         } else if (predicate.isIAdjective()) {
                             sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:keiyoushi)");
                         } else
-                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:verb)");
+                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND (pos:verb NOT pos:suru))");
                     }
                     search = sb.toString();
                 } else

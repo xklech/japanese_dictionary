@@ -83,6 +83,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     private LayoutInflater mInflater;
     private ListItemComparator mListComaparator;
     private String mLastSearchedKeb;
+    private boolean mIsExact;
 
 
     /**
@@ -100,6 +101,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         mGerman = sharedPrefs.getBoolean("language_german", false);
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mListComaparator = new ListItemComparator();
+        mIsExact = false;
     }
 
     /**
@@ -150,6 +152,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         StringBuilder strBuilder = new StringBuilder();
         boolean write = false;
         int writeLength = 0;
+        boolean isDeconjugated = true;
         if(item.getJapaneseKeb() != null && item.getJapaneseKeb().size() > 0){
             strBuilder.append(item.getJapaneseKeb().get(0)).append("  ");
             writeLength = item.getJapaneseKeb().get(0).length();
@@ -160,6 +163,10 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
                 strBuilder.append(item.getJapaneseReb().get(i));
                 if (i < item.getJapaneseReb().size() - 1) {
                     strBuilder.append(", ");
+                }
+                //was it deconjugated? -> color
+                if (isDeconjugated && item.getJapaneseReb().get(i).equals(mLastSearchedKeb)) {
+                    isDeconjugated = false;
                 }
             }
         }
@@ -179,7 +186,9 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
             ForegroundColorSpan color;
             if(alternative){
                 color= new ForegroundColorSpan(Color.GREEN);
-            }else{
+            }else if (isDeconjugated && mIsExact && mLastSearchedKeb != null) {
+                color= new ForegroundColorSpan(Color.YELLOW);
+            } else {
                 color= new ForegroundColorSpan(Color.WHITE);
             }
 
@@ -273,5 +282,9 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         }
         this.mLastSearchedKeb = lastSearchedKeb;
 
+    }
+
+    public void setIsExact(boolean isExact) {
+        mIsExact = isExact;
     }
 }
