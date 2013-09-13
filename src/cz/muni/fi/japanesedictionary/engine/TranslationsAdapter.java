@@ -56,6 +56,7 @@ import android.widget.TextView;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum;
+import cz.muni.fi.japanesedictionary.util.jap.TranscriptionConverter;
 
 /**
  * Adapter for ResultFragmentList.
@@ -278,7 +279,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
 
     public void setLastSearchedKeb(String lastSearchedKeb) {
         if (lastSearchedKeb != null && Pattern.matches("\\p{Latin}*", lastSearchedKeb)){
-            lastSearchedKeb = RomanizationEnum.Hepburn.toHiragana(lastSearchedKeb);
+            lastSearchedKeb = RomanizationEnum.Hepburn.toHiragana(TranscriptionConverter.kunreiToHepburn(lastSearchedKeb));
         }
         this.mLastSearchedKeb = lastSearchedKeb;
     }
