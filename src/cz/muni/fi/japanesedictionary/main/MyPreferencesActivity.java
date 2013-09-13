@@ -1,12 +1,12 @@
 /**
  *     JapaneseDictionary - an JMDict browser for Android
  Copyright (C) 2013 Jaroslav Klech
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,7 +39,7 @@ import cz.muni.fi.japanesedictionary.parser.ParserService;
 
 /**
  * Preference activity for JapaneseDictionary. Containst language settings and update dictionaries info.
- * 
+ *
  * @author Jaroslav Klech
  *
  */
@@ -51,11 +51,10 @@ public class MyPreferencesActivity extends PreferenceActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			
+
 			Log.e(LOG_TAG, "Creating activity");
 			addPreferencesFromResource(R.xml.preferences);
-			
-			
+
 			PreferenceScreen preferenceScreen = (PreferenceScreen)findPreference("update_dictionary");
 			//ads OnPreferenceClickListener on preference view for updating dictionary
             if(preferenceScreen == null){
@@ -75,7 +74,7 @@ public class MyPreferencesActivity extends PreferenceActivity {
 					} else if (MainActivity.isMyServiceRunning(getApplicationContext())) {
 						Log.w(LOG_TAG,"Update dictionary - update in progress");
 						Toast.makeText(getApplicationContext(), R.string.updating_in_progress, Toast.LENGTH_SHORT).show();
-					} else {					
+					} else {
 						Log.i(LOG_TAG,"Update dictionary - launching service");
 						Intent intent = new Intent(getApplicationContext(), ParserService.class);
 						startService(intent);
@@ -83,9 +82,9 @@ public class MyPreferencesActivity extends PreferenceActivity {
 					}
 					return false;
 				}
-				
+
 			});
-			
+
 	        SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
 			String dictionaryPath = settings.getString("pathToDictionary", null);
 			if(dictionaryPath == null || !(new File(dictionaryPath)).exists()){
@@ -98,12 +97,12 @@ public class MyPreferencesActivity extends PreferenceActivity {
 					SimpleDateFormat simpleDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateTimeInstance();
 					preferenceScreen.setSummary(getString(R.string.last_update) + " " + simpleDateFormat.format(timestamp));
 				}
-				
+
 			}
-			
-		
+
+
 	}
-	
+
 	
 	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
