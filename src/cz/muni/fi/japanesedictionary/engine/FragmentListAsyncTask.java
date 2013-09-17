@@ -142,7 +142,7 @@ public class FragmentListAsyncTask extends
 				// only romaji
 				onlyReb = true;
 				Log.i(LOG_TAG,
-						"Only letters, converting to hiragana. ");
+						"Only latin letters, converting to hiragana. ");
 				expression = TranscriptionConverter.kunreiToHepburn(expression);
 				expression = RomanizationEnum.Hepburn.toHiragana(expression);
 			}

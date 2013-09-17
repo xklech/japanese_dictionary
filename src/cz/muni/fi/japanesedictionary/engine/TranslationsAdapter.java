@@ -36,7 +36,9 @@
 
 package cz.muni.fi.japanesedictionary.engine;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import android.content.Context;
@@ -54,7 +56,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import cz.muni.fi.japanesedictionary.R;
+import cz.muni.fi.japanesedictionary.entity.Predicate;
 import cz.muni.fi.japanesedictionary.entity.Translation;
+import cz.muni.fi.japanesedictionary.util.jap.Deconjugator;
+import cz.muni.fi.japanesedictionary.util.jap.PredicateFormEnum;
 import cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum;
 import cz.muni.fi.japanesedictionary.util.jap.TranscriptionConverter;
 
@@ -74,6 +79,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     static class TranslationsViewHolder {
         TextView japanese;
         TextView translation;
+        TextView conjugation;
     }
 
 
@@ -85,6 +91,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     private LayoutInflater mInflater;
     private ListItemComparator mListComaparator;
     private String mLastSearchedKeb;
+    private String mFormName;
     private boolean mIsExact;
 
 
@@ -146,6 +153,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
             holder = new TranslationsViewHolder();
             holder.japanese = (TextView)convertView.findViewById(R.id.japanese_item);
             holder.translation = (TextView)convertView.findViewById(R.id.translation);
+            holder.conjugation = (TextView)convertView.findViewById(R.id.conjugation);
             convertView.setTag(holder);
         } else {
             holder = (TranslationsViewHolder) convertView.getTag();
@@ -187,11 +195,13 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
             }
             ForegroundColorSpan color;
             if(alternative){
-                color= new ForegroundColorSpan(Color.GREEN);
+                color= new ForegroundColorSpan(Color.MAGENTA);
             }else if (isDeconjugated && mIsExact && mLastSearchedKeb != null) {
-                color= new ForegroundColorSpan(Color.YELLOW);
+                color= new ForegroundColorSpan(Color.BLUE);
+
+                holder.conjugation.setText(mFormName);
             } else {
-                color= new ForegroundColorSpan(Color.WHITE);
+                color= new ForegroundColorSpan(Color.BLACK);
             }
 
             TextAppearanceSpan appearance = new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Medium);
@@ -274,8 +284,6 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
             notifyDataSetChanged();
         }
     }
-
-
 
     public void setLastSearchedKeb(String lastSearchedKeb) {
         if (lastSearchedKeb != null && Pattern.matches("\\p{Latin}*", lastSearchedKeb)){

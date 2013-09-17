@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
  JapaneseDictionary - an JMDict browser for Android
  Copyright (C) 2013 Jaroslav Klech
  
@@ -17,371 +16,302 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<ScrollView
-     xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content">
-<LinearLayout 
-	
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="vertical"	
-	>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/paddingLeft"
+    android:paddingRight="@dimen/paddingLeft"
+    android:paddingTop="@dimen/paddingTop"
+    android:paddingBottom="@dimen/paddingTop"
+    android:scrollbarStyle="outsideOverlay">
 
-	<LinearLayout 
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="#303030"
-		android:orientation="vertical"
-	    >
-   	<TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/kanjidict_literal"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/secondary_text_dark"
-        android:layout_marginLeft="20dp"
-        android:textIsSelectable="true"
-        />
-    
-	</LinearLayout>
-	<LinearLayout 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="visible"
-		android:id="@+id/kanjidict_radical_container"
-	    >
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:background="@android:color/darker_gray"/>
-			<LinearLayout 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-				android:orientation="horizontal"
-			    >
-		
-			   	<TextView 
-			        android:layout_width="100dp"
-			        android:layout_height="wrap_content"
-			        android:gravity="right"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/kanjidict_radical_text"
-			        android:layout_gravity="right"
-			        android:layout_marginLeft="20dp" />
-			    <TextView 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:id="@+id/kanjidict_radical"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/primary_text_dark"
-			        android:textIsSelectable="true"
-			        android:layout_marginLeft="10dp"
-			        />
-		   	</LinearLayout>
-   	</LinearLayout>
-   	
-	<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="visible"
-		android:id="@+id/kanjidict_grade_container"
-	    >
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:background="@android:color/darker_gray"/>
-			<LinearLayout 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-				android:orientation="horizontal"
-			    >
-		
-			   	<TextView 
-			        android:layout_width="100dp"
-			        android:layout_height="wrap_content"
-			        android:gravity="right"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/kanjidict_grade_text"
-			        android:layout_gravity="right"
-			        android:layout_marginLeft="20dp" />
-			    <TextView 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:id="@+id/kanjidict_grade"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/primary_text_dark"
-			        android:textIsSelectable="true"
-			        android:layout_marginLeft="10dp"
-			        />
-		   	</LinearLayout>
-	</LinearLayout>	
-	
-	<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="visible"
-		android:id="@+id/kanjidict_stroke_count_container"
-	    >
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:background="@android:color/darker_gray"/>
-			<LinearLayout 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-				android:orientation="horizontal"
-			    >
-		
-			   	<TextView 
-			        android:layout_width="100dp"
-			        android:layout_height="wrap_content"
-			        android:gravity="right"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/kanjidict_stroke_count_text"
-			        android:layout_gravity="right"
-			        android:layout_marginLeft="20dp" />
-			    <TextView 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:id="@+id/kanjidict_stroke_count"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/primary_text_dark"
-			        android:textIsSelectable="true"
-			        android:layout_marginLeft="10dp"
-			        />
-		   	</LinearLayout>
-	</LinearLayout>	
-	
-	<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="visible"
-		android:id="@+id/kanjidict_skip_container"
-	    >
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:background="@android:color/darker_gray"/>
-			<LinearLayout 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-				android:orientation="horizontal"
-			    >
-		
-			   	<TextView 
-			        android:layout_width="100dp"
-			        android:layout_height="wrap_content"
-			        android:gravity="right"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/kanjidict_skip_text"
-			        android:layout_gravity="right"
-			        android:layout_marginLeft="20dp" />
-			    <TextView 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:id="@+id/kanjidict_skip"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/primary_text_dark"
-			        android:textIsSelectable="true"
-			        android:layout_marginLeft="10dp"
-			        />
-		   	</LinearLayout>
-	</LinearLayout>	
+        android:orientation="vertical">
 
-	<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="visible"
-		android:id="@+id/kanjidict_nanori_container"
-	    >
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:background="@android:color/darker_gray"/>
-			<LinearLayout 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-				android:orientation="horizontal"
-			    >
-		
-			   	<TextView 
-			        android:layout_width="100dp"
-			        android:layout_height="wrap_content"
-			        android:gravity="right"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/kanjidict_nanori_text"
-			        android:layout_gravity="right"
-			        android:layout_marginLeft="20dp" />
-			    <TextView 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:id="@+id/kanjidict_nanori"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/primary_text_dark"
-			        android:textIsSelectable="true"
-			        android:layout_marginLeft="10dp"
-			        />
-		   	</LinearLayout>
-	</LinearLayout>	
+        <TextView
+            android:id="@+id/kanjidict_literal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/paddingLeftSmall"
+            android:paddingRight="@dimen/paddingLeftSmall"
+            android:paddingBottom="@dimen/paddingLeftSmall"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/primary_text_light"
+            android:textIsSelectable="true" />
 
-	<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="visible"
-		android:id="@+id/kanjidict_onyomi_container"
-	    >
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:background="@android:color/darker_gray"/>
-			<LinearLayout 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-				android:orientation="horizontal"
-			    >
-		
-			   	<TextView 
-			        android:layout_width="100dp"
-			        android:layout_height="wrap_content"
-			        android:gravity="right"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/kanjidict_onyomi_text"
-			        android:layout_gravity="right"
-			        android:layout_marginLeft="20dp" />
-			    <TextView 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:id="@+id/kanjidict_onyomi"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/primary_text_dark"
-			        android:textIsSelectable="true"
-			        android:layout_marginLeft="10dp"
-			        />
-		   	</LinearLayout>
-	</LinearLayout>	
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
-	<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="visible"
-		android:id="@+id/kanjidict_kunyomi_container"
-	    >
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:background="@android:color/darker_gray"/>
-			<LinearLayout 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-				android:orientation="horizontal"
-			    >
-		
-			   	<TextView 
-			        android:layout_width="100dp"
-			        android:layout_height="wrap_content"
-			        android:gravity="right"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/secondary_text_dark"
-			        android:text="@string/kanjidict_kunyomi_text"
-			        android:layout_gravity="right"
-			        android:layout_marginLeft="20dp" />
-			    <TextView 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:id="@+id/kanjidict_kunyomi"
-			        android:textAppearance="?android:attr/textAppearanceSmall"
-			        android:textColor="@android:color/primary_text_dark"
-			        android:textIsSelectable="true"
-			        android:layout_marginLeft="10dp"
-			        />
-		   	</LinearLayout>
-	</LinearLayout>
-	
-   	<LinearLayout 
-   	    android:layout_width="match_parent"
-   	    android:layout_height="wrap_content"
-   	    android:id="@+id/kanjidict_meanings_container"
-   	    android:orientation="vertical"
-   	    >
-		<View
-		    android:layout_width="fill_parent"
-		    android:layout_height="1dp"
-		    android:background="@android:color/darker_gray"/>
-		<LinearLayout 
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="#303030"
-		    >
-		    <TextView 
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textAppearance="?android:attr/textAppearanceMedium"
-		        android:textColor="@android:color/primary_text_dark"
-		        android:text="@string/kanjidict_meanings"
-		        android:layout_marginLeft="20dp"
-		        />
-	    </LinearLayout>
-		<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:id="@+id/kanjidict_meanings_lines_container"
-	    >
-   		</LinearLayout>
-   	</LinearLayout>
-   	
-	<LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:visibility="visible"
-		android:id="@+id/kanjidict_dictionaries_container"
-	    >
-			<View
-			    android:layout_width="fill_parent"
-			    android:layout_height="1dp"
-			    android:background="@android:color/darker_gray"/>
-			
-			<LinearLayout 
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:background="#303030"
-			    >
-		    <TextView 
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textAppearance="?android:attr/textAppearanceMedium"
-		        android:textColor="@android:color/primary_text_dark"
-		        android:text="@string/kanjidict_dictionaries"
-		        android:layout_marginLeft="20dp"
-		        />
-			</LinearLayout>
-			
-			<LinearLayout 
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:id="@+id/kanjidict_dictionaries_records"
-			    >
-		
+        <LinearLayout
+            android:id="@+id/kanjidict_radical_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingTopSmall"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-		   	</LinearLayout>
-	</LinearLayout>	
-	
-		
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:text="@string/kanjidict_radical_text"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+
+                <TextView
+                    android:id="@+id/kanjidict_radical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textIsSelectable="true"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kanjidict_grade_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingTopSmall"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:text="@string/kanjidict_grade_text"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+
+                <TextView
+                    android:id="@+id/kanjidict_grade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textIsSelectable="true"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kanjidict_stroke_count_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingTopSmall"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:text="@string/kanjidict_stroke_count_text"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+
+                <TextView
+                    android:id="@+id/kanjidict_stroke_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textIsSelectable="true"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kanjidict_skip_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingTopSmall"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:text="@string/kanjidict_skip_text"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+
+                <TextView
+                    android:id="@+id/kanjidict_skip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textIsSelectable="true"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kanjidict_onyomi_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingTopSmall"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:text="@string/kanjidict_onyomi_text"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+
+                <TextView
+                    android:id="@+id/kanjidict_onyomi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textIsSelectable="true"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kanjidict_kunyomi_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingTopSmall"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:text="@string/kanjidict_kunyomi_text"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+
+                <TextView
+                    android:id="@+id/kanjidict_kunyomi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textIsSelectable="true"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kanjidict_nanori_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingTopSmall"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:text="@string/kanjidict_nanori_text"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+
+                <TextView
+                    android:id="@+id/kanjidict_nanori"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textIsSelectable="true"
+                    android:layout_marginLeft="@dimen/paddingLeftSmall" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kanjidict_meanings_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:listSeparatorTextViewStyle"
+                android:textColor="@android:color/primary_text_light"
+                android:text="@string/kanjidict_meanings" />
+
+            <LinearLayout
+                android:id="@+id/kanjidict_meanings_lines_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kanjidict_dictionaries_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:listSeparatorTextViewStyle"
+                android:textColor="@android:color/primary_text_light"
+                android:text="@string/kanjidict_dictionaries" />
+
+            <LinearLayout
+                android:id="@+id/kanjidict_dictionaries_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 </ScrollView>

@@ -104,7 +104,7 @@
    <string name="translation_romaji">Romaji</string>
    <string name="translation_alternative">Alternative</string>
    <string name="translation_translation">Translation</string>
-   <string name="translation_kanji">Kanji</string>
+   <string name="translation_kanji">Kanji components</string>
    <string name="translation_kanji_no_meaning">No known meaning in selected language</string>
    <string name="translation_note">Note</string>
    <string name="anki_not_found">AnkiDroid application is not installed. Install AnkiDroid now?</string>

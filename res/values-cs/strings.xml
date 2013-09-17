@@ -104,7 +104,7 @@
    <string name="translation_romaji">Romaji</string>
    <string name="translation_alternative">Alternativy</string>
    <string name="translation_translation">Překlad</string>
-   <string name="translation_kanji">Kanji</string>
+   <string name="translation_kanji">Kandži ve slově</string>
    <string name="translation_kanji_no_meaning">Žádné známe významy ve zvoleném jazyce</string>
    <string name="translation_note">Poznámka</string>
    <string name="anki_not_found">Aplikace AnkiDroid není nainstalovaná.</string>
@@ -119,8 +119,8 @@
    <string name="kanjidict_skip_text">SKIP</string>  
    <string name="kanjidict_nanori_text">Nanori</string>  
    <string name="kanjidict_meanings">Významy</string>  
-   <string name="kanjidict_onyomi_text">Onyomi</string>  
-   <string name="kanjidict_kunyomi_text">Kunyomi</string>  
+   <string name="kanjidict_onyomi_text">Onjomi</string>
+   <string name="kanjidict_kunyomi_text">Kunjomi</string>
    
    <!--About -->
    <string name="about_title">O aplikaci</string>
