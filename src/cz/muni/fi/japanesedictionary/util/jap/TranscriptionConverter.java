@@ -33,7 +33,7 @@ public class TranscriptionConverter {
 						sb.append(charArr[i]);
 					}
 			} else if (charArr[i] == 'h' && charArr[i + 1] == 'u'
-						&& (i == 0 || (i > 0 && charArr[i - 1] != 's'))) {
+						&& (i == 0 || (i > 0 && charArr[i - 1] != 's') && charArr[i - 1] != 'c')) {
 		        	sb.append("f");
 		        } else if (charArr[i] == 'd') { //exceptions
 		        	if(charArr[i+1] == 'i' || (skipNext = charArr[i+1] == 'y')) {

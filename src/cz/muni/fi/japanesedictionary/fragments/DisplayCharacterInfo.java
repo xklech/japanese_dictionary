@@ -315,10 +315,10 @@ public class DisplayCharacterInfo extends Fragment {
 					dictNameView.setText(dictName);
 					TextView dictNumber = (TextView)dictionaryLine.findViewById(R.id.kanjidict_dictionary_number);
 					dictNumber.setText(mJapaneseCharacter.getDicRef().get(key));
-					
+
 					dictionariesContainer.addView(dictionaryLine);
 				}
-				
+
 			}
 		}else{
 			getView().findViewById(R.id.kanjidict_dictionaries_container).setVisibility(View.GONE);
