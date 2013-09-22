@@ -174,7 +174,7 @@ public enum RomanizationEnum {
 	}
 
 	private final static Set<String> DOUBLED_CONSONANTS = new HashSet<String>(
-			Arrays.asList("rr", "tt", "pp", "ss", "dd", "gg", "hh", "jj", "kk",
+			Arrays.asList("rr", "tt", "tc", "pp", "ss", "dd", "gg", "hh", "jj", "kk",
 					"zz", "cc", "bb", "mm"));
 
 	private static boolean isDoubledConsonant(final String str) {
