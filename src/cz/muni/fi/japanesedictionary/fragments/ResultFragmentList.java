@@ -208,10 +208,11 @@ public class ResultFragmentList extends ListFragment implements
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE );
 		mNewSearch = mCallbackTranslation.getCurrentFilter();
 		Log.i(LOG_TAG+": "+mLastTab,"new search: "+mNewSearch+" old search: "+mLastSearched);
-		
+
 		if(mNewSearch != null && mNewSearch.equals(mLastSearched) && mAdapter.getCount()>0){
 			Log.i(LOG_TAG+": "+mLastTab,"restore, no search");
             mAdapter.setLastSearchedKeb(mNewSearch);
+            mAdapter.setIsExact(mLastTab.equals("exact"));
 			mAdapter.notifyDataSetChanged();
 			listShown(true);
 		}else{
@@ -219,6 +220,7 @@ public class ResultFragmentList extends ListFragment implements
 			mLastSearched = mNewSearch;
 			mAdapter.clear();
             mAdapter.setLastSearchedKeb(mNewSearch);
+            mAdapter.setIsExact(mLastTab.equals("exact"));
 			mLoader = new FragmentListAsyncTask(this, getActivity());
 			mLoader.execute(mLastSearched,mLastTab);
 		}
@@ -274,6 +276,10 @@ public class ResultFragmentList extends ListFragment implements
 	 * @param expression to be searched for
 	 */
 	public void search(String expression){
+        final String consonants = "qwrtzpsdfghjklyxcvbmｑｗｒｔｚｐｓｄｆｇｈｊｋｌｙｘｃｖｂｍ"; //don't run pointless queries
+        if (expression != null && (expression.matches(".*[" + consonants + "]") || expression.matches("[" + consonants + "nｎ]") || expression.matches(".*[" + consonants + "nｎ]{4,}.*") || expression.matches("[　]+"))) {
+            return;
+        }
         if(expression != null && expression.equals(mLastSearched)){
             listShown(true);
             return;
