@@ -26,36 +26,36 @@
         <CheckBoxPreference
                 android:key="language_english"
                 android:title="@string/language_english"
-                android:summaryOff="@string/preferences_english_dont"
-                android:summaryOn="@string/preferences_english_do"
+                android:summary="@string/preferences_english"
                 />
         <CheckBoxPreference
                 android:key="language_french"
                 android:title="@string/language_french"
-                android:summaryOff="@string/preferences_french_dont"
-                android:summaryOn="@string/preferences_french_do"
+                android:summary="@string/preferences_french"
                 />
         <CheckBoxPreference
                 android:key="language_dutch"
                 android:title="@string/language_dutch"
-                android:summaryOff="@string/preferences_dutch_dont"
-                android:summaryOn="@string/preferences_dutch_do"
+                android:summary="@string/preferences_dutch"
                 />
         <CheckBoxPreference
                 android:key="language_german"
                 android:title="@string/language_german"
-                android:summaryOff="@string/preferences_german_dont"
-                android:summaryOn="@string/preferences_german_do"
+                android:summary="@string/preferences_german"
                 />
     </PreferenceCategory>
     <PreferenceCategory
             android:title="@string/preferences_search_setting">
         <CheckBoxPreference
                 android:key="search_only_favorite"
-                android:title="@string/preferences_search_only_favorite"
-                android:summaryOff="@string/preferences_favorite_dont"
-                android:summaryOn="@string/preferences_favorite_do"
+                android:title="@string/preferences_search_common_title"
+                android:summary="@string/preferences_search_common"
                 />
+        <CheckBoxPreference
+            android:key="search_deinflected"
+            android:title="@string/preferences_search_dictionary_form_title"
+            android:summary="@string/preferences_search_dictionary_form"
+            />
 
     </PreferenceCategory>
 	<PreferenceCategory

@@ -2109,7 +2109,7 @@ cz.muni.fi.japanesedictionary.parser.ParserService:
     public static final java.lang.String DICTIONARY_PATH
     public static final java.lang.String KANJIDICT_PATH
     public static final java.lang.String DICTIONARY_PREFERENCES
-cz.muni.fi.japanesedictionary.parser.RomanizationEnum:
+cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum:
     114:114:public java.lang.String toKatakana(java.lang.String)
 cz.muni.fi.japanesedictionary.parser.SaxDataHolder:
     private static final java.lang.String LOG_TAG
@@ -2117,7 +2117,7 @@ cz.muni.fi.japanesedictionary.parser.SaxDataHolder:
 cz.muni.fi.japanesedictionary.parser.SaxDataHolderKanjiDict:
     private static final java.lang.String LOG_TAG
     public static final int ENTRIES_COUNT
-cz.muni.fi.japanesedictionary.parser.TranscriptionConverter:
+cz.muni.fi.japanesedictionary.util.jap.TranscriptionConverter:
     8:8:public TranscriptionConverter()
 cz.muni.fi.japanesedictionary.util.MenuUtil
 org.apache.lucene.analysis.ASCIIFoldingFilter

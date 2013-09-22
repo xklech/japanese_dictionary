@@ -16,7 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cz.muni.fi.japanesedictionary.parser;
+package cz.muni.fi.japanesedictionary.util.jap;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -174,7 +174,7 @@ public enum RomanizationEnum {
 	}
 
 	private final static Set<String> DOUBLED_CONSONANTS = new HashSet<String>(
-			Arrays.asList("rr", "tt", "pp", "ss", "dd", "gg", "hh", "jj", "kk",
+			Arrays.asList("rr", "tt", "tc", "pp", "ss", "dd", "gg", "hh", "jj", "kk",
 					"zz", "cc", "bb", "mm"));
 
 	private static boolean isDoubledConsonant(final String str) {

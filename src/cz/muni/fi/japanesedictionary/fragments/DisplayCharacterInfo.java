@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.util.MiscellaneousUtil;
 
 /**
  * Fragment which displays japanese character info
@@ -151,40 +152,11 @@ public class DisplayCharacterInfo extends Fragment {
 		}else{
 			getView().findViewById(R.id.kanjidict_skip_container).setVisibility(View.GONE);
 		}
-	
-		
-		if(mJapaneseCharacter.getNanori() != null && mJapaneseCharacter.getNanori().size() > 0){
-			Log.i(LOG_TAG,"Setting nanori: " + mJapaneseCharacter.getNanori());
-			int count = mJapaneseCharacter.getNanori().size();
-			int i =1;
-			StringBuilder strBuilder = new StringBuilder();
-			for(String nanori:mJapaneseCharacter.getNanori()){
-				strBuilder.append(nanori);
-				if(i < count){
-					strBuilder.append(", ");
-				}
-				i++;
-			}
-			TextView nanori = (TextView)getView().findViewById(R.id.kanjidict_nanori);
-			nanori.setText(strBuilder);
-		}else{
-			getView().findViewById(R.id.kanjidict_nanori_container).setVisibility(View.GONE);
-		}
 
 		if(mJapaneseCharacter.getRmGroupJaKun() != null && mJapaneseCharacter.getRmGroupJaKun().size() > 0){
 			Log.i(LOG_TAG,"Setting kunyomi: " + mJapaneseCharacter.getRmGroupJaKun());
-			int count = mJapaneseCharacter.getRmGroupJaKun().size();
-			int i =1;
-			StringBuilder strBuilder = new StringBuilder();
-			for(String kunyomi:mJapaneseCharacter.getRmGroupJaKun()){
-				strBuilder.append(kunyomi);
-				if(i < count){
-					strBuilder.append(", ");
-				}
-				i++;
-			}
 			TextView kunyomi = (TextView)getView().findViewById(R.id.kanjidict_kunyomi);
-			kunyomi.setText(strBuilder);
+			kunyomi.setText(MiscellaneousUtil.processKunyomi(getActivity(), mJapaneseCharacter.getRmGroupJaKun()));
 		}else{
 			getView().findViewById(R.id.kanjidict_kunyomi_container).setVisibility(View.GONE);
 		}
@@ -206,6 +178,24 @@ public class DisplayCharacterInfo extends Fragment {
 		}else{
 			getView().findViewById(R.id.kanjidict_onyomi_container).setVisibility(View.GONE);
 		}
+
+        if(mJapaneseCharacter.getNanori() != null && mJapaneseCharacter.getNanori().size() > 0){
+            Log.i(LOG_TAG,"Setting nanori: " + mJapaneseCharacter.getNanori());
+            int count = mJapaneseCharacter.getNanori().size();
+            int i =1;
+            StringBuilder strBuilder = new StringBuilder();
+            for(String nanori:mJapaneseCharacter.getNanori()){
+                strBuilder.append(nanori);
+                if(i < count){
+                    strBuilder.append(", ");
+                }
+                i++;
+            }
+            TextView nanori = (TextView)getView().findViewById(R.id.kanjidict_nanori);
+            nanori.setText(strBuilder);
+        }else{
+            getView().findViewById(R.id.kanjidict_nanori_container).setVisibility(View.GONE);
+        }
 		
 		boolean hasMeaning = false; 	
 		LinearLayout container = (LinearLayout) getView().findViewById(R.id.kanjidict_meanings_lines_container);
@@ -215,6 +205,9 @@ public class DisplayCharacterInfo extends Fragment {
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+            if (!mFrench && !mDutch && !mGerman) {
+                language.setVisibility(View.GONE);
+            }
 			language.setText(R.string.language_english);
 			int i =1;
 			int count = mJapaneseCharacter.getMeaningEnglish().size();
@@ -237,6 +230,9 @@ public class DisplayCharacterInfo extends Fragment {
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+            if (!mEnglish && !mDutch && !mGerman) {
+                language.setVisibility(View.GONE);
+            }
 			language.setText(R.string.language_french);
 			int i =1;
 			int count = mJapaneseCharacter.getMeaningFrench().size();
@@ -258,6 +254,9 @@ public class DisplayCharacterInfo extends Fragment {
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+            if (!mFrench && !mEnglish && !mGerman) {
+                language.setVisibility(View.GONE);
+            }
 			language.setText(R.string.language_dutch);
 			int i =1;
 			int count = mJapaneseCharacter.getMeaningDutch().size();
@@ -279,6 +278,9 @@ public class DisplayCharacterInfo extends Fragment {
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+            if (!mFrench && !mDutch && !mEnglish) {
+                language.setVisibility(View.GONE);
+            }
 			language.setText(R.string.language_german);
 			int i =1;
 			int count = mJapaneseCharacter.getMeaningGerman().size();
@@ -313,10 +315,10 @@ public class DisplayCharacterInfo extends Fragment {
 					dictNameView.setText(dictName);
 					TextView dictNumber = (TextView)dictionaryLine.findViewById(R.id.kanjidict_dictionary_number);
 					dictNumber.setText(mJapaneseCharacter.getDicRef().get(key));
-					
+
 					dictionariesContainer.addView(dictionaryLine);
 				}
-				
+
 			}
 		}else{
 			getView().findViewById(R.id.kanjidict_dictionaries_container).setVisibility(View.GONE);

@@ -16,49 +16,48 @@
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
---><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
+    android:paddingLeft="@dimen/paddingLeft"
+    android:paddingRight="@dimen/paddingLeft"
+    android:orientation="vertical"
     android:clickable="false"
-    android:focusable="false"
-    >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        android:gravity="left"
-        android:clickable="false"
-        android:focusable="false"
-        >
+    android:focusable="false">
 
-        <TextView
-            android:id="@+id/japanese_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"
-            android:textIsSelectable="false"
-            android:focusable="false"
-            android:clickable="false" 
-            android:layout_marginLeft="10dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            />    
-        
-    </LinearLayout>
+    <TextView
+        android:id="@+id/japanese_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/paddingTop"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/darker_gray"
+        android:textIsSelectable="false"
+        android:focusable="false"
+        android:clickable="false"
+        android:ellipsize="end"
+        android:maxLines="1" />
 
     <TextView
         android:id="@+id/translation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" 
-        android:layout_marginLeft="10dp"
+        android:textIsSelectable="false"
         android:focusable="false"
         android:clickable="false"
         android:ellipsize="end"
-        android:maxLines="1"
-        />
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/conjugation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="8sp"
+        android:textColor="@color/orange"
+        android:textStyle="bold" />
 
 </LinearLayout>

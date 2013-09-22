@@ -79,6 +79,7 @@ import cz.muni.fi.japanesedictionary.fragments.ResultFragmentList;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
 import cz.muni.fi.japanesedictionary.interfaces.OnTranslationSelectedListener;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
+import cz.muni.fi.japanesedictionary.util.MiscellaneousUtil;
 
 
 /**
@@ -182,6 +183,7 @@ public class MainActivity extends ActionBarActivity
         PagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager());
         Log.i(LOG_TAG,"ViewPager adapter set");
         mPager.setAdapter(adapter);
+        mPager.setPageMargin(MiscellaneousUtil.convertDip2Pixels(this, 16));
 
 
         if(mLastTabId == null || mLastTabId.length()==0){
@@ -462,7 +464,7 @@ public class MainActivity extends ActionBarActivity
      */
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.i(LOG_TAG, "onquerychanged fird");
+        Log.i(LOG_TAG, "onquerychanged fired");
 
         String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
         // Don't do anything if the filter hasn't actually changed.
