@@ -47,7 +47,8 @@ public class Translation {
 	public static final String SAVE_ENGLISH = "cz.muni.fi.japanesedictionary.english";
 	public static final String SAVE_FRENCH = "cz.muni.fi.japanesedictionary.french";
 	public static final String SAVE_GERMAN = "cz.muni.fi.japanesedictionary.german";
-	
+    public static final String SAVE_RUSSIAN = "cz.muni.fi.japanesedictionary.RUSSIAN";
+
     private static final String LOG_TAG = "Translation";
 	
 	private List<String> mJapKeb;
@@ -56,6 +57,7 @@ public class Translation {
 	private List<List<String>> mFrench;
 	private List<List<String>> mDutch;
 	private List<List<String>> mGerman;
+    private List<List<String>> mRussian;
 
     private boolean mPrioritized;
 
@@ -63,7 +65,7 @@ public class Translation {
 	public String toString() {
 		return "Translation [jap_keb=" + mJapKeb + ", jap_reb=" + mJapReb
 				+ ", english=" + mEnglish + ", french=" + mFrench + ", dutch="
-				+ mDutch + ", german=" + mGerman + "]";
+				+ mDutch + ", german=" + mGerman + ", russian=" + mRussian + "]";
 	}
 
 	public Translation(){
@@ -73,6 +75,7 @@ public class Translation {
 		mFrench = new ArrayList<List<String>>();
 		mDutch = new ArrayList<List<String>>();
 		mGerman = new ArrayList<List<String>>();
+        mRussian = new ArrayList<List<String>>();
 	}
 	
 	public void addJapKeb(String keb){
@@ -107,6 +110,7 @@ public class Translation {
 		}
 		mDutch.add(sense);
 	}
+
 	public void addGermanSense(List<String> sense){
 		if(sense == null || sense.size() < 1){
 			return ;
@@ -114,6 +118,12 @@ public class Translation {
 		mGerman.add(sense);
 	}
 
+    public void addRussianSense(List<String> sense){
+        if(sense == null || sense.size() < 1){
+            return ;
+        }
+        mRussian.add(sense);
+    }
     public void setPrioritized(boolean isPrioritized){
         mPrioritized = isPrioritized;
     }
@@ -141,6 +151,10 @@ public class Translation {
 	public List<List<String>> getGermanSense(){
 		return mGerman.isEmpty()?null:mGerman;
 	}
+
+    public List<List<String>> getRussianSense(){
+        return mRussian.isEmpty()?null:mRussian;
+    }
 
     public boolean isPrioritized(){
         return mPrioritized;
@@ -333,7 +347,37 @@ public class Translation {
 			}
     	}
 	}
-	
+
+    /**
+     * Takes json string and parses it list of Russian meanings.
+     *
+     * @param jsonString - JSON string to be parsed
+     */
+    public void parseRussian(String jsonString){
+        if(jsonString == null){
+            return ;
+        }
+        JSONArray language_senses;
+        try {
+            language_senses = new JSONArray(jsonString);
+        } catch (JSONException e) {
+            Log.w(LOG_TAG,"getting parseRussian()  initial expression failed: "+ e.toString());
+            return ;
+        }
+
+        for( int j = 0; j< language_senses.length(); j++){
+            if(!language_senses.isNull(j)){
+                List<String> sense;
+                try {
+                    sense = parseOneSense(language_senses.getJSONArray(j));
+                    this.addRussianSense(sense);
+                } catch (JSONException e) {
+                    Log.w(LOG_TAG,"getting parseRussian() expression failed: "+ e.toString());
+                }
+            }
+        }
+    }
+
 	/**
 	 *  Adds Translation to given bundle.
 	 * 
@@ -368,6 +412,10 @@ public class Translation {
 			JSONArray sense = convertToJSON(this.getGermanSense());
 			bundle.putString(SAVE_GERMAN, sense.toString());
 		}
+        if(this.getRussianSense() != null && this.getRussianSense().size() > 0){
+            JSONArray sense = convertToJSON(this.getRussianSense());
+            bundle.putString(SAVE_RUSSIAN, sense.toString());
+        }
 		return bundle;
 	}
 
@@ -401,6 +449,10 @@ public class Translation {
 			JSONArray sense = convertToJSON(this.getGermanSense());
 			values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_GERMAN, sense.toString());
 		}
+        if(this.getRussianSense() != null && this.getRussianSense().size() > 0){
+            JSONArray sense = convertToJSON(this.getRussianSense());
+            values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN, sense.toString());
+        }
         values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED, (new Date()).getTime());
 		return values;
 	}
@@ -422,7 +474,8 @@ public class Translation {
     	String english = bundle.getString(SAVE_ENGLISH);
     	String french = bundle.getString(SAVE_FRENCH);
     	String dutch = bundle.getString(SAVE_DUTCH);
-    	String german = bundle.getString(SAVE_GERMAN);   
+    	String german = bundle.getString(SAVE_GERMAN);
+        String russian = bundle.getString(SAVE_RUSSIAN);
     	
     	translation.parseJapaneseKeb(japaneseKeb);
     	translation.parseJapaneseReb(japaneseReb);
@@ -430,7 +483,8 @@ public class Translation {
     	translation.parseFrench(french);
     	translation.parseDutch(dutch);
     	translation.parseGerman(german);
-    	
+        translation.parseRussian(russian);
+
 		return translation.getJapaneseReb()!=null && translation.getJapaneseReb().size() > 0 ? translation : null;
 	}
 	

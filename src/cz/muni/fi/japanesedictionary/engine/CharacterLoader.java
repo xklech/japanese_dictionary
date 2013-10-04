@@ -211,7 +211,12 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 	    	    if(meaningGerman != null && meaningGerman.length() > 0 ){
 	    	    	japanCharacter.parseMeaningGerman(meaningGerman);
 	    	    }
-	    	    
+
+                String meaningRussian = d.get("meaningRussian");
+                if(meaningRussian != null && meaningRussian.length() > 0 ){
+                    japanCharacter.parseMeaningRussian(meaningRussian);
+                }
+
 	    	    String nanori = d.get("nanori");
 	    	    if(nanori != null && nanori.length() > 0 ){
 	    	    	japanCharacter.parseNanori(nanori);

@@ -50,6 +50,7 @@ public class JapaneseCharacter {
 	public static final String SAVE_CHARACTER_FRENCH = "cz.muni.fi.japanesedictionary.japanesecharacter.french";
 	public static final String SAVE_CHARACTER_DUTCH = "cz.muni.fi.japanesedictionary.japanesecharacter.dutch";
 	public static final String SAVE_CHARACTER_GERMAN = "cz.muni.fi.japanesedictionary.japanesecharacter.german";
+    public static final String SAVE_CHARACTER_RUSSIAN = "cz.muni.fi.japanesedictionary.japanesecharacter.russian";
 	public static final String SAVE_CHARACTER_NANORI = "cz.muni.fi.japanesedictionary.japanesecharacter.nanori";
 
     private static final String LOG_TAG = "JapaneseCharacter";
@@ -65,11 +66,12 @@ public class JapaneseCharacter {
 	private List<String> mMeaningEnglish;
 	private List<String> mMeaningFrench;
 	/*
-	 *  dutch and german aren't in current kanjidict 2
+	 *  dutch, german, russian aren't in current kanjidict 2
 	 */
 	private List<String> mMeaningDutch;
 	private List<String> mMeaningGerman;
-	
+    private List<String> mMeaningRussian;
+
 	private List<String> mNanori;
 	
 	@Override
@@ -80,8 +82,8 @@ public class JapaneseCharacter {
 				+ mRMGroupJaOn + ", rmGroupJaKun=" + mRMmGroupJaKun
 				+ ", meaningEnglish=" + mMeaningEnglish + ", meaningFrench="
 				+ mMeaningFrench + ", meaningDutch=" + mMeaningDutch
-				+ ", meaningGerman=" + mMeaningGerman + ", nanori=" + mNanori
-				+ "]";
+				+ ", meaningGerman=" + mMeaningGerman +  ", meaningRussian=" + mMeaningRussian
+                +", nanori=" + mNanori + "]";
 	}
 	
 	public JapaneseCharacter(){
@@ -96,6 +98,7 @@ public class JapaneseCharacter {
 		mMeaningFrench = new ArrayList<String>();
 		mMeaningDutch = new ArrayList<String>();
 		mMeaningGerman = new ArrayList<String>();
+        mMeaningRussian = new ArrayList<String>();
 		mNanori = new ArrayList<String>();
 	}
 
@@ -166,9 +169,16 @@ public class JapaneseCharacter {
 			return;
 		}
 		mMeaningGerman.add(value);
-	}	
-	
-	public void addNanori(String value){
+	}
+
+    public void addMeaningRussian(String value){
+        if(value == null || value.length() < 1){
+            return;
+        }
+        mMeaningRussian.add(value);
+    }
+
+    public void addNanori(String value){
 		if(value == null || value.length() < 1){
 			return;
 		}
@@ -222,6 +232,10 @@ public class JapaneseCharacter {
 	public List<String> getMeaningGerman() {
 		return mMeaningGerman.size() < 1? null : mMeaningGerman;
 	}
+
+    public List<String> getMeaningRussian() {
+        return mMeaningRussian.size() < 1? null : mMeaningRussian;
+    }
 
 	public List<String> getNanori() {
 		return mNanori.size() < 1? null : mNanori;
@@ -407,6 +421,30 @@ public class JapaneseCharacter {
     	}
 	}
 
+
+    /**
+     * Takes json string and parses it to list of russian meanings.
+     *
+     * @param jsonString - JSON string to be parsed
+     */
+    public void parseMeaningRussian(String jsonString){
+        if(jsonString == null  || jsonString.length() < 1){
+            return ;
+        }
+        List<String> temp;
+        JSONArray parseJSON;
+        try {
+            parseJSON = new JSONArray(jsonString);
+        } catch (JSONException e) {
+            Log.w(LOG_TAG,"parsing parseMeaningRussian() - initial expression failed: "+ e.toString());
+            return ;
+        }
+        temp = this.parseOneJSONArray(parseJSON);
+        for(String str: temp){
+            this.addMeaningRussian(str);
+        }
+    }
+
 	/**
 	 * Takes json string and parses it to list of nanori.
 	 * 
@@ -499,8 +537,11 @@ public class JapaneseCharacter {
 		}	
 		if(this.getMeaningGerman() != null && this.getMeaningGerman().size() > 0){	
 			bundle.putString(SAVE_CHARACTER_GERMAN, (new JSONArray(this.getMeaningGerman())).toString());
-		}	
-		if(this.getNanori() != null && this.getNanori().size() > 0){	
+		}
+        if(this.getMeaningRussian() != null && this.getMeaningRussian().size() > 0){
+            bundle.putString(SAVE_CHARACTER_RUSSIAN, (new JSONArray(this.getMeaningRussian())).toString());
+        }
+        if(this.getNanori() != null && this.getNanori().size() > 0){
 			bundle.putString(SAVE_CHARACTER_NANORI, (new JSONArray(this.getNanori())).toString());
 		}	
 		
@@ -529,10 +570,11 @@ public class JapaneseCharacter {
 		japaneseCharacter.parseMeaningEnglish(bundle.getString(SAVE_CHARACTER_ENGLISH));
 		japaneseCharacter.parseMeaningFrench(bundle.getString(SAVE_CHARACTER_FRENCH));
 		/*
-		 *  dutch and german aren't in current kanjidict 2
+		 *  dutch, german, russian aren't in current kanjidict 2
 		 */
 		japaneseCharacter.parseMeaningDutch(bundle.getString(SAVE_CHARACTER_DUTCH));
 		japaneseCharacter.parseMeaningGerman(bundle.getString(SAVE_CHARACTER_GERMAN));
+        japaneseCharacter.parseMeaningRussian(bundle.getString(SAVE_CHARACTER_RUSSIAN));
 		japaneseCharacter.parseNanori(bundle.getString(SAVE_CHARACTER_NANORI));
     	
 		return japaneseCharacter.getLiteral()!=null && japaneseCharacter.getLiteral().length() > 0 ? japaneseCharacter : null;

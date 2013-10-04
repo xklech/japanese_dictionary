@@ -206,8 +206,8 @@ public class ParserService extends IntentService {
 			throws IOException
 			{
 		mCurrentlyDownloading = true;
-		BufferedInputStream input = null;
-		OutputStream output = null;
+		BufferedInputStream input;
+		OutputStream output;
 		
 		HttpURLConnection connection;
                 connection = (HttpURLConnection)url.openConnection();
@@ -254,7 +254,7 @@ public class ParserService extends IntentService {
 		
 		byte data[] = new byte[1024];
 
-		int count = 0;
+		int count;
 		int perc = 0;
 		long lastUpdate = System.currentTimeMillis();
 		try{
@@ -403,7 +403,8 @@ public class ParserService extends IntentService {
 		boolean french = sharedPrefs.getBoolean("language_french", false);
 		boolean dutch = sharedPrefs.getBoolean("language_dutch", false);
 		boolean german = sharedPrefs.getBoolean("language_german", false);
-		if (!english && !french && !dutch && !german) {
+        boolean russian = sharedPrefs.getBoolean("language_russian", false);
+		if (!english && !french && !dutch && !german && !russian) {
 			Log.i(LOG_TAG,
 					"Setting english as only translation language");
 			SharedPreferences.Editor editor_lang = sharedPrefs.edit();
@@ -411,10 +412,10 @@ public class ParserService extends IntentService {
 			editor_lang.commit();
 		}
 
-		String dictionaryPath = null;
-		String kanjiDictPath = null;
+		String dictionaryPath;
+		String kanjiDictPath;
 
-		URL url = null;
+		URL url;
 		try {
 			url = new URL(ParserService.DICTIONARY_PATH);
 		} catch (MalformedURLException ex) {
@@ -489,7 +490,6 @@ public class ParserService extends IntentService {
 	 * 
 	 * @param path to the dictionary gziped file
 	 * @return path to lucene folder for jmdict
-	 * @throws InterruptedException
 	 * @throws IOException
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
@@ -588,7 +588,6 @@ public class ParserService extends IntentService {
 	 * 
 	 * @param path to the KanjiDict2 dictionary gziped file
 	 * @return path to lucene folder for kanjidict2
-	 * @throws InterruptedException
 	 * @throws IOException
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
@@ -704,20 +703,6 @@ public class ParserService extends IntentService {
 		editor.putLong("dictionaryLastUpdate", date.getTime());
 		editor.commit();
 
-		SharedPreferences sharedPrefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		boolean english = sharedPrefs.getBoolean("language_english", false);
-		boolean french = sharedPrefs.getBoolean("language_french", false);
-		boolean dutch = sharedPrefs.getBoolean("language_dutch", false);
-		boolean german = sharedPrefs.getBoolean("language_german", false);
-		if (!english && !french && !dutch && !german) {
-			Log.i(LOG_TAG,
-					"Setting english as only translation language");
-			SharedPreferences.Editor editor_lang = sharedPrefs.edit();
-			editor_lang.putBoolean("language_english", true);
-			editor_lang.commit();
-		}
-
 		Log.i(LOG_TAG, "Parsing dictionary - preferences saved");
 		Intent intent = new Intent("downloadingDictinaryServiceDone");
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
@@ -725,7 +710,7 @@ public class ParserService extends IntentService {
 	}
 
 	/**
-	 * Closes IO streams. If service wasn't done succesfully changes
+	 * If service wasn't done succesfully changes
 	 * notification and broadcasts serviceCanceled intent.
 	 */
 	@Override
@@ -761,14 +746,12 @@ public class ParserService extends IntentService {
 				input.close();
 			} catch (IOException e) {
 			}
-			input = null;
 		}
 		if (output != null) {
 			try {
 				output.close();
 			} catch (IOException e) {
 			}
-			output = null;
 		}
 
 	}

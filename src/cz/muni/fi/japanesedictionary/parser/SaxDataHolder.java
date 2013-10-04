@@ -78,6 +78,7 @@ public class SaxDataHolder extends DefaultHandler{
 	private boolean mFrench;
 	private boolean mDutch;
 	private boolean mGerman;
+    private boolean mRussian;
     private boolean mPriorityTag;
 	private long mStartTime;
 	
@@ -95,6 +96,9 @@ public class SaxDataHolder extends DefaultHandler{
 	
 	private JSONArray mGermanJSON;
 	private JSONArray mGermanJSONSense;
+
+    private JSONArray mRussianJSON;
+    private JSONArray mRussianJSONSense;
 
     private boolean mPrioritized;
 
@@ -153,6 +157,7 @@ public class SaxDataHolder extends DefaultHandler{
 			mFrenchJSONSense = new JSONArray();
 			mDutchJSONSense = new JSONArray();
 			mGermanJSONSense = new JSONArray();
+            mRussianJSONSense = new JSONArray();
 			mJapaneseRebJSON = new JSONArray();
 			mJapaneseKebJSON = new JSONArray();
 		}else if("reb".equals(qName)){
@@ -165,6 +170,7 @@ public class SaxDataHolder extends DefaultHandler{
 			mFrenchJSON = new JSONArray();
 			mDutchJSON = new JSONArray();
 			mGermanJSON = new JSONArray();
+            mRussianJSON = new JSONArray();
 		}else if("gloss".equals(qName)){
 			if("eng".equals(attributes.getValue("xml:lang"))){
 				//english
@@ -175,8 +181,10 @@ public class SaxDataHolder extends DefaultHandler{
 				mDutch = true;
 			}else if("ger".equals(attributes.getValue("xml:lang"))){
 				mGerman = true;
-			}
-		}else if("ke_pri".equals(qName) || "re_pri".equals(qName)){
+			}else if("rus".equals(attributes.getValue("xml:lang"))){
+                mRussian = true;
+            }
+		}else if("ke_ri".equals(qName) || "re_pri".equals(qName)){
             mPriorityTag = true;
         } else if("pos".equals(qName)){
             mPos = true;
@@ -211,7 +219,10 @@ public class SaxDataHolder extends DefaultHandler{
 			mDutch = false;			
 		}else if(mGerman){
 			mGermanJSON.put(new String(ch,start,length));
-			mGerman = false;			
+			mGerman = false;
+        }else if(mRussian){
+            mRussianJSON.put(new String(ch,start,length));
+            mRussian = false;
 		}else if(mPriorityTag){
             String string = new String(ch,start,length);
             if("news1".equals(string) || "ichi1".equals(string) || "spec1".equals(string) || "gai1".equals(string)){
@@ -242,6 +253,9 @@ public class SaxDataHolder extends DefaultHandler{
 				if(mGermanJSON.length()>0){
 					mGermanJSONSense.put(mGermanJSON);
 				}
+                if(mRussianJSON.length()>0){
+                    mRussianJSONSense.put(mRussianJSON);
+                }
 			}else if("entry".equals(qName)){
 				if(mJapaneseKebJSON.length()>0){
 					mDocument.add(new Field("japanese_keb",mJapaneseKebJSON.toString(),Field.Store.YES,Index.NO));
@@ -264,8 +278,12 @@ public class SaxDataHolder extends DefaultHandler{
 				if(mGermanJSONSense.length()>0){
 					mDocument.add(new Field("german",mGermanJSONSense.toString(),Field.Store.YES,Index.NO));	
 					mGermanJSONSense = null;
-				}				
-				if(mPrioritized){
+				}
+                if(mRussianJSONSense.length()>0){
+                    mDocument.add(new Field("russian",mRussianJSONSense.toString(),Field.Store.YES,Index.NO));
+                    mRussianJSONSense = null;
+                }
+                if(mPrioritized){
                     mPrioritized = false;
                     mDocument.add(new Field("prioritized", "true", Field.Store.YES,Index.NO));
                 }

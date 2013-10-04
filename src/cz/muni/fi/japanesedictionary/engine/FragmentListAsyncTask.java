@@ -99,6 +99,8 @@ public class FragmentListAsyncTask extends
 				false);
 		final boolean germanBool = sharedPrefs.getBoolean("language_german",
 				false);
+        final boolean russianBool = sharedPrefs.getBoolean("language_russian",
+                false);
         final boolean searchOnlyFavorised = sharedPrefs.getBoolean("search_only_favorite",
                 false);
         final boolean searchDeinflected = sharedPrefs.getBoolean("search_deinflected", false);
@@ -244,15 +246,16 @@ public class FragmentListAsyncTask extends
 						translation.parseGerman(german);
 					}
 
-
+                    String russian = d.get("russian");
+                    if (russian != null && russian.length() != 0) {
+                        translation.parseRussian(russian);
+                    }
 
 					if ((englishBool && translation.getEnglishSense() != null)
 							|| (dutchBool && translation.getDutchSense() != null)
 							|| (germanBool && translation.getGermanSense() != null)
 							|| (frenchBool && translation.getFrenchSense() != null)
-							|| (!englishBool && !dutchBool && !germanBool
-									&& !frenchBool && translation
-									.getEnglishSense() != null)) {
+                            || (russianBool && translation.getRussianSense() != null)) {
 
 						count++;
 						if (count < max) {

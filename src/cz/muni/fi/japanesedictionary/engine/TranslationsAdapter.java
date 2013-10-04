@@ -88,6 +88,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
     private boolean mFrench;
     private boolean mDutch;
     private boolean mGerman;
+    private boolean mRussian;
     private LayoutInflater mInflater;
     private ListItemComparator mListComaparator;
     private String mLastSearchedKeb;
@@ -108,6 +109,7 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         mFrench = sharedPrefs.getBoolean("language_french", false);
         mDutch = sharedPrefs.getBoolean("language_dutch", false);
         mGerman = sharedPrefs.getBoolean("language_german", false);
+        mRussian = sharedPrefs.getBoolean("language_russian", false);
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mListComaparator = new ListItemComparator();
         mIsExact = false;
@@ -220,6 +222,9 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
             holder.translation.setText(formatSenses(item.getDutchSense()));
         }else if(mGerman && item.getGermanSense() != null && item.getGermanSense().size() > 0 ){
             holder.translation.setText(formatSenses(item.getGermanSense()));
+        }else if(mRussian && item.getRussianSense() != null && item.getRussianSense().size() > 0 ){
+            holder.translation.setText(formatSenses(item.getRussianSense()));
+            System.out.println("Russian: "+item.getRussianSense());
         }else{
             if(item.getEnglishSense() != null && item.getEnglishSense().size() > 0){
                 holder.translation.setText(item.getEnglishSense().get(0).get(0));
@@ -274,6 +279,11 @@ public class TranslationsAdapter extends ArrayAdapter<Translation>{
         boolean germanTemp = sharedPrefs.getBoolean("language_german", false);
         if(germanTemp != mGerman){
             mGerman = germanTemp;
+            changed = true;
+        }
+        boolean russianTemp = sharedPrefs.getBoolean("language_russian", false);
+        if(russianTemp != mRussian){
+            mRussian = russianTemp;
             changed = true;
         }
         return changed;

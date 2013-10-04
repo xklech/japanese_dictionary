@@ -28,7 +28,7 @@
     <string name="dictionary_parsing_in_progress">Probíhá zpracování slovníku</string>
     <plurals name="dictionary_parsing_in_progress_time_left">
         <item quantity="one">Zbývá 1 minuta</item>
-        <item quantity="few">Zbývá %1$d minuty</item>
+        <item quantity="few">Zbývají %1$d minuty</item>
         <item quantity="other">Zbývá %1$d minut</item>
     </plurals>
     <string name="dictionary_download_interrupted">Stahování přerušeno</string>
@@ -72,14 +72,15 @@
     <string name="language_english">Anglicky</string>
     <string name="language_french">Francouzsky</string>
     <string name="language_dutch">Holandsky</string>
-    <string name="language_german">Německy</string>  
-    
+    <string name="language_german">Německy</string>
+    <string name="language_russian">Rusky</string>
     <!--  Preferences -->
     <string name="preferences_language_setting">Nastavení jazyků</string>
     <string name="preferences_english">Překládat do angličtiny</string>
     <string name="preferences_french">Překládat do francouzštiny</string>
-    <string name="preferences_dutch">Nepřekládat do holandštiny</string>
-    <string name="preferences_german">Nepřekládat do němčiny</string>
+    <string name="preferences_dutch">Překládat do holandštiny</string>
+    <string name="preferences_german">Překládat do němčiny</string>
+    <string name="preferences_russian">Překládat do ruštiny</string>
     <string name="preferences_dictionary_info">Informace o slovníku</string>
  	<string name="preferences_update_dictionary">Aktualizovat slovník</string>
  	<string name="preferences_no_dictionary_info">Slovník nenalezen</string>

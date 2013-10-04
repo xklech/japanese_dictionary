@@ -56,6 +56,7 @@ public class DisplayCharacterInfo extends Fragment {
     private boolean mFrench;        
     private boolean mDutch;
     private boolean mGerman;
+    private boolean mRussian;
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -200,12 +201,12 @@ public class DisplayCharacterInfo extends Fragment {
 		boolean hasMeaning = false; 	
 		LinearLayout container = (LinearLayout) getView().findViewById(R.id.kanjidict_meanings_lines_container);
 		container.removeAllViews();
-		if(mEnglish && mJapaneseCharacter.getMeaningEnglish() != null && mJapaneseCharacter.getMeaningEnglish().size() > 0){
+		if((mEnglish || (!mDutch && !mFrench && !mDutch && !mRussian)) && mJapaneseCharacter.getMeaningEnglish() != null && mJapaneseCharacter.getMeaningEnglish().size() > 0){
 			Log.i(LOG_TAG,"Setting english meaning");
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
-            if (!mFrench && !mDutch && !mGerman) {
+            if (!mFrench && !mDutch && !mGerman && !mRussian) {
                 language.setVisibility(View.GONE);
             }
 			language.setText(R.string.language_english);
@@ -230,7 +231,7 @@ public class DisplayCharacterInfo extends Fragment {
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
-            if (!mEnglish && !mDutch && !mGerman) {
+            if (!mEnglish && !mDutch && !mGerman && !mRussian) {
                 language.setVisibility(View.GONE);
             }
 			language.setText(R.string.language_french);
@@ -254,7 +255,7 @@ public class DisplayCharacterInfo extends Fragment {
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
-            if (!mFrench && !mEnglish && !mGerman) {
+            if (!mFrench && !mEnglish && !mGerman && !mRussian) {
                 language.setVisibility(View.GONE);
             }
 			language.setText(R.string.language_dutch);
@@ -278,7 +279,7 @@ public class DisplayCharacterInfo extends Fragment {
 			hasMeaning = true;
 			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
-            if (!mFrench && !mDutch && !mEnglish) {
+            if (!mFrench && !mDutch && !mEnglish && !mRussian) {
                 language.setVisibility(View.GONE);
             }
 			language.setText(R.string.language_german);
@@ -296,7 +297,31 @@ public class DisplayCharacterInfo extends Fragment {
 			meaningTextView.setText(strBuilder);
 			container.addView(languageView);
 		}
-		
+
+        if(mRussian && mJapaneseCharacter.getMeaningRussian() != null && mJapaneseCharacter.getMeaningRussian().size() > 0){
+            Log.i(LOG_TAG,"Setting russian meaning");
+            hasMeaning = true;
+            View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
+            TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
+            if (!mFrench && !mDutch && !mEnglish && !mGerman) {
+                language.setVisibility(View.GONE);
+            }
+            language.setText(R.string.language_russian);
+            int i =1;
+            int count = mJapaneseCharacter.getMeaningRussian().size();
+            StringBuilder strBuilder = new StringBuilder();
+            for(String meaning : mJapaneseCharacter.getMeaningRussian()){
+                strBuilder.append(meaning);
+                if(i < count){
+                    strBuilder.append(", ");
+                }
+                i++;
+            }
+            TextView meaningTextView = (TextView)languageView.findViewById(R.id.kanjidict_translation);
+            meaningTextView.setText(strBuilder);
+            container.addView(languageView);
+        }
+
 		if(!hasMeaning){
 			Log.i(LOG_TAG,"Doesn't have meanings");
 			getView().findViewById(R.id.kanjidict_meanings_container).setVisibility(View.GONE);
@@ -318,7 +343,6 @@ public class DisplayCharacterInfo extends Fragment {
 
 					dictionariesContainer.addView(dictionaryLine);
 				}
-
 			}
 		}else{
 			getView().findViewById(R.id.kanjidict_dictionaries_container).setVisibility(View.GONE);
@@ -383,10 +407,10 @@ public class DisplayCharacterInfo extends Fragment {
         	mDutch = dutchTemp;
         	changed = true;
         }
-        boolean germanTemp = sharedPrefs.getBoolean("language_german", false);  
-        if(germanTemp != mGerman){
-        	mGerman = germanTemp;
-        	changed = true;
+        boolean russianTemp = sharedPrefs.getBoolean("language_russian", false);
+        if(russianTemp != mRussian){
+            mRussian = russianTemp;
+            changed = true;
         }
         return changed;
     }

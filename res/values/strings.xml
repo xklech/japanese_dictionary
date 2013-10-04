@@ -73,14 +73,15 @@
     <string name="language_english">English</string>
     <string name="language_french">French</string>
     <string name="language_dutch">Dutch</string>
-    <string name="language_german">German</string>  
-    
+    <string name="language_german">German</string>
+    <string name="language_russian">Russian</string>
     <!--  Preferences -->
     <string name="preferences_language_setting">Language settings</string>
     <string name="preferences_english">Translate English</string>
     <string name="preferences_french">Translate French</string>
     <string name="preferences_dutch">Translate Dutch</string>
     <string name="preferences_german">Translate German</string>
+    <string name="preferences_russian">Translate Russian</string>
     <string name="preferences_dictionary_info">Dictionary info</string>
  	<string name="preferences_update_dictionary">Update dictionary</string>
  	<string name="preferences_no_dictionary_info">No dictionary found</string>

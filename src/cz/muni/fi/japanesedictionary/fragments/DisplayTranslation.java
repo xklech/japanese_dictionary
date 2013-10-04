@@ -79,6 +79,7 @@ public class DisplayTranslation extends Fragment {
     private boolean mFrench;
     private boolean mDutch;
     private boolean mGerman;
+    private boolean mRussian;
 
     private MenuItem mFavorite;
     private MenuItem mNote;
@@ -167,7 +168,7 @@ public class DisplayTranslation extends Fragment {
                     }
                 }
                 StringBuilder sense = new StringBuilder();
-                if (mEnglish || (!mDutch && !mGerman && !mFrench)) {
+                if (mEnglish || (!mDutch && !mGerman && !mFrench && !mRussian)) {
                     //only english
                     sense.append(sensesToString(mTranslation.getEnglishSense()));
                 }
@@ -182,6 +183,12 @@ public class DisplayTranslation extends Fragment {
                         sense.append("<br>");
                     }
                     sense.append(sensesToString(mTranslation.getGermanSense()));
+                }
+                if (mRussian) {
+                    if (sense.length() > 0 && (sense.length() < 3 || !"<br>".equals(sense.substring(sense.length() - 4)))) {
+                        sense.append("<br>");
+                    }
+                    sense.append(sensesToString(mTranslation.getRussianSense()));
                 }
                 if (mFrench) {
                     if (sense.length() > 0 && (sense.length() < 3 || !"<br>".equals(sense.substring(sense.length() - 4)))) {
@@ -322,10 +329,10 @@ public class DisplayTranslation extends Fragment {
             String reading = mTranslation.getJapaneseReb().get(0);
             read.setText(reading);
             ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(reading);
+
             DBAsyncTask saveTranslation = new DBAsyncTask(mCallbackTranslation.getDatabase());
-            if (saveTranslation != null) {
-                saveTranslation.execute(mTranslation);
-            }
+            saveTranslation.execute(mTranslation);
+
             TextView romaji = (TextView) getView().findViewById(R.id.translation_romaji);
             romaji.setText(RomanizationEnum.Hepburn.toRomaji(reading));
 
@@ -374,14 +381,14 @@ public class DisplayTranslation extends Fragment {
         if (mInflater != null) {
             LinearLayout translationsContainer = (LinearLayout) getView().findViewById(R.id.translation_translation_container);
             translationsContainer.removeAllViews();
-            if ((mEnglish || (!mEnglish && !mFrench && !mDutch && !mGerman)) && mTranslation.getEnglishSense() != null && mTranslation.getEnglishSense().size() > 0) {
-                View translation_language = mInflater.inflate(R.layout.translation_language, null);
-                TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
-                if (!mFrench && !mDutch && !mGerman) {
+            if ((mEnglish || (!mEnglish && !mFrench && !mDutch && !mGerman && !mRussian)) && mTranslation.getEnglishSense() != null && mTranslation.getEnglishSense().size() > 0) {
+                View translationLanguage = mInflater.inflate(R.layout.translation_language, null);
+                TextView textView = (TextView) translationLanguage.findViewById(R.id.translation_language);
+                if (!mFrench && !mDutch && !mGerman && !mRussian) {
                     textView.setVisibility(View.GONE);
                 }
                 textView.setText(getString(R.string.language_english));
-                translationsContainer.addView(translation_language);
+                translationsContainer.addView(translationLanguage);
                 for (List<String> tran : mTranslation.getEnglishSense()) {
                     int tran_size = tran.size();
                     if (tran_size > 0) {
@@ -405,7 +412,7 @@ public class DisplayTranslation extends Fragment {
             if (mFrench && mTranslation.getFrenchSense() != null && mTranslation.getFrenchSense().size() > 0) {
                 View translation_language = mInflater.inflate(R.layout.translation_language, null);
                 TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
-                if (!mEnglish && !mDutch && !mGerman) {
+                if (!mEnglish && !mDutch && !mGerman && !mRussian) {
                     textView.setVisibility(View.GONE);
                 }
                 textView.setText(getString(R.string.language_french));
@@ -432,7 +439,7 @@ public class DisplayTranslation extends Fragment {
             if (mDutch && mTranslation.getDutchSense() != null && mTranslation.getDutchSense().size() > 0) {
                 View translation_language = mInflater.inflate(R.layout.translation_language, null);
                 TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
-                if (!mFrench && !mEnglish && !mGerman) {
+                if (!mFrench && !mEnglish && !mGerman && !mRussian) {
                     textView.setVisibility(View.GONE);
                 }
                 textView.setText(getString(R.string.language_dutch));
@@ -459,7 +466,7 @@ public class DisplayTranslation extends Fragment {
             if (mGerman && mTranslation.getGermanSense() != null && mTranslation.getGermanSense().size() > 0) {
                 View translation_language = mInflater.inflate(R.layout.translation_language, null);
                 TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
-                if (!mFrench && !mDutch && !mEnglish) {
+                if (!mFrench && !mDutch && !mEnglish && !mRussian) {
                     textView.setVisibility(View.GONE);
                 }
                 textView.setText(getString(R.string.language_german));
@@ -483,6 +490,34 @@ public class DisplayTranslation extends Fragment {
                     }
                 }
             }
+            if (mRussian && mTranslation.getRussianSense() != null && mTranslation.getRussianSense().size() > 0) {
+                View translation_language = mInflater.inflate(R.layout.translation_language, null);
+                TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
+                if (!mFrench && !mDutch && !mEnglish && !mGerman) {
+                    textView.setVisibility(View.GONE);
+                }
+                textView.setText(getString(R.string.language_russian));
+                translationsContainer.addView(translation_language);
+                for (List<String> tran : mTranslation.getRussianSense()) {
+                    int tran_size = tran.size();
+                    if (tran_size > 0) {
+                        int i = 0;
+                        StringBuilder strBuilder = new StringBuilder();
+                        for (String str : tran) {
+                            strBuilder.append(str);
+                            i++;
+                            if (i < tran_size) {
+                                strBuilder.append(", ");
+                            }
+                        }
+                        View translation_ll = mInflater.inflate(R.layout.translation_line, null);
+                        TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
+                        tView.setText(strBuilder.toString());
+                        translationsContainer.addView(translation_ll);
+                    }
+                }
+            }
+
             getView().findViewById(R.id.translation_kanji_container).setVisibility(View.GONE);
             mCharacters = null;
             if (writeCharacters != null) {
@@ -524,7 +559,7 @@ public class DisplayTranslation extends Fragment {
                 TextView kanjiView = (TextView) translationKanji.findViewById(R.id.translation_kanji);
                 kanjiView.setText(character);
                 TextView meaningView = (TextView) translationKanji.findViewById(R.id.translation_kanji_meaning);
-                if (mEnglish && japCharacter.getMeaningEnglish() != null) {
+                if ((mEnglish && !mFrench && !mDutch && !mGerman && !mRussian) && japCharacter.getMeaningEnglish() != null) {
                     int meaningSize = japCharacter.getMeaningEnglish().size();
                     if (meaningSize > 0) {
                         int j = 0;
@@ -573,6 +608,20 @@ public class DisplayTranslation extends Fragment {
                         int j = 0;
                         StringBuilder strBuilder = new StringBuilder();
                         for (String str : japCharacter.getMeaningGerman()) {
+                            strBuilder.append(str);
+                            j++;
+                            if (j < meaningSize) {
+                                strBuilder.append(", ");
+                            }
+                        }
+                        meaningView.setText(strBuilder);
+                    }
+                } else if (mRussian && japCharacter.getMeaningRussian() != null) {
+                    int meaningSize = japCharacter.getMeaningRussian().size();
+                    if (meaningSize > 0) {
+                        int j = 0;
+                        StringBuilder strBuilder = new StringBuilder();
+                        for (String str : japCharacter.getMeaningRussian()) {
                             strBuilder.append(str);
                             j++;
                             if (j < meaningSize) {
@@ -640,6 +689,11 @@ public class DisplayTranslation extends Fragment {
             mGerman = germanTemp;
             changed = true;
         }
+        boolean russianTemp = sharedPrefs.getBoolean("language_russian", false);
+        if (russianTemp != mRussian) {
+            mRussian = russianTemp;
+            changed = true;
+        }
         return changed;
     }
 
@@ -688,7 +742,7 @@ public class DisplayTranslation extends Fragment {
     }
 
     private String sensesToString(List<List<String>> senses) {
-        List<String> collection = new ArrayList();
+        List<String> collection = new ArrayList<String>();
         for (List<String> list : mTranslation.getEnglishSense()) {
             collection.addAll(list);
         }

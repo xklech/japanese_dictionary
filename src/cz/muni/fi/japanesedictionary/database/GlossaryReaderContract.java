@@ -40,7 +40,7 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
  */
 public class GlossaryReaderContract extends SQLiteOpenHelper {
 	
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
 
     // Database Name
     private static final String DATABASE_NAME = "JapaneseDictionary.db";
@@ -55,6 +55,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_FRENCH = "french";
         public static final String COLUMN_NAME_DUTCH = "dutch";
         public static final String COLUMN_NAME_GERMAN = "german";
+        public static final String COLUMN_NAME_RUSSIAN = "russian";
         public static final String COLUMN_NAME_NOTE = "note";
         public static final String COLUMN_NAME_FAVORITE = "favorite";
         public static final String COLUMN_NAME_LAST_VIEWED = "last_viewed";
@@ -73,6 +74,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_FRENCH + TEXT_TYPE + COMMA_SEP +
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_DUTCH + TEXT_TYPE + COMMA_SEP +
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_GERMAN + TEXT_TYPE + COMMA_SEP +
+            GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN + TEXT_TYPE + COMMA_SEP +
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_NOTE + TEXT_TYPE + COMMA_SEP +
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_FAVORITE + INTEGER_TYPE + COMMA_SEP+
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED + INTEGER_TYPE +
@@ -116,14 +118,11 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             return ;
         }
 
-        ContentValues values = new ContentValues();
-        values.put(GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED, (new Date()).getTime());
+        ContentValues values = translation.createContentValuesFromTranslation();
         int updateCount = db.update(GlossaryEntryFavorite.TABLE_NAME,values, "_ID = ?",new String[]{translation.getIndexHash()});
         if(updateCount == 0){
             //insert new
-            Log.i(LOG_TAG, "Is Not factorised, doesn¨t exist, insert new values");
-            values = translation.createContentValuesFromTranslation();
-            values.put(GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED, (new Date()).getTime());
+            Log.i(LOG_TAG, "Is Not factorised, doesn't exist, insert new values");
             values.put(GlossaryEntryFavorite._ID,translation.getIndexHash());
             long returnedId = db.insert(GlossaryEntryFavorite.TABLE_NAME, null, values);
             if(returnedId == -1){
@@ -162,6 +161,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 GlossaryEntryFavorite.COLUMN_NAME_ENGLISH,
                 GlossaryEntryFavorite.COLUMN_NAME_FRENCH,
                 GlossaryEntryFavorite.COLUMN_NAME_GERMAN,
+                GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN
 	    		};
 	    
 	    Cursor cursor = db.query(
@@ -273,6 +273,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 GlossaryEntryFavorite.COLUMN_NAME_ENGLISH,
                 GlossaryEntryFavorite.COLUMN_NAME_FRENCH,
                 GlossaryEntryFavorite.COLUMN_NAME_GERMAN,
+                GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN
         };
         Cursor cursor = db.query(
                 true, //distinct - not same translations
@@ -372,6 +373,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             String french = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_FRENCH));
             String dutch = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_DUTCH));
             String german = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_GERMAN));
+            String russian = cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN));
 
             translation.parseJapaneseKeb(japaneseKeb);
             translation.parseJapaneseReb(japaneseReb);
@@ -379,6 +381,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             translation.parseFrench(french);
             translation.parseDutch(dutch);
             translation.parseGerman(german);
+            translation.parseRussian(russian);
 
             translationsReturn.add(translation);
         }while(cursor.moveToNext());
