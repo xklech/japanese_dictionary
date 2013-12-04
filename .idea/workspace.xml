@@ -17,394 +17,16 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="japanese_dictionary" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="c1a431d1-1559-443d-90ad-02e2c20021fe" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\.classpath" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\.project" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\.settings\org.eclipse.core.resources.prefs" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\.settings\org.eclipse.jdt.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\.settings\org.eclipse.ltk.core.refactoring.prefs" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\gen\cz\muni\fi\japanesedictionary\BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\gen\cz\muni\fi\japanesedictionary\Manifest.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\gen\cz\muni\fi\japanesedictionary\R.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\classes.jar" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$attr.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$bool.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$color.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$dimen.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$drawable.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$id.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$integer.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$layout.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$string.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$style.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R$styleable.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\ActionBarSherlock\com\actionbarsherlock\R.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\BuildConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$attr.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$bool.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$color.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$dimen.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$drawable.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$id.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$integer.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$layout.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$menu.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$string.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$style.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$styleable.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R$xml.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\R.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\database\DBAsyncTask.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\database\GlossaryReaderContract$GlossaryEntryFavorite.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\database\GlossaryReaderContract.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\CharacterLoader.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\FavoriteChanger.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\FavoriteListLoader.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\FavoriteLoader.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\FragmentListAsyncTask$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\FragmentListAsyncTask.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\ListItemComparator.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\MainPagerAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\NoteLoader.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\NoteSaver.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\TranslationsAdapter$TranslationsViewHolder.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\engine\TranslationsAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\entity\JapaneseCharacter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\entity\Translation.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\DisplayCharacterInfo.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\DisplayTranslation$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\DisplayTranslation$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\DisplayTranslation$3.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\DisplayTranslation.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\MyFragmentAlertDialog$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\MyFragmentAlertDialog$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\MyFragmentAlertDialog.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\ResultFragmentList$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\ResultFragmentList$IncomingHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\fragments\ResultFragmentList.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\interfaces\OnCreateTranslationListener.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\interfaces\OnTranslationSelectedListener.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\interfaces\SearchListener.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\AboutActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\AboutActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\DisplayCharacterInfoActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\DisplayTranslationActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\FavoriteActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\MainActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\MainActivity$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\MainActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\MyPreferencesActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\main\MyPreferencesActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\ParserService$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\ParserService$ServiceDownloadHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\ParserService$ServiceHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\ParserService.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\RomanizationEnum$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\RomanizationEnum.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\SaxDataHolder$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\SaxDataHolder.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\SaxDataHolderKanjiDict$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\SaxDataHolderKanjiDict.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\cz\muni\fi\japanesedictionary\parser\TranscriptionConverter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\japanese_dictionary.apk" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\production\japanese_dictionary\japanese_dictionary.unaligned.apk" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_bottom_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_bottom_solid_inverse_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_bottom_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_bottom_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_bottom_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_share_pack_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_share_pack_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_solid_shadow_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_stacked_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_stacked_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_stacked_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_stacked_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ab_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__btn_cab_done_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__btn_cab_done_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__btn_cab_done_focused_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__btn_cab_done_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__btn_cab_done_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__btn_cab_done_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__cab_background_bottom_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__cab_background_bottom_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__cab_background_top_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__cab_background_top_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_ab_back_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_ab_back_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_cab_done_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_cab_done_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_clear_disabled.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_clear_normal.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_clear_search_api_disabled_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_clear_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_commit_search_api_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_commit_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_go.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_go_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_menu_moreoverflow_normal_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_menu_moreoverflow_normal_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_menu_share_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_menu_share_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_voice_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__ic_voice_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_activated_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_divider_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_divider_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_longpressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_selector_disabled_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__list_selector_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__menu_dropdown_panel_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__menu_dropdown_panel_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__progress_bg_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__progress_bg_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__progress_primary_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__progress_primary_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__progress_secondary_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__progress_secondary_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_48_inner_holo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_48_outer_holo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_ab_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_ab_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_ab_disabled_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_ab_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_ab_focused_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_ab_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_ab_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__spinner_ab_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__tab_selected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__tab_selected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__tab_selected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__tab_unselected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__textfield_search_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__textfield_search_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__textfield_search_right_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__textfield_search_right_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__textfield_search_right_selected_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__textfield_search_right_selected_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__textfield_search_selected_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__textfield_search_selected_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-hdpi\abs__toast_frame.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_bottom_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_bottom_solid_inverse_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_bottom_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_bottom_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_bottom_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_share_pack_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_share_pack_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_solid_shadow_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_stacked_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_stacked_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_stacked_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_stacked_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ab_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__btn_cab_done_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__btn_cab_done_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__btn_cab_done_focused_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__btn_cab_done_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__btn_cab_done_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__btn_cab_done_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__cab_background_bottom_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__cab_background_bottom_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__cab_background_top_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__cab_background_top_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_ab_back_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_ab_back_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_cab_done_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_cab_done_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_clear_disabled.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_clear_normal.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_clear_search_api_disabled_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_clear_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_commit_search_api_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_commit_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_go.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_go_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_menu_moreoverflow_normal_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_menu_moreoverflow_normal_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_menu_share_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_menu_share_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_voice_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__ic_voice_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_activated_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_divider_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_divider_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_longpressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_selector_disabled_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__list_selector_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__menu_dropdown_panel_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__menu_dropdown_panel_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__progress_bg_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__progress_bg_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__progress_primary_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__progress_primary_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__progress_secondary_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__progress_secondary_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_48_inner_holo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_48_outer_holo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_ab_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_ab_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_ab_disabled_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_ab_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_ab_focused_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_ab_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_ab_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__spinner_ab_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__tab_selected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__tab_selected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__tab_selected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__tab_unselected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__textfield_search_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__textfield_search_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__textfield_search_right_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__textfield_search_right_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__textfield_search_right_selected_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__textfield_search_right_selected_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__textfield_search_selected_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__textfield_search_selected_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-mdpi\abs__toast_frame.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_bottom_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_bottom_solid_inverse_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_bottom_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_bottom_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_bottom_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_share_pack_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_share_pack_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_solid_shadow_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_stacked_solid_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_stacked_solid_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_stacked_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_stacked_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_transparent_dark_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ab_transparent_light_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__btn_cab_done_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__btn_cab_done_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__btn_cab_done_focused_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__btn_cab_done_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__btn_cab_done_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__btn_cab_done_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__cab_background_bottom_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__cab_background_bottom_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__cab_background_top_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__cab_background_top_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_ab_back_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_ab_back_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_cab_done_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_cab_done_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_clear_disabled.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_clear_search_api_disabled_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_clear_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_commit_search_api_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_commit_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_go.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_go_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_menu_moreoverflow_normal_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_menu_moreoverflow_normal_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_menu_share_holo_dark.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_menu_share_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_voice_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__ic_voice_search_api_holo_light.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_activated_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_divider_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_divider_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_longpressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_selector_disabled_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__list_selector_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__menu_dropdown_panel_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__menu_dropdown_panel_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__progress_bg_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__progress_bg_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__progress_primary_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__progress_primary_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__progress_secondary_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__progress_secondary_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_48_inner_holo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_48_outer_holo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_ab_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_ab_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_ab_disabled_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_ab_disabled_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_ab_focused_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_ab_focused_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_ab_pressed_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__spinner_ab_pressed_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__tab_selected_focused_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__tab_selected_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__tab_selected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__tab_unselected_pressed_holo.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__textfield_search_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__textfield_search_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__textfield_search_right_default_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__textfield_search_right_default_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__textfield_search_right_selected_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__textfield_search_right_selected_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__textfield_search_selected_holo_dark.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__textfield_search_selected_holo_light.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\ActionBarSherlock\drawable-xhdpi\abs__toast_frame.9.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-hdpi\alert_dialog_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-hdpi\ic_action_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-hdpi\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-hdpi\note.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-hdpi\rating_favorite.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-hdpi\rating_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-hdpi\rating_not_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-ldpi\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\delete_normal.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\delete_pressed.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\ic_action_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\ic_launcher_settings.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\note.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\rating_favorite.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\rating_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-mdpi\rating_not_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-xhdpi\ic_action_search.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-xhdpi\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-xhdpi\note.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-xhdpi\rating_favorite.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-xhdpi\rating_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Jarek\Documents\GitHub\japanese_dictionary\out\res-cache\japanese_dictionary\drawable-xhdpi\rating_not_important.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayCharacterInfo.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayCharacterInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FragmentListAsyncTask.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FragmentListAsyncTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/JapaneseCharacter.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/JapaneseCharacter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MyPreferencesActivity.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MyPreferencesActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/ParserService.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/ParserService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Translation.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Translation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java" afterPath="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/japanese_dictionary.iml" afterPath="$PROJECT_DIR$/japanese_dictionary.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/xml/preferences.xml" afterPath="$PROJECT_DIR$/res/xml/preferences.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values-cs/strings.xml" afterPath="$PROJECT_DIR$/res/values-cs/strings.xml" />
     </list>
     <ignored path="japanese_dictionary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -468,34 +90,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TranslationsAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java">
+      <file leaf-file-name="SaxDataHolder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="226" column="63" selection-start="8918" selection-end="8933" vertical-scroll-proportion="0.0" vertical-offset="2653" max-vertical-offset="4318">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DisplayTranslation.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="194" column="39" selection-start="7771" selection-end="7771" vertical-scroll-proportion="0.58135283" vertical-offset="2708" max-vertical-offset="12614">
+            <state line="112" column="48" selection-start="3345" selection-end="3345" vertical-scroll-proportion="0.0" vertical-offset="1598" max-vertical-offset="5219">
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#28952#29000#0" expanded="true" />
-                <element signature="e#32145#32169#0" expanded="true" />
-                <element signature="e#33029#33037#0" expanded="true" />
+                <element signature="n#!!doc" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#2153#2324#0" expanded="false" />
+                <element signature="e#2321#2322#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DBAsyncTask.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/DBAsyncTask.java">
+      <file leaf-file-name="ParserService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/ParserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="57" selection-start="1124" selection-end="1124" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+            <state line="767" column="39" selection-start="23316" selection-end="23316" vertical-scroll-proportion="-4.08" vertical-offset="11798" max-vertical-offset="13056">
+              <folding>
+                <element signature="e#7487#7532#0" expanded="true" />
+                <element signature="e#7570#7621#0" expanded="true" />
+                <element signature="e#9193#9244#0" expanded="true" />
+                <element signature="e#10350#10399#0" expanded="true" />
+                <element signature="e#10433#10483#0" expanded="true" />
+                <element signature="e#11849#11894#0" expanded="true" />
+                <element signature="e#11924#11975#0" expanded="true" />
+                <element signature="e#23354#23405#0" expanded="true" />
+                <element signature="e#23882#23930#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="0" selection-start="146" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="8" max-vertical-offset="884">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CompressFolder.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/util/CompressFolder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="5" selection-start="1472" selection-end="1472" vertical-scroll-proportion="2.4401913" vertical-offset="357" max-vertical-offset="2652">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -820,11 +463,6 @@
                 <option name="name" value="processTestTestManifest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Initializes a new Gradle build. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="setupBuild" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
                 <option name="description" value="Displays the signing info for each variant" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="signingReport" />
@@ -861,7 +499,7 @@
     <option name="modificationStamps">
       <map>
         <entry key="$PROJECT_DIR$" value="1380871968112" />
-        <entry key="C:\Users\Jarek\Documents\GitHub\japanese_dictionary" value="1380871968112" />
+        <entry key="C:\Users\Jarek\Documents\GitHub\japanese_dictionary" value="1386166767288" />
       </map>
     </option>
   </component>
@@ -869,20 +507,24 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/japanese_dictionary.iml" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/ParserService.java" />
-        <option value="$PROJECT_DIR$/res/xml/preferences.xml" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MyPreferencesActivity.java" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/JapaneseCharacter.java" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/CharacterLoader.java" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java" />
-        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayCharacterInfo.java" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java" />
         <option value="$PROJECT_DIR$/res/values-cs/strings.xml" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FragmentListAsyncTask.java" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java" />
+        <option value="$PROJECT_DIR$/res/xml/preferences.xml" />
         <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Translation.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/ParserService.java" />
+        <option value="$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/util/CompressFolder.java" />
       </list>
     </option>
   </component>
@@ -918,7 +560,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -954,26 +595,8 @@
               <option name="myItemId" value="japanesedictionary" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanesedictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fragments" />
+              <option name="myItemId" value="util" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -992,60 +615,13 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="japanesedictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="entity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanesedictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="engine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanese_dictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="japanesedictionary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="database" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1055,16 +631,17 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="options.lastSelected" value="com.genymobile.genymotion.ide.idea.GdmSettings" />
+    <property name="options.lastSelected" value="gradle.compiler" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="FullScreen" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.82.101:5555" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHub/PortableGit_0f65d050d0c352fd38a0b25d82ee942deb19ef87/bin/git.exe" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="and4.3" />
   </component>
   <component name="RunManager" selected="Android Application.japanese_dictionary">
@@ -1076,6 +653,7 @@
       <option name="CLASS_NAME" value="" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
       <option name="COMMAND_LINE" value="" />
@@ -1093,6 +671,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -1120,19 +711,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1174,7 +752,9 @@
       <option name="ACTIVITY_CLASS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
       <option name="COMMAND_LINE" value="" />
@@ -1191,7 +771,9 @@
       <option name="ACTIVITY_CLASS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
       <option name="COMMAND_LINE" value="" />
@@ -1252,18 +834,20 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5735294" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5735294" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42810458" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.61601305" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963397" sideWeight="0.5718954" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21083455" sideWeight="0.5718954" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1272,6 +856,11 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USERS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -1285,125 +874,323 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/DrawerItemClickListener.java">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/DBAsyncTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="7" selection-start="5" selection-end="7" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="918">
+        <state line="38" column="32" selection-start="1284" selection-end="1284" vertical-scroll-proportion="0.0" vertical-offset="646" max-vertical-offset="918" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MyPreferencesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="69" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1071" max-vertical-offset="2550" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/xml/preferences.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="18" selection-start="1152" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="1394" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="3" selection-start="6807" selection-end="7062" vertical-scroll-proportion="0.0" vertical-offset="2244" max-vertical-offset="2465">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteChanger.java">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/AboutActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="26" selection-start="1438" selection-end="1441" vertical-scroll-proportion="0.33214286" vertical-offset="154" max-vertical-offset="1139">
-          <folding />
-        </state>
+        <state line="184" column="103" selection-start="7001" selection-end="7001" vertical-scroll-proportion="0.0" vertical-offset="3128" max-vertical-offset="3655" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FavoriteListLoader.java">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Predicate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="33" selection-start="199" selection-end="201" vertical-scroll-proportion="0.15178572" vertical-offset="0" max-vertical-offset="1054">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="30" selection-start="273" selection-end="273" vertical-scroll-proportion="0.4641638" vertical-offset="0" max-vertical-offset="884" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="256" column="54" selection-start="8225" selection-end="8225" vertical-scroll-proportion="0.39922482" vertical-offset="3467" max-vertical-offset="5219">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DictionaryFragmentAlertDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="21" selection-start="1420" selection-end="1422" vertical-scroll-proportion="0.33188722" vertical-offset="170" max-vertical-offset="1173">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/AnkiFragmentAlertDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="21" selection-start="1414" selection-end="1416" vertical-scroll-proportion="0.33188722" vertical-offset="170" max-vertical-offset="1207">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/FavoriteListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="45" selection-start="1285" selection-end="1287" vertical-scroll-proportion="0.33188722" vertical-offset="153" max-vertical-offset="1190">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayCharacterInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="66" selection-start="7303" selection-end="7303" vertical-scroll-proportion="0.25669643" vertical-offset="2690" max-vertical-offset="6613">
-          <folding>
-            <element signature="e#3388#3424#0" expanded="true" />
-            <element signature="e#7924#7949#0" expanded="true" />
-            <element signature="e#8970#8994#0" expanded="true" />
-            <element signature="e#9961#9984#0" expanded="true" />
-            <element signature="e#10941#10965#0" expanded="true" />
-            <element signature="e#11978#12003#0" expanded="true" />
-            <element signature="e#14030#14045#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="226" column="63" selection-start="8918" selection-end="8933" vertical-scroll-proportion="0.0" vertical-offset="2653" max-vertical-offset="4318">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values-cs/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="44" selection-start="1546" selection-end="1546" vertical-scroll-proportion="0.54662377" vertical-offset="357" max-vertical-offset="2431">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FragmentListAsyncTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="32" selection-start="4913" selection-end="4913" vertical-scroll-proportion="0.33333334" vertical-offset="1407" max-vertical-offset="5083">
-          <folding />
-        </state>
+        <state line="7" column="13" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="1734" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Translation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="445" column="76" selection-start="13635" selection-end="13635" vertical-scroll-proportion="0.35602096" vertical-offset="6834" max-vertical-offset="8432">
+        <state line="517" column="9" selection-start="16412" selection-end="16412" vertical-scroll-proportion="0.0" vertical-offset="8789" max-vertical-offset="8959" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/ParserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="212" column="33" selection-start="6416" selection-end="6416" vertical-scroll-proportion="0.0" vertical-offset="3604" max-vertical-offset="12223">
+          <folding>
+            <element signature="e#7487#7532#0" expanded="true" />
+            <element signature="e#7570#7621#0" expanded="true" />
+            <element signature="e#9193#9244#0" expanded="true" />
+            <element signature="e#10350#10399#0" expanded="true" />
+            <element signature="e#10433#10483#0" expanded="true" />
+            <element signature="e#11849#11894#0" expanded="true" />
+            <element signature="e#11924#11975#0" expanded="true" />
+            <element signature="e#23354#23405#0" expanded="true" />
+            <element signature="e#23882#23930#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="55" selection-start="2109" selection-end="2109" vertical-scroll-proportion="0.0" vertical-offset="1037" max-vertical-offset="6001" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolderKanjiDict.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="14" selection-start="2408" selection-end="2408" vertical-scroll-proportion="0.0" vertical-offset="1173" max-vertical-offset="6647" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/DBAsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="32" selection-start="1284" selection-end="1284" vertical-scroll-proportion="0.0" vertical-offset="646" max-vertical-offset="918" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MyPreferencesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="69" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1071" max-vertical-offset="2550" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/xml/preferences.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="18" selection-start="1152" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="1394" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/about.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="3" selection-start="6807" selection-end="7062" vertical-scroll-proportion="0.0" vertical-offset="2244" max-vertical-offset="2465">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/AboutActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="184" column="103" selection-start="7001" selection-end="7001" vertical-scroll-proportion="0.0" vertical-offset="3128" max-vertical-offset="3655" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Predicate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="13" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="1734" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Translation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="517" column="9" selection-start="16412" selection-end="16412" vertical-scroll-proportion="0.0" vertical-offset="8364" max-vertical-offset="8364" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="55" selection-start="2109" selection-end="2109" vertical-scroll-proportion="0.0" vertical-offset="1037" max-vertical-offset="6001" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolderKanjiDict.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="14" selection-start="2408" selection-end="2408" vertical-scroll-proportion="0.0" vertical-offset="1173" max-vertical-offset="6647" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/DBAsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="32" selection-start="1284" selection-end="1284" vertical-scroll-proportion="0.0" vertical-offset="646" max-vertical-offset="918" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MyPreferencesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="69" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="1071" max-vertical-offset="2550" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/xml/preferences.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="18" selection-start="1152" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="1394" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="226" column="63" selection-start="8918" selection-end="8933" vertical-scroll-proportion="0.0" vertical-offset="3842" max-vertical-offset="5321" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="33" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="969" max-vertical-offset="13005" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/about.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="3" selection-start="6807" selection-end="7062" vertical-scroll-proportion="0.0" vertical-offset="2244" max-vertical-offset="2465">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/GlossaryReaderContract.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="55" selection-start="4632" selection-end="4632" vertical-scroll-proportion="0.17406143" vertical-offset="1275" max-vertical-offset="6358">
+        <state line="110" column="55" selection-start="4632" selection-end="4632" vertical-scroll-proportion="0.17406143" vertical-offset="1275" max-vertical-offset="6358" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/TranslationsAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="226" column="63" selection-start="8918" selection-end="8933" vertical-scroll-proportion="0.0" vertical-offset="2653" max-vertical-offset="4318" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="33" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0" vertical-offset="969" max-vertical-offset="12614" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/about.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="324">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="3" selection-start="6807" selection-end="7062" vertical-scroll-proportion="0.0" vertical-offset="2141" max-vertical-offset="2465">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/MyPreferencesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="69" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1921" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/xml/preferences.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="18" selection-start="1152" selection-end="1152" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1394" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Translation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="0" selection-start="2227" selection-end="2227" vertical-scroll-proportion="0.7626527" vertical-offset="90" max-vertical-offset="8364" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/engine/FragmentListAsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="164" column="43" selection-start="5821" selection-end="5821" vertical-scroll-proportion="0.0" vertical-offset="2788" max-vertical-offset="5899" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/util/MiscellaneousUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="13" selection-start="314" selection-end="314" vertical-scroll-proportion="-0.4537522" vertical-offset="379" max-vertical-offset="952" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolderKanjiDict.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="137" column="38" selection-start="4375" selection-end="4375" vertical-scroll-proportion="-6.5357766" vertical-offset="5275" max-vertical-offset="5848" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="1" selection-end="1" vertical-scroll-proportion="0.029010238" vertical-offset="0" max-vertical-offset="586">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/database/DBAsyncTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="57" selection-start="1124" selection-end="1124" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+        <state line="38" column="32" selection-start="1284" selection-end="1284" vertical-scroll-proportion="0.53583616" vertical-offset="43" max-vertical-offset="629" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/entity/Predicate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="13" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1326" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/main/AboutActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="184" column="103" selection-start="7001" selection-end="7001" vertical-scroll-proportion="0.100682594" vertical-offset="3069" max-vertical-offset="3655" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/japanese_dictionary.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="51" selection-start="3701" selection-end="3705" vertical-scroll-proportion="0.33211678" vertical-offset="719" max-vertical-offset="1394">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/fragments/DisplayTranslation.java">
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/SaxDataHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="194" column="39" selection-start="7771" selection-end="7771" vertical-scroll-proportion="0.58135283" vertical-offset="2708" max-vertical-offset="12614">
+        <state line="112" column="48" selection-start="3345" selection-end="3345" vertical-scroll-proportion="0.0" vertical-offset="1598" max-vertical-offset="5219">
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2153#2324#0" expanded="false" />
+            <element signature="e#2321#2322#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="36" selection-start="1244" selection-end="1244" vertical-scroll-proportion="-0.8566553" vertical-offset="1012" max-vertical-offset="1598">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="230" selection-end="230" vertical-scroll-proportion="0.26493508" vertical-offset="0" max-vertical-offset="385">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="146" selection-end="146" vertical-scroll-proportion="0.0" vertical-offset="8" max-vertical-offset="884">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-19/java/io/IOException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="13" selection-start="1126" selection-end="1126" vertical-scroll-proportion="0.078431375" vertical-offset="126" max-vertical-offset="1054">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/parser/ParserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="767" column="39" selection-start="23316" selection-end="23316" vertical-scroll-proportion="-4.08" vertical-offset="11798" max-vertical-offset="13056">
+          <folding>
+            <element signature="e#7487#7532#0" expanded="true" />
+            <element signature="e#7570#7621#0" expanded="true" />
+            <element signature="e#9193#9244#0" expanded="true" />
+            <element signature="e#10350#10399#0" expanded="true" />
+            <element signature="e#10433#10483#0" expanded="true" />
+            <element signature="e#11849#11894#0" expanded="true" />
+            <element signature="e#11924#11975#0" expanded="true" />
+            <element signature="e#23354#23405#0" expanded="true" />
+            <element signature="e#23882#23930#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cz/muni/fi/japanesedictionary/util/CompressFolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="5" selection-start="1472" selection-end="1472" vertical-scroll-proportion="2.4401913" vertical-offset="357" max-vertical-offset="2652">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#28952#29000#0" expanded="true" />
-            <element signature="e#32145#32169#0" expanded="true" />
-            <element signature="e#33029#33037#0" expanded="true" />
           </folding>
         </state>
       </provider>
