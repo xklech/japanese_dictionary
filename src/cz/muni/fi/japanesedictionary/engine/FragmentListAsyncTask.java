@@ -27,9 +27,11 @@ import java.util.regex.Pattern;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.AtomicReaderContext;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.queryParser.standard.StandardQueryParser;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -125,7 +127,7 @@ public class FragmentListAsyncTask extends
 		File file = new File(pathToDictionary);
 		if (!file.exists() || !file.canRead()) {
 			Log.e(LOG_TAG,
-					"Cant read jmdict dictionary directory");
+					"Can't read jmdict dictionary directory");
 			return null;
 		}
 
@@ -133,8 +135,7 @@ public class FragmentListAsyncTask extends
 			Log.w(LOG_TAG, "No expression to translate");
 			return null;
 		}
-		Analyzer analyzer = new CJKAnalyzer(Version.LUCENE_36);
-		IndexSearcher searcher = null;
+		Analyzer analyzer = new CJKAnalyzer(Version.LUCENE_46);
 		try {
 			final String search;
             final String hiragana;
@@ -163,15 +164,15 @@ public class FragmentListAsyncTask extends
                     StringBuilder sb = new StringBuilder("\"lucenematch " + expression + "lucenematch\"");
                     for (Predicate predicate: Deconjugator.deconjugate(hiragana)) {
                         if (predicate.isSuru()) {
-                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:suru)");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:suru)");
                         } else if (predicate.isKuru()) {
-                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:Kuru)");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append( "lucenematch\" AND pos:Kuru)");
                         } else if (predicate.isIku()) {
-                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:Iku)");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:Iku)");
                         } else if (predicate.isIAdjective()) {
-                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND pos:keiyoushi)");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:keiyoushi)");
                         } else
-                            sb.append(" OR " + "(\"lucenematch " + insertSpaces(predicate.getPredicate()) + "lucenematch\" AND (pos:verb NOT pos:suru))");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND (pos:verb NOT pos:suru))");
                     }
                     search = sb.toString();
                 } else
@@ -181,7 +182,7 @@ public class FragmentListAsyncTask extends
 
 			Query q;
 			if (onlyReb) {
-				q = (new QueryParser(Version.LUCENE_36, "index_japanese_reb",
+				q = (new QueryParser(Version.LUCENE_46, "index_japanese_reb",
 						analyzer)).parse(search);
 			} else {
 				StandardQueryParser parser = new StandardQueryParser(analyzer);
@@ -189,13 +190,13 @@ public class FragmentListAsyncTask extends
 			}
 
 			Directory dir = FSDirectory.open(file);
-			IndexReader reader = IndexReader.open(dir);
-			searcher = new IndexSearcher(reader);
+			IndexReader reader =  DirectoryReader.open(dir);
+			final IndexSearcher searcher = new IndexSearcher(reader);
 
 			Collector collector = new Collector() {
 				int max = 1000;
 				int count = 0;
-				IndexReader reader;
+                private int docBase;
 
 				@Override
 				public boolean acceptsDocsOutOfOrder() {
@@ -204,8 +205,7 @@ public class FragmentListAsyncTask extends
 
 				@Override
 				public void collect(int docID) throws IOException {
-
-					Document d = reader.document(docID);
+					Document d = searcher.doc(docID+docBase);
 					Translation translation = new Translation();
                     String prioritized = d.get("prioritized");
                     if(searchOnlyFavorised && prioritized == null){
@@ -272,11 +272,11 @@ public class FragmentListAsyncTask extends
 					}
 				}
 
-				@Override
-				public void setNextReader(IndexReader _reader, int base)
-						throws IOException {
-					reader = _reader;
-				}
+                @Override
+                public void setNextReader(AtomicReaderContext atomicReaderContext) throws IOException {
+                    docBase = atomicReaderContext.docBase;
+                }
+
 
 				@Override
 				public void setScorer(Scorer arg0) throws IOException {
@@ -285,16 +285,8 @@ public class FragmentListAsyncTask extends
 			};
 
 			searcher.search(q, collector);
-			searcher.close();
 		} catch (IOException ex) {
 			Log.e(LOG_TAG, "IO Exception:  " + ex.toString());
-			try {
-				if (searcher != null) {
-					searcher.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 			return translations;
 		} catch (Exception ex) {
 			Log.e(LOG_TAG, "Exception: " + ex.toString());

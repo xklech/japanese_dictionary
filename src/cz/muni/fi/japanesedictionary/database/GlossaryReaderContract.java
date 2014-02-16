@@ -40,7 +40,7 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
  */
 public class GlossaryReaderContract extends SQLiteOpenHelper {
 	
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 12;
 
     // Database Name
     private static final String DATABASE_NAME = "JapaneseDictionary.db";
@@ -58,6 +58,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_RUSSIAN = "russian";
         public static final String COLUMN_NAME_NOTE = "note";
         public static final String COLUMN_NAME_FAVORITE = "favorite";
+        public static final String COLUMN_NAME_RUBY = "ruby";
         public static final String COLUMN_NAME_LAST_VIEWED = "last_viewed";
     }
 
@@ -77,6 +78,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN + TEXT_TYPE + COMMA_SEP +
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_NOTE + TEXT_TYPE + COMMA_SEP +
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_FAVORITE + INTEGER_TYPE + COMMA_SEP+
+            GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUBY + TEXT_TYPE + COMMA_SEP+
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED + INTEGER_TYPE +
             " );";
 
@@ -161,7 +163,9 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 GlossaryEntryFavorite.COLUMN_NAME_ENGLISH,
                 GlossaryEntryFavorite.COLUMN_NAME_FRENCH,
                 GlossaryEntryFavorite.COLUMN_NAME_GERMAN,
-                GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN
+                GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN,
+                GlossaryEntryFavorite.COLUMN_NAME_FAVORITE,
+                GlossaryEntryFavorite.COLUMN_NAME_RUBY
 	    		};
 	    
 	    Cursor cursor = db.query(
@@ -273,7 +277,9 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 GlossaryEntryFavorite.COLUMN_NAME_ENGLISH,
                 GlossaryEntryFavorite.COLUMN_NAME_FRENCH,
                 GlossaryEntryFavorite.COLUMN_NAME_GERMAN,
-                GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN
+                GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN,
+                GlossaryEntryFavorite.COLUMN_NAME_FAVORITE,
+                GlossaryEntryFavorite.COLUMN_NAME_RUBY
         };
         Cursor cursor = db.query(
                 true, //distinct - not same translations
@@ -382,6 +388,8 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             translation.parseDutch(dutch);
             translation.parseGerman(german);
             translation.parseRussian(russian);
+            translation.setPrioritized(cursor.getInt(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_FAVORITE)) > 0?true:false);
+            translation.setRuby(cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_RUBY)));
 
             translationsReturn.add(translation);
         }while(cursor.moveToNext());

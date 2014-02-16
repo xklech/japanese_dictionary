@@ -47,7 +47,10 @@ public class Translation {
 	public static final String SAVE_ENGLISH = "cz.muni.fi.japanesedictionary.english";
 	public static final String SAVE_FRENCH = "cz.muni.fi.japanesedictionary.french";
 	public static final String SAVE_GERMAN = "cz.muni.fi.japanesedictionary.german";
-    public static final String SAVE_RUSSIAN = "cz.muni.fi.japanesedictionary.RUSSIAN";
+    public static final String SAVE_RUSSIAN = "cz.muni.fi.japanesedictionary.russian";
+    public static final String SAVE_PRIORITIZED = "cz.muni.fi.japanesedictionary.prioritized";
+    public static final String SAVE_RUBY = "cz.muni.fi.japanesedictionary.ruby";
+
 
     private static final String LOG_TAG = "Translation";
 	
@@ -60,12 +63,13 @@ public class Translation {
     private List<List<String>> mRussian;
 
     private boolean mPrioritized;
+    private String mRuby;
 
 	@Override
 	public String toString() {
 		return "Translation [jap_keb=" + mJapKeb + ", jap_reb=" + mJapReb
 				+ ", english=" + mEnglish + ", french=" + mFrench + ", dutch="
-				+ mDutch + ", german=" + mGerman + ", russian=" + mRussian + "]";
+				+ mDutch + ", german=" + mGerman + ", russian=" + mRussian + ", ruby="+mRuby+"]";
 	}
 
 	public Translation(){
@@ -127,6 +131,10 @@ public class Translation {
     public void setPrioritized(boolean isPrioritized){
         mPrioritized = isPrioritized;
     }
+
+    public void setRuby(String ruby){
+        mRuby = ruby;
+    }
 	
 	public List<String> getJapaneseKeb(){
 		return mJapKeb.isEmpty()?null:mJapKeb;
@@ -159,6 +167,11 @@ public class Translation {
     public boolean isPrioritized(){
         return mPrioritized;
     }
+
+    public String getRuby(){
+        return mRuby;
+    }
+
 	/**
 	 * Takes json string and parses it list of Japanese Keb.
 	 * 
@@ -399,7 +412,6 @@ public class Translation {
 			JSONArray sense = convertToJSON(this.getDutchSense());
 			bundle.putString(SAVE_DUTCH,sense.toString());
 		}
-		
 		if(this.getEnglishSense() != null && this.getEnglishSense().size() > 0){	
 			JSONArray sense = convertToJSON(this.getEnglishSense());
 			bundle.putString(SAVE_ENGLISH, sense.toString());
@@ -416,6 +428,8 @@ public class Translation {
             JSONArray sense = convertToJSON(this.getRussianSense());
             bundle.putString(SAVE_RUSSIAN, sense.toString());
         }
+        bundle.putBoolean(SAVE_PRIORITIZED,mPrioritized);
+        bundle.putString(SAVE_RUBY, mRuby);
 		return bundle;
 	}
 
@@ -453,6 +467,8 @@ public class Translation {
             JSONArray sense = convertToJSON(this.getRussianSense());
             values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN, sense.toString());
         }
+        values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_FAVORITE, mPrioritized?1:0);
+        values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUBY, mRuby);
         values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED, (new Date()).getTime());
 		return values;
 	}
@@ -485,6 +501,8 @@ public class Translation {
     	translation.parseGerman(german);
         translation.parseRussian(russian);
 
+        translation.setPrioritized(bundle.getBoolean(SAVE_PRIORITIZED));
+        translation.setRuby(bundle.getString(SAVE_RUBY));
 		return translation.getJapaneseReb()!=null && translation.getJapaneseReb().size() > 0 ? translation : null;
 	}
 	
