@@ -164,15 +164,15 @@ public class FragmentListAsyncTask extends
                     StringBuilder sb = new StringBuilder("\"lucenematch " + expression + "lucenematch\"");
                     for (Predicate predicate: Deconjugator.deconjugate(hiragana)) {
                         if (predicate.isSuru()) {
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:suru)");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND (pos:vs OR pos:vs-c OR pos:vs-s OR pos:vs-i))");
                         } else if (predicate.isKuru()) {
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append( "lucenematch\" AND pos:Kuru)");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append( "lucenematch\" AND pos:vk)");
                         } else if (predicate.isIku()) {
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:Iku)");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:v5k-s)");
                         } else if (predicate.isIAdjective()) {
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:keiyoushi)");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:adj-i)");
                         } else
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND (pos:verb NOT pos:suru))");
+                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND (pos:v1 OR pos:v2 OR pos:v5 OR pos:vz OR pos:vi OR pos:vn OR pos:vr))");
                     }
                     search = sb.toString();
                 } else
