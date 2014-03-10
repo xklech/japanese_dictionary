@@ -320,17 +320,50 @@ public class DisplayTranslation extends Fragment {
 
         updateLanguages();
 
-        TextView read = (TextView) getView().findViewById(R.id.translation_read);
-        TextView write = (TextView) getView().findViewById(R.id.translation_write);
+        LinearLayout readWriteContainer = (LinearLayout)getView().findViewById(R.id.translation_reading_writing_container);
+        //Ruby: 噛,か;ま;せ;犬,いぬ;
 
 
-        TextView alternative = (TextView) getView().findViewById(R.id.translation_alternative);
+        String writeCharacters = null;
+
         StringBuilder alternativeStrBuilder = new StringBuilder();
+        if(mTranslation.getRuby() != null){
+            String ruby = mTranslation.getRuby();
+            String[] pairs = ruby.split(";");
+            for(String pair: pairs){
+                View view = mInflater.inflate(R.layout.display_translation_reading_group, null);
+                String[] parts = pair.split(",");
+                TextView writing = (TextView) view.findViewById(R.id.translation_write);
+                writing.setText(parts[0]);
+                if(parts.length == 2) {
+                    TextView reading = (TextView) view.findViewById(R.id.translation_read);
+                    reading.setText(parts[1]);
+                }
+                readWriteContainer.addView(view);
+            }
+        }else{
+            View view = mInflater.inflate(R.layout.display_translation_reading_group, null);
+            TextView write = (TextView) view.findViewById(R.id.translation_write);
+            TextView read = (TextView) view.findViewById(R.id.translation_read);
+            if (mTranslation.getJapaneseKeb() != null && mTranslation.getJapaneseKeb().size() > 0) {
+                writeCharacters = mTranslation.getJapaneseKeb().get(0);
+                write.setText(writeCharacters);
+            } else {
+                write.setVisibility(View.GONE);
+            }
+
+            if (mTranslation.getJapaneseReb() != null) {
+                String reading = mTranslation.getJapaneseReb().get(0);
+                read.setText(reading);
+                ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(reading);
+            } else {
+                read.setVisibility(View.GONE);
+            }
+            readWriteContainer.addView(view);
+        }
         if (mTranslation.getJapaneseReb() != null) {
             String reading = mTranslation.getJapaneseReb().get(0);
-            read.setText(reading);
             ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(reading);
-
             DBAsyncTask saveTranslation = new DBAsyncTask(mCallbackTranslation.getDatabase());
             saveTranslation.execute(mTranslation);
 
@@ -348,6 +381,7 @@ public class DisplayTranslation extends Fragment {
             }
         }
         if (mTranslation.getJapaneseKeb() != null) {
+            writeCharacters = mTranslation.getJapaneseKeb().get(0);
             int size_keb = mTranslation.getJapaneseKeb().size();
             if (size_keb > 1) {
                 if (alternativeStrBuilder.length() > 0) {
@@ -361,6 +395,8 @@ public class DisplayTranslation extends Fragment {
                 }
             }
         }
+
+        TextView alternative = (TextView) getView().findViewById(R.id.translation_alternative);
         if (alternativeStrBuilder.length() > 0) {
             alternative.setText(alternativeStrBuilder);
             getView().findViewById(R.id.translation_alternative_container).setVisibility(View.VISIBLE);
@@ -369,14 +405,7 @@ public class DisplayTranslation extends Fragment {
         }
 
 
-        String writeCharacters = null;
-        if (mTranslation.getJapaneseKeb() != null && mTranslation.getJapaneseKeb().size() > 0) {
-            writeCharacters = mTranslation.getJapaneseKeb().get(0);
-            write.setText(writeCharacters);
-            write.setVisibility(View.VISIBLE);
-        } else {
-            write.setVisibility(View.GONE);
-        }
+
 
 
         if (mInflater != null) {

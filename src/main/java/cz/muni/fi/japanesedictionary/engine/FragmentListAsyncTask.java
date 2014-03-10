@@ -136,6 +136,8 @@ public class FragmentListAsyncTask extends
 			return null;
 		}
 		Analyzer analyzer = new CJKAnalyzer(Version.LUCENE_46);
+
+        IndexReader reader;
 		try {
 			final String search;
             final String hiragana;
@@ -190,9 +192,8 @@ public class FragmentListAsyncTask extends
 			}
 
 			Directory dir = FSDirectory.open(file);
-			IndexReader reader =  DirectoryReader.open(dir);
-			final IndexSearcher searcher = new IndexSearcher(reader);
-
+			reader =  DirectoryReader.open(dir);
+            final IndexSearcher searcher = new IndexSearcher(reader);
 			Collector collector = new Collector() {
 				int max = 1000;
 				int count = 0;
@@ -292,6 +293,7 @@ public class FragmentListAsyncTask extends
 			};
 
 			searcher.search(q, collector);
+            reader.close();
 		} catch (IOException ex) {
 			Log.e(LOG_TAG, "IO Exception:  " + ex.toString());
 			return translations;
