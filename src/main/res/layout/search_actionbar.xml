@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<RelativeLayout
+	 xmlns:android="http://schemas.android.com/apk/res/android"
+	 android:focusable="true"
+	 android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:layout_marginLeft="32dp" 
+    android:layout_marginTop="4dp" 
+    android:background="?android:attr/actionBarItemBackground"
+    style="?android:attr/actionButtonStyle"
+     >
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_translation"
+        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
+        android:minWidth="150dp" >
+    </EditText>
+
+    
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@id/search"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/delete" />
+ </RelativeLayout>
+    

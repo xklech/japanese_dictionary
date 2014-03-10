@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="app_name">Japonský slovník</string>
+    <string name="title_activity_main">Japonský slovník</string>
+    
+    <!-- ParserService -->
+    <string name="dictionary_download_title">Stahuji slovník</string>
+    <string name="dictionary_download_in_progress">Probíhá stahování slovníku</string>
+    <string name="dictionary_kanji_download_title">Stahuji slovník znaků kanji</string>
+    <string name="dictionary_download_complete">Stahování kompletní</string>
+    <string name="dictionary_parsing_in_progress">Probíhá zpracování slovníku</string>
+    <plurals name="dictionary_parsing_in_progress_time_left">
+        <item quantity="one">Zbývá 1 minuta</item>
+        <item quantity="few">Zbývají %1$d minuty</item>
+        <item quantity="other">Zbývá %1$d minut</item>
+    </plurals>
+    <string name="dictionary_download_interrupted">Stahování přerušeno</string>
+    
+    <!-- MainActivity -->
+    <string name="parsing_downloaded_dictionary">Zpracování staženého slovníku</string>
+    <string name="no_dictionary_found">Slovník nenalezen</string>
+    <string name="nothing_found">Žádný výsledek</string>
+    <string name="download_dictionary_question">Chcete nyní stáhnout slovník? Vyžadováno připojení k internetu. Velikost: 12 MB.</string>
+    <string name="download">Stáhnout</string>
+    <string name="storno">Zrušit</string>
+    <string name="save">Uložit</string>
+    <string name="currently_downloading_dictionary">Stahuji slovník, prosím vyčkejte</string>
+    <string name="internet_connection_failed_title">Připojení k internetu selhalo</string>
+    <string name="internet_connection_failed_message">Připojení k internetu není k dispozici</string>
+    <string name="external_storrage_failed_title">Nedostupné externí uložiště </string>
+    <string name="external_storrage_failed_message">Externí uložiště je nedostupné.</string>   
+    <string name="search_translation">Vyhledat překlad</string>
+    <string name="updating_in_progress">Probíhá aktualizace slovníku, prosím čekejte.</string>
+    <string name="unknown_last_update">Poslední aktualizace neznámá</string>
+    <string name="last_update">Poslední aktualizace:</string>
+    <string name="actionbar_search">Hledat</string>
+    <string name="last_seen">Poslední zobrazené</string>
+    <string name="drawer_open">Otevřít šuplík</string>
+    <string name="drawer_close">Zavřít šuplík</string>
+
+    <!-- Menu -->
+    <string name="anki_card">Přidat překlad do aplikace AnkiDroid</string>
+    <string name="menu_favorite">Oblíbené</string>
+    <string name="menu_favorite_activity">Zobraz oblíbené</string>
+    <string name="menu_note">Přidat poznámku</string>
+    <string name="menu_setting">Nastavení</string>
+
+    <!-- Favorite -->
+    <string name="favorite_title">Oblíbené</string>
+
+    <!-- History -->
+    <string name="history_title">Historie</string>
+
+    <!-- Languages -->
+    <string name="language_english">Anglicky</string>
+    <string name="language_french">Francouzsky</string>
+    <string name="language_dutch">Holandsky</string>
+    <string name="language_german">Německy</string>
+    <string name="language_russian">Rusky</string>
+    <!--  Preferences -->
+    <string name="preferences_language_setting">Nastavení jazyků</string>
+    <string name="preferences_english">Překládat do angličtiny</string>
+    <string name="preferences_french">Překládat do francouzštiny</string>
+    <string name="preferences_dutch">Překládat do holandštiny</string>
+    <string name="preferences_german">Překládat do němčiny</string>
+    <string name="preferences_russian">Překládat do ruštiny</string>
+    <string name="preferences_dictionary_info">Informace o slovníku</string>
+ 	<string name="preferences_update_dictionary">Aktualizovat slovník</string>
+ 	<string name="preferences_no_dictionary_info">Slovník nenalezen</string>
+ 	<string name="preferences">Nastavení</string>
+    <string name="preferences_search_setting">Nastavení vyhledávání</string>
+    <string name="preferences_search_common">Vyhledávat pouze běžně používané výrazy</string>
+    <string name="preferences_search_common_title">Běžné výrazy</string>
+    <string name="preferences_search_dictionary_form">Převést výraz do slovníkového tvaru</string>
+    <string name="preferences_search_dictionary_form_title">Slovníkový tvar</string>
+
+
+   <!-- Tabs -->
+   <string name="search_exact">Přesně</string>
+   <string name="search_beginning">Začátek</string>
+   <string name="search_middle">Střed</string>
+   <string name="search_end">Konec</string>
+ 	
+   
+   <!-- Display Translation -->
+   <string name="translation_select_translation">Vyberte překlad</string>
+   <string name="translation_title">Detail záznamu</string>
+   <string name="translation_romaji">Romaji</string>
+   <string name="translation_alternative">Alternativy</string>
+   <string name="translation_translation">Překlad</string>
+   <string name="translation_kanji">Kandži ve slově</string>
+   <string name="translation_kanji_no_meaning">Žádné známe významy ve zvoleném jazyce</string>
+   <string name="translation_note">Poznámka</string>
+   <string name="anki_not_found">Aplikace AnkiDroid není nainstalovaná.</string>
+   <string name="anki_required">Je vyžadována aplikace AnkiDroid. Nainstalovat AnkiDroid nyní?</string>
+    <!-- Display character info -->
+   <string name="character_unknown_character">Neznámý znak</string>
+   <string name="character_title">Detail znaku</string>
+   <string name="kanjidict_radical_text">Radical</string>
+   <string name="kanjidict_grade_text">Stupeň</string>   
+   <string name="kanjidict_stroke_count_text">Počet tahů</string>   
+   <string name="kanjidict_dictionaries">Odkazy na slovníky</string>  
+   <string name="kanjidict_skip_text">SKIP</string>  
+   <string name="kanjidict_nanori_text">Nanori</string>  
+   <string name="kanjidict_meanings">Významy</string>  
+   <string name="kanjidict_onyomi_text">Onjomi</string>
+   <string name="kanjidict_kunyomi_text">Kunjomi</string>
+   
+   <!--About -->
+   <string name="about_title">O aplikaci</string>
+   <string name="about_unknown">neznámá</string>
+   <string name="about_version">Verze:  </string>
+   <string name="about_creator">Vytvořil: </string>
+   <string name="about_dictionary">Tato aplikace využívá JMDict a KANJIDIC2 slovníkové soubory. Tyto soubory jsou majetkem Electronic Dictionary Research and Development Group, a jsou užívány v souladu s licencí skupiny. </string>
+
+
+    <!--voice search -->
+    <string name="searchable_ja">ja</string>
+    <string name="searchable_hint">rómadži/かな/漢字</string>
+
+</resources>

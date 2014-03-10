@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="@string/preferences_language_setting">
+
+
+        <CheckBoxPreference
+                android:key="language_english"
+                android:title="@string/language_english"
+                android:summary="@string/preferences_english"
+                />
+        <CheckBoxPreference
+                android:key="language_french"
+                android:title="@string/language_french"
+                android:summary="@string/preferences_french"
+                />
+        <CheckBoxPreference
+                android:key="language_dutch"
+                android:title="@string/language_dutch"
+                android:summary="@string/preferences_dutch"
+                />
+        <CheckBoxPreference
+                android:key="language_german"
+                android:title="@string/language_german"
+                android:summary="@string/preferences_german"
+                />
+        <CheckBoxPreference
+            android:key="language_russian"
+            android:title="@string/language_russian"
+            android:summary="@string/preferences_russian"
+            />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/preferences_search_setting">
+        <CheckBoxPreference
+                android:key="search_only_favorite"
+                android:title="@string/preferences_search_common_title"
+                android:summary="@string/preferences_search_common"
+                />
+        <CheckBoxPreference
+            android:key="search_deinflected"
+            android:title="@string/preferences_search_dictionary_form_title"
+            android:summary="@string/preferences_search_dictionary_form"
+            />
+
+    </PreferenceCategory>
+	<PreferenceCategory
+	    android:title="@string/preferences_dictionary_info">
+	 	
+       <PreferenceScreen
+           android:key="update_dictionary"
+           android:title="@string/preferences_update_dictionary"
+           android:summary="@string/preferences_dictionary_info"
+            />
+	 	
+	</PreferenceCategory>
+
+</PreferenceScreen>
