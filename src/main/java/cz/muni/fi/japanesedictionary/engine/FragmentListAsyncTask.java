@@ -27,11 +27,11 @@ import java.util.regex.Pattern;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.AtomicReaderContext;
-import org.apache.lucene.index.DirectoryReader;
+
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
+
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryParser.standard.StandardQueryParser;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -107,7 +107,7 @@ public class FragmentListAsyncTask extends
                 false);
         final boolean searchDeinflected = sharedPrefs.getBoolean("search_deinflected", false);
 
-		final List<Translation> translations = new ArrayList<Translation>();
+		final List<Translation> translations = new ArrayList<>();
 
 		if (expression == null) {
 			// first run
@@ -135,7 +135,7 @@ public class FragmentListAsyncTask extends
 			Log.w(LOG_TAG, "No expression to translate");
 			return null;
 		}
-		Analyzer analyzer = new CJKAnalyzer(Version.LUCENE_46);
+		Analyzer analyzer = new CJKAnalyzer(Version.LUCENE_36);
 
         IndexReader reader;
 		try {
@@ -155,36 +155,41 @@ public class FragmentListAsyncTask extends
 
             expression = insertSpaces(expression);
 
-			if ("end".equals(part)) {
-				search = "\"" + expression + "lucenematch\"";
-			} else if ("beginning".equals(part)) {
-				search = "\"lucenematch " + expression + "\"";
-			} else if ("middle".equals(part)) {
-				search = "\"" + expression + "\"";
-			} else {
-                if (searchDeinflected) {
-                    StringBuilder sb = new StringBuilder("\"lucenematch " + expression + "lucenematch\"");
-                    for (Predicate predicate: Deconjugator.deconjugate(hiragana)) {
-                        if (predicate.isSuru()) {
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND (pos:vs OR pos:vs-c OR pos:vs-s OR pos:vs-i))");
-                        } else if (predicate.isKuru()) {
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append( "lucenematch\" AND pos:vk)");
-                        } else if (predicate.isIku()) {
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:v5k-s)");
-                        } else if (predicate.isIAdjective()) {
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:adj-i)");
-                        } else
-                            sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND (pos:v1 OR pos:v2 OR pos:v5 OR pos:vz OR pos:vi OR pos:vn OR pos:vr))");
+            switch(part){
+                case "end":
+                    search = "\"" + expression + "lucenematch\"";
+                    break;
+                case "beginning":
+                    search = "\"lucenematch " + expression + "\"";
+                    break;
+                case "middle":
+                    search = "\"" + expression + "\"";
+                    break;
+                default:
+                    if (searchDeinflected) {
+                        StringBuilder sb = new StringBuilder("\"lucenematch " + expression + "lucenematch\"");
+                        for (Predicate predicate: Deconjugator.deconjugate(hiragana)) {
+                            if (predicate.isSuru()) {
+                                sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND (pos:vs OR pos:vs-c OR pos:vs-s OR pos:vs-i))");
+                            } else if (predicate.isKuru()) {
+                                sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append( "lucenematch\" AND pos:vk)");
+                            } else if (predicate.isIku()) {
+                                sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:v5k-s)");
+                            } else if (predicate.isIAdjective()) {
+                                sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND pos:adj-i)");
+                            } else
+                                sb.append(" OR ").append("(\"lucenematch ").append(insertSpaces(predicate.getPredicate())).append("lucenematch\" AND (pos:v1 OR pos:v2 OR pos:v5 OR pos:vz OR pos:vi OR pos:vn OR pos:vr))");
+                        }
+                        search = sb.toString();
+                    } else {
+                        search = "\"lucenematch " + expression + "lucenematch\"";
                     }
-                    search = sb.toString();
-                } else
-				    search = "\"lucenematch " + expression + "lucenematch\"";
-			}
+            }
 			Log.i(LOG_TAG, " Searching for: " + search);
 
 			Query q;
 			if (onlyReb) {
-				q = (new QueryParser(Version.LUCENE_46, "index_japanese_reb",
+				q = (new QueryParser(Version.LUCENE_36, "index_japanese_reb",
 						analyzer)).parse(search);
 			} else {
 				StandardQueryParser parser = new StandardQueryParser(analyzer);
@@ -192,7 +197,7 @@ public class FragmentListAsyncTask extends
 			}
 
 			Directory dir = FSDirectory.open(file);
-			reader =  DirectoryReader.open(dir);
+			reader =  IndexReader.open(dir);
             final IndexSearcher searcher = new IndexSearcher(reader);
 			Collector collector = new Collector() {
 				int max = 1000;
@@ -281,10 +286,9 @@ public class FragmentListAsyncTask extends
 				}
 
                 @Override
-                public void setNextReader(AtomicReaderContext atomicReaderContext) throws IOException {
-                    docBase = atomicReaderContext.docBase;
+                public void setNextReader(IndexReader reader, int docBas) throws IOException {
+                    docBase = docBas;
                 }
-
 
 				@Override
 				public void setScorer(Scorer arg0) throws IOException {

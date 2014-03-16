@@ -20,31 +20,22 @@ package cz.muni.fi.japanesedictionary.parser;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
-import java.util.zip.GZIPInputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -52,11 +43,13 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.StatFs;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -71,14 +64,17 @@ import cz.muni.fi.japanesedictionary.util.CompressFolder;
  * @author Jaroslav Klech
  * 
  */
-public class ParserService extends IntentService {
+public class ParserService extends Service {
 
 	private static final String LOG_TAG = "ParserService";
 	
 	public static final String DICTIONARY_PATH = "http://android-japdict.rhcloud.com/cron/jmdict";
 	public static final String KANJIDICT_PATH = "http://android-japdict.rhcloud.com/cron/kanjidic2";
 	public static final String DICTIONARY_PREFERENCES = "cz.muni.fi.japanesedictionary";
-	
+
+    public static final Long downloadExpireTime = 60 * 60 * 3l;
+
+
 	private URL mDownloadJMDictFrom = null;
 	private File mDownloadJMDictTo = null;
 	private boolean mDownloadingJMDict = false;
@@ -94,11 +90,11 @@ public class ParserService extends IntentService {
 	private NotificationManager mNotifyManager = null;
 	private Notification mNotification = null;
 	private boolean mComplete = false;
+    private boolean mNotEnoughSpace = false;
 
 
     private volatile Looper mServiceLooper;
     private volatile ServiceHandler mServiceHandler;
-    private String mName;
     private boolean mRedelivery;
     private int mStartId;
 
@@ -155,9 +151,7 @@ public class ParserService extends IntentService {
 		}
 	};
 
-	public ParserService() {
-		super("ParserService");
-	}	
+
 	
 	
 	
@@ -165,7 +159,7 @@ public class ParserService extends IntentService {
 	public void onCreate() {
 		super.onCreate();
 		
-        HandlerThread thread = new HandlerThread("IntentService[" + mName + "]");
+        HandlerThread thread = new HandlerThread("IntentService[Dictionary_parser]");
         thread.start();
         
         mServiceLooper = thread.getLooper();
@@ -175,17 +169,13 @@ public class ParserService extends IntentService {
 		
 	}
 
+    
     @Override
-    public void onStart(Intent intent, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         Message msg = mServiceHandler.obtainMessage();
         msg.arg1 = startId;
         msg.obj = intent;
         mServiceHandler.sendMessage(msg);
-    }
-    
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        onStart(intent, startId);
         return mRedelivery ? START_REDELIVER_INTENT : START_NOT_STICKY;
     }
 
@@ -219,28 +209,27 @@ public class ParserService extends IntentService {
 
 		
 		if(outputFile.exists()){
-			output = new FileOutputStream(outputFile.getPath(), true);
-			total = outputFile.length();
-			connection = (HttpURLConnection)url.openConnection();
-			connection.setRequestProperty("Accept-Encoding", "identity");
-			connection.setRequestProperty("Range", "bytes=" + total + "-");
-			connection.connect();
+            if((outputFile.lastModified()+downloadExpireTime) < System.currentTimeMillis()){
+                CompressFolder.deleteDirectory(outputFile);
+                output = new FileOutputStream(outputFile.getPath());
+            }else{
+                output = new FileOutputStream(outputFile.getPath(), true);
+                total = outputFile.length();
+                connection = (HttpURLConnection)url.openConnection();
+                connection.setRequestProperty("Accept-Encoding", "identity");
+                connection.setRequestProperty("Range", "bytes=" + total + "-");
+                connection.connect();
+            }
+
 		}else{
-			output = new FileOutputStream(outputFile.getPath());
-		}
-		
+            output = new FileOutputStream(outputFile.getPath());
+        }
+
+
 
 		// velikost souboru
 		input = new BufferedInputStream(connection.getInputStream(), 1024);
-		
-		if (input == null || output == null) {
-			Log.e(LOG_TAG,
-					"Error while downloading file, one of streams is null");
-			closeIOStreams(input, output);
-			mCurrentlyDownloading = false;
-			return false;
-		}
-		
+
 		if (fileLength == -1) {
             mBuilder.setProgress(100, 0, false)
                     .setContentTitle(getString(R.string.dictionary_download_title))
@@ -376,7 +365,7 @@ public class ParserService extends IntentService {
 	/**
 	 * Downloads dictionaries.
 	 */
-	@Override
+
 	protected void onHandleIntent(Intent arg0) {		
 		
 		Log.i(LOG_TAG, "Creating parser service");
@@ -401,7 +390,25 @@ public class ParserService extends IntentService {
 		
 		startForeground(0,mNotification);
 		mNotifyManager.notify(0, mBuilder.build());
-		
+
+        // kontrola volneho mista
+        StatFs stat = new StatFs(getExternalCacheDir().getPath());
+        long bytesAvailable;
+        if(Build.VERSION.SDK_INT < 18){
+            bytesAvailable = (long)stat.getBlockSize() *(long)stat.getAvailableBlocks();
+        }else{
+            bytesAvailable = stat.getAvailableBytes();
+        }
+        long megAvailable = bytesAvailable / 1048576;
+        System.out.println("Megs free :"+megAvailable);
+        if(megAvailable < 140){
+            mInternetReceiver = null;
+            mNotEnoughSpace = true;
+            stopSelf(mStartId);
+            return;
+        }
+
+
 		this.registerReceiver(mInternetReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 		
@@ -537,78 +544,6 @@ public class ParserService extends IntentService {
             }
         }
         return file.getAbsolutePath();
-		/*InputStream parsFile = new GZIPInputStream(new FileInputStream(
-				downloadedFile));
-		// kodovani utf-8
-		Reader reader = new InputStreamReader(parsFile, "UTF-8");
-		InputSource is = new InputSource(reader);
-
-		Log.i(LOG_TAG, "Parsing dictionary - input streams created");
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-		SAXParser saxParser = factory.newSAXParser();
-
-		String indexFile = getExternalCacheDir().getAbsolutePath()
-				+ File.separator + "dictionary";
-		File file = new File(indexFile);
-		boolean renameFolder = false;
-		if (!file.mkdir()) {
-			String indexFileTempPath = indexFile + "_temp";
-			file = new File(indexFileTempPath);
-			renameFolder = true;
-			if (!file.mkdir()) {
-				deleteDirectory(file);
-				file.mkdir();
-			}
-		}
-
-		Log.i(LOG_TAG, "Parsing dictionary - index folder created");
-		Log.i(LOG_TAG, "Parsing dictionary - SAX ready");
-		DefaultHandler handler = new SaxDataHolder(file,
-				getApplicationContext(), mNotifyManager, mBuilder);
-
-		try {
-			saxParser.parse(is, handler);
-			Log.i(LOG_TAG, "Parsing dictionary - SAX ended");
-			downloadedFile.delete();
-			Log.i(LOG_TAG,
-					"Parsing dictionary - downloaded file deleted");
-
-            mBuilder.setContentTitle(getString(R.string.dictionary_download_complete))
-                    .setContentText("")
-                    .setContentInfo("")
-                    .setProgress(0, 0, false);
-
-            mNotifyManager.notify(0, mBuilder.build());
-
-			mComplete = true;
-
-			if (renameFolder) {
-				Log.i(LOG_TAG, "Parsing dictionary - rename folders");
-				File directory = new File(indexFile);
-				deleteDirectory(directory);
-				if (file.renameTo(directory)) {
-					Log.i(LOG_TAG,
-							"Parsing dictionary - folder renamed");
-					file = directory;
-				}
-			}
-
-			return file.getAbsolutePath();
-
-		} catch (SAXException ex) {
-			Log.e(LOG_TAG, "SaxDataHolder: " + ex.getMessage());
-			if(file != null){
-				file.delete();
-			}
-			stopSelf(mStartId);
-		} catch (Exception ex) {
-			Log.e(LOG_TAG, "SaxDataHolder - Unknown exception: " + ex.toString());
-			if(file != null){
-				file.delete();
-			}
-			stopSelf(mStartId);
-		}*/
-		//return null;
 
 	}
 
@@ -629,16 +564,6 @@ public class ParserService extends IntentService {
 
 		File downloadedFile = new File(path);
 
-		/*InputStream parsFile = new GZIPInputStream(new FileInputStream(
-				downloadedFile));
-		// kodovani utf-8
-		Reader reader = new InputStreamReader(parsFile, "UTF-8");
-		InputSource is = new InputSource(reader);
-
-		Log.i(LOG_TAG, "Parsing KanjiDict - input streams created");
-		SAXParserFactory factory = SAXParserFactory.newInstance();
-		SAXParser saxParser = factory.newSAXParser();
-*/
 		String indexFile = getExternalCacheDir().getAbsolutePath()
 				+ File.separator + "kanjidict";
 		File file = new File(indexFile);
@@ -666,56 +591,6 @@ public class ParserService extends IntentService {
             }
         }
         return file.getAbsolutePath();
-
-/*
-		Log.i(LOG_TAG, "Parsing KanjiDict - index folder created");
-		Log.i(LOG_TAG, "Parsing KanjiDict - SAX ready");
-		DefaultHandler handler = new SaxDataHolderKanjiDict(file,
-				getApplicationContext(), mNotifyManager, mBuilder);
-
-		try {
-			saxParser.parse(is, handler);
-			Log.i(LOG_TAG, "Parsing KanjiDict - SAX ended");
-			downloadedFile.delete();
-			Log.i(LOG_TAG,
-					"Parsing KanjiDict - downloaded file deleted");
-
-            mBuilder.setContentText(getString(R.string.dictionary_download_complete))
-                    .setProgress(0, 0, false) //hide progress
-                    .setContentInfo("");
-
-            mNotifyManager.notify(0, mBuilder.build());
-
-			mComplete = true;
-
-			if (renameFolder) {
-				Log.i(LOG_TAG, "Parsing KanjiDict - rename folders");
-				File directory = new File(indexFile);
-				deleteDirectory(directory);
-				if (file.renameTo(directory)) {
-					Log.i(LOG_TAG, "Parsing KanjiDict - folder renamed");
-					file = directory;
-				}
-
-			}
-
-			return file.getAbsolutePath();
-
-		} catch (SAXException ex) {
-			Log.e(LOG_TAG, "SaxDataHolderKanjiDict: " + ex.getMessage());
-			if(file != null){
-				file.delete();
-			}
-			stopSelf(mStartId);
-		} catch (Exception ex) {
-			Log.e(LOG_TAG, "SaxDataHolderKanjiDict - Unknown exception: " + ex.toString());
-			if(file != null){
-				file.delete();
-			}
-			stopSelf(mStartId);
-		}
-		return null;*/
-
 	}
 
 	/**
@@ -758,33 +633,27 @@ public class ParserService extends IntentService {
 		if(mInternetReceiver!= null){
 			this.unregisterReceiver(mInternetReceiver);
 		}
-
+        mBuilder.setAutoCancel(true)
+                .setOngoing(false)
+                .setProgress(0, 0, false)
+                .setContentText("")
+                .setContentInfo("");
 		if (!mComplete) {
 			Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
-            mBuilder.setAutoCancel(true)
-                    .setOngoing(false)
-                    .setProgress(0,0,false)
-                    .setContentText("")
-                    .setContentInfo("")
-                    .setContentTitle(getString(R.string.dictionary_download_interrupted));
+            mBuilder.setContentTitle(getString(R.string.dictionary_download_interrupted));
 
-            mNotifyManager.notify(0, mBuilder.build());
 			Intent intent = new Intent("serviceCanceled");
 			LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 			Log.w(LOG_TAG, "Service ending none complete");
 		}else{
-            mBuilder.setAutoCancel(true)
-                    .setOngoing(false)
-                    .setProgress(0,0,false)
-                    .setContentText("")
-                    .setContentInfo("")
-                    .setContentTitle(getString(R.string.dictionary_download_complete));
-
-            mNotifyManager.notify(0, mBuilder.build());
-
+            mBuilder.setContentTitle(getString(R.string.dictionary_download_complete));
         }
-		mServiceLooper.quit();
-		
+        if(mNotEnoughSpace) {
+            mBuilder.setContentTitle(getString(R.string.dictionary_download_interrupted));
+            mBuilder.setContentText(getString(R.string.dictionary_not_enough_space));
+        }
+        mNotifyManager.notify(0, mBuilder.build());
+        mServiceLooper.quit();
 	}
 
 	/**
@@ -795,12 +664,14 @@ public class ParserService extends IntentService {
 			try {
 				input.close();
 			} catch (IOException e) {
+                Log.w(LOG_TAG, "Closing input causded excaption");
 			}
 		}
 		if (output != null) {
 			try {
 				output.close();
 			} catch (IOException e) {
+                Log.w(LOG_TAG, "Closing output causded excaption");
 			}
 		}
 

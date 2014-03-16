@@ -24,6 +24,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StatFs;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
@@ -74,6 +76,7 @@ public class MyPreferencesActivity extends PreferenceActivity {
                     Log.w(LOG_TAG, "Update dictionary - update in progress");
                     Toast.makeText(getApplicationContext(), R.string.updating_in_progress, Toast.LENGTH_SHORT).show();
                 } else {
+
                     Log.i(LOG_TAG, "Update dictionary - launching service");
                     Intent intent = new Intent(getApplicationContext(), ParserService.class);
                     startService(intent);

@@ -2,12 +2,12 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.2"
+    buildToolsVersion "19.0.3"
 
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 19
-        versionCode 1
+        versionCode 3
         versionName "1.0"
     }
 
@@ -32,8 +32,8 @@ android {
 dependencies {
     compile "com.android.support:appcompat-v7:19.0.+"
     compile 'com.android.support:support-v4:19.0.+'
-    compile 'org.apache.lucene:lucene-core:4.6.0'
-    compile 'org.apache.lucene:lucene-queryparser:4.6.0'
-    compile 'org.apache.lucene:lucene-analyzers-common:4.6.0'
+    compile 'org.apache.lucene:lucene-core:3.6.0'
+    compile 'org.apache.lucene:lucene-queryparser:3.6.0'
+    compile 'org.apache.lucene:lucene-analyzers:3.6.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

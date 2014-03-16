@@ -32,12 +32,14 @@
         <item quantity="other">Zbývá %1$d minut</item>
     </plurals>
     <string name="dictionary_download_interrupted">Stahování přerušeno</string>
-    
+    <string name="dictionary_not_enough_space">Nedostatek volného místa. Je potřeba nejméně 100 Mb.</string>
+
+
     <!-- MainActivity -->
     <string name="parsing_downloaded_dictionary">Zpracování staženého slovníku</string>
     <string name="no_dictionary_found">Slovník nenalezen</string>
     <string name="nothing_found">Žádný výsledek</string>
-    <string name="download_dictionary_question">Chcete nyní stáhnout slovník? Vyžadováno připojení k internetu. Velikost: 12 MB.</string>
+    <string name="download_dictionary_question">Chcete nyní stáhnout slovník? Vyžadováno připojení k internetu. Velikost: 18 MB.</string>
     <string name="download">Stáhnout</string>
     <string name="storno">Zrušit</string>
     <string name="save">Uložit</string>
