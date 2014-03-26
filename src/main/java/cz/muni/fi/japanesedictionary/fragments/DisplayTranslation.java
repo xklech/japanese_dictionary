@@ -85,6 +85,9 @@ public class DisplayTranslation extends Fragment {
     private MenuItem mNote;
     private MenuItem mAnki;
 
+
+    private boolean mSaved = false;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -104,7 +107,9 @@ public class DisplayTranslation extends Fragment {
 
     @Override
     public void onStart() {
-        updateTranslation();
+        if(!mSaved) {
+            updateTranslation();
+        }
         super.onStart();
     }
 
@@ -112,6 +117,7 @@ public class DisplayTranslation extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
+            mSaved = true;
             mTranslation = Translation.newInstanceFromBundle(savedInstanceState);
             Log.i(LOG_TAG, "Loading from saved state, restoring translation");
         }
@@ -321,6 +327,7 @@ public class DisplayTranslation extends Fragment {
         updateLanguages();
 
         LinearLayout readWriteContainer = (LinearLayout)getView().findViewById(R.id.translation_reading_writing_container);
+        readWriteContainer.removeAllViews();
         //Ruby: 噛,か;ま;せ;犬,いぬ;
 
 
