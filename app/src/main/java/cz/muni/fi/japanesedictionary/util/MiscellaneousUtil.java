@@ -12,9 +12,6 @@ import java.util.List;
  * Created by JonaSevcik on 15.9.13.
  */
 public class MiscellaneousUtil {
-    public static int convertDip2Pixels(Context context, int dip) {
-        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, context.getResources().getDisplayMetrics());
-    }
 
     public static SpannableStringBuilder processKunyomi(Context context, List<String> kunyomis) {
         final int count = kunyomis.size();

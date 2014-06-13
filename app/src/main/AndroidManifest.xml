@@ -17,8 +17,7 @@
             android:label="@string/title_activity_main"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation"
-            >
+            android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,31 +31,49 @@
         </activity>
         <activity
             android:name=".main.DisplayTranslationActivity"
-            >
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".main.DisplayCharacterInfoActivity"
-            >
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".main.MyPreferencesActivity"
             android:label="@string/menu_setting"
-            >
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".main.AboutActivity"
             android:label="@string/about_title"
-            >
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".main.FavoriteActivity"
             android:label="@string/favorite_title"
-            >
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".main.HistoryActivity"
             android:label="@string/history_title"
-            >
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
         </activity>
         <service android:name="cz.muni.fi.japanesedictionary.parser.ParserService"
             android:exported="false" />

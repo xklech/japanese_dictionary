@@ -64,7 +64,6 @@ public class DictionaryFragmentAlertDialog extends DialogFragment {
                 false);
 
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                .setIcon(R.drawable.alert_dialog_icon)
                 .setTitle(title)
                 .setMessage(message)
                 .setNegativeButton(R.string.storno,

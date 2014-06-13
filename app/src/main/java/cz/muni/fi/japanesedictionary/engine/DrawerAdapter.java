@@ -19,13 +19,10 @@ import cz.muni.fi.japanesedictionary.entity.DrawerItem;
  */
 public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
     private Context mContext;
-    private LayoutInflater mInflater;
-
 
     public DrawerAdapter(Context _context){
         super(_context, R.layout.drawer_list_item);
         mContext = _context;
-        mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
 
@@ -44,16 +41,27 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        DrawerItem drawerItem = getItem(position);
+        DrawerViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.drawer_list_item, parent,false);
+            LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.drawer_list_item, parent,false);
+            holder = new DrawerViewHolder();
+            holder.icon = (ImageView) convertView.findViewById(R.id.drawer_item_icon);
+            holder.text = (TextView) convertView.findViewById(R.id.drawer_item_text);
+            convertView.setTag(holder);
+        } else {
+            holder = (DrawerViewHolder) convertView.getTag();
         }
 
-        ImageView icon = (ImageView) convertView.findViewById(R.id.drawer_item_icon);
-        TextView text = (TextView) convertView.findViewById(R.id.drawer_item_text);
-        icon.setImageResource(drawerItem.getIconResource());
-        text.setText(drawerItem.getName());
+        DrawerItem drawerItem = getItem(position);
+        holder.icon.setImageResource(drawerItem.getIconResource());
+        holder.text.setText(drawerItem.getName());
 
         return convertView;
+    }
+
+    private static class DrawerViewHolder {
+        ImageView icon;
+        protected TextView text;
     }
 }

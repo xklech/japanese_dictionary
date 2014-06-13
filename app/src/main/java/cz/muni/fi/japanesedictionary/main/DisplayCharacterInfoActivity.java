@@ -116,9 +116,6 @@ public class DisplayCharacterInfoActivity extends ActionBarActivity
 		Log.i(LOG_TAG, "Inflating menu");
         getMenuInflater().inflate(R.menu.menu_details, menu);
         Log.i(LOG_TAG, "Setting menu ");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
 		return super.onCreateOptionsMenu(menu);
 	}

@@ -4,4 +4,5 @@
     <dimen name="paddingLeftSmall">8dp</dimen>
     <dimen name="paddingTopSmall">4dp</dimen>
     <dimen name="paddingTop">8dp</dimen>
+    <dimen name="viewPager_margin">16dp</dimen>
 </resources>

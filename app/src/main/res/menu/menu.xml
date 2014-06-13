@@ -20,45 +20,40 @@
       xmlns:japanesedictionary="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="@string/actionbar_search"
-    	android:icon="@android:drawable/ic_menu_search"
-        japanesedictionary:showAsAction="ifRoom|collapseActionView"
+        android:orderInCategory="1"
         japanesedictionary:actionViewClass="android.support.v7.widget.SearchView"
-    	/>
+        japanesedictionary:showAsAction="ifRoom|collapseActionView"/>
     <item
-            android:title="@string/menu_favorite"
-            japanesedictionary:showAsAction="ifRoom"
-            android:id="@+id/favorite"
-            android:icon="@drawable/rating_not_important"
-            android:enabled="false"
-            android:visible="false"
-            />
+        android:id="@+id/favorite"
+        android:enabled="false"
+        android:icon="@drawable/rating_not_important"
+        android:title="@string/menu_favorite"
+        android:visible="false"
+        japanesedictionary:showAsAction="ifRoom"/>
     <item
-            android:title="@string/menu_note"
-            japanesedictionary:showAsAction="ifRoom"
-            android:id="@+id/ab_note"
-            android:icon="@drawable/note"
-            android:enabled="false"
-            android:visible="false"
-            />
+        android:id="@+id/ab_note"
+        android:enabled="false"
+        android:icon="@drawable/note"
+        android:title="@string/menu_note"
+        android:visible="false"
+        japanesedictionary:showAsAction="ifRoom"/>
     <item
-            android:title="@string/anki_card"
-            japanesedictionary:showAsAction="ifRoom"
-            android:id="@+id/ab_anki"
-            android:icon="@drawable/content_new"
-            android:enabled="false"
-            android:visible="false"
-            />
-	<item 
-	    android:title="@string/menu_setting"
-        japanesedictionary:showAsAction="never"
-	    android:id="@+id/settings"
-	    android:icon="@android:drawable/ic_menu_preferences"
-	    />
-	<item 
-	    android:title="@string/about_title"
-        japanesedictionary:showAsAction="never"
-	    android:id="@+id/about"
-	    android:icon="@android:drawable/ic_menu_info_details"
-	    />
+        android:id="@+id/ab_anki"
+        android:enabled="false"
+        android:icon="@drawable/content_new"
+        android:title="@string/anki_card"
+        android:visible="false"
+        japanesedictionary:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/menu_setting"
+        japanesedictionary:showAsAction="never"/>
+    <item
+        android:id="@+id/about"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/about_title"
+        japanesedictionary:showAsAction="never"/>
 </menu>

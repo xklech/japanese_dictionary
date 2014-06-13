@@ -183,7 +183,7 @@ public class MainActivity extends ActionBarActivity
         PagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager());
         Log.i(LOG_TAG,"ViewPager adapter set");
         mPager.setAdapter(adapter);
-        mPager.setPageMargin(MiscellaneousUtil.convertDip2Pixels(this, 16));
+        mPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.viewPager_margin));
 
 
         if(mLastTabId == null || mLastTabId.length()==0){
