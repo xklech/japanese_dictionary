@@ -38,6 +38,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import cz.muni.fi.japanesedictionary.Const;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.engine.FragmentListAsyncTask;
 import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
@@ -179,7 +180,7 @@ public class ResultFragmentList extends ListFragment implements
 		}
 		SharedPreferences settings = getActivity().getSharedPreferences(
 				ParserService.DICTIONARY_PREFERENCES, 0);
-		String dictionaryPath = settings.getString("pathToDictionary",
+		String dictionaryPath = settings.getString(Const.PREF_JMDICT_PATH,
 				null);
 		if (dictionaryPath == null || !(new File(dictionaryPath)).exists() ) {
 			setEmptyText(getString(R.string.no_dictionary_found));

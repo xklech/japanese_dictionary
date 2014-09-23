@@ -34,6 +34,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
+import cz.muni.fi.japanesedictionary.Const;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
 
@@ -86,7 +87,7 @@ public class MyPreferencesActivity extends PreferenceActivity {
         });
 
         SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
-        String dictionaryPath = settings.getString("pathToDictionary", null);
+        String dictionaryPath = settings.getString(Const.PREF_JMDICT_PATH, null);
         if (dictionaryPath == null || !(new File(dictionaryPath)).exists()) {
             preferenceScreen.setSummary(R.string.preferences_no_dictionary_info);
         } else {

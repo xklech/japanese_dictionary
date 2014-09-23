@@ -311,7 +311,7 @@ public class DisplayTranslation extends Fragment {
      */
     public void updateTranslation() {
         Log.i(LOG_TAG, " Update translation");
-        Log.i(LOG_TAG, " Ruby: "+mTranslation.getRuby());
+
 
         TextView layoutSelect = (TextView) getView().findViewById(R.id.translation_select);
         LinearLayout layoutTranslation = (LinearLayout) getView().findViewById(R.id.translation_container);
@@ -320,6 +320,7 @@ public class DisplayTranslation extends Fragment {
             layoutTranslation.setVisibility(View.GONE);
             return;
         }
+        Log.i(LOG_TAG, " Ruby: " + mTranslation.getRuby());
         layoutSelect.setVisibility(View.GONE);
         layoutTranslation.setVisibility(View.VISIBLE);
 

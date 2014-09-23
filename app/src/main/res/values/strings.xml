@@ -24,6 +24,8 @@
     <string name="dictionary_download_title">Downloading japanese dictionary</string>
     <string name="dictionary_download_in_progress">Download in progress</string>
     <string name="dictionary_kanji_download_title">Downloading kanji dictionary</string>
+    <string name="dictionary_tatoeba_download_title">Downloading tatoeba dictionary</string>
+
     <string name="dictionary_download_complete">Download complete</string>
     <string name="dictionary_parsing_in_progress">Parsing file in progress</string>
     <plurals name="dictionary_parsing_in_progress_time_left">
@@ -38,7 +40,7 @@
     <string name="parsing_downloaded_dictionary">Parsing downloaded dictionaries</string>
     <string name="no_dictionary_found">No dictionary found</string>
     <string name="nothing_found">Nothing found</string>
-    <string name="download_dictionary_question">Do you want to download dictionary? \nInternet connection required.\nSize: 18 MB</string>
+    <string name="download_dictionary_question">Do you want to download dictionary? \nInternet connection required.\nSize: 35 MB</string>
     <string name="download">Download</string>
     <string name="storno">Cancel</string>
     <string name="save">Save</string>
@@ -137,5 +139,6 @@
    <!--voice search -->
    <string name="searchable_ja">ja</string>
    <string name="searchable_hint">romaji/かな/漢字</string>
+    <string name="dictionary_download_complete_text">Dictionaries downloaded successfully</string>
 
 </resources>

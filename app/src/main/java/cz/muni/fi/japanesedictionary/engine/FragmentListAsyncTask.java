@@ -45,6 +45,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import cz.muni.fi.japanesedictionary.Const;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.Predicate;
 import cz.muni.fi.japanesedictionary.entity.Translation;
@@ -90,7 +92,7 @@ public class FragmentListAsyncTask extends
 
 		SharedPreferences settings = mContext.getSharedPreferences(
 				ParserService.DICTIONARY_PREFERENCES, 0);
-		String pathToDictionary = settings.getString("pathToDictionary", null);
+		String pathToDictionary = settings.getString(Const.PREF_JMDICT_PATH, null);
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(mContext);
 		final boolean englishBool = sharedPrefs.getBoolean("language_english",

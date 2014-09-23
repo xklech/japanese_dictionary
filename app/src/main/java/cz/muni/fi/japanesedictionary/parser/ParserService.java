@@ -54,6 +54,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import cz.muni.fi.japanesedictionary.Const;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.main.MainActivity;
 import cz.muni.fi.japanesedictionary.util.CompressFolder;
@@ -70,6 +72,9 @@ public class ParserService extends Service {
 	
 	public static final String DICTIONARY_PATH = "http://android-japdict.rhcloud.com/cron/jmdict";
 	public static final String KANJIDICT_PATH = "http://android-japdict.rhcloud.com/cron/kanjidic2";
+    public static final String TATOEBA_JAPANESE_PATH = "http://android-japdict.rhcloud.com/cron/tatoebajapanese";
+    public static final String TATOEBA_TRANSLATION_PATH = "http://android-japdict.rhcloud.com/cron/tatoebatranslations";
+
 	public static final String DICTIONARY_PREFERENCES = "cz.muni.fi.japanesedictionary";
 
     public static final Long downloadExpireTime = 60 * 60 * 3l;
@@ -81,7 +86,17 @@ public class ParserService extends Service {
 	private URL mDownloadKanjidicFrom = null;
 	private File mDownloadKanjidicTo = null;
 	private boolean mDownloadingKanjidic = false;
-	
+
+    private URL mDownloadTatoebaJapaneseFrom = null;
+    private File mDownloadTatoebaJapaneseTo = null;
+    private boolean mDownloadingTatoebaJapanese = false;
+
+    private URL mDownloadTatoebaTranslationFrom = null;
+    private File mDownloadTatoebaTranslationTo = null;
+    private boolean mDownloadingTatoebaTranslation = false;
+
+
+
 	private boolean mDownloadInProgress = false;
 	private boolean mCurrentlyDownloading = false;
 	private boolean mParsing = false;
@@ -288,6 +303,7 @@ public class ParserService extends Service {
 	 * @throws IOException
 	 */
 	private void downloadDictionaries() throws IOException{
+        Log.i(LOG_TAG,"downloading JMDict");
 		if(mDownloadingJMDict){
 			if(downloadFile(mDownloadJMDictFrom,mDownloadJMDictTo)){
 				mDownloadingJMDict = false;
@@ -296,7 +312,7 @@ public class ParserService extends Service {
 				return;
 			}
 		}
-        Log.i(LOG_TAG,"JMDict downloaded");
+        Log.i(LOG_TAG,"downloading Kanjidic2");
 		if(mDownloadingKanjidic){
             mBuilder.setContentTitle(getString(R.string.dictionary_kanji_download_title))
                     .setProgress(100, 0, false)
@@ -306,7 +322,7 @@ public class ParserService extends Service {
 
 			if(downloadFile(mDownloadKanjidicFrom,mDownloadKanjidicTo)){
 				mDownloadingKanjidic = false;
-				mDownloadInProgress = false;
+                mDownloadingTatoebaJapanese = true;
 
 				Log.i(LOG_TAG, "Downloading dictionary finished");
 				
@@ -314,6 +330,41 @@ public class ParserService extends Service {
 				return;
 			}
 		}
+        Log.i(LOG_TAG,"downloading Tatoeba japanese");
+        if(mDownloadingTatoebaJapanese){
+            mBuilder.setContentTitle(getString(R.string.dictionary_tatoeba_download_title))
+                    .setProgress(100, 0, false)
+                    .setContentInfo("0%");
+
+            mNotifyManager.notify(0, mBuilder.build());
+
+            if(downloadFile(mDownloadTatoebaJapaneseFrom, mDownloadTatoebaJapaneseTo)){
+                mDownloadingTatoebaJapanese = false;
+                mDownloadingTatoebaTranslation = true;
+                Log.i(LOG_TAG, "Downloading dictionary finished");
+
+            }else{
+                return;
+            }
+        }
+        Log.i(LOG_TAG,"downloading Tatoeba translations");
+        if(mDownloadingTatoebaTranslation){
+            mBuilder.setContentTitle(getString(R.string.dictionary_tatoeba_download_title))
+                    .setProgress(100, 0, false)
+                    .setContentInfo("0%");
+
+            mNotifyManager.notify(0, mBuilder.build());
+
+            if(downloadFile(mDownloadTatoebaTranslationFrom, mDownloadTatoebaTranslationTo)){
+                mDownloadingTatoebaTranslation = false;
+                mDownloadInProgress = false;
+
+                Log.i(LOG_TAG, "Downloading dictionary finished");
+
+            }else{
+                return;
+            }
+        }
 		if(!mDownloadInProgress && !mParsing){
 			try {
 				mParsing = true;
@@ -345,9 +396,11 @@ public class ParserService extends Service {
 
         mNotifyManager.notify(0, mBuilder.build());
 
-		String japDictAbsolutePath = parseDictionary(mDownloadJMDictTo.getPath());
-		String japKanjiDictAbsolutePath = parseKanjiDict(mDownloadKanjidicTo.getPath());
-		
+		String japDictAbsolutePath = parseDictionary(mDownloadJMDictTo.getPath(), "jmdict");
+		String japKanjiDictAbsolutePath = parseDictionary(mDownloadKanjidicTo.getPath(), "kanjidic");
+        String tatoebaJapaneseAbsolutePath = parseDictionary(mDownloadTatoebaJapaneseTo.getPath(), "tatoeba_japanese");
+        String tatoebaTranslationAbsolutePath = parseDictionary(mDownloadTatoebaTranslationTo.getPath(), "tatoeba_translations");
+
 		Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
 		mBuilder.setAutoCancel(true)
 		        .setOngoing(false);
@@ -355,7 +408,7 @@ public class ParserService extends Service {
 		mNotifyManager.notify(0, mBuilder.build());
 		if (japDictAbsolutePath != null) {
             mComplete = true;
-			serviceSuccessfullyDone(japDictAbsolutePath,japKanjiDictAbsolutePath);
+			serviceSuccessfullyDone(japDictAbsolutePath,japKanjiDictAbsolutePath, tatoebaJapaneseAbsolutePath, tatoebaTranslationAbsolutePath);
 		} else {
 			Log.e(LOG_TAG, "Parsing dictionary failed");
 			stopSelf(mStartId);
@@ -390,9 +443,19 @@ public class ParserService extends Service {
 		
 		startForeground(0,mNotification);
 		mNotifyManager.notify(0, mBuilder.build());
-
+        File karta = null;
+        if (MainActivity.canWriteExternalStorage()) {
+            // je dostupna karta
+            karta = getExternalCacheDir();
+        }else{
+            karta = getCacheDir();
+        }
+        if (karta == null) {
+            throw new IllegalStateException(
+                    "External storage isn't accessible");
+        }
         // kontrola volneho mista
-        StatFs stat = new StatFs(getExternalCacheDir().getPath());
+        StatFs stat = new StatFs(karta.getPath());
         long bytesAvailable;
         if(Build.VERSION.SDK_INT < 18){
             bytesAvailable = (long)stat.getBlockSize() *(long)stat.getAvailableBlocks();
@@ -442,15 +505,7 @@ public class ParserService extends Service {
 
 
 		try {
-			File karta = null;
-			if (MainActivity.canWriteExternalStorage()) {
-				// je dostupna karta
-				karta = getExternalCacheDir();
-			}
-			if (karta == null) {
-				throw new IllegalStateException(
-						"External storage isn't accesible");
-			}
+
 			dictionaryPath = karta.getPath() + File.separator + "dictionary.zip";
 			File outputFile = new File(dictionaryPath);
 			if(outputFile.exists()){
@@ -482,7 +537,21 @@ public class ParserService extends Service {
 				mDownloadKanjidicTo = fileKanjidict;
 			}
 			
-			
+			mDownloadTatoebaJapaneseFrom = new URL(ParserService.TATOEBA_JAPANESE_PATH);
+            mDownloadTatoebaJapaneseTo = new File(karta, "tatoeba-japanese.zip");
+            if(mDownloadTatoebaJapaneseTo.exists()){
+                mDownloadTatoebaJapaneseTo.delete();
+            }
+
+            mDownloadTatoebaTranslationFrom = new URL(ParserService.TATOEBA_TRANSLATION_PATH);
+            mDownloadTatoebaTranslationTo = new File(karta, "tatoeba-translation.zip");
+            if(mDownloadTatoebaTranslationTo.exists()){
+                mDownloadTatoebaTranslationTo.delete();
+            }
+
+
+
+
 			downloadDictionaries();
 			
 		} catch(MalformedURLException e){
@@ -503,22 +572,23 @@ public class ParserService extends Service {
 	/**
 	 * Parse downloaded JMdict dictionary.
 	 * 
-	 * @param path to the dictionary gziped file
+	 * @param pathDownloaded to the dictionary gziped file
+     * @param dictionaryName dictionary name
 	 * @return path to lucene folder for jmdict
 	 * @throws IOException
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 */
-	private String parseDictionary(String path) throws 
+	private String parseDictionary(String pathDownloaded, String dictionaryName) throws
 			IOException, ParserConfigurationException, SAXException {
 
 
 
 		Log.i(LOG_TAG, "Parsing dictionary - start");
 
-		File downloadedFile = new File(path);
-        String indexFile = getExternalCacheDir().getAbsolutePath()
-                + File.separator + "dictionary";
+		File downloadedFile = new File(pathDownloaded);
+        File externalDir = getExternalCacheDir() == null ? getCacheDir() : getExternalCacheDir();
+        String indexFile = externalDir.getAbsolutePath() + File.separator + dictionaryName;
         File file = new File(indexFile);
         boolean renameFolder = false;
         if (!file.mkdir()) {
@@ -547,70 +617,29 @@ public class ParserService extends Service {
 
 	}
 
-	/**
-	 * Parse downloaded KanjiDict2 dictionary.
-	 * 
-	 * @param path to the KanjiDict2 dictionary gziped file
-	 * @return path to lucene folder for kanjidict2
-	 * @throws IOException
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 */
-	private String parseKanjiDict(String path) throws
-			IOException, ParserConfigurationException, SAXException {
-		Log.i(LOG_TAG, "Parsing kanji dict");
 
-		Log.i(LOG_TAG, "Parsing KanjiDict - start");
-
-		File downloadedFile = new File(path);
-
-		String indexFile = getExternalCacheDir().getAbsolutePath()
-				+ File.separator + "kanjidict";
-		File file = new File(indexFile);
-		boolean renameFolder = false;
-		if (!file.mkdir()) {
-			String indexFileTempPath = indexFile + "_temp";
-			file = new File(indexFileTempPath);
-			renameFolder = true;
-			if (!file.mkdir()) {
-				deleteDirectory(file);
-				file.mkdir();
-			}
-		}
-
-        CompressFolder.unzip(downloadedFile,file);
-        downloadedFile.delete();
-        if (renameFolder) {
-            Log.i(LOG_TAG, "Parsing dictionary - rename folders");
-            File directory = new File(indexFile);
-            deleteDirectory(directory);
-            if (file.renameTo(directory)) {
-                Log.i(LOG_TAG,
-                        "Parsing dictionary - folder renamed");
-                file = directory;
-            }
-        }
-        return file.getAbsolutePath();
-	}
 
 	/**
 	 * Called when parsing was succesfully done. Sets shared preferences and
 	 * broadcast downloadingDictinaryServiceDone intent.
 	 * 
-	 * @param dictionaryPath path to JMdict dictionary
+	 * @param jmdictPath path to JMdict dictionary
 	 * @param kanjiDictPath path to kanjidict2 dictionary
 	 */
-	private void serviceSuccessfullyDone(String dictionaryPath,
-			String kanjiDictPath) {
+	private void serviceSuccessfullyDone(String jmdictPath, String kanjiDictPath, String tatoebaJapanesePath, String tatoebaTranslationPath) {
 		Log.i(LOG_TAG,
 				"Parsing dictionary - parsing succesfully done, saving preferences");
 		SharedPreferences settings = getSharedPreferences(
 				DICTIONARY_PREFERENCES, 0);
 		SharedPreferences.Editor editor = settings.edit();
-		Log.i(LOG_TAG, "Dictionary path: " + dictionaryPath);
+		Log.i(LOG_TAG, "Dictionary path: " + jmdictPath);
 		Log.i(LOG_TAG, "KanjiDict path: " + kanjiDictPath);
-		editor.putString("pathToDictionary", dictionaryPath);
-		editor.putString("pathToKanjiDictionary", kanjiDictPath);
+        Log.i(LOG_TAG, "tatoeba japanese  path: " + tatoebaJapanesePath);
+        Log.i(LOG_TAG, "tatoeba translation path: " + tatoebaTranslationPath);
+		editor.putString(Const.PREF_JMDICT_PATH, jmdictPath);
+		editor.putString(Const.PREF_KANJIDIC_PATH, kanjiDictPath);
+        editor.putString(Const.PREF_TATOEBA_JAPANESE_PATH, tatoebaJapanesePath);
+        editor.putString(Const.PREF_TATOEBA_TRANSLATION_PATH, tatoebaTranslationPath);
 		Date date = new Date();
 		editor.putLong("dictionaryLastUpdate", date.getTime());
 		editor.commit();
@@ -647,6 +676,7 @@ public class ParserService extends Service {
 			Log.w(LOG_TAG, "Service ending none complete");
 		}else{
             mBuilder.setContentTitle(getString(R.string.dictionary_download_complete));
+            mBuilder.setContentText(getString(R.string.dictionary_download_complete_text));
         }
         if(mNotEnoughSpace) {
             mBuilder.setContentTitle(getString(R.string.dictionary_download_interrupted));

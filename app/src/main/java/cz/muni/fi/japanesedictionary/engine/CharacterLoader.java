@@ -42,6 +42,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import cz.muni.fi.japanesedictionary.Const;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
 import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
@@ -86,7 +88,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
 		}
 
 		SharedPreferences settings = mContext.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
-        String pathToDictionary = settings.getString("pathToKanjiDictionary", null);
+        String pathToDictionary = settings.getString(Const.PREF_KANJIDIC_PATH, null);
         if(pathToDictionary == null){
         	Log.e(LOG_TAG, "No path to kanjidict2 dictionary");
         	return null;

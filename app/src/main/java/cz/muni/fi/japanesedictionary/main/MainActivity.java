@@ -64,6 +64,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
+import cz.muni.fi.japanesedictionary.Const;
 import cz.muni.fi.japanesedictionary.R;
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.engine.DrawerAdapter;
@@ -132,7 +133,7 @@ public class MainActivity extends ActionBarActivity
                     ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
             if (!noConnectivity) {
                 SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
-                String dictionaryPath = settings.getString("pathToDictionary", null);
+                String dictionaryPath = settings.getString(Const.PREF_JMDICT_PATH , null);
                 boolean waitingForConnection = settings.getBoolean("waitingForConnection", false);
                 if(waitingForConnection && (dictionaryPath == null || !(new File(dictionaryPath)).exists()) ) {
                     displayDownloadPrompt();
@@ -192,7 +193,7 @@ public class MainActivity extends ActionBarActivity
         setUpTabs(mLastTabId);
 
         SharedPreferences settings = getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
-        String dictionaryPath = settings.getString("pathToDictionary", null);
+        String dictionaryPath = settings.getString(Const.PREF_JMDICT_PATH, null);
         boolean waitingForConnection = settings.getBoolean("waitingForConnection", false);
         if(waitingForConnection && (dictionaryPath == null || !(new File(dictionaryPath)).exists()) ) {
             displayDownloadPrompt();
