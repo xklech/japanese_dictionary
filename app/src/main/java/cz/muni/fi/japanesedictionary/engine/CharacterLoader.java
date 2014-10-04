@@ -101,7 +101,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
         StringBuilder searchBuilder = new StringBuilder();
         final int characterListSize = characterList.length();
         // search string
-        for(int i =0;i< characterListSize ; i++){
+        for(int i = 0; i < characterListSize ; i++){
         	String character = String.valueOf(characterList.charAt(i));
         	if(Pattern.matches("\\p{Han}", character)){
         		if(i > 0){ //searchBuilder.length() > 0
@@ -111,7 +111,7 @@ public class CharacterLoader extends AsyncTask<String,Void,Map<String,JapaneseCh
         	}
         }
         String search = searchBuilder.toString();
-        if(search == null || search.length() == 0){
+        if(search.length() == 0){
         	return null;
         }
         

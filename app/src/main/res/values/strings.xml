@@ -140,5 +140,6 @@
    <string name="searchable_ja">ja</string>
    <string name="searchable_hint">romaji/かな/漢字</string>
     <string name="dictionary_download_complete_text">Dictionaries downloaded successfully</string>
+    <string name="detail_tatoeba">Example</string>
 
 </resources>

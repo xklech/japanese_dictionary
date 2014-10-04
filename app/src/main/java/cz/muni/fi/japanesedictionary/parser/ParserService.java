@@ -63,7 +63,7 @@ import cz.muni.fi.japanesedictionary.util.CompressFolder;
 /**
  * Service for downloading and parsing dictionaries.
  * 
- * @author Jaroslav Klech
+ * @author Bc. Jaroslav Klech
  * 
  */
 public class ParserService extends Service {
@@ -72,8 +72,8 @@ public class ParserService extends Service {
 	
 	public static final String DICTIONARY_PATH = "http://android-japdict.rhcloud.com/cron/jmdict";
 	public static final String KANJIDICT_PATH = "http://android-japdict.rhcloud.com/cron/kanjidic2";
-    public static final String TATOEBA_JAPANESE_PATH = "http://android-japdict.rhcloud.com/cron/tatoebajapanese";
-    public static final String TATOEBA_TRANSLATION_PATH = "http://android-japdict.rhcloud.com/cron/tatoebatranslations";
+    public static final String TATOEBA_INDICES_PATH = "http://android-japdict.rhcloud.com/cron/tatoebaindices";
+    public static final String TATOEBA_SENTENCES_PATH = "http://android-japdict.rhcloud.com/cron/tatoebasentences";
 
 	public static final String DICTIONARY_PREFERENCES = "cz.muni.fi.japanesedictionary";
 
@@ -87,13 +87,13 @@ public class ParserService extends Service {
 	private File mDownloadKanjidicTo = null;
 	private boolean mDownloadingKanjidic = false;
 
-    private URL mDownloadTatoebaJapaneseFrom = null;
-    private File mDownloadTatoebaJapaneseTo = null;
-    private boolean mDownloadingTatoebaJapanese = false;
+    private URL mDownloadTatoebaIndicesFrom = null;
+    private File mDownloadTatoebaIndicesTo = null;
+    private boolean mDownloadingTatoebaIndices = false;
 
-    private URL mDownloadTatoebaTranslationFrom = null;
-    private File mDownloadTatoebaTranslationTo = null;
-    private boolean mDownloadingTatoebaTranslation = false;
+    private URL mDownloadTatoebaSentencesFrom = null;
+    private File mDownloadTatoebaSentencesTo = null;
+    private boolean mDownloadingTatoebaSentences = false;
 
 
 
@@ -121,7 +121,7 @@ public class ParserService extends Service {
         @Override
         public void handleMessage(Message msg) {
         	mStartId = msg.arg1;
-            onHandleIntent((Intent)msg.obj);
+            onHandleIntent();
         }
     }
 
@@ -316,13 +316,14 @@ public class ParserService extends Service {
 		if(mDownloadingKanjidic){
             mBuilder.setContentTitle(getString(R.string.dictionary_kanji_download_title))
                     .setProgress(100, 0, false)
+                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (2/4)")
                     .setContentInfo("0%");
 
             mNotifyManager.notify(0, mBuilder.build());
 
-			if(downloadFile(mDownloadKanjidicFrom,mDownloadKanjidicTo)){
+			if(downloadFile(mDownloadKanjidicFrom, mDownloadKanjidicTo)){
 				mDownloadingKanjidic = false;
-                mDownloadingTatoebaJapanese = true;
+                mDownloadingTatoebaIndices = true;
 
 				Log.i(LOG_TAG, "Downloading dictionary finished");
 				
@@ -331,16 +332,17 @@ public class ParserService extends Service {
 			}
 		}
         Log.i(LOG_TAG,"downloading Tatoeba japanese");
-        if(mDownloadingTatoebaJapanese){
+        if(mDownloadingTatoebaIndices){
             mBuilder.setContentTitle(getString(R.string.dictionary_tatoeba_download_title))
                     .setProgress(100, 0, false)
+                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (3/4)")
                     .setContentInfo("0%");
 
             mNotifyManager.notify(0, mBuilder.build());
 
-            if(downloadFile(mDownloadTatoebaJapaneseFrom, mDownloadTatoebaJapaneseTo)){
-                mDownloadingTatoebaJapanese = false;
-                mDownloadingTatoebaTranslation = true;
+            if(downloadFile(mDownloadTatoebaIndicesFrom, mDownloadTatoebaIndicesTo)){
+                mDownloadingTatoebaIndices = false;
+                mDownloadingTatoebaSentences = true;
                 Log.i(LOG_TAG, "Downloading dictionary finished");
 
             }else{
@@ -348,15 +350,16 @@ public class ParserService extends Service {
             }
         }
         Log.i(LOG_TAG,"downloading Tatoeba translations");
-        if(mDownloadingTatoebaTranslation){
+        if(mDownloadingTatoebaSentences){
             mBuilder.setContentTitle(getString(R.string.dictionary_tatoeba_download_title))
                     .setProgress(100, 0, false)
+                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (4/4)")
                     .setContentInfo("0%");
 
             mNotifyManager.notify(0, mBuilder.build());
 
-            if(downloadFile(mDownloadTatoebaTranslationFrom, mDownloadTatoebaTranslationTo)){
-                mDownloadingTatoebaTranslation = false;
+            if(downloadFile(mDownloadTatoebaSentencesFrom, mDownloadTatoebaSentencesTo)){
+                mDownloadingTatoebaSentences = false;
                 mDownloadInProgress = false;
 
                 Log.i(LOG_TAG, "Downloading dictionary finished");
@@ -398,8 +401,8 @@ public class ParserService extends Service {
 
 		String japDictAbsolutePath = parseDictionary(mDownloadJMDictTo.getPath(), "jmdict");
 		String japKanjiDictAbsolutePath = parseDictionary(mDownloadKanjidicTo.getPath(), "kanjidic");
-        String tatoebaJapaneseAbsolutePath = parseDictionary(mDownloadTatoebaJapaneseTo.getPath(), "tatoeba_japanese");
-        String tatoebaTranslationAbsolutePath = parseDictionary(mDownloadTatoebaTranslationTo.getPath(), "tatoeba_translations");
+        String tatoebaIndicesAbsolutePath = parseDictionary(mDownloadTatoebaIndicesTo.getPath(), "tatoeba_japanese");
+        String tatoebaSentencesAbsolutePath = parseDictionary(mDownloadTatoebaSentencesTo.getPath(), "tatoeba_translations");
 
 		Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
 		mBuilder.setAutoCancel(true)
@@ -408,7 +411,7 @@ public class ParserService extends Service {
 		mNotifyManager.notify(0, mBuilder.build());
 		if (japDictAbsolutePath != null) {
             mComplete = true;
-			serviceSuccessfullyDone(japDictAbsolutePath,japKanjiDictAbsolutePath, tatoebaJapaneseAbsolutePath, tatoebaTranslationAbsolutePath);
+			serviceSuccessfullyDone(japDictAbsolutePath, japKanjiDictAbsolutePath, tatoebaIndicesAbsolutePath, tatoebaSentencesAbsolutePath);
 		} else {
 			Log.e(LOG_TAG, "Parsing dictionary failed");
 			stopSelf(mStartId);
@@ -419,7 +422,7 @@ public class ParserService extends Service {
 	 * Downloads dictionaries.
 	 */
 
-	protected void onHandleIntent(Intent arg0) {		
+	protected void onHandleIntent() {
 		
 		Log.i(LOG_TAG, "Creating parser service");
 
@@ -435,7 +438,7 @@ public class ParserService extends Service {
             .setAutoCancel(false)
             .setOngoing(true)
             .setContentTitle(getString(R.string.dictionary_download_title))
-            .setContentText(getString(R.string.dictionary_download_in_progress))
+            .setContentText(getString(R.string.dictionary_download_in_progress) + " (1/4)")
             .setSmallIcon(R.drawable.ic_notification)
             .setProgress(100, 0, false)
             .setContentInfo("0%")
@@ -443,19 +446,19 @@ public class ParserService extends Service {
 		
 		startForeground(0,mNotification);
 		mNotifyManager.notify(0, mBuilder.build());
-        File karta = null;
+        File storage = null;
         if (MainActivity.canWriteExternalStorage()) {
-            // je dostupna karta
-            karta = getExternalCacheDir();
+            // external storage available
+            storage = getExternalCacheDir();
         }else{
-            karta = getCacheDir();
+            storage = getCacheDir();
         }
-        if (karta == null) {
+        if (storage == null) {
             throw new IllegalStateException(
                     "External storage isn't accessible");
         }
-        // kontrola volneho mista
-        StatFs stat = new StatFs(karta.getPath());
+        // free sapce controll
+        StatFs stat = new StatFs(storage.getPath());
         long bytesAvailable;
         if(Build.VERSION.SDK_INT < 18){
             bytesAvailable = (long)stat.getBlockSize() *(long)stat.getAvailableBlocks();
@@ -463,7 +466,7 @@ public class ParserService extends Service {
             bytesAvailable = stat.getAvailableBytes();
         }
         long megAvailable = bytesAvailable / 1048576;
-        System.out.println("Megs free :"+megAvailable);
+        Log.d(LOG_TAG, "Megs free :" + megAvailable);
         if(megAvailable < 140){
             mInternetReceiver = null;
             mNotEnoughSpace = true;
@@ -506,7 +509,7 @@ public class ParserService extends Service {
 
 		try {
 
-			dictionaryPath = karta.getPath() + File.separator + "dictionary.zip";
+			dictionaryPath = storage.getPath() + File.separator + "dictionary.zip";
 			File outputFile = new File(dictionaryPath);
 			if(outputFile.exists()){
 				outputFile.delete();
@@ -526,7 +529,7 @@ public class ParserService extends Service {
 						"Error: creating url for downloading kanjidict2");
 			}
 			if (url != null) {
-				kanjiDictPath = karta.getPath() + File.separator
+				kanjiDictPath = storage.getPath() + File.separator
 						+ "kanjidict.zip";
 				File fileKanjidict = new File(kanjiDictPath);
 				if(fileKanjidict.exists()){
@@ -537,16 +540,16 @@ public class ParserService extends Service {
 				mDownloadKanjidicTo = fileKanjidict;
 			}
 			
-			mDownloadTatoebaJapaneseFrom = new URL(ParserService.TATOEBA_JAPANESE_PATH);
-            mDownloadTatoebaJapaneseTo = new File(karta, "tatoeba-japanese.zip");
-            if(mDownloadTatoebaJapaneseTo.exists()){
-                mDownloadTatoebaJapaneseTo.delete();
+			mDownloadTatoebaIndicesFrom = new URL(ParserService.TATOEBA_INDICES_PATH);
+            mDownloadTatoebaIndicesTo = new File(storage, "tatoeba-japanese.zip");
+            if(mDownloadTatoebaIndicesTo.exists()){
+                mDownloadTatoebaIndicesTo.delete();
             }
 
-            mDownloadTatoebaTranslationFrom = new URL(ParserService.TATOEBA_TRANSLATION_PATH);
-            mDownloadTatoebaTranslationTo = new File(karta, "tatoeba-translation.zip");
-            if(mDownloadTatoebaTranslationTo.exists()){
-                mDownloadTatoebaTranslationTo.delete();
+            mDownloadTatoebaSentencesFrom = new URL(ParserService.TATOEBA_SENTENCES_PATH);
+            mDownloadTatoebaSentencesTo = new File(storage, "tatoeba-translation.zip");
+            if(mDownloadTatoebaSentencesTo.exists()){
+                mDownloadTatoebaSentencesTo.delete();
             }
 
 
@@ -626,7 +629,7 @@ public class ParserService extends Service {
 	 * @param jmdictPath path to JMdict dictionary
 	 * @param kanjiDictPath path to kanjidict2 dictionary
 	 */
-	private void serviceSuccessfullyDone(String jmdictPath, String kanjiDictPath, String tatoebaJapanesePath, String tatoebaTranslationPath) {
+	private void serviceSuccessfullyDone(String jmdictPath, String kanjiDictPath, String tatoebaIndicesPath, String tatoebaSentencesPath) {
 		Log.i(LOG_TAG,
 				"Parsing dictionary - parsing succesfully done, saving preferences");
 		SharedPreferences settings = getSharedPreferences(
@@ -634,12 +637,12 @@ public class ParserService extends Service {
 		SharedPreferences.Editor editor = settings.edit();
 		Log.i(LOG_TAG, "Dictionary path: " + jmdictPath);
 		Log.i(LOG_TAG, "KanjiDict path: " + kanjiDictPath);
-        Log.i(LOG_TAG, "tatoeba japanese  path: " + tatoebaJapanesePath);
-        Log.i(LOG_TAG, "tatoeba translation path: " + tatoebaTranslationPath);
+        Log.i(LOG_TAG, "tatoeba indices  path: " + tatoebaIndicesPath);
+        Log.i(LOG_TAG, "tatoeba sentences path: " + tatoebaSentencesPath);
 		editor.putString(Const.PREF_JMDICT_PATH, jmdictPath);
 		editor.putString(Const.PREF_KANJIDIC_PATH, kanjiDictPath);
-        editor.putString(Const.PREF_TATOEBA_JAPANESE_PATH, tatoebaJapanesePath);
-        editor.putString(Const.PREF_TATOEBA_TRANSLATION_PATH, tatoebaTranslationPath);
+        editor.putString(Const.PREF_TATOEBA_INDICES_PATH, tatoebaIndicesPath);
+        editor.putString(Const.PREF_TATOEBA_SENTENCES_PATH, tatoebaSentencesPath);
 		Date date = new Date();
 		editor.putLong("dictionaryLastUpdate", date.getTime());
 		editor.commit();

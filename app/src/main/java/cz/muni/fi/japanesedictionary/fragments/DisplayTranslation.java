@@ -102,7 +102,7 @@ public class DisplayTranslation extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.display_translation, null);
+        return inflater.inflate(R.layout.display_translation, container);
     }
 
     @Override
@@ -419,7 +419,7 @@ public class DisplayTranslation extends Fragment {
         if (mInflater != null) {
             LinearLayout translationsContainer = (LinearLayout) getView().findViewById(R.id.translation_translation_container);
             translationsContainer.removeAllViews();
-            if ((mEnglish || (!mEnglish && !mFrench && !mDutch && !mGerman && !mRussian)) && mTranslation.getEnglishSense() != null && mTranslation.getEnglishSense().size() > 0) {
+            if ((mEnglish || (!mFrench && !mDutch && !mGerman && !mRussian)) && mTranslation.getEnglishSense() != null && mTranslation.getEnglishSense().size() > 0) {
                 View translationLanguage = mInflater.inflate(R.layout.translation_language, null);
                 TextView textView = (TextView) translationLanguage.findViewById(R.id.translation_language);
                 if (!mFrench && !mDutch && !mGerman && !mRussian) {
@@ -597,7 +597,7 @@ public class DisplayTranslation extends Fragment {
                 TextView kanjiView = (TextView) translationKanji.findViewById(R.id.translation_kanji);
                 kanjiView.setText(character);
                 TextView meaningView = (TextView) translationKanji.findViewById(R.id.translation_kanji_meaning);
-                if ((mEnglish && !mFrench && !mDutch && !mGerman && !mRussian) && japCharacter.getMeaningEnglish() != null) {
+                if (mEnglish && japCharacter.getMeaningEnglish() != null) {
                     int meaningSize = japCharacter.getMeaningEnglish().size();
                     if (meaningSize > 0) {
                         int j = 0;
@@ -780,8 +780,8 @@ public class DisplayTranslation extends Fragment {
     }
 
     private String sensesToString(List<List<String>> senses) {
-        List<String> collection = new ArrayList<String>();
-        for (List<String> list : mTranslation.getEnglishSense()) {
+        List<String> collection = new ArrayList<>();
+        for (List<String> list : senses) {
             collection.addAll(list);
         }
         StringBuilder strBuilder = new StringBuilder();

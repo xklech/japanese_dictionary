@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JapaneseDictionary.iml" filepath="$PROJECT_DIR$/JapaneseDictionary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/japanese_dictionary.iml" filepath="$PROJECT_DIR$/japanese_dictionary.iml" />
     </modules>
   </component>
 </project>
