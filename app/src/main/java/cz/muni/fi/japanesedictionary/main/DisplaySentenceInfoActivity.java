@@ -41,10 +41,11 @@ import cz.muni.fi.japanesedictionary.engine.DrawerAdapter;
 import cz.muni.fi.japanesedictionary.engine.DrawerItemClickListener;
 import cz.muni.fi.japanesedictionary.entity.DrawerItem;
 import cz.muni.fi.japanesedictionary.fragments.DisplayCharacterInfo;
+import cz.muni.fi.japanesedictionary.fragments.DisplaySentenceInfo;
 
-public class DisplayCharacterInfoActivity extends ActionBarActivity
+public class DisplaySentenceInfoActivity extends ActionBarActivity
 		{
-	private static final String LOG_TAG = "DisplayCharacterInfoActivity";
+	private static final String LOG_TAG = "DisplaySentenceInfoActivity";
 
 
 	@Override
@@ -52,26 +53,25 @@ public class DisplayCharacterInfoActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		Log.i(LOG_TAG,"Setting layout");
 		setContentView(R.layout.display_activity);
+
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 		if(savedInstanceState != null){
 			return ;
 		}
 		Bundle bundle = getIntent().getExtras();
 
-		DisplayCharacterInfo displayCharacter= new DisplayCharacterInfo();
-		displayCharacter.setArguments(bundle);
-		displayCharacter.setRetainInstance(true);
-		
-		
+        DisplaySentenceInfo displaySentence = DisplaySentenceInfo.newInstance(bundle);
+        displaySentence.setRetainInstance(true);
+
+
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		Log.i(LOG_TAG,"Setting main fragment");
-		ft.add(R.id.display_fragment_container, displayCharacter);
+		ft.add(R.id.display_fragment_container, displaySentence);
 		ft.commit();
-		
+
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.i(LOG_TAG, "Inflating menu");
@@ -80,10 +80,10 @@ public class DisplayCharacterInfoActivity extends ActionBarActivity
 
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	/**
 	 * Listener for menu item selected.
-	 * 
+	 *
 	 * @param item - home item selected, restarts main activity
 	 * 		 - settings item selceted, launches new MypreferenceActivity
 	 * 		 - other item, default behavior
@@ -91,30 +91,25 @@ public class DisplayCharacterInfoActivity extends ActionBarActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.settings:
                 Log.i(LOG_TAG, "Lauching preference Activity");
-                Intent intentSetting = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.MyPreferencesActivity.class);
+                Intent intentSetting = new Intent(this.getApplicationContext(), MyPreferencesActivity.class);
                 intentSetting.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intentSetting);
                 return true;
             case R.id.about:
                 Log.i(LOG_TAG, "Lauching About Activity");
-                Intent intentAbout = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.AboutActivity.class);
+                Intent intentAbout = new Intent(this.getApplicationContext(), AboutActivity.class);
                 intentAbout.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intentAbout);
                 return true;
             case android.R.id.home:
-                Log.i(LOG_TAG, "home: finish");
                 finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
-
-
 
 }

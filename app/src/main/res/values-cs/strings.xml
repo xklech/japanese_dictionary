@@ -141,5 +141,6 @@
     <string name="dictionary_download_complete_text">Slovníky staženy úspěšně</string>
 
     <string name="detail_tatoeba">Příkladové věty</string>
+    <string name="character_unknown_sentence">Neznámá věta</string>
 
 </resources>

@@ -96,4 +96,15 @@ public class TatoebaSentence {
         return sentence;
     }
 
+    @Override
+    public String toString() {
+        return "TatoebaSentence{" +
+                "mJapaneseSentence='" + mJapaneseSentence + '\'' +
+                ", mEnglish='" + mEnglish + '\'' +
+                ", mFrench='" + mFrench + '\'' +
+                ", mDutch='" + mDutch + '\'' +
+                ", mGerman='" + mGerman + '\'' +
+                ", mRussian='" + mRussian + '\'' +
+                '}';
+    }
 }

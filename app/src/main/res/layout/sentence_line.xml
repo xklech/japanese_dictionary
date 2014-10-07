@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ JapaneseDictionary - an JMDict browser for Android
+ Copyright (C) 2013 Jaroslav Klech
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:showDividers="end"
+    android:divider="?android:dividerHorizontal"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:id="@+id/sentence_line_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/paddingTop"
+        android:paddingBottom="@dimen/paddingTop"
+        android:orientation="vertical"
+        android:background="@drawable/abc_list_selector_holo_light"
+        >
+
+        <TextView
+            android:id="@+id/sentence_line_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/paddingLeftSmall"
+            android:paddingRight="@dimen/paddingLeftSmall"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/primary_text_light"
+            android:layout_gravity="center_vertical"
+            android:focusable="false"
+            android:clickable="false"
+            android:textIsSelectable="false" />
+        <TextView
+            android:id="@+id/sentence_line_translation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/secondary_text_light"
+            android:layout_marginLeft="@dimen/paddingLeftSmall"
+            android:layout_marginRight="@dimen/paddingLeftSmall"
+            android:focusable="false"
+            android:clickable="false"
+            android:textIsSelectable="false" />
+    </LinearLayout>
+</LinearLayout>

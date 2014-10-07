@@ -428,7 +428,7 @@ public class Translation {
             JSONArray sense = convertToJSON(this.getRussianSense());
             bundle.putString(SAVE_RUSSIAN, sense.toString());
         }
-        bundle.putBoolean(SAVE_PRIORITIZED,mPrioritized);
+        bundle.putBoolean(SAVE_PRIORITIZED, mPrioritized);
         bundle.putString(SAVE_RUBY, mRuby);
 		return bundle;
 	}
@@ -467,7 +467,7 @@ public class Translation {
             JSONArray sense = convertToJSON(this.getRussianSense());
             values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN, sense.toString());
         }
-        values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_FAVORITE, mPrioritized?1:0);
+        values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_PRIORITIZED, mPrioritized ? 1:0);
         values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUBY, mRuby);
         values.put(GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED, (new Date()).getTime());
 		return values;

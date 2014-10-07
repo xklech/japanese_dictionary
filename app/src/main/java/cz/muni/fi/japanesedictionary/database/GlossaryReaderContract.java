@@ -40,7 +40,7 @@ import cz.muni.fi.japanesedictionary.entity.Translation;
  */
 public class GlossaryReaderContract extends SQLiteOpenHelper {
 	
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 13;
 
     // Database Name
     private static final String DATABASE_NAME = "JapaneseDictionary.db";
@@ -60,6 +60,8 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_FAVORITE = "favorite";
         public static final String COLUMN_NAME_RUBY = "ruby";
         public static final String COLUMN_NAME_LAST_VIEWED = "last_viewed";
+
+        public static final String COLUMN_NAME_PRIORITIZED = "prioritized";
     }
 
 	
@@ -79,6 +81,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_NOTE + TEXT_TYPE + COMMA_SEP +
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_FAVORITE + INTEGER_TYPE + COMMA_SEP+
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_RUBY + TEXT_TYPE + COMMA_SEP+
+            GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_PRIORITIZED + INTEGER_TYPE + COMMA_SEP +
             GlossaryReaderContract.GlossaryEntryFavorite.COLUMN_NAME_LAST_VIEWED + INTEGER_TYPE +
             " );";
 
@@ -121,14 +124,14 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         }
 
         ContentValues values = translation.createContentValuesFromTranslation();
-        int updateCount = db.update(GlossaryEntryFavorite.TABLE_NAME,values, "_ID = ?",new String[]{translation.getIndexHash()});
+        int updateCount = db.update(GlossaryEntryFavorite.TABLE_NAME, values, GlossaryEntryFavorite._ID + " = ?", new String[]{translation.getIndexHash()});
         if(updateCount == 0){
             //insert new
             Log.i(LOG_TAG, "Is Not factorised, doesn't exist, insert new values");
-            values.put(GlossaryEntryFavorite._ID,translation.getIndexHash());
+            values.put(GlossaryEntryFavorite._ID, translation.getIndexHash());
             long returnedId = db.insert(GlossaryEntryFavorite.TABLE_NAME, null, values);
             if(returnedId == -1){
-                Log.e(LOG_TAG, "Error inserting Translation: "+translation.toString()+" Values: "+values.toString());
+                Log.e(LOG_TAG, "Error inserting Translation: " + translation.toString() + " Values: " + values.toString());
             }
         }
 
@@ -164,7 +167,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 GlossaryEntryFavorite.COLUMN_NAME_FRENCH,
                 GlossaryEntryFavorite.COLUMN_NAME_GERMAN,
                 GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN,
-                GlossaryEntryFavorite.COLUMN_NAME_FAVORITE,
+                GlossaryEntryFavorite.COLUMN_NAME_PRIORITIZED,
                 GlossaryEntryFavorite.COLUMN_NAME_RUBY
 	    		};
 	    
@@ -209,7 +212,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         if (cursor == null){
             return false;
         }
-        if(cursor.getCount()<1){
+        if(cursor.getCount() < 1){
             cursor.close();
             return false;
         }
@@ -217,7 +220,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         cursor.moveToFirst();
         int favorite = cursor.getInt(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_FAVORITE));
         cursor.close();
-        return favorite>0;
+        return favorite > 0;
 
     }
 	
@@ -225,7 +228,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         if(translation == null){
             return false;
         }
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         if(db == null){
             Log.w(LOG_TAG, "Error changing Translations, database is null");
             return false;
@@ -239,8 +242,8 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
         if(isFavorite(translation)){
             Log.i(LOG_TAG, "Is favorized, update to 0");
             ContentValues values = new ContentValues();
-            values.put(GlossaryEntryFavorite.COLUMN_NAME_FAVORITE,0);
-            db.update(GlossaryEntryFavorite.TABLE_NAME,values,"_ID = ?",new String[]{translation.getIndexHash()});
+            values.put(GlossaryEntryFavorite.COLUMN_NAME_FAVORITE, 0);
+            db.update(GlossaryEntryFavorite.TABLE_NAME, values ,GlossaryEntryFavorite._ID + " = ?",new String[]{translation.getIndexHash()});
             return false;
         }else{
             Log.i(LOG_TAG, "Is Not favorized, update to 1");
@@ -278,7 +281,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
                 GlossaryEntryFavorite.COLUMN_NAME_FRENCH,
                 GlossaryEntryFavorite.COLUMN_NAME_GERMAN,
                 GlossaryEntryFavorite.COLUMN_NAME_RUSSIAN,
-                GlossaryEntryFavorite.COLUMN_NAME_FAVORITE,
+                GlossaryEntryFavorite.COLUMN_NAME_PRIORITIZED,
                 GlossaryEntryFavorite.COLUMN_NAME_RUBY
         };
         Cursor cursor = db.query(
@@ -388,7 +391,7 @@ public class GlossaryReaderContract extends SQLiteOpenHelper {
             translation.parseDutch(dutch);
             translation.parseGerman(german);
             translation.parseRussian(russian);
-            translation.setPrioritized(cursor.getInt(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_FAVORITE)) > 0?true:false);
+            translation.setPrioritized(cursor.getInt(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_PRIORITIZED)) > 0);
             translation.setRuby(cursor.getString(cursor.getColumnIndexOrThrow(GlossaryEntryFavorite.COLUMN_NAME_RUBY)));
 
             translationsReturn.add(translation);

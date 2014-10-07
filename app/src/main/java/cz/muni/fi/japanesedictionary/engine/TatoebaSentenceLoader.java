@@ -22,12 +22,10 @@ import org.apache.lucene.util.Version;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cz.muni.fi.japanesedictionary.Const;
-import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.TatoebaLangEnum;
 import cz.muni.fi.japanesedictionary.entity.TatoebaSentence;
 import cz.muni.fi.japanesedictionary.interfaces.TatoebaSentenceCallback;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
@@ -68,14 +66,26 @@ public class TatoebaSentenceLoader extends AsyncTask<List<String>, Void, List<Ta
         SharedPreferences settings = mContext.getSharedPreferences(ParserService.DICTIONARY_PREFERENCES, 0);
         String pathToIndices = settings.getString(Const.PREF_TATOEBA_INDICES_PATH, null);
         if(pathToIndices == null){
-            if(LOG) Log.w(LOG_TAG, "No path to kanjidict2 dictionary");
+            if(LOG) Log.w(LOG_TAG, "No path to tatoeba indices");
             return null;
         }
-        File file = new File(pathToIndices);
-        if(!file.exists() || !file.canRead()){
-            if(LOG) Log.e(LOG_TAG, "Can't read dictionary directory");
+        File fileIndices = new File(pathToIndices);
+        if(!fileIndices.exists() || !fileIndices.canRead()){
+            if(LOG) Log.e(LOG_TAG, "Can't read tatoeba indices directory");
             return null;
         }
+
+        String pathToSentences = settings.getString(Const.PREF_TATOEBA_SENTENCES_PATH, null);
+        if(pathToSentences == null){
+            if(LOG) Log.w(LOG_TAG, "No path to tatoeba sentences");
+            return null;
+        }
+        File fileSentences = new File(pathToSentences);
+        if(!fileSentences.exists() || !fileSentences.canRead()){
+            if(LOG) Log.e(LOG_TAG, "Can't read tatoeba sentences directory");
+            return null;
+        }
+
 
         StringBuilder queryBuilder = new StringBuilder();
         for(String word : words){
@@ -94,28 +104,75 @@ public class TatoebaSentenceLoader extends AsyncTask<List<String>, Void, List<Ta
             query.setPhraseSlop(0);
 
             Query q = query.parse(search);
-            Directory dir = FSDirectory.open(file);
-            IndexReader reader = IndexReader.open(dir);
-            IndexSearcher mSearcher= new IndexSearcher(reader);
-            TopScoreDocCollector collector = TopScoreDocCollector.create(100, false);
-            mSearcher.search(q, collector);
-            ScoreDoc[] hitsIndices = collector.topDocs().scoreDocs;
+            Directory indicesDir = FSDirectory.open(fileIndices);
+            IndexReader indicesReader = IndexReader.open(indicesDir);
+            IndexSearcher indicesSearcher= new IndexSearcher(indicesReader);
+            TopScoreDocCollector indicesCollector = TopScoreDocCollector.create(5, false);
+            indicesSearcher.search(q, indicesCollector);
+            ScoreDoc[] hitsIndices = indicesCollector.topDocs().scoreDocs;
+
+            QueryParser sentenceQueryParser = new QueryParser(Version.LUCENE_36, "japanese_id", analyzer);
+            sentenceQueryParser.setPhraseSlop(0);
+
+            Directory sentenceDir = FSDirectory.open(fileSentences);
+            IndexReader sentenceReader = IndexReader.open(sentenceDir);
+            IndexSearcher sentenceSearcher= new IndexSearcher(sentenceReader);
+
+
+
 
             List<TatoebaSentence> result = new ArrayList<>();
             for(ScoreDoc document : hitsIndices){
                 int docId = document.doc;
-                Document d = mSearcher.doc(docId);
-                //d.get();
 
+                TatoebaSentence tatoebaSentence = new TatoebaSentence();
+
+                Document d = indicesSearcher.doc(docId);
+                String sentenceId = '"' + d.get("japanese_sentence_id") + '"';
+                Log.d(LOG_TAG, "sentence id: " + sentenceId);
+                TopScoreDocCollector sentenceCollector = TopScoreDocCollector.create(10, false);
+                Query sentenceQuery = sentenceQueryParser.parse(sentenceId);
+                sentenceSearcher.search(sentenceQuery, sentenceCollector);
+                ScoreDoc[] hitsSentences = sentenceCollector.topDocs().scoreDocs;
+                for(ScoreDoc sentenceScore : hitsSentences){
+                    int sentenceDocId = sentenceScore.doc;
+                    Document sentenceDocument = sentenceSearcher.doc(sentenceDocId);
+                    String language  = sentenceDocument.get("language");
+                    String sentence  = sentenceDocument.get("sentence");
+                    Log.d(LOG_TAG, "language: " + language + ", sentence: " + sentence);
+                    switch(language){
+                        case TatoebaLangEnum.ENGLISH_CODE:
+                            tatoebaSentence.setEnglish(sentence);
+                            break;
+                        case TatoebaLangEnum.DEUTSCH_CODE:
+                            tatoebaSentence.setGerman(sentence);
+                            break;
+                        case TatoebaLangEnum.DUTCH_CODE:
+                            tatoebaSentence.setDutch(sentence);
+                            break;
+                        case TatoebaLangEnum.FRENCH_CODE:
+                            tatoebaSentence.setFrench(sentence);
+                            break;
+                        case TatoebaLangEnum.RUSSIAN_CODE:
+                            tatoebaSentence.setRussian(sentence);
+                            break;
+                        case TatoebaLangEnum.JAPANESE_CODE:
+                            tatoebaSentence.setJapaneseSentence(sentence);
+                            break;
+                    }
+                }
+
+                Log.d(LOG_TAG, "sentence: " + tatoebaSentence);
+                result.add(tatoebaSentence);
             }
             return result.size() > 0 ? result : null;
 
         }catch(ParseException ex){
-            Log.e(LOG_TAG,"Searching for charaters ParseException caught: "+ex);
+            Log.e(LOG_TAG,"Searching for sentences ParseException caught: " + ex);
         }catch(IOException ex){
-            Log.e(LOG_TAG,"Searching for charaters IOException caught: "+ex);
+            Log.e(LOG_TAG,"Searching for sentences IOException caught: "+ex);
         }catch(Exception ex){
-            Log.e(LOG_TAG,"Searching for charaters Exception caught: "+ex);
+            Log.e(LOG_TAG,"Searching for sentences Exception caught: "+ex);
         }
 
 
@@ -124,4 +181,9 @@ public class TatoebaSentenceLoader extends AsyncTask<List<String>, Void, List<Ta
         return null;
     }
 
+
+    @Override
+    protected void onPostExecute(List<TatoebaSentence> tatoebaSentences) {
+        mCallback.receiveSentences(tatoebaSentences);
+    }
 }

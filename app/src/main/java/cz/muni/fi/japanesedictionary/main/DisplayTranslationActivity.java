@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -43,6 +44,8 @@ import cz.muni.fi.japanesedictionary.engine.DrawerAdapter;
 import cz.muni.fi.japanesedictionary.engine.DrawerItemClickListener;
 import cz.muni.fi.japanesedictionary.entity.DrawerItem;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.TatoebaSentence;
+import cz.muni.fi.japanesedictionary.fragments.DisplaySentenceInfo;
 import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
 
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
@@ -184,15 +187,34 @@ public class DisplayTranslationActivity extends ActionBarActivity
 		Log.i(LOG_TAG,"Setting DisplayCharacterInfo Activity");
 		Bundle bundle = character.createBundleFromJapaneseCharacter(null);
 
-		Intent intent = new Intent(this.getApplicationContext(),cz.muni.fi.japanesedictionary.main.DisplayCharacterInfoActivity.class);
+		Intent intent = new Intent(this.getApplicationContext(), DisplayCharacterInfoActivity.class);
 		intent.putExtras(bundle);
 		startActivity(intent);
 				
 	}
-	
-	
-	
-	/**
+
+    /**
+     * CallBack method for DisplayTranslation fragment. Launches new DisplaySentenceInfo fragment.
+     *
+     * @param sentence TatoebaSentence to be displayed
+     */
+    @Override
+    public void showSentenceDetail(TatoebaSentence sentence) {
+        Log.i(LOG_TAG,"Setting DisplayCharacterInfo fragment");
+
+        // decides whether using two pane layout or replace fragment list
+        if(sentence == null){
+            return;
+        }
+        Bundle bundle = sentence.convertToBundle();
+
+        Intent intent = new Intent(this.getApplicationContext(), DisplaySentenceInfoActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
+    /**
 	 * Returns reference to instance of SQLite database
 	 * 
 	 * @return GlossaryReaderContract instance of database

@@ -72,9 +72,11 @@ import cz.muni.fi.japanesedictionary.engine.MainPagerAdapter;
 import cz.muni.fi.japanesedictionary.engine.TranslationsAdapter;
 import cz.muni.fi.japanesedictionary.entity.DrawerItem;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.TatoebaSentence;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.fragments.DictionaryFragmentAlertDialog;
 import cz.muni.fi.japanesedictionary.fragments.DisplayCharacterInfo;
+import cz.muni.fi.japanesedictionary.fragments.DisplaySentenceInfo;
 import cz.muni.fi.japanesedictionary.fragments.DisplayTranslation;
 import cz.muni.fi.japanesedictionary.fragments.ResultFragmentList;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
@@ -253,14 +255,16 @@ public class MainActivity extends ActionBarActivity
         mSearchVisible = true;
 
         Log.i(LOG_TAG,"Setting layout");
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
         if(findViewById(R.id.detail_fragment) != null){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             // two frames layout
             Log.i(LOG_TAG,"Setting info fragment");
             DisplayTranslation displayTranslation = new DisplayTranslation();
             ft.add(R.id.detail_fragment, displayTranslation,"displayFragment");
+            ft.commit();
         }
-        ft.commit();
+
         if (dictionaryPath == null || !(new File(dictionaryPath)).exists() ) {
             displayDownloadPrompt();
         }
@@ -363,6 +367,7 @@ public class MainActivity extends ActionBarActivity
             if(searchItem != null){
                 Log.i(LOG_TAG, "Search item expanded");
                 MenuItemCompat.expandActionView(searchItem);
+
                 if(mSearchView != null){
                     Log.i(LOG_TAG, "text set");
                     mSearchView.setQuery(mCurFilter,true);
@@ -668,19 +673,42 @@ public class MainActivity extends ActionBarActivity
 
         // decides whether using two pane layout or replace fragment list
         final int container = R.id.detail_fragment;
-
+        if(character == null){
+            return;
+        }
         Bundle bundle = character.createBundleFromJapaneseCharacter(null);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         DisplayCharacterInfo displayCharacter = new DisplayCharacterInfo();
         displayCharacter.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(container, displayCharacter,"displayCharacter");
+        fragmentTransaction.replace(container, displayCharacter, "displayCharacter");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
+    /**
+     * CallBack method for DisplayTranslation fragment. Launches new DisplaySentenceInfo fragment.
+     *
+     * @param sentence TatoebaSentence to be displayed
+     */
+    @Override
+    public void showSentenceDetail(TatoebaSentence sentence) {
+        Log.i(LOG_TAG,"Setting DisplayCharacterInfo fragment");
 
+        // decides whether using two pane layout or replace fragment list
+        final int container = R.id.detail_fragment;
+        if(sentence == null){
+            return;
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DisplaySentenceInfo displaySentence = DisplaySentenceInfo.newInstance(sentence);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(container, displaySentence, "displaySentence");
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     /**
      * Called if tab is changed. Calls search method on ResultFragmentList
@@ -793,7 +821,7 @@ public class MainActivity extends ActionBarActivity
 
             MenuItemCompat.expandActionView(searchItem);
             mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-            mSearchView.setQuery(query,true);
+            mSearchView.setQuery(query, true);
             ResultFragmentList fragmentList = (ResultFragmentList) getSupportFragmentManager().findFragmentByTag(getFragmentTag(mPager.getCurrentItem()));
             mCurFilter = query;
             fragmentList.search(mCurFilter);

@@ -54,9 +54,12 @@ import cz.muni.fi.japanesedictionary.engine.FavoriteChanger;
 import cz.muni.fi.japanesedictionary.engine.FavoriteLoader;
 import cz.muni.fi.japanesedictionary.engine.NoteLoader;
 import cz.muni.fi.japanesedictionary.engine.NoteSaver;
+import cz.muni.fi.japanesedictionary.engine.TatoebaSentenceLoader;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.TatoebaSentence;
 import cz.muni.fi.japanesedictionary.entity.Translation;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
+import cz.muni.fi.japanesedictionary.interfaces.TatoebaSentenceCallback;
 import cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum;
 
 /**
@@ -65,7 +68,8 @@ import cz.muni.fi.japanesedictionary.util.jap.RomanizationEnum;
  * @author Jaroslav Klech
  */
 
-public class DisplayTranslation extends Fragment {
+public class DisplayTranslation extends Fragment
+    implements TatoebaSentenceCallback{
 
     private static final String LOG_TAG = "DisplayTranslation";
 
@@ -86,7 +90,6 @@ public class DisplayTranslation extends Fragment {
     private MenuItem mAnki;
 
 
-    private boolean mSaved = false;
 
     @Override
     public void onAttach(Activity activity) {
@@ -102,30 +105,25 @@ public class DisplayTranslation extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.display_translation, container);
+        return inflater.inflate(R.layout.display_translation, container, false);
     }
 
     @Override
     public void onStart() {
-        if(!mSaved) {
-            updateTranslation();
-        }
         super.onStart();
+
+        updateTranslation(getView());
+
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            mSaved = true;
-            mTranslation = Translation.newInstanceFromBundle(savedInstanceState);
-            Log.i(LOG_TAG, "Loading from saved state, restoring translation");
-        }
+        super.onCreate(savedInstanceState);
+        mTranslation = Translation.newInstanceFromBundle(getArguments());
 
         setHasOptionsMenu(true);
         mInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        super.onCreate(savedInstanceState);
     }
 
 
@@ -231,30 +229,6 @@ public class DisplayTranslation extends Fragment {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-
-        if (mTranslation != null) {
-            outState = mTranslation.createBundleFromTranslation(outState);
-        }
-        Log.i(LOG_TAG, "Saving instance ");
-        super.onSaveInstanceState(outState);
-    }
-
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        if (savedInstanceState == null) {
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                mTranslation = Translation.newInstanceFromBundle(bundle);
-            }
-        }
-
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     /**
      * Change displayed translation
      *
@@ -274,13 +248,13 @@ public class DisplayTranslation extends Fragment {
                 mAnki.setVisible(true);
 
             }
-            updateTranslation();
+            updateTranslation(getView());
         }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
+        super.onCreateOptionsMenu(menu, inflater);
         mFavorite = menu.findItem(R.id.favorite);
         mNote = menu.findItem(R.id.ab_note);
         mAnki = menu.findItem(R.id.ab_anki);
@@ -303,18 +277,20 @@ public class DisplayTranslation extends Fragment {
                 mAnki.setVisible(true);
             }
         }
-        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     /**
      * Updates Fragment view acording to saved translation.
      */
-    public void updateTranslation() {
+    public void updateTranslation(View view) {
         Log.i(LOG_TAG, " Update translation");
+        if(getActivity() == null || view == null){
+            return;
+        }
 
-
-        TextView layoutSelect = (TextView) getView().findViewById(R.id.translation_select);
-        LinearLayout layoutTranslation = (LinearLayout) getView().findViewById(R.id.translation_container);
+        TextView layoutSelect = (TextView) view.findViewById(R.id.translation_select);
+        LinearLayout layoutTranslation = (LinearLayout) view.findViewById(R.id.translation_container);
         if (mTranslation == null) {
             layoutSelect.setVisibility(View.VISIBLE);
             layoutTranslation.setVisibility(View.GONE);
@@ -327,7 +303,7 @@ public class DisplayTranslation extends Fragment {
 
         updateLanguages();
 
-        LinearLayout readWriteContainer = (LinearLayout)getView().findViewById(R.id.translation_reading_writing_container);
+        LinearLayout readWriteContainer = (LinearLayout)view.findViewById(R.id.translation_reading_writing_container);
         readWriteContainer.removeAllViews();
         //Ruby: 噛,か;ま;せ;犬,いぬ;
 
@@ -339,20 +315,20 @@ public class DisplayTranslation extends Fragment {
             String ruby = mTranslation.getRuby();
             String[] pairs = ruby.split(";");
             for(String pair: pairs){
-                View view = mInflater.inflate(R.layout.display_translation_reading_group, null);
+                View viewReading = mInflater.inflate(R.layout.display_translation_reading_group, readWriteContainer, false);
                 String[] parts = pair.split(",");
-                TextView writing = (TextView) view.findViewById(R.id.translation_write);
+                TextView writing = (TextView) viewReading.findViewById(R.id.translation_write);
                 writing.setText(parts[0]);
                 if(parts.length == 2) {
-                    TextView reading = (TextView) view.findViewById(R.id.translation_read);
+                    TextView reading = (TextView) viewReading.findViewById(R.id.translation_read);
                     reading.setText(parts[1]);
                 }
-                readWriteContainer.addView(view);
+                readWriteContainer.addView(viewReading);
             }
         }else{
-            View view = mInflater.inflate(R.layout.display_translation_reading_group, null);
-            TextView write = (TextView) view.findViewById(R.id.translation_write);
-            TextView read = (TextView) view.findViewById(R.id.translation_read);
+            View viewReading = mInflater.inflate(R.layout.display_translation_reading_group, readWriteContainer, false);
+            TextView write = (TextView) viewReading.findViewById(R.id.translation_write);
+            TextView read = (TextView) viewReading.findViewById(R.id.translation_read);
             if (mTranslation.getJapaneseKeb() != null && mTranslation.getJapaneseKeb().size() > 0) {
                 writeCharacters = mTranslation.getJapaneseKeb().get(0);
                 write.setText(writeCharacters);
@@ -367,15 +343,17 @@ public class DisplayTranslation extends Fragment {
             } else {
                 read.setVisibility(View.GONE);
             }
-            readWriteContainer.addView(view);
+            readWriteContainer.addView(viewReading);
         }
+
+
         if (mTranslation.getJapaneseReb() != null) {
             String reading = mTranslation.getJapaneseReb().get(0);
             ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(reading);
             DBAsyncTask saveTranslation = new DBAsyncTask(mCallbackTranslation.getDatabase());
             saveTranslation.execute(mTranslation);
 
-            TextView romaji = (TextView) getView().findViewById(R.id.translation_romaji);
+            TextView romaji = (TextView) view.findViewById(R.id.translation_romaji);
             romaji.setText(RomanizationEnum.Hepburn.toRomaji(reading));
 
             int sizeReb = mTranslation.getJapaneseReb().size();
@@ -404,12 +382,12 @@ public class DisplayTranslation extends Fragment {
             }
         }
 
-        TextView alternative = (TextView) getView().findViewById(R.id.translation_alternative);
+        TextView alternative = (TextView) view.findViewById(R.id.translation_alternative);
         if (alternativeStrBuilder.length() > 0) {
             alternative.setText(alternativeStrBuilder);
-            getView().findViewById(R.id.translation_alternative_container).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.translation_alternative_container).setVisibility(View.VISIBLE);
         } else {
-            getView().findViewById(R.id.translation_alternative_container).setVisibility(View.GONE);
+            view.findViewById(R.id.translation_alternative_container).setVisibility(View.GONE);
         }
 
 
@@ -420,7 +398,7 @@ public class DisplayTranslation extends Fragment {
             LinearLayout translationsContainer = (LinearLayout) getView().findViewById(R.id.translation_translation_container);
             translationsContainer.removeAllViews();
             if ((mEnglish || (!mFrench && !mDutch && !mGerman && !mRussian)) && mTranslation.getEnglishSense() != null && mTranslation.getEnglishSense().size() > 0) {
-                View translationLanguage = mInflater.inflate(R.layout.translation_language, null);
+                View translationLanguage = mInflater.inflate(R.layout.translation_language, translationsContainer, false);
                 TextView textView = (TextView) translationLanguage.findViewById(R.id.translation_language);
                 if (!mFrench && !mDutch && !mGerman && !mRussian) {
                     textView.setVisibility(View.GONE);
@@ -439,7 +417,7 @@ public class DisplayTranslation extends Fragment {
                                 strBuilder.append(", ");
                             }
                         }
-                        View translation_ll = mInflater.inflate(R.layout.translation_line, null);
+                        View translation_ll = mInflater.inflate(R.layout.translation_line, translationsContainer, false);
                         TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
                         tView.setText(strBuilder.toString());
                         translationsContainer.addView(translation_ll);
@@ -448,7 +426,7 @@ public class DisplayTranslation extends Fragment {
                 }
             }
             if (mFrench && mTranslation.getFrenchSense() != null && mTranslation.getFrenchSense().size() > 0) {
-                View translation_language = mInflater.inflate(R.layout.translation_language, null);
+                View translation_language = mInflater.inflate(R.layout.translation_language, translationsContainer, false);
                 TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
                 if (!mEnglish && !mDutch && !mGerman && !mRussian) {
                     textView.setVisibility(View.GONE);
@@ -467,7 +445,7 @@ public class DisplayTranslation extends Fragment {
                                 strBuilder.append(", ");
                             }
                         }
-                        View translation_ll = mInflater.inflate(R.layout.translation_line, null);
+                        View translation_ll = mInflater.inflate(R.layout.translation_line, translationsContainer, false);
                         TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
                         tView.setText(strBuilder.toString());
                         translationsContainer.addView(translation_ll);
@@ -475,7 +453,7 @@ public class DisplayTranslation extends Fragment {
                 }
             }
             if (mDutch && mTranslation.getDutchSense() != null && mTranslation.getDutchSense().size() > 0) {
-                View translation_language = mInflater.inflate(R.layout.translation_language, null);
+                View translation_language = mInflater.inflate(R.layout.translation_language, translationsContainer, false);
                 TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
                 if (!mFrench && !mEnglish && !mGerman && !mRussian) {
                     textView.setVisibility(View.GONE);
@@ -494,7 +472,7 @@ public class DisplayTranslation extends Fragment {
                                 strBuilder.append(", ");
                             }
                         }
-                        View translation_ll = mInflater.inflate(R.layout.translation_line, null);
+                        View translation_ll = mInflater.inflate(R.layout.translation_line, translationsContainer, false);
                         TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
                         tView.setText(strBuilder.toString());
                         translationsContainer.addView(translation_ll);
@@ -502,7 +480,7 @@ public class DisplayTranslation extends Fragment {
                 }
             }
             if (mGerman && mTranslation.getGermanSense() != null && mTranslation.getGermanSense().size() > 0) {
-                View translation_language = mInflater.inflate(R.layout.translation_language, null);
+                View translation_language = mInflater.inflate(R.layout.translation_language, translationsContainer, false);
                 TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
                 if (!mFrench && !mDutch && !mEnglish && !mRussian) {
                     textView.setVisibility(View.GONE);
@@ -521,7 +499,7 @@ public class DisplayTranslation extends Fragment {
                                 strBuilder.append(", ");
                             }
                         }
-                        View translation_ll = mInflater.inflate(R.layout.translation_line, null);
+                        View translation_ll = mInflater.inflate(R.layout.translation_line, translationsContainer, false);
                         TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
                         tView.setText(strBuilder.toString());
                         translationsContainer.addView(translation_ll);
@@ -529,7 +507,7 @@ public class DisplayTranslation extends Fragment {
                 }
             }
             if (mRussian && mTranslation.getRussianSense() != null && mTranslation.getRussianSense().size() > 0) {
-                View translation_language = mInflater.inflate(R.layout.translation_language, null);
+                View translation_language = mInflater.inflate(R.layout.translation_language, translationsContainer, false);
                 TextView textView = (TextView) translation_language.findViewById(R.id.translation_language);
                 if (!mFrench && !mDutch && !mEnglish && !mGerman) {
                     textView.setVisibility(View.GONE);
@@ -548,7 +526,7 @@ public class DisplayTranslation extends Fragment {
                                 strBuilder.append(", ");
                             }
                         }
-                        View translation_ll = mInflater.inflate(R.layout.translation_line, null);
+                        View translation_ll = mInflater.inflate(R.layout.translation_line, translationsContainer, false);
                         TextView tView = (TextView) translation_ll.findViewById(R.id.translation_translation);
                         tView.setText(strBuilder.toString());
                         translationsContainer.addView(translation_ll);
@@ -556,7 +534,7 @@ public class DisplayTranslation extends Fragment {
                 }
             }
 
-            getView().findViewById(R.id.translation_kanji_container).setVisibility(View.GONE);
+            view.findViewById(R.id.translation_kanji_container).setVisibility(View.GONE);
             mCharacters = null;
             if (writeCharacters != null) {
                 // write single characters
@@ -565,7 +543,16 @@ public class DisplayTranslation extends Fragment {
                     charLoader.execute(writeCharacters);
                 }
             }
+            view.findViewById(R.id.detail_example_sentences_progress_bar).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.translation_tatoeba_container).setVisibility(View.VISIBLE);
+            ViewGroup tatoebaContainer = (ViewGroup) view.findViewById(R.id.detail_example_sentences_container);
+            tatoebaContainer.removeAllViews();
 
+            List<String> kebRebList = kebRebToList(mTranslation);
+            if(kebRebList != null && kebRebList.size() > 0){
+                TatoebaSentenceLoader sentenceLoader = new TatoebaSentenceLoader(this.getActivity().getApplicationContext(), this);
+                sentenceLoader.execute(kebRebList);
+            }
         } else {
             Log.e(LOG_TAG, "inflater null");
         }
@@ -593,7 +580,7 @@ public class DisplayTranslation extends Fragment {
             String character = String.valueOf(writeCharacters.charAt(i));
             JapaneseCharacter japCharacter = mCharacters.get(character);
             if (japCharacter != null) {
-                View translationKanji = mInflater.inflate(R.layout.kanji_line, null);
+                View translationKanji = mInflater.inflate(R.layout.kanji_line, container, false);
                 TextView kanjiView = (TextView) translationKanji.findViewById(R.id.translation_kanji);
                 kanjiView.setText(character);
                 TextView meaningView = (TextView) translationKanji.findViewById(R.id.translation_kanji_meaning);
@@ -687,6 +674,55 @@ public class DisplayTranslation extends Fragment {
 
 
     }
+
+    @Override
+    public void receiveSentences(List<TatoebaSentence> sentences) {
+        if(getActivity() == null || getView() == null || mInflater == null ){
+            return;
+        }
+        View tatoebaProgressBar = getView().findViewById(R.id.detail_example_sentences_progress_bar);
+        tatoebaProgressBar.setVisibility(View.GONE);
+
+        if(sentences == null){
+            getView().findViewById(R.id.translation_tatoeba_container).setVisibility(View.GONE);
+            return;
+        }
+
+        ViewGroup tatoebaContainer = (ViewGroup) getView().findViewById(R.id.detail_example_sentences_container);
+        for(TatoebaSentence sentence : sentences){
+            View sentenceLine = mInflater.inflate(R.layout.sentence_line, tatoebaContainer, false);
+            sentenceLine.setTag(sentence);
+            TextView sentenceText = (TextView) sentenceLine.findViewById(R.id.sentence_line_text);
+            sentenceText.setText(sentence.getJapaneseSentence());
+            TextView sentenceTranslation = (TextView) sentenceLine.findViewById(R.id.sentence_line_translation);
+            String translation;
+            if(mEnglish && sentence.getEnglish() != null){
+                translation = sentence.getEnglish();
+            }else if(mDutch && sentence.getDutch() != null){
+                translation = sentence.getDutch();
+            }else if(mFrench && sentence.getFrench() != null){
+                translation = sentence.getFrench();
+            }else if(mGerman && sentence.getGerman() != null){
+                translation = sentence.getGerman();
+            }else if(mRussian && sentence.getRussian() != null){
+                translation = sentence.getRussian();
+            }else {
+                translation = sentence.getEnglish();
+            }
+            sentenceTranslation.setText(translation);
+
+            sentenceLine.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TatoebaSentence sentence = (TatoebaSentence) v.getTag();
+                    Log.d(LOG_TAG, "open sentence: " + sentence);
+                    mCallbackTranslation.showSentenceDetail(sentence);
+                }
+            });
+            tatoebaContainer.addView(sentenceLine);
+        }
+    }
+
 
     /**
      * Sets new character info and if the fragment is visible then changes UI
@@ -793,5 +829,21 @@ public class DisplayTranslation extends Fragment {
         }
         return strBuilder.toString();
     }
+
+
+    private static List<String> kebRebToList(Translation translation){
+        if(translation == null){
+            throw new IllegalArgumentException("translation");
+        }
+        List<String> words = new ArrayList<>();
+        if(translation.getJapaneseKeb() != null){
+            words.addAll(translation.getJapaneseKeb());
+        }
+        if(translation.getJapaneseReb() != null){
+            words.addAll(translation.getJapaneseReb());
+        }
+        return words.size() > 0 ? words : null;
+    }
+
 
 }

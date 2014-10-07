@@ -23,6 +23,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -58,52 +59,25 @@ public class DisplayCharacterInfo extends Fragment {
     private boolean mGerman;
     private boolean mRussian;
 	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		if(mJapaneseCharacter != null){
-			outState = mJapaneseCharacter.createBundleFromJapaneseCharacter(outState);
-			Log.i(LOG_TAG,"saving state: "+outState);
-		}
-		super.onSaveInstanceState(outState);
-	}
-	
     
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.display_character, null);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.display_character, container, false);
 	}
 
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {		
+	public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		mInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		if(savedInstanceState != null){
-			mJapaneseCharacter = JapaneseCharacter.newInstanceFromBundle(savedInstanceState);
-			Log.i(LOG_TAG,"saved state: "+savedInstanceState);	
-		}
-		super.onCreate(savedInstanceState);
+        mJapaneseCharacter = JapaneseCharacter.newInstanceFromBundle(getArguments());
 	}
-	
 
-	
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		if(mJapaneseCharacter ==null){
-			Log.i(LOG_TAG,"Get japanese character from bundle");
-			Bundle bundle = getArguments();
-			mJapaneseCharacter = JapaneseCharacter.newInstanceFromBundle(bundle);
-		}
-
-		
-	}
-	
 	@Override
 	public void onStart() {
-		updateCharacter();
-		super.onStart();
+        super.onStart();
+        updateCharacter(getView());
 	}
 	
 	
@@ -111,55 +85,62 @@ public class DisplayCharacterInfo extends Fragment {
 	 * Updates Fragment view acording to saved japanese character.
 	 * 
 	 */
-	private void updateCharacter(){
+	private void updateCharacter(View view){
 		Log.i(LOG_TAG,"Setting literal");
 		if(mJapaneseCharacter == null){
 			Toast.makeText(getActivity(), R.string.character_unknown_character, Toast.LENGTH_LONG).show();
 			return;
 		}
+
+
 		updateLanguages();
+
+        if(view == null || getActivity() == null){
+            return;
+        }
+
 		TextView literal = (TextView)getView().findViewById(R.id.kanjidict_literal);
 		literal.setText(mJapaneseCharacter.getLiteral());
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle(mJapaneseCharacter.getLiteral());
 		
 		if(mJapaneseCharacter.getRadicalClassic() != 0){
 			Log.i(LOG_TAG,"Setting radical: " + mJapaneseCharacter.getRadicalClassic());
-			TextView radicalClassical = (TextView)getView().findViewById(R.id.kanjidict_radical);
+			TextView radicalClassical = (TextView)view.findViewById(R.id.kanjidict_radical);
 			radicalClassical.setText(String.valueOf(mJapaneseCharacter.getRadicalClassic()));
 		}else{
-			getView().findViewById(R.id.kanjidict_radical_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_radical_container).setVisibility(View.GONE);
 		}
 		
 		if(mJapaneseCharacter.getGrade() != 0){
 			Log.i(LOG_TAG,"Setting grade: " + mJapaneseCharacter.getGrade());
-			TextView grade = (TextView)getView().findViewById(R.id.kanjidict_grade);
+			TextView grade = (TextView)view.findViewById(R.id.kanjidict_grade);
 			grade.setText(String.valueOf(mJapaneseCharacter.getGrade()));
 		}else{
-			getView().findViewById(R.id.kanjidict_grade_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_grade_container).setVisibility(View.GONE);
 		}
 		
 		if(mJapaneseCharacter.getStrokeCount() != 0){
 			Log.i(LOG_TAG,"Setting stroke count: " + mJapaneseCharacter.getStrokeCount());
-			TextView strokeCount = (TextView)getView().findViewById(R.id.kanjidict_stroke_count);
+			TextView strokeCount = (TextView)view.findViewById(R.id.kanjidict_stroke_count);
 			strokeCount.setText(String.valueOf(mJapaneseCharacter.getStrokeCount()));
 		}else{
-			getView().findViewById(R.id.kanjidict_stroke_count_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_stroke_count_container).setVisibility(View.GONE);
 		}
 		
 		if(mJapaneseCharacter.getSkip() != null && mJapaneseCharacter.getSkip().length() > 0){
 			Log.i(LOG_TAG,"Setting skip: " + mJapaneseCharacter.getSkip());
-			TextView skip = (TextView)getView().findViewById(R.id.kanjidict_skip);
+			TextView skip = (TextView)view.findViewById(R.id.kanjidict_skip);
 			skip.setText(mJapaneseCharacter.getSkip());
 		}else{
-			getView().findViewById(R.id.kanjidict_skip_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_skip_container).setVisibility(View.GONE);
 		}
 
 		if(mJapaneseCharacter.getRmGroupJaKun() != null && mJapaneseCharacter.getRmGroupJaKun().size() > 0){
 			Log.i(LOG_TAG,"Setting kunyomi: " + mJapaneseCharacter.getRmGroupJaKun());
-			TextView kunyomi = (TextView)getView().findViewById(R.id.kanjidict_kunyomi);
+			TextView kunyomi = (TextView)view.findViewById(R.id.kanjidict_kunyomi);
 			kunyomi.setText(MiscellaneousUtil.processKunyomi(getActivity(), mJapaneseCharacter.getRmGroupJaKun()));
 		}else{
-			getView().findViewById(R.id.kanjidict_kunyomi_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_kunyomi_container).setVisibility(View.GONE);
 		}
 		
 		if(mJapaneseCharacter.getRmGroupJaOn() != null && mJapaneseCharacter.getRmGroupJaOn().size() > 0){
@@ -174,10 +155,10 @@ public class DisplayCharacterInfo extends Fragment {
 				}
 				i++;
 			}
-			TextView onyomi = (TextView)getView().findViewById(R.id.kanjidict_onyomi);
+			TextView onyomi = (TextView)view.findViewById(R.id.kanjidict_onyomi);
 			onyomi.setText(strBuilder);
 		}else{
-			getView().findViewById(R.id.kanjidict_onyomi_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_onyomi_container).setVisibility(View.GONE);
 		}
 
         if(mJapaneseCharacter.getNanori() != null && mJapaneseCharacter.getNanori().size() > 0){
@@ -192,19 +173,19 @@ public class DisplayCharacterInfo extends Fragment {
                 }
                 i++;
             }
-            TextView nanori = (TextView)getView().findViewById(R.id.kanjidict_nanori);
+            TextView nanori = (TextView)view.findViewById(R.id.kanjidict_nanori);
             nanori.setText(strBuilder);
         }else{
-            getView().findViewById(R.id.kanjidict_nanori_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_nanori_container).setVisibility(View.GONE);
         }
 		
 		boolean hasMeaning = false; 	
-		LinearLayout container = (LinearLayout) getView().findViewById(R.id.kanjidict_meanings_lines_container);
+		LinearLayout container = (LinearLayout) view.findViewById(R.id.kanjidict_meanings_lines_container);
 		container.removeAllViews();
-		if((mEnglish || (!mDutch && !mFrench && !mDutch && !mRussian)) && mJapaneseCharacter.getMeaningEnglish() != null && mJapaneseCharacter.getMeaningEnglish().size() > 0){
+		if((mEnglish || (!mDutch && !mFrench && !mGerman && !mRussian)) && mJapaneseCharacter.getMeaningEnglish() != null && mJapaneseCharacter.getMeaningEnglish().size() > 0){
 			Log.i(LOG_TAG,"Setting english meaning");
 			hasMeaning = true;
-			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
+			View languageView = mInflater.inflate(R.layout.kanji_meaning, container, false);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
             if (!mFrench && !mDutch && !mGerman && !mRussian) {
                 language.setVisibility(View.GONE);
@@ -229,7 +210,7 @@ public class DisplayCharacterInfo extends Fragment {
 		if(mFrench && mJapaneseCharacter.getMeaningFrench() != null && mJapaneseCharacter.getMeaningFrench().size() > 0){
 			Log.i(LOG_TAG,"Setting french meaning");
 			hasMeaning = true;
-			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
+			View languageView = mInflater.inflate(R.layout.kanji_meaning, container, false);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
             if (!mEnglish && !mDutch && !mGerman && !mRussian) {
                 language.setVisibility(View.GONE);
@@ -253,7 +234,7 @@ public class DisplayCharacterInfo extends Fragment {
 		if(mDutch && mJapaneseCharacter.getMeaningDutch() != null && mJapaneseCharacter.getMeaningDutch().size() > 0){
 			Log.i("DisplayCharacter","Setting dutch meaning");
 			hasMeaning = true;
-			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
+			View languageView = mInflater.inflate(R.layout.kanji_meaning, container, false);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
             if (!mFrench && !mEnglish && !mGerman && !mRussian) {
                 language.setVisibility(View.GONE);
@@ -277,7 +258,7 @@ public class DisplayCharacterInfo extends Fragment {
 		if(mGerman && mJapaneseCharacter.getMeaningGerman() != null && mJapaneseCharacter.getMeaningGerman().size() > 0){
 			Log.i(LOG_TAG,"Setting german meaning");
 			hasMeaning = true;
-			View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
+			View languageView = mInflater.inflate(R.layout.kanji_meaning, container, false);
 			TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
             if (!mFrench && !mDutch && !mEnglish && !mRussian) {
                 language.setVisibility(View.GONE);
@@ -301,7 +282,7 @@ public class DisplayCharacterInfo extends Fragment {
         if(mRussian && mJapaneseCharacter.getMeaningRussian() != null && mJapaneseCharacter.getMeaningRussian().size() > 0){
             Log.i(LOG_TAG,"Setting russian meaning");
             hasMeaning = true;
-            View languageView = mInflater.inflate(R.layout.kanji_meaning, null);
+            View languageView = mInflater.inflate(R.layout.kanji_meaning, container, false);
             TextView language = (TextView) languageView.findViewById(R.id.kanjidict_language);
             if (!mFrench && !mDutch && !mEnglish && !mGerman) {
                 language.setVisibility(View.GONE);
@@ -324,16 +305,17 @@ public class DisplayCharacterInfo extends Fragment {
 
 		if(!hasMeaning){
 			Log.i(LOG_TAG,"Doesn't have meanings");
-			getView().findViewById(R.id.kanjidict_meanings_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_meanings_container).setVisibility(View.GONE);
 		}
 
 		
 		if(mJapaneseCharacter.getDicRef() != null && mJapaneseCharacter.getDicRef().size() > 0){
 			Log.i(LOG_TAG,"Setting dictionary references");
 			Map<String, String> dictionaries = getDictionaryCodes();
-			LinearLayout dictionariesContainer = (LinearLayout) getView().findViewById(R.id.kanjidict_dictionaries_records);
+			LinearLayout dictionariesContainer = (LinearLayout) view.findViewById(R.id.kanjidict_dictionaries_records);
+            dictionariesContainer.removeAllViews();
 			for(String key:mJapaneseCharacter.getDicRef().keySet()){
-				View dictionaryLine = mInflater.inflate(R.layout.dictionary_line, null);
+				View dictionaryLine = mInflater.inflate(R.layout.dictionary_line, dictionariesContainer, false);
 				String dictName = dictionaries.get(key);
 				if(dictName != null && dictName.length() > 0){
 					TextView dictNameView = (TextView)dictionaryLine.findViewById(R.id.kanjidict_dictionary_dict);
@@ -345,20 +327,27 @@ public class DisplayCharacterInfo extends Fragment {
 				}
 			}
 		}else{
-			getView().findViewById(R.id.kanjidict_dictionaries_container).setVisibility(View.GONE);
+            view.findViewById(R.id.kanjidict_dictionaries_container).setVisibility(View.GONE);
 		}
 		
 		
 		
 	}
-	
-	/**
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updateCharacter(getView());
+    }
+
+    /**
 	 * Constructs map of dictionary references
 	 * 
-	 * @return  Map<String, String> dictionary references
+	 * @return dictionary references
 	 */
 	public static Map<String, String> getDictionaryCodes(){
-		Map<String, String> dictionaryCodes = new HashMap<String,String>();
+		Map<String, String> dictionaryCodes = new HashMap<>();
 		dictionaryCodes.put("nelson_c", "Modern Reader's Japanese-English Character Dictionary");
 		dictionaryCodes.put("nelson_n", "The New Nelson Japanese-English Character Dictionary");
 		dictionaryCodes.put("halpern_njecd", "New Japanese-English Character Dictionary");
@@ -406,6 +395,11 @@ public class DisplayCharacterInfo extends Fragment {
         if(dutchTemp != mDutch){
         	mDutch = dutchTemp;
         	changed = true;
+        }
+        boolean germanTemp = sharedPrefs.getBoolean("language_german", false);
+        if(germanTemp != mGerman){
+            mGerman = germanTemp;
+            changed = true;
         }
         boolean russianTemp = sharedPrefs.getBoolean("language_russian", false);
         if(russianTemp != mRussian){

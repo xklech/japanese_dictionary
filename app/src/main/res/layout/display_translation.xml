@@ -192,11 +192,20 @@
                     android:textColor="@android:color/primary_text_light"
                     android:text="@string/detail_tatoeba" />
 
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:layout_margin="16dp"
+                    android:id="@+id/detail_example_sentences_progress_bar" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:id="@+id/detail_example_sentences_container" />
+
             </LinearLayout>
 
         </LinearLayout>

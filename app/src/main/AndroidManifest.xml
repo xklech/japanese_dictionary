@@ -30,47 +30,49 @@
 
         </activity>
         <activity
-            android:name=".main.DisplayTranslationActivity"
-            android:parentActivityName=".main.MainActivity">
+            android:name=".main.DisplayTranslationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main.MainActivity" />
         </activity>
         <activity
-            android:name=".main.DisplayCharacterInfoActivity"
-            android:parentActivityName=".main.MainActivity">
+            android:name=".main.DisplayCharacterInfoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".main.MainActivity" />
+                android:value=".main.DisplayTranslationActivity" />
         </activity>
+        <activity
+            android:name=".main.DisplaySentenceInfoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.DisplayTranslationActivity" />
+        </activity>
+
+
         <activity
             android:name=".main.MyPreferencesActivity"
-            android:label="@string/menu_setting"
-            android:parentActivityName=".main.MainActivity">
+            android:label="@string/menu_setting">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".main.AboutActivity"
-            android:label="@string/about_title"
-            android:parentActivityName=".main.MainActivity">
+            android:label="@string/about_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".main.FavoriteActivity"
-            android:label="@string/favorite_title"
-            android:parentActivityName=".main.MainActivity">
+            android:label="@string/favorite_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main.MainActivity" />
         </activity>
         <activity
             android:name=".main.HistoryActivity"
-            android:label="@string/history_title"
-            android:parentActivityName=".main.MainActivity">
+            android:label="@string/history_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main.MainActivity" />

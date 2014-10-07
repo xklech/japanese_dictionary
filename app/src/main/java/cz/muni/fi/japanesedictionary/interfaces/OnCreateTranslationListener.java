@@ -21,6 +21,7 @@ package cz.muni.fi.japanesedictionary.interfaces;
 
 import cz.muni.fi.japanesedictionary.database.GlossaryReaderContract;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.entity.TatoebaSentence;
 
 
 public interface OnCreateTranslationListener{
@@ -28,5 +29,7 @@ public interface OnCreateTranslationListener{
 	public GlossaryReaderContract getDatabase();
 	
 	public void showKanjiDetail(JapaneseCharacter character);
-	
+
+    public void showSentenceDetail(TatoebaSentence sentence);
+
 }

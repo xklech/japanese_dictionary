@@ -16,7 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -79,6 +79,8 @@
         <TextView
             android:id="@+id/about_acknowledgment"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_dictionary"
@@ -94,4 +96,4 @@
               android:divider="@android:color/transparent"
               android:dividerHeight="0dp"
               android:background="#111"/>
-</android.support.v4.widget.DrawerLayout>
+</LinearLayout>
