@@ -291,6 +291,32 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/kanjidict_kanjivg_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:listSeparatorTextViewStyle"
+                android:textColor="@android:color/primary_text_light"
+                android:text="@string/kanjidict_kanjivg" />
+
+            <LinearLayout
+                android:id="@+id/kanjidict_kanjivg_image_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                <ProgressBar
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/kanjidict_dictionaries_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

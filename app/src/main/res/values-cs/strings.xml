@@ -142,5 +142,7 @@
 
     <string name="detail_tatoeba">Příkladové věty</string>
     <string name="character_unknown_sentence">Neznámá věta</string>
+    <string name="dictionary_kanjivg_download_title">Donwloading kanji strokes dictionary - KanjiVG</string>
+    <string name="kanjidict_kanjivg">Character strokes</string>
 
 </resources>

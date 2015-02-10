@@ -9,4 +9,5 @@ public class Const {
     public static final String PREF_KANJIDIC_PATH = "cz.muni.fi.japanesedictionary.PREF_KANJIDIC_PATH";
     public static final String PREF_TATOEBA_INDICES_PATH = "cz.muni.fi.japanesedictionary.PREF_TATOEBA_INDICES_PATH";
     public static final String PREF_TATOEBA_SENTENCES_PATH = "cz.muni.fi.japanesedictionary.PREF_TATOEBA_SENTENCES_PATH";
+    public static final String PREF_KANJIVG_PATH = "cz.muni.fi.japanesedictionary.PREF_KANJIVG_PATH";
 }

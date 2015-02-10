@@ -19,16 +19,21 @@
 package cz.muni.fi.japanesedictionary.fragments;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +42,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGImageView;
+
 import cz.muni.fi.japanesedictionary.R;
+import cz.muni.fi.japanesedictionary.engine.KanjiStrokeLoader;
 import cz.muni.fi.japanesedictionary.entity.JapaneseCharacter;
+import cz.muni.fi.japanesedictionary.interfaces.KanjiVgCallback;
 import cz.muni.fi.japanesedictionary.util.MiscellaneousUtil;
 
 /**
@@ -46,7 +56,7 @@ import cz.muni.fi.japanesedictionary.util.MiscellaneousUtil;
  * @author Jaroslav Klech
  *
  */
-public class DisplayCharacterInfo extends Fragment {
+public class DisplayCharacterInfo extends Fragment implements KanjiVgCallback {
 	
     private static final String LOG_TAG = "DisplayCharacterInfo";
 	
@@ -79,9 +89,14 @@ public class DisplayCharacterInfo extends Fragment {
         super.onStart();
         updateCharacter(getView());
 	}
-	
-	
-	/**
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mTimerHandler.removeCallbacks(mTimerRunnable);
+    }
+
+    /**
 	 * Updates Fragment view acording to saved japanese character.
 	 * 
 	 */
@@ -99,7 +114,11 @@ public class DisplayCharacterInfo extends Fragment {
             return;
         }
 
-		TextView literal = (TextView)getView().findViewById(R.id.kanjidict_literal);
+        KanjiStrokeLoader kanjiVgLoader = new KanjiStrokeLoader(getActivity().getApplicationContext(), this);
+        kanjiVgLoader.execute(mJapaneseCharacter.getLiteral());
+
+
+		TextView literal = (TextView)view.findViewById(R.id.kanjidict_literal);
 		literal.setText(mJapaneseCharacter.getLiteral());
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle(mJapaneseCharacter.getLiteral());
 		
@@ -408,6 +427,68 @@ public class DisplayCharacterInfo extends Fragment {
         }
         return changed;
     }
-	
-	
+
+    private int mStep;
+    private Handler mTimerHandler = new Handler();
+    final Runnable mTimerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if(mSvgs == null ||mImageView == null){
+                return;
+            }
+            if(mStep > mSvgs.size() - 1){
+                mStep = 0;
+            }
+            mImageView.setSVG(mSvgs.get(mStep));
+            mStep++;
+            mTimerHandler.postDelayed(this, 2000);
+        }
+    };
+    private List<SVG> mSvgs;
+    private SVGImageView mImageView;
+
+    @Override
+    public void kanjiVgLoaded(final List<SVG> svgs) {
+        if(svgs == null || svgs.size() == 0){
+            Log.d(LOG_TAG, "svg is null");
+            return ;
+        }
+        if(getView() == null){
+            Log.d(LOG_TAG, "view is null");
+            return ;
+        }
+        if(getActivity() == null){
+            Log.d(LOG_TAG, "activity is null");
+            return ;
+        }
+        mSvgs = svgs;
+        LinearLayout container = (LinearLayout) getView().findViewById(R.id.kanjidict_kanjivg_image_container);
+        container.removeAllViews();
+
+        int minSize;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            int height = size.y;
+            minSize = Math.min(width/2, height/2);
+        }else {
+            Display display = getActivity().getWindowManager().getDefaultDisplay();
+            int width = display.getWidth();  // deprecated
+            int height = display.getHeight();  // deprecated
+            minSize = Math.min(width/2, height/2);
+        }
+
+
+        mImageView = new SVGImageView(getActivity());
+        mImageView.setMinimumHeight(minSize);
+        mImageView.setMinimumWidth(minSize);
+        mImageView.setSVG(mSvgs.get(mStep > mSvgs.size()-1 ? 0 : mStep));
+        container.addView(mImageView,
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        mTimerHandler.removeCallbacks(mTimerRunnable);
+        mTimerHandler.postDelayed(mTimerRunnable, 0);
+    }
+
 }

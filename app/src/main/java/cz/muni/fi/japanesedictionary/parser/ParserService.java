@@ -74,6 +74,8 @@ public class ParserService extends Service {
 	public static final String KANJIDICT_PATH = "http://android-japdict.rhcloud.com/cron/kanjidic2";
     public static final String TATOEBA_INDICES_PATH = "http://android-japdict.rhcloud.com/cron/tatoebaindices";
     public static final String TATOEBA_SENTENCES_PATH = "http://android-japdict.rhcloud.com/cron/tatoebasentences";
+    public static final String KANJIVG_PATH = "https://github.com/KanjiVG/kanjivg/releases/download/r20140816/kanjivg-20140816-main.zip";
+
 
 	public static final String DICTIONARY_PREFERENCES = "cz.muni.fi.japanesedictionary";
 
@@ -83,6 +85,7 @@ public class ParserService extends Service {
 	private URL mDownloadJMDictFrom = null;
 	private File mDownloadJMDictTo = null;
 	private boolean mDownloadingJMDict = false;
+
 	private URL mDownloadKanjidicFrom = null;
 	private File mDownloadKanjidicTo = null;
 	private boolean mDownloadingKanjidic = false;
@@ -95,6 +98,9 @@ public class ParserService extends Service {
     private File mDownloadTatoebaSentencesTo = null;
     private boolean mDownloadingTatoebaSentences = false;
 
+    private URL mDownloadKanjiVGFrom = null;
+    private File mDownloadKanjiVGTo = null;
+    private boolean mDownloadingKanjiVG = false;
 
 
 	private boolean mDownloadInProgress = false;
@@ -316,7 +322,7 @@ public class ParserService extends Service {
 		if(mDownloadingKanjidic){
             mBuilder.setContentTitle(getString(R.string.dictionary_kanji_download_title))
                     .setProgress(100, 0, false)
-                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (2/4)")
+                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (2/5)")
                     .setContentInfo("0%");
 
             mNotifyManager.notify(0, mBuilder.build());
@@ -335,7 +341,7 @@ public class ParserService extends Service {
         if(mDownloadingTatoebaIndices){
             mBuilder.setContentTitle(getString(R.string.dictionary_tatoeba_download_title))
                     .setProgress(100, 0, false)
-                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (3/4)")
+                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (3/5)")
                     .setContentInfo("0%");
 
             mNotifyManager.notify(0, mBuilder.build());
@@ -353,13 +359,32 @@ public class ParserService extends Service {
         if(mDownloadingTatoebaSentences){
             mBuilder.setContentTitle(getString(R.string.dictionary_tatoeba_download_title))
                     .setProgress(100, 0, false)
-                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (4/4)")
+                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (4/5)")
                     .setContentInfo("0%");
 
             mNotifyManager.notify(0, mBuilder.build());
 
             if(downloadFile(mDownloadTatoebaSentencesFrom, mDownloadTatoebaSentencesTo)){
                 mDownloadingTatoebaSentences = false;
+                mDownloadingKanjiVG = true;
+
+                Log.i(LOG_TAG, "Downloading dictionary finished");
+
+            }else{
+                return;
+            }
+        }
+        Log.i(LOG_TAG,"downloading kanjivg strokes");
+        if(mDownloadingKanjiVG){
+            mBuilder.setContentTitle(getString(R.string.dictionary_kanjivg_download_title))
+                    .setProgress(100, 0, false)
+                    .setContentText(getString(R.string.dictionary_download_in_progress) + " (5/5)")
+                    .setContentInfo("0%");
+
+            mNotifyManager.notify(0, mBuilder.build());
+
+            if(downloadFile(mDownloadKanjiVGFrom, mDownloadKanjiVGTo)){
+                mDownloadingKanjiVG = false;
                 mDownloadInProgress = false;
 
                 Log.i(LOG_TAG, "Downloading dictionary finished");
@@ -368,6 +393,7 @@ public class ParserService extends Service {
                 return;
             }
         }
+
 		if(!mDownloadInProgress && !mParsing){
 			try {
 				mParsing = true;
@@ -403,15 +429,16 @@ public class ParserService extends Service {
 		String japKanjiDictAbsolutePath = parseDictionary(mDownloadKanjidicTo.getPath(), "kanjidic");
         String tatoebaIndicesAbsolutePath = parseDictionary(mDownloadTatoebaIndicesTo.getPath(), "tatoeba_japanese");
         String tatoebaSentencesAbsolutePath = parseDictionary(mDownloadTatoebaSentencesTo.getPath(), "tatoeba_translations");
+        String kanjiVGAbsolutePath = parseDictionary(mDownloadKanjiVGTo.getPath(), "kanjivg");
 
-		Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
+        Log.w(LOG_TAG, "restarting notificatiomn, setting ongoing false");
 		mBuilder.setAutoCancel(true)
 		        .setOngoing(false);
 
 		mNotifyManager.notify(0, mBuilder.build());
 		if (japDictAbsolutePath != null) {
             mComplete = true;
-			serviceSuccessfullyDone(japDictAbsolutePath, japKanjiDictAbsolutePath, tatoebaIndicesAbsolutePath, tatoebaSentencesAbsolutePath);
+			serviceSuccessfullyDone(japDictAbsolutePath, japKanjiDictAbsolutePath, tatoebaIndicesAbsolutePath, tatoebaSentencesAbsolutePath, kanjiVGAbsolutePath);
 		} else {
 			Log.e(LOG_TAG, "Parsing dictionary failed");
 			stopSelf(mStartId);
@@ -438,7 +465,7 @@ public class ParserService extends Service {
             .setAutoCancel(false)
             .setOngoing(true)
             .setContentTitle(getString(R.string.dictionary_download_title))
-            .setContentText(getString(R.string.dictionary_download_in_progress) + " (1/4)")
+            .setContentText(getString(R.string.dictionary_download_in_progress) + " (1/5)")
             .setSmallIcon(R.drawable.ic_notification)
             .setProgress(100, 0, false)
             .setContentInfo("0%")
@@ -446,7 +473,7 @@ public class ParserService extends Service {
 		
 		startForeground(0,mNotification);
 		mNotifyManager.notify(0, mBuilder.build());
-        File storage = null;
+        File storage;
         if (MainActivity.canWriteExternalStorage()) {
             // external storage available
             storage = getExternalCacheDir();
@@ -552,6 +579,11 @@ public class ParserService extends Service {
                 mDownloadTatoebaSentencesTo.delete();
             }
 
+            mDownloadKanjiVGFrom = new URL(ParserService.KANJIVG_PATH);
+            mDownloadKanjiVGTo = new File(storage, "kanjivg.zip");
+            if(mDownloadKanjiVGTo.exists()){
+                mDownloadKanjiVGTo.delete();
+            }
 
 
 
@@ -629,7 +661,7 @@ public class ParserService extends Service {
 	 * @param jmdictPath path to JMdict dictionary
 	 * @param kanjiDictPath path to kanjidict2 dictionary
 	 */
-	private void serviceSuccessfullyDone(String jmdictPath, String kanjiDictPath, String tatoebaIndicesPath, String tatoebaSentencesPath) {
+	private void serviceSuccessfullyDone(String jmdictPath, String kanjiDictPath, String tatoebaIndicesPath, String tatoebaSentencesPath, String kanjiVgPath) {
 		Log.i(LOG_TAG,
 				"Parsing dictionary - parsing succesfully done, saving preferences");
 		SharedPreferences settings = getSharedPreferences(
@@ -639,10 +671,12 @@ public class ParserService extends Service {
 		Log.i(LOG_TAG, "KanjiDict path: " + kanjiDictPath);
         Log.i(LOG_TAG, "tatoeba indices  path: " + tatoebaIndicesPath);
         Log.i(LOG_TAG, "tatoeba sentences path: " + tatoebaSentencesPath);
+        Log.i(LOG_TAG, "kanjivg path: " + kanjiVgPath);
 		editor.putString(Const.PREF_JMDICT_PATH, jmdictPath);
 		editor.putString(Const.PREF_KANJIDIC_PATH, kanjiDictPath);
         editor.putString(Const.PREF_TATOEBA_INDICES_PATH, tatoebaIndicesPath);
         editor.putString(Const.PREF_TATOEBA_SENTENCES_PATH, tatoebaSentencesPath);
+        editor.putString(Const.PREF_KANJIVG_PATH, kanjiVgPath + "/kanji");
 		Date date = new Date();
 		editor.putLong("dictionaryLastUpdate", date.getTime());
 		editor.commit();
