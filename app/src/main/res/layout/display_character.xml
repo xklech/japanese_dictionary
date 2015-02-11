@@ -306,8 +306,9 @@
             <LinearLayout
                 android:id="@+id/kanjidict_kanjivg_image_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:layout_height="200dp"
+                android:orientation="vertical"
+                android:gravity="center">
                 <ProgressBar
                     android:layout_gravity="center"
                     android:indeterminate="true"

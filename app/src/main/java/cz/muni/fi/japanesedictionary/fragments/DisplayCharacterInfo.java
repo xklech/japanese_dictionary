@@ -25,6 +25,7 @@ import java.util.Map;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -464,7 +466,7 @@ public class DisplayCharacterInfo extends Fragment implements KanjiVgCallback {
         mSvgs = svgs;
         LinearLayout container = (LinearLayout) getView().findViewById(R.id.kanjidict_kanjivg_image_container);
         container.removeAllViews();
-
+/*
         int minSize;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             Display display = getActivity().getWindowManager().getDefaultDisplay();
@@ -478,7 +480,9 @@ public class DisplayCharacterInfo extends Fragment implements KanjiVgCallback {
             int width = display.getWidth();  // deprecated
             int height = display.getHeight();  // deprecated
             minSize = Math.min(width/2, height/2);
-        }
+        }*/
+        Resources r = getResources();
+        int minSize = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, r.getDisplayMetrics()));
 
 
         mImageView = new SVGImageView(getActivity());
