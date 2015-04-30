@@ -26,16 +26,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,7 +119,7 @@ public class DisplayCharacterInfo extends Fragment implements KanjiVgCallback {
 
 		TextView literal = (TextView)view.findViewById(R.id.kanjidict_literal);
 		literal.setText(mJapaneseCharacter.getLiteral());
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle(mJapaneseCharacter.getLiteral());
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mJapaneseCharacter.getLiteral());
 		
 		if(mJapaneseCharacter.getRadicalClassic() != 0){
 			Log.i(LOG_TAG,"Setting radical: " + mJapaneseCharacter.getRadicalClassic());

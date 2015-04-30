@@ -37,7 +37,7 @@ import android.os.Bundle;
 import android.os.Environment;
 
 
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -50,7 +50,8 @@ import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBarActivity;
+
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -63,6 +64,8 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+
+import com.crashlytics.android.Crashlytics;
 
 import cz.muni.fi.japanesedictionary.Const;
 import cz.muni.fi.japanesedictionary.R;
@@ -82,7 +85,7 @@ import cz.muni.fi.japanesedictionary.fragments.ResultFragmentList;
 import cz.muni.fi.japanesedictionary.interfaces.OnCreateTranslationListener;
 import cz.muni.fi.japanesedictionary.interfaces.OnTranslationSelectedListener;
 import cz.muni.fi.japanesedictionary.parser.ParserService;
-import cz.muni.fi.japanesedictionary.util.MiscellaneousUtil;
+
 
 
 /**
@@ -90,12 +93,11 @@ import cz.muni.fi.japanesedictionary.util.MiscellaneousUtil;
  * @author Jaroslav Klech
  *
  */
-public class MainActivity extends ActionBarActivity
-        implements OnCreateTranslationListener,
+public class MainActivity extends AppCompatActivity
+implements OnCreateTranslationListener,
         OnTranslationSelectedListener,
         SearchView.OnQueryTextListener,
         ActionBar.TabListener
-
 {
 
     private static final String LOG_TAG = "MainActivity";
@@ -104,6 +106,7 @@ public class MainActivity extends ActionBarActivity
     public static final String PARSER_SERVICE = "cz.muni.fi.japanesedictionary.parser.ParserService";
     public static final String SEARCH_TEXT = "cz.muni.fi.japanesedictionary.edit_text_searched";
     public static final String PART_OF_TEXT = "cz.muni.fi.japanesedictionary.edit_text_part";
+
 
     private GlossaryReaderContract mDatabase = null;
 
@@ -147,6 +150,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Crashlytics.start(this);
         supportRequestWindowFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.main_activity);
         setSupportProgressBarIndeterminate(true);
@@ -218,7 +222,7 @@ public class MainActivity extends ActionBarActivity
         mDrawerList.setAdapter(drawerAdapter);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+                 R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {

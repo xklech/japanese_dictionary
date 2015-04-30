@@ -79,6 +79,10 @@
         </activity>
         <service android:name="cz.muni.fi.japanesedictionary.parser.ParserService"
             android:exported="false" />
+
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="6f383f845e8b4c78c28e827d16ac5da68651eb15" />
     </application>
 
 </manifest>

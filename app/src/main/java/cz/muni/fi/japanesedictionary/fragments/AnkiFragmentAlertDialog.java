@@ -28,7 +28,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import cz.muni.fi.japanesedictionary.R;
-import cz.muni.fi.japanesedictionary.main.MainActivity;
 
 /**
  * Fragment alert dialog for displaying error messages and promt to user.

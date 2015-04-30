@@ -21,10 +21,10 @@ package cz.muni.fi.japanesedictionary.main;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +46,7 @@ import cz.muni.fi.japanesedictionary.fragments.FavoriteListFragment;
  *
  * @author Jaroslav Klech
  */
-public class FavoriteActivity extends ActionBarActivity {
+public class FavoriteActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "FavoriteActivity";
 
@@ -80,7 +80,7 @@ public class FavoriteActivity extends ActionBarActivity {
         mDrawerList.setAdapter(drawerAdapter);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+                 R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {

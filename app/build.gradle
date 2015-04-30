@@ -1,14 +1,34 @@
+buildscript {
+    repositories {
+
+        maven { url 'http://download.crashlytics.com/maven' }
+    }
+    dependencies {
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+
 apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
+
+
+repositories {
+    mavenCentral()
+    maven { url 'http://download.crashlytics.com/maven' }
+}
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "cz.muni.fi.japanesedictionary"
         minSdkVersion 8
-        targetSdkVersion 21
-        versionCode 7
+        targetSdkVersion 22
+        versionCode 9
         versionName "1.0"
     }
 
@@ -29,11 +49,13 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:support-v4:22.1.1'
     compile 'org.apache.lucene:lucene-core:3.6.0'
     compile 'org.apache.lucene:lucene-queryparser:3.6.0'
     compile 'org.apache.lucene:lucene-analyzers:3.6.0'
     compile 'com.caverock:androidsvg:1.2.1'
     compile 'commons-io:commons-io:2.4'
+
+    compile 'com.crashlytics.android:crashlytics:1.+'
 }

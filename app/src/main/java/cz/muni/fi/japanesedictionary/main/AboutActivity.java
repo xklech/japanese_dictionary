@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
 import android.text.util.Linkify.TransformFilter;
 import android.util.Log;
@@ -40,7 +40,7 @@ import cz.muni.fi.japanesedictionary.R;
  * @author Jaroslav Klech
  *
  */
-public class AboutActivity extends ActionBarActivity{
+public class AboutActivity extends AppCompatActivity {
 
 	private static final String LOG_TAG = "AboutActivity";
 	

@@ -30,7 +30,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -339,7 +339,7 @@ public class DisplayTranslation extends Fragment
             if (mTranslation.getJapaneseReb() != null) {
                 String reading = mTranslation.getJapaneseReb().get(0);
                 read.setText(reading);
-                ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(reading);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(reading);
             } else {
                 read.setVisibility(View.GONE);
             }
@@ -349,7 +349,7 @@ public class DisplayTranslation extends Fragment
 
         if (mTranslation.getJapaneseReb() != null) {
             String reading = mTranslation.getJapaneseReb().get(0);
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(reading);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(reading);
             DBAsyncTask saveTranslation = new DBAsyncTask(mCallbackTranslation.getDatabase());
             saveTranslation.execute(mTranslation);
 
